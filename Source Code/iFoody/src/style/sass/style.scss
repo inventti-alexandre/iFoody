@@ -1,6 +1,8 @@
 @import '~bootstrap/dist/css/bootstrap.css';
-$myColor : red;
+$myColor : #c5c5c5;
 body {
     background-color:$myColor   ;
+    padding: 20px;
+    text-align: center
 }    
 

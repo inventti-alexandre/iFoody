@@ -1,22 +1,27 @@
+import { RouterModule } from '@angular/router';
+import { UploadingModule } from './uploading/uploading.module';
+import { SharedModule } from './shared/shared.module';
+import { SearchingModule } from './searching/searching.module';
+import { MembershipModule } from './membership/membership.module';
+import { CoreModule } from './core/core.module';
+import { AdminModule } from './admin/admin.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { BsNavbarComponent } from './global/bs-navbar/bs-navbar.component';
-import { FooterComponent } from './global/footer/footer.component';
-import { SearchBarComponent } from './global/search-bar/search-bar.component';
-import { BsBreadcrumbComponent } from './bs-breadcrumb/bs-breadcrumb.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    BsNavbarComponent,
-    FooterComponent,
-    SearchBarComponent,
-    BsBreadcrumbComponent,
+    AppComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AdminModule,
+    CoreModule,
+    MembershipModule,
+    SearchingModule,
+    SharedModule,
+    UploadingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
