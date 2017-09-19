@@ -3,6 +3,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { BsNavbarComponent } from './components/bs-navbar/bs-navbar.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   imports: [
@@ -11,7 +12,8 @@ import { CommonModule } from '@angular/common';
   declarations: [
     BsNavbarComponent,
     FooterComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    HomeComponent
   ]
 })
 export class CoreModule { }

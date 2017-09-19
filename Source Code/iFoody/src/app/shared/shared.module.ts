@@ -1,3 +1,5 @@
+import { RouterModule } from '@angular/router';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AuthService } from './services/auth.service';
 import { StoreService } from './services/store.service';
 import { ProductService } from './services/product.service';
@@ -10,17 +12,20 @@ import { CommonModule } from '@angular/common';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule
   ],
   exports: [
     BsBreadcrumbComponent,
     BsPaginationComponent,
-    ProductItemComponent
+    ProductItemComponent,
+    NotFoundComponent
   ],
   declarations: [
     BsBreadcrumbComponent,
     BsPaginationComponent,
-    ProductItemComponent
+    ProductItemComponent,
+    NotFoundComponent
   ],
   providers: [
     UserService,

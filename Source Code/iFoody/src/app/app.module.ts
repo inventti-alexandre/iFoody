@@ -1,3 +1,4 @@
+import { AppRoutingModule } from './app.routing';
 import { RouterModule } from '@angular/router';
 import { UploadingModule } from './uploading/uploading.module';
 import { SharedModule } from './shared/shared.module';
@@ -7,7 +8,6 @@ import { CoreModule } from './core/core.module';
 import { AdminModule } from './admin/admin.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppComponent } from './app.component';
 
 @NgModule({
@@ -16,6 +16,7 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     AdminModule,
     CoreModule,
     MembershipModule,
