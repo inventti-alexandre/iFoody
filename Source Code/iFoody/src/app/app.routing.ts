@@ -19,7 +19,7 @@ const routes: Routes = [
                 }
             },
             {
-                path: 'bs-pagination',
+                path: 'pagination',
                 component: BsPaginationComponent,
                 data: {
                     breadcrumb: "pagination"

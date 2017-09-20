@@ -56,6 +56,8 @@
 
 .breadcrumb li:last-of-type a {
     /* width: calc( 100% - 38px ); */
+    background-color: #D4E178;
+    margin-right: -2px
 }
 
 .breadcrumb li a:before {
