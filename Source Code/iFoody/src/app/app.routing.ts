@@ -10,42 +10,62 @@ const routes: Routes = [
     {
         path: '',
         component: BsBreadcrumbComponent,
-        data: {
-            breadcrumb: "breadcrumb"
-        }
-    },
-    {
-        path: 'bs-breadcrumb',
-        component: BsBreadcrumbComponent,
-        data: {
-            breadcrumb: "breadcrumb"
-        }
-    },
-    {
-        path: 'bs-pagination',
-        component: BsPaginationComponent,
-        data: {
-            breadcrumb: "pagination"
-        }
-    },
-    {
-        path: 'product-item',
-        component: ProductItemComponent,
-        data: {
-            breadcrumb: "product-item"
-        }
-    },
-    {
-        path: 'a/b/c',
-        component: ProductItemComponent,
-        data: {
-            breadcrumb: "product-item"
-        },
         children: [
-            { path: 'a', component: ProductItemComponent },
-            { path: 'b', component: BsPaginationComponent },
-            { path: 'c', component: BsPaginationComponent }
-          ]
+            {
+                path: 'bs-breadcrumb',
+                component: BsBreadcrumbComponent,
+                data: {
+                    breadcrumb: "breadcrumb"
+                }
+            },
+            {
+                path: 'bs-pagination',
+                component: BsPaginationComponent,
+                data: {
+                    breadcrumb: "pagination"
+                }
+            },
+            {
+                path: 'product-item',
+                component: ProductItemComponent,
+                data: {
+                    breadcrumb: "product-item"
+                }
+            },
+            { // This path is just for testing breadcrumb
+                path: 'product-item1',
+                component: ProductItemComponent,
+                data: {
+                    breadcrumb: "product-item"
+                },
+                children: [
+                    {
+                        path: 'a', 
+                        component: ProductItemComponent,
+                        data: {
+                            breadcrumb: "home"
+                        },
+                        children: [
+                            {
+                                path: 'a1', 
+                                component: ProductItemComponent,
+                                data: {
+                                    breadcrumb: "library"
+                                }
+                            }
+                        ]
+                    },
+                    { 
+                        path: 'b', 
+                        component: BsPaginationComponent,
+                        data: {
+                            breadcrumb: "b"
+                        },
+                    },
+                    { path: 'c', component: BsPaginationComponent }
+                  ]
+            },
+        ]
     },
     {
         path: '**',

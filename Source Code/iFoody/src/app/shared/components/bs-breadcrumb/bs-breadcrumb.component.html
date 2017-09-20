@@ -1,8 +1,25 @@
-<h4>BreadCrumb works!</h4>
+<!-- <h4>BreadCrumb works!</h4>
 <ol class="breadcrumb">
         <li *ngFor="let breadcrumb of breadcrumbs">
                 <a [routerLink]="[breadcrumb.url, breadcrumb.params]">{{ breadcrumb.label }}</a>
-                <!-- <a href="#">TEST</a> -->
         </li>
-</ol>
+</ol> -->
+
+<div class="container">
+	<div class="row">
+		<ul class="breadcrumb">
+    		        <!-- <li class="completed"><a href="javascript:void(0);">about</a></li>
+			<li class="active"><a href="javascript:void(0);">business</a></li>
+                        <li><a href="javascript:void(0);">gallery</a></li> -->
+                        <li *ngFor="let breadcrumb of breadcrumbs"  class="active">
+                                <a
+                                        [routerLink]="[breadcrumb.url, breadcrumb.params]" 
+                                        href="javascript:void(0);"
+                                       >
+                                              {{ breadcrumb.label }}
+                                </a>
+                        </li>
+                </ul>
+	</div>
+</div>
 
