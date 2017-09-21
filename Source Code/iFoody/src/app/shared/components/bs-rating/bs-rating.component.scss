@@ -6,7 +6,8 @@ $empty: #C5D4E6;
 $filled: #4B95E9;
 
 div {
-    background-color: white;    
+    background-color: white;  
+    position: relative  
 }
 
 .star {
@@ -14,13 +15,19 @@ div {
     color: $empty;
 }
 
-.rating-number {
+.number {
     color:white;
     font-size: 0.9em
 }
+
 .filled {
     color: $filled;
 }
+
+span[class^="fa-"] {
+    margin-bottom: 10px
+}
+
 .good {
     color: $good;
 }
@@ -35,4 +42,9 @@ div {
 
 .bad {
     color: $bad;
+}
+
+.ratingNumber {
+    font-size: 0.7em;
+    margin-top: 10px
 }

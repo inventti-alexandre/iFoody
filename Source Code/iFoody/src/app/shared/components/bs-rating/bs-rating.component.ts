@@ -7,6 +7,7 @@ import { AfterViewInit, ElementRef, Component, OnInit } from '@angular/core';
 })
 export class BsRatingComponent  {
   currentRate: number;
+  ratingNumber: number;
   max = 5;
   isGood: boolean; // for rating which greater than 4.5
   isFair: boolean; // "fair" for rating which greater than 4.0
@@ -20,7 +21,7 @@ export class BsRatingComponent  {
     this.isFair = false;
     this.isMedium = false;
     this.isBad = false;
-
+    this.ratingNumber = 33;
     this.getStatus();
   }
 

@@ -1,3 +1,11 @@
-<p>
-  product-item works!
-</p>
+<div class="product-item">
+  <div class="image">
+    <img src="http://lorempixel.com/320/180/food/" alt="Food">
+  </div>
+
+  <bs-rating></bs-rating>
+
+  <h4>{{ name }}</h4>
+  
+  <h5>{{ price | currency:'vnd':4.0}}</h5>
+</div>

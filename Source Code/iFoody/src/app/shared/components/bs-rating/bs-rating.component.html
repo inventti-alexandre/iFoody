@@ -10,8 +10,14 @@
     </ng-template>
   </ngb-rating>
 
-  <span class="fa-stack fa-lg">
+  <span class="fa-stack">
     <i class="fa fa-circle fa-stack-2x" ></i>
-    <i class="fa rating-number fa-stack-1x">{{ currentRate }}</i>
+    <i class="fa number fa-stack-1x">{{ currentRate }}</i>
+  </span>
+
+  <span *ngIf="ratingNumber > 0" class="ratingNumber pull-right">
+    <a href="#">
+     &nbsp;&nbsp; {{ ratingNumber }} đánh giá
+    </a>
   </span>
 </div>
