@@ -1,0 +1,17 @@
+<div 
+  [ngClass]="
+    {'good': isGood, 
+    'fair': isFair, 
+    'medium': isMedium, 
+    'bad': isBad}">
+  <ngb-rating [(rate)]="currentRate" [max]="max">
+    <ng-template let-fill="fill">
+      <span class="star" [class.filled]="fill === 100">&#9733;</span>
+    </ng-template>
+  </ngb-rating>
+
+  <span class="fa-stack fa-lg">
+    <i class="fa fa-circle fa-stack-2x" ></i>
+    <i class="fa rating-number fa-stack-1x">{{ currentRate }}</i>
+  </span>
+</div>

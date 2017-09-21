@@ -3,6 +3,8 @@ $myColor : #c5c5c5;
 body {
     background-color:$myColor;
     font-size: 14px;
-    text-align: center
+    text-align: center;
+    font-family: 'Open Sans', sans-serif; // San-serif has No leg
+    font-family: 'Roboto', sans-serif;  // Serif has leg
 }    
 
