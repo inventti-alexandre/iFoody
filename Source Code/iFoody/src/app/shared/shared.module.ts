@@ -10,6 +10,7 @@ import { ProductItemComponent } from './components/product-item/product-item.com
 import { BsPaginationComponent } from './components/bs-pagination/bs-pagination.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { BsRatingComponent } from './components/bs-rating/bs-rating.component';
 
 @NgModule({
   imports: [
@@ -21,13 +22,15 @@ import { CommonModule } from '@angular/common';
     BsBreadcrumbComponent,
     BsPaginationComponent,
     ProductItemComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    BsRatingComponent
   ],
   declarations: [
     BsBreadcrumbComponent,
     BsPaginationComponent,
     ProductItemComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    BsRatingComponent
   ],
   providers: [
     UserService,

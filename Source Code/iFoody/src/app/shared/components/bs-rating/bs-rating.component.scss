@@ -1,0 +1,50 @@
+$good : #24A11F;
+$fair : #8df723;
+$medium: rgba(253, 170, 76, 0.96);
+$bad: #ff0005;
+$empty: #C5D4E6;
+$filled: #4B95E9;
+
+div {
+    background-color: white;  
+    position: relative  
+}
+
+.star {
+    font-size: 1.5rem;
+    color: $empty;
+}
+
+.number {
+    color:white;
+    font-size: 0.9em
+}
+
+.filled {
+    color: $filled;
+}
+
+span[class^="fa-"] {
+    margin-bottom: 10px
+}
+
+.good {
+    color: $good;
+}
+
+.fair {
+    color: $fair;
+}
+
+.medium {
+    color: $medium;
+}
+
+.bad {
+    color: $bad;
+}
+
+.ratingNumber {
+    font-size: 0.7em;
+    margin-top: 10px
+}
