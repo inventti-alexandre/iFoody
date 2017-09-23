@@ -9,6 +9,12 @@ import { HomeComponent } from './components/home/home.component';
   imports: [
     CommonModule
   ],
+  exports: [
+    BsNavbarComponent,
+    FooterComponent,
+    SearchBarComponent,
+    HomeComponent
+  ],
   declarations: [
     BsNavbarComponent,
     FooterComponent,

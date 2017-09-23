@@ -1,0 +1,25 @@
+.footer{
+    background-color: white;
+    margin: unset;
+    line-height: 50px;
+   &__left{
+       float: left;
+       padding-left: 20px;
+       img{
+           width:50px;
+           height:50px;
+       }
+       &__nameApp{
+           font-weight: bold;
+       }
+   }
+   &__right{
+       float: right;
+       padding-right: 20px;
+       a{
+            font-style:italic;
+            font-weight: bold;
+            padding-right: 15px;
+       }
+   } 
+}
