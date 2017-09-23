@@ -1,3 +1,4 @@
+import * as global from './../../../constant/global';
 import { Component, OnInit } from '@angular/core';
 
 @Component({  
@@ -11,5 +12,5 @@ export class BsNavbarComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  nameApp = global.nameApp;
 }

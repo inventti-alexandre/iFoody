@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import * as global from './../../../constant/global';
 
 @Component({
   selector: 'footer',
@@ -10,6 +11,6 @@ export class FooterComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  nameApp = global.nameApp;
 
 }
