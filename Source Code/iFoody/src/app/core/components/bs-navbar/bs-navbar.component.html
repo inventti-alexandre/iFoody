@@ -1,20 +1,24 @@
 <nav class="navbar navbar-inverse iFoodyNav">
     <div class="container-fluid col-md-12">
-      <div class="navbar-header col-md-8 col-sm-7 col-xs-12">
+      <div class="navbar-header col-md-6 col-sm-7 col-xs-12 col-lg-7">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>                        
         </button>
         <div>
-            <a href="#" class="navbar-brand">
-              <img src="../../../../assets/images/core/logo.png" alt="logoApp" id="logoApp">
-              {{nameApp}}
-            </a>
-          <search-bar id="searchBar" class="col-md-9 col-sm-8 col-xs-10"></search-bar>
+          <div class="col-md-6 col-sm-4 col-xs-2 col-lg-5">
+              <a href="#" class="navbar-brand">
+                  <img src="../../../../assets/images/core/logo.png" alt="logoApp" id="logoApp">
+                  <span>{{nameApp}}</span>
+                </a>
+          </div>
+          <div class="col-md-6 col-sm-8 col-xs-10 col-lg-7">
+              <search-bar id="searchBar"></search-bar>            
+          </div>
         </div>
       </div>
-      <div class="collapse navbar-collapse col-md-5 col-sm-5 col-xs-12" id="myNavbar">
+      <div class="collapse navbar-collapse col-md-6 col-sm-5 col-xs-12 col-lg-5" id="myNavbar">
         <ul class="nav navbar-nav navbar-right">
           <li><a href="#"><span class="glyphicon glyphicon-home"></span> Mở cửa hàng</a></li>
           <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>

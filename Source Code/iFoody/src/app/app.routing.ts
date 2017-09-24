@@ -1,3 +1,4 @@
+import { HomeComponent } from './core/components/home/home.component';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { ProductItemComponent } from './shared/components/product-item/product-item.component';
 import { BsPaginationComponent } from './shared/components/bs-pagination/bs-pagination.component';
@@ -9,7 +10,7 @@ import { NgModule } from '@angular/core';
 const routes: Routes = [
     {
         path: '',
-        component: BsBreadcrumbComponent,
+        component: HomeComponent,
         children: [
             {
                 path: 'bs-breadcrumb',

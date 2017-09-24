@@ -1,3 +1,4 @@
+import { SharedModule } from './../shared/shared.module';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { BsNavbarComponent } from './components/bs-navbar/bs-navbar.component';
@@ -8,7 +9,8 @@ import { SliderComponent } from './components/slider/slider.component';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    SharedModule
   ],
   exports: [
     BsNavbarComponent,
