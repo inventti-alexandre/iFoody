@@ -3,18 +3,21 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SignupComponent } from './components/signup/signup.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SignupByEmailComponent } from './components/signup-by-email/signup-by-email.component';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
-    NgbModule
+    // NgbModule
   ],
   exports:[
-    SignupComponent
+    SignupComponent,
+    SignupByEmailComponent
   ],
   declarations: [
-    SignupComponent
+    SignupComponent,
+    SignupByEmailComponent
   ]
 })
 export class MembershipModule { }

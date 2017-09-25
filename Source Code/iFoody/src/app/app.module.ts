@@ -1,3 +1,4 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app.routing';
 import { RouterModule } from '@angular/router';
 import { UploadingModule } from './uploading/uploading.module';
@@ -18,13 +19,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     AdminModule,
     CoreModule,
     MembershipModule,
     SearchingModule,
     SharedModule,
     UploadingModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

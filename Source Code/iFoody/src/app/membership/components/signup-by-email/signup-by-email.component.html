@@ -1,0 +1,30 @@
+<p>
+  signup-by-email works!
+</p>
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div>
+    <div class="modal-body form-signup ">
+      <div>
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true"><i class="fa fa-times fa-1x"></i></span>
+          </button>
+      </div>
+      <button class="btn btn-primary btn-signup-facebook"><i class="fa fa-facebook"></i>Sign Up With Facebook</button>
+      <button class="btn btn-default btn-signup-google"><i class="fa fa-google"></i>Sign Up With Google</button>
+
+      <div class="line-signup">
+        <div>
+           
+        </div>
+        <span>or</span>
+      </div>
+      <button class="btn btn-signup-email"><i class="fa fa-email"></i>Sign Up With An Email</button>
+      <hr/>
+      <p>Đã có tài khoản iFoody? <a href="#">Đăng Nhập</a></p>
+    </div>
+  </div>
+</ng-template>
+
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button>

@@ -1,3 +1,4 @@
+import { SignupByEmailComponent } from './membership/components/signup-by-email/signup-by-email.component';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { ProductItemComponent } from './shared/components/product-item/product-item.component';
 import { BsPaginationComponent } from './shared/components/bs-pagination/bs-pagination.component';
@@ -7,6 +8,60 @@ import { NgModule } from '@angular/core';
 
 //  routing configuration const
 const routes: Routes = [
+    {
+        path: 'bs-breadcrumb',
+        component: BsBreadcrumbComponent,
+        data: {
+            breadcrumb: "breadcrumb"
+        }
+    },
+    {
+        path: 'pagination',
+        component: BsPaginationComponent,
+        data: {
+            breadcrumb: "pagination"
+        }
+    },
+    {
+        path: 'product-item',
+        component: ProductItemComponent,
+        data: {
+            breadcrumb: "product-item"
+        }
+    },
+    { // This path is just for testing breadcrumb
+        path: 'product-item1',
+        component: ProductItemComponent,
+        data: {
+            breadcrumb: "product-item"
+        },
+        children: [
+            {
+                path: 'a', 
+                component: ProductItemComponent,
+                data: {
+                    breadcrumb: "home"
+                },
+                children: [
+                    {
+                        path: 'a1', 
+                        component: ProductItemComponent,
+                        data: {
+                            breadcrumb: "library"
+                        }
+                    }
+                ]
+            },
+            { 
+                path: 'b', 
+                component: BsPaginationComponent,
+                data: {
+                    breadcrumb: "b"
+                },
+            },
+            { path: 'c', component: BsPaginationComponent }
+          ]
+    },
     {
         path: '',
         component: BsBreadcrumbComponent,
@@ -66,6 +121,10 @@ const routes: Routes = [
                   ]
             },
         ]
+    },
+    {
+        path: 'signup-by-email',
+        component: SignupByEmailComponent
     },
     {
         path: '**',
