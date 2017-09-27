@@ -1,0 +1,13 @@
+.image {
+  width: 100%;
+  max-height: 150px;
+  overflow: hidden;
+  margin-bottom: 3px;
+  border-radius: 3px;
+}
+
+.image img {
+  box-shadow: 2px 2px 2px #c5c5c5;
+  width:100%;
+  height:auto;
+}

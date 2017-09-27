@@ -62,7 +62,7 @@
   display: none;
 }
 
-@media screen and (max-width: 447px) {
+@media screen and (max-width: 465px) {
   .searchBar {
     display: none;
   }
