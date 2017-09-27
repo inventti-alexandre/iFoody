@@ -4,7 +4,7 @@
 }
 
 .navbar {
-  margin-bottom: 5px;
+  margin-bottom: 0px;
 }
 
 .navbar-brand > span {
@@ -47,6 +47,10 @@
   float: right;
   padding-top: 10px;
   height: 55px;
+}
+
+.navbar-right {
+  margin-right: 0px;
 }
 
 #myNavbar {
