@@ -1,25 +1,121 @@
-<ng-template #content let-c="close" let-d="dismiss">
+<div class="row">
+    <div class="col-xs-12 col-sm-12">
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" class="form-control" bsDatepicker #dp="bsDatepicker">
+          <div class="input-group-btn">
+            <button class="btn btn-success" (click)="dp.show() ">Open</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+
+<button type="button" class="btn btn-primary" (click)="openModal(signup)">Create template modal</button>
+
+<ng-template #signup>
+  <div class="modal-body form-signup">
+    <div>
+      <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true"><i class="fa fa-times fa-1x"></i></span>
+        </button>
+    </div>
+    <button class="btn btn-primary btn-signup-facebook"><i class="fa fa-facebook"></i>Đăng Nhập với Facebook</button>
+    <button class="btn btn-default btn-signup-google"><i class="fa fa-google"></i>Đăng Nhập với Google</button>
+
+    <div class="line-signup">
+      <div></div>
+      <span>or</span>
+    </div>
+    <button type="button" class="btn btn-signup-email" (click)="modalRef.hide();openSecondModal(signupByEmail)"><i class="fa fa-email"></i>Đăng ký bằng Email</button>
+    <hr/>
+    <p>Đã có tài khoản iFoody? <a href="#">Đăng Nhập</a></p>
+  </div>
+</ng-template>
+
+
+<ng-template #signupByEmail>
   <div>
-    <div class="modal-body form-signup ">
+    <div class="modal-body form-signup-by-email ">
       <div>
-          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
             <span aria-hidden="true"><i class="fa fa-times fa-1x"></i></span>
           </button>
       </div>
-      <button class="btn btn-primary btn-signup-facebook"><i class="fa fa-facebook"></i>Sign Up With Facebook</button>
-      <button class="btn btn-default btn-signup-google"><i class="fa fa-google"></i>Sign Up With Google</button>
 
+      <!-- <div class="signup-social">
+        <button class="btn btn-primary btn-signup-facebook"><i class="fa fa-facebook"></i>Đăng nhập với Facebook</button>
+        <span>or</span>
+        <button class="btn btn-default btn-signup-google "><i class="fa fa-google"></i>Đăng nhập với Google</button>
+      </div> -->
+      <div class="signup-social">
+        Đăng Nhập với <a href="#">Facebook</a> or <a href="#">Google</a>
+      </div>
       <div class="line-signup">
-        <div>
-           
-        </div>
+        <div></div>
         <span>or</span>
       </div>
-      <button class="btn btn-signup-email"><i class="fa fa-email"></i>Sign Up With An Email</button>
-      <hr/>
+
+      <form [formGroup]="user" (ngSubmit)="onSubmit(user)">
+        <div>
+          <input type="text" formControlName="email" class="form-control input-lg" placeholder="Email...">
+          <i class="fa fa-envelope fa-2x"></i>
+        </div>
+
+        <div>
+          <input type="text" formControlName="gender" class="form-control input-lg" placeholder="Gender...">
+          <i class="fa fa-venus-mars fa-2x"></i>
+        </div>
+
+        <div>
+          <input type="text" formControlName="lastname" class="form-control input-lg" placeholder="Last name...">
+          <i class="fa fa-user fa-2x"></i>
+        </div>
+
+        <div>
+          <input type="text" formControlName="firstname" class="form-control input-lg" placeholder="First name...">
+          <i class="fa fa-user-circle fa-2x"></i>
+        </div>
+
+        <div>
+          <input type="password" formControlName="password" class="form-control input-lg" placeholder="Password...">
+          <i class="fa fa-lock fa-2x"></i>
+        </div>
+
+        <div>
+          <input type="password" formControlName="confirmPassword" class="form-control input-lg" placeholder="Confirm Password...">
+          <i class="fa fa-lock fa-2x"></i>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="text"  formControlName="DOB" class="form-control  input-lg" bsDatepicker #dp="bsDatepicker" placeholder="Date of Birth...">
+                  <div class="input-group-btn ">
+                    <button type="button" class="btn btn-success btn-calendar" (click)="dp.show()" ><i class="fa fa-calendar fa-2x"></i></button>
+                    <!-- <button type="button" class="btn btn-success" (click)="openCalendar()"><i class="fa fa-calendar fa-2x"></i></button> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <div>
+          <input type="checkbox" formControlName="DOB" class="form-control input-lg" placeholder="Date of Birth...">
+          <span>Tôi đã đọc và chấp nhận những điều khoản của iFoody.</span>
+        </div>
+
+
+        <hr/>
+
+      </form>
+
+      <div class="line-signup">
+        <div></div>
+      </div>
       <p>Đã có tài khoản iFoody? <a href="#">Đăng Nhập</a></p>
     </div>
   </div>
 </ng-template>
-
-<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button>

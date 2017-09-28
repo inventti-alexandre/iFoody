@@ -1,7 +1,7 @@
 <p>
   signup-by-email works!
 </p>
-<md-checkbox>Check me!</md-checkbox>
+
 
 <!-- <ng-template #content let-c="close" let-d="dismiss">
   <div>
@@ -59,6 +59,12 @@
           <i class="fa fa-calendar fa-2x"></i>
         </div>
 
+        <md-form-field>
+            <input mdInput [mdDatepicker]="picker" placeholder="Choose a date">
+            <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
+            <md-datepicker #picker></md-datepicker>
+          </md-form-field>
+        
         <div>
           <input type="checkbox" formControlName="DOB" class="form-control input-lg" placeholder="Date of Birth...">
           <span>Tôi đã đọc và chấp nhận những điều khoản của iFoody.</span>
@@ -75,6 +81,24 @@
       <p>Đã có tài khoản iFoody? <a href="#">Đăng Nhập</a></p>
     </div>
   </div>
-</ng-template>
+</ng-template> -->
 
-<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button> -->
+<!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button><br> -->
+<button type="button" class="btn btn-primary" (click)="openModal(template)">Create template modal</button>
+
+<ng-template #template>
+ <div class="modal-header">
+   <h4 class="modal-title pull-left">Modal</h4>
+   <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+     <span aria-hidden="true">&times;</span>
+   </button>
+ </div>
+ <div class="modal-body">
+   This is a modal.
+ </div>
+</ng-template>
+<!-- <md-form-field>
+    <input mdInput [mdDatepicker]="picker" placeholder="Choose a date">
+    <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
+    <md-datepicker #picker></md-datepicker>
+  </md-form-field> -->

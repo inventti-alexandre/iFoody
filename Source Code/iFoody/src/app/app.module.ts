@@ -1,4 +1,5 @@
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap'; // For Angular Material
+import { MdDatepickerModule, MdNativeDateModule } from '@angular/material';
+// import { NgbModule } from '@ng-bootstrap/ng-bootstrap'; // For Angular Material
 import { AppRoutingModule } from './app.routing';
 import { RouterModule } from '@angular/router';
 import { UploadingModule } from './uploading/uploading.module';
@@ -28,7 +29,10 @@ import 'hammerjs'; // For Angular Material
     SearchingModule,
     SharedModule,
     UploadingModule,
-    NgbModule.forRoot()  // For Angular Material
+    // NgbModule.forRoot(),  // For Angular Material
+    MdDatepickerModule,
+    MdNativeDateModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

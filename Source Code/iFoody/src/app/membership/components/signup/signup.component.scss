@@ -3,8 +3,17 @@
     background-color: white;
     opacity:1;
     // background-color:rgba(0, 0, 0, 0.5);
-    @media screen and (min-width: 10500px) {
+    @media screen and (max-width: 768px) {
+        .btn {
+            line-height:100% !important;
+        }    
+    }
+    
+    @media screen and (min-width: 1050px) {
         width: 40% !important; 
+        .btn {
+            line-height:190% !important;
+        }
     }
 
     @media screen and (max-width: 1050px) {
@@ -14,6 +23,9 @@
         // left: 0;
         // right: 0;
         margin: auto;
+        .btn {
+            line-height:190% !important;
+        }
     }
 }
 
@@ -25,16 +37,20 @@
     }
 } 
 
-.btn {
-    line-height:190% !important;
-}
+
 
 .btn-signup-facebook, .btn-signup-google {
-    width: 100% !important;
-    margin-top: 10px;
+    width: 100%;
+    margin-top: 4px;
     i {
         margin-right: 10px;
     }
+}
+.form-signup-by-email {
+    .btn-signup-facebook, .btn-signup-google {
+        width: 46%;
+    }
+
 }
 
 .btn-signup-email {
@@ -47,23 +63,82 @@
     -webkit-text-stroke: 3px white;
 }
 
-.line-signup {
-    height:40px;
-    text-align: center;
-    position: relative;
-    div {
-        position: absolute;
-        height:0.4px;
-        width:100%;
-        margin-top: 20px;
-        border-top: 0.4px solid #E9DEDE; 
+.form-signup, .form-signup-by-email {
+    .line-signup {
+        height:40px;
+        text-align: center;
+        position: relative;
+        div {
+            position: absolute;
+            height:0.4px;
+            width:100%;
+            margin-top: 20px;
+            border-top: 0.4px solid #E9DEDE; 
+        }
+        span {
+            position: absolute;
+            line-height:40px;
+            width:40px;
+            background-color: white;
+            margin-left: -20px;
+        } 
     }
-    span {
-        position: absolute;
-        line-height:40px;
-        width:40px;
-        background-color: white;
-        margin-left: -20px;
-    } 
-    
 }
+
+.form-signup-by-email {
+    .line-signup {
+        height:30px;
+        div {
+            height:20px;
+            margin-top: 10px;
+        }
+        span {
+            line-height:20px;
+        } 
+    }
+    i {
+        position: absolute;
+        right: 15px;
+        bottom:8px;
+        color: #4B4747;
+    }
+    div {
+        position: relative;
+        margin-bottom: 10px
+    }
+    .fa-times {
+        top: 6px;
+        z-index: 1000
+    }
+}
+.signup-social {
+    height:22px;
+        text-align: center;
+}
+
+
+p {
+    text-align: center
+}
+
+input[type="checkbox"] {
+    width:15px;
+    height:15px;
+    display: inline-block;  
+}
+
+
+// .example-button-row {
+//     display: flex;
+//     align-items: center;
+//     justify-content: space-around;
+//   }
+//   .example-form {
+//     min-width: 150px;
+//     max-width: 500px;
+//     width: 100%;
+//   }
+  
+//   .example-full-width {
+//     width: 100%;
+//   }

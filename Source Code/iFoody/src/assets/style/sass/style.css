@@ -1,4 +1,3 @@
-@import "~@angular/material/prebuilt-themes/indigo-pink.css"; 
 body {
   font-size: 14px;
   font-family: 'Open Sans', sans-serif;
@@ -22,4 +21,21 @@ body {
 
 .no-margin {
   margin: 0 !important;
+}
+
+bs-datepicker-container {
+  z-index: 1300 !important;
+  top: 200px !important;
+  left: 30% !important;
+}
+
+.btn-calendar {
+  background-color: #689232 !important;
+  width: 40px !important;
+  height: 46px !important;
+}
+
+.fa-calendar {
+  top: 7px !important;
+  right: 7px !important;
 }
