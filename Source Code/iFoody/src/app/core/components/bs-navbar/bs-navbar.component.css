@@ -1,3 +1,7 @@
+.iFoodyNav {
+  overflow: hidden;
+}
+
 .iFoodyNav #logoApp {
   width: 50px;
   height: 50px;
@@ -77,4 +81,9 @@
 
 .navbar-collapse {
   margin-right: 0px !important;
+}
+
+.navbar-fixed-top {
+  position: relative;
+  min-height: 50px;
 }

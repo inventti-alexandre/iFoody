@@ -1,4 +1,5 @@
-<nav class="navbar navbar-inverse iFoodyNav" (window:resize)="onResize($event)" [ngClass]="isMobile ?  '' : 'navbar-fixed-top'">
+<div class="iFoodyNav">
+  <nav class="navbar navbar-inverse" (window:resize)="onResize($event)" [ngClass]="isMobile ?  '' : 'navbar-fixed-top'">
     <div class="container-fluid col-md-12 no-padding">
       <div class="navbar-header col-md-7 col-sm-7 col-xs-12 col-lg-7 no-padding-left-right">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -8,13 +9,13 @@
         </button>
         <div>
           <div class="col-md-3 col-sm-4 col-xs-2 col-lg-5">
-              <a href="#" class="navbar-brand row no-padding-left-right no-margin-left-right  ">
+            <a href="#" class="navbar-brand row no-padding-left-right no-margin-left-right  ">
                   <img src="../../../../assets/images/core/logo.png" alt="logoApp" id="logoApp">
                   <span>{{nameApp}}</span>
                 </a>
           </div>
           <div class="col-md-9 col-sm-8 col-xs-8 col-lg-7">
-              <search-bar class="searchBar"></search-bar>            
+            <search-bar class="searchBar"></search-bar>
           </div>
         </div>
       </div>
@@ -27,5 +28,5 @@
       </div>
     </div>
   </nav>
-  <search-bar class="searchBar-mobile"></search-bar>   
-  
+  <search-bar class="searchBar-mobile"></search-bar>
+</div>
