@@ -1,0 +1,43 @@
+div {
+  background-color: white;
+  position: relative;
+}
+
+.star {
+  font-size: 1.5rem;
+  color: #C5D4E6;
+}
+
+.number {
+  color: white;
+  font-size: 0.9em;
+}
+
+.filled {
+  color: #4B95E9;
+}
+
+span[class^="fa-"] {
+  margin-bottom: 10px;
+}
+
+.good {
+  color: #24A11F;
+}
+
+.fair {
+  color: #8df723;
+}
+
+.medium {
+  color: rgba(253, 170, 76, 0.96);
+}
+
+.bad {
+  color: #ff0005;
+}
+
+.ratingNumber {
+  font-size: 0.7em;
+  margin-top: 10px;
+}

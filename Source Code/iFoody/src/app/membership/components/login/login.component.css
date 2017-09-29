@@ -4,24 +4,29 @@
   opacity: 1;
 }
 
-@media screen and (max-width: 810px) {
-  .modal-dialog .signup-social button {
-    width: 100% !important;
+@media screen and (max-width: 768px) {
+  .modal-dialog .btn {
+    line-height: 100% !important;
   }
 }
 
 @media screen and (min-width: 1050px) {
   .modal-dialog {
-    width: 50% !important;
-    top: 30px;
+    width: 40% !important;
+  }
+  .modal-dialog .btn {
+    line-height: 190% !important;
   }
 }
 
 @media screen and (max-width: 1050px) {
   .modal-dialog {
     width: 65% !important;
-    top: 180px;
+    top: 100px;
     margin: auto;
+  }
+  .modal-dialog .btn {
+    line-height: 190% !important;
   }
 }
 
@@ -34,25 +39,16 @@
   border-radius: 1px !important;
 }
 
-.signup-social {
-  text-align: center;
+.btn-signup-facebook, .btn-signup-google, .btn-login-email {
+  width: 100%;
+  margin-top: 4px;
 }
 
-.signup-social button {
-  margin: auto 5px;
-}
-
-.btn-signup-facebook, .btn-signup-google {
-  width: 40% !important;
-  margin: auto;
-  margin-top: 20px;
-}
-
-.btn-signup-facebook i, .btn-signup-google i {
+.btn-signup-facebook i, .btn-signup-google i, .btn-login-email i {
   margin-right: 10px;
 }
 
-.btn-signup-email {
+.btn-login-email {
   background-color: #ff5a5f;
   color: white;
   width: 100%;
@@ -62,13 +58,13 @@
   -webkit-text-stroke: 3px white;
 }
 
-.line-signup {
+.form-login .line-signup {
   height: 40px;
   text-align: center;
   position: relative;
 }
 
-.line-signup div {
+.form-login .line-signup div {
   position: absolute;
   height: 0.4px;
   width: 100%;
@@ -76,7 +72,7 @@
   border-top: 0.4px solid #E9DEDE;
 }
 
-.line-signup span {
+.form-login .line-signup span {
   position: absolute;
   line-height: 40px;
   width: 40px;
@@ -84,20 +80,21 @@
   margin-left: -20px;
 }
 
-form button:last-child {
-  width: 100%;
-}
-
-form div {
-  position: relative;
-  margin-bottom: 10px;
-}
-
-form i {
+.form-login form i {
   position: absolute;
   right: 15px;
   bottom: 8px;
   color: #4B4747;
+}
+
+.form-login form div {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.signup-social {
+  height: 22px;
+  text-align: center;
 }
 
 p {
@@ -108,32 +105,4 @@ input[type="checkbox"] {
   width: 15px;
   height: 15px;
   display: inline-block;
-}
-
-.example-button-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-
-.example-form {
-  min-width: 150px;
-  max-width: 500px;
-  width: 100%;
-}
-
-.example-full-width {
-  width: 100%;
-}
-
-.md-datepicker-calendar-pane {
-  z-index: 22200;
-}
-
-.md-datepicker-calendar-pane {
-  z-index: 1200;
-}
-
-.mat-calenlar {
-  display: block;
 }

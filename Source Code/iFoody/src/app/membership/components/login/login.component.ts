@@ -5,11 +5,12 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss'],
+  selector: 'login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
-export class SignupComponent implements OnInit {
+export class LoginComponent implements OnInit {
+
   user: FormGroup;
   // closeResult: string;
   public modalRef: BsModalRef;
@@ -24,22 +25,11 @@ export class SignupComponent implements OnInit {
     this.modalRef = this.modalService.show(template);
   }
 
-  applyTheme(pop: any) {
-    setTimeout(() => {
-      pop.show();
-    });
-  }
 
   ngOnInit() {
     this.user = new FormGroup({
       email: new FormControl(),
-      gender: new FormControl(),
-      lastname: new FormControl(),
-      firstname: new FormControl(),
       password: new FormControl(),
-      confirmPassword: new FormControl(),
-      DOB: new FormControl(),
-      readPolicy: new FormControl(),
     });
   }
 

@@ -30,12 +30,14 @@ bs-datepicker-container {
 }
 
 .btn-calendar {
-  background-color: #689232 !important;
+  background-color: #5CB85C !important;
   width: 40px !important;
   height: 46px !important;
 }
 
-.fa-calendar {
+.form-signup-by-email .fa-calendar {
   top: 7px !important;
   right: 7px !important;
+  color: white !important;
+  text-shadow: 1px 1px 1px lightcyan !important;
 }

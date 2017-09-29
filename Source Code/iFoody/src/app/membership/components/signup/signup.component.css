@@ -39,12 +39,12 @@
   border-radius: 1px !important;
 }
 
-.btn-signup-facebook, .btn-signup-google {
+.btn-signup-facebook, .btn-signup-google, .btn-signup {
   width: 100%;
   margin-top: 4px;
 }
 
-.btn-signup-facebook i, .btn-signup-google i {
+.btn-signup-facebook i, .btn-signup-google i, .btn-signup i {
   margin-right: 10px;
 }
 

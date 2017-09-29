@@ -25,7 +25,7 @@ body {
 }
 
 .no-margin {
-    margin: 0 !important
+    margin: 0 !important;
 }
 // For Datepicker in Sign Up Component
 bs-datepicker-container {
@@ -36,12 +36,16 @@ bs-datepicker-container {
 }
 
 .btn-calendar {
-    background-color: #689232 !important;
+    background-color: #5CB85C !important;
     width:40px !important;
-    height: 46px !important
+    height: 46px !important;
 }
 
-.fa-calendar {
-    top: 7px !important;
-    right: 7px !important
+.form-signup-by-email {
+    .fa-calendar {
+        top: 7px !important;
+        right: 7px !important;  
+        color: white !important;
+        text-shadow: 1px 1px 1px lightcyan !important;
+    }
 }
