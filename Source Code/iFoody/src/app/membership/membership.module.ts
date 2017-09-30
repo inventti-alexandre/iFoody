@@ -11,6 +11,11 @@ import {FormBuilder, FormGroup, Validators, FormsModule} from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { LoginComponent } from './components/login/login.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { ChangePasswordComponent } from './components/profile/change-password/change-password.component';
+import { MatButtonModule } from '@angular/material';
+import { ResetPasswordComponent } from './components/profile/reset-password/reset-password.component';
+import { EditProfileComponent } from './components/profile/edit-profile/edit-profile.component';
 
 @NgModule({
   imports: [
@@ -25,19 +30,21 @@ import { LoginComponent } from './components/login/login.component';
     FormsModule,
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(), 
-    // NgbModule,
-    // NgbDatepickerModule
+    MatButtonModule,
+    MdCheckboxModule
   ],  
   exports:[
     SignupComponent,
-    // SignupByEmailComponent,
-    LoginComponent
-
+    LoginComponent,
+    ProfileComponent,
   ],
   declarations: [
     SignupComponent,
     LoginComponent,
-    // SignupByEmailComponent
+    ProfileComponent,
+    ChangePasswordComponent,
+    ResetPasswordComponent,
+    EditProfileComponent
   ]
 })
 export class MembershipModule { }
