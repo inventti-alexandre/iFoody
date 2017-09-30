@@ -1,4 +1,4 @@
-import { MdCheckboxModule,MatDatepickerModule } from '@angular/material';
+import { MdCheckboxModule } from '@angular/material';
 import { SharedModule } from './../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -11,7 +11,6 @@ import { FormsModule, NgForm, NgModel } from '@angular/forms';
     SharedModule,
     FormsModule,
     MdCheckboxModule,
-    MatDatepickerModule,
   ],
   exports:[
     AdminLayoutComponent,
