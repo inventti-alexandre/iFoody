@@ -20,7 +20,6 @@ export class BsNavbarComponent implements OnInit {
   
   onResize(event) {
     let innerWidth = event.target.innerWidth;
-    console.log(innerWidth);
     if (innerWidth >= 768) {
       this.isMobile = false;
       return;

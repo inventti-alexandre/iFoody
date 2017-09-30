@@ -1,0 +1,12 @@
+.admin-profile {
+  width: 100%;
+  background-color: wheat;
+}
+
+.admin-profile .control-label {
+  text-align: right;
+}
+
+.admin-profile a {
+  font-style: italic;
+}
