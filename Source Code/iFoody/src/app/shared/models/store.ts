@@ -1,4 +1,4 @@
-export interface Store {
+export class Store {
     email: string;
     name: string;
     category: string;

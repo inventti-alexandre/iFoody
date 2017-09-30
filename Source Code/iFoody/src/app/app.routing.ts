@@ -1,4 +1,3 @@
-import { SignupByEmailComponent } from './membership/components/signup-by-email/signup-by-email.component';
 import { HomeComponent } from './core/components/home/home.component';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { ProductItemComponent } from './shared/components/product-item/product-item.component';
@@ -62,10 +61,6 @@ const routes: Routes = [
             },
             { path: 'c', component: BsPaginationComponent }
           ]
-    },
-    {
-        path: 'signup-by-email',
-        component: SignupByEmailComponent
     },
     {
         path: '**',
