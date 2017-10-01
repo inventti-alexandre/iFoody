@@ -16,6 +16,7 @@ import { ChangePasswordComponent } from './components/profile/change-password/ch
 import { MatButtonModule } from '@angular/material';
 import { ResetPasswordComponent } from './components/profile/reset-password/reset-password.component';
 import { EditProfileComponent } from './components/profile/edit-profile/edit-profile.component';
+import { OpenStoreComponent } from './components/open-store/open-store.component';
 
 @NgModule({
   imports: [
@@ -44,7 +45,8 @@ import { EditProfileComponent } from './components/profile/edit-profile/edit-pro
     ProfileComponent,
     ChangePasswordComponent,
     ResetPasswordComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    OpenStoreComponent
   ]
 })
 export class MembershipModule { }
