@@ -39,21 +39,15 @@
 
 
 
-.btn-signup-facebook, .btn-signup-google, .btn-signup {
+.btn-signup-facebook, .btn-signup-google, .btn-login-email {
     width: 100%;
     margin-top: 4px;
     i {
         margin-right: 10px;
     }
 }
-.form-signup-by-email {
-    .btn-signup-facebook, .btn-signup-google {
-        width: 46%;
-    }
 
-}
-
-.btn-signup-email {
+.btn-login-email {
     background-color: #ff5a5f;
     color: white;   
     width: 100%
@@ -63,7 +57,7 @@
     -webkit-text-stroke: 3px white;
 }
 
-.form-signup, .form-signup-by-email {
+.form-login {
     .line-signup {
         height:40px;
         text-align: center;
@@ -83,34 +77,21 @@
             margin-left: -20px;
         } 
     }
+    form {
+        i {
+            position: absolute;
+            right: 15px;
+            bottom:8px;
+            color: #4B4747;
+        }
+        div {
+            position: relative;
+            margin-bottom: 10px
+        }
+    
+    }
 }
 
-.form-signup-by-email {
-    .line-signup {
-        height:30px;
-        div {
-            height:20px;
-            margin-top: 10px;
-        }
-        span {
-            line-height:20px;
-        } 
-    }
-    i {
-        position: absolute;
-        right: 15px;
-        bottom:8px;
-        color: #4B4747;
-    }
-    div {
-        position: relative;
-        margin-bottom: 10px
-    }
-    .fa-times {
-        top: 6px;
-        z-index: 1000
-    }
-}
 .signup-social {
     height:22px;
         text-align: center;
