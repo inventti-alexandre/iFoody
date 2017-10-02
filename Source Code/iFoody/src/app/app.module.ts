@@ -13,7 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'; // For Angular Material
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
-import 'hammerjs'; // For Angular Material
+import 'hammerjs';
 
 @NgModule({
   declarations: [
