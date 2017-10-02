@@ -1,5 +1,36 @@
-<div 
-  [ngClass]="
+<div [ngClass]="
+{'good': isGood, 
+'fair': isFair, 
+'medium': isMedium, 
+'bad': isBad}">
+<rating 
+  [(ngModel)]="currentRate" 
+  [max]="max" 
+  [readonly]="isReadonly" 
+  (onHover)="hoveringOver($event)" 
+  [titles]="['one','two','three']" class="filled"></rating>
+
+  <span class="fa-stack">
+    <i class="fa fa-circle fa-stack-2x" ></i>
+    <i class="fa number fa-stack-1x">{{ currentRate }}</i>
+  </span>
+
+  <span *ngIf="ratingNumber > 0" class="ratingNumber pull-right">
+    <a href="#">
+     &nbsp;&nbsp; {{ ratingNumber }} đánh giá
+    </a>
+  </span>
+</div>
+<!-- <span class="label" [ngClass]="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}"
+  [ngStyle]="{display: (overStar && !isReadonly) ? 'inline' : 'none'}">{{percent}}%</span> -->
+<!-- <div class="card">
+  <pre class="card-block card-header" style="margin:15px 0;">Rate: <b>{{currentRate}}</b>;  Readonly is: <i>{{isReadonly}}</i>;  Hovering over: <b>{{overStar || "none"}}</b></pre>
+</div> -->
+<!-- 
+<button type="button" class="btn btn-sm btn-primary" (click)="isReadonly = ! isReadonly">Toggle Readonly
+</button> -->
+<!-- 
+<div [ngClass]="
     {'good': isGood, 
     'fair': isFair, 
     'medium': isMedium, 
@@ -20,4 +51,4 @@
      &nbsp;&nbsp; {{ ratingNumber }} đánh giá
     </a>
   </span>
-</div>
+</div> -->

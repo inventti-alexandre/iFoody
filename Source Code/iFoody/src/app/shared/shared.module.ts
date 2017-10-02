@@ -1,3 +1,6 @@
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { RatingModule } from 'ngx-bootstrap/rating';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { NotFoundComponent } from './components/not-found/not-found.component';
@@ -16,7 +19,9 @@ import { BsRatingComponent } from './components/bs-rating/bs-rating.component';
   imports: [
     CommonModule,
     RouterModule,
-    NgbModule
+    NgbModule,
+    RatingModule.forRoot(),
+    FormsModule
   ],
   exports: [
     BsBreadcrumbComponent,

@@ -6,13 +6,31 @@ import { AfterViewInit, ElementRef, Component, OnInit } from '@angular/core';
   styleUrls: ['./bs-rating.component.scss']
 })
 export class BsRatingComponent  {
-  currentRate: number;
+  public max = 5;
+  public currentRate = 3.4;
   ratingNumber: number;
-  max = 5;
+  public isReadonly = false;
   isGood: boolean; // for rating which greater than 4.5
   isFair: boolean; // "fair" for rating which greater than 4.0
   isMedium: boolean; // "medium" for rating which equal to or greater than 3.5
   isBad: boolean; // "bad" for rating which less than 3.5
+ 
+  public overStar:number;
+  //public percent:number;
+ 
+  public hoveringOver(value:number):void {
+    this.overStar = value;
+    //this.percent = 100 * (value / this.max);
+  }
+ 
+  // public resetStar():void {
+  //   this.overStar = void 0;
+  // }
+  
+  // currentRate: number;
+  // ratingNumber: number;
+  // max = 5;
+ 
   
   constructor (private elementRef: ElementRef) {
     this.currentRate = 3.4;
@@ -25,7 +43,7 @@ export class BsRatingComponent  {
     this.getStatus();
   }
 
-  // modify variable for setting color to rating
+  // // modify variable for setting color to rating
   private getStatus() {
     if (this.currentRate >= 4.5) {this.isGood = true;}
     else if (this.currentRate >= 4.0) {this.isFair = true;}
