@@ -7,6 +7,43 @@
   text-align: right;
 }
 
+.admin-profile h2 {
+  text-align: center;
+  color: #1d89e6;
+}
+
 .admin-profile a {
   font-style: italic;
+}
+
+.admin-profile form i {
+  position: absolute;
+  right: 15px;
+  bottom: 8px;
+  color: #4B4747;
+}
+
+.admin-profile form div {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.admin-profile form .btn {
+  text-align: center;
+  width: 100%;
+}
+
+.admin-profile .btn-calendar {
+  width: 60px !important;
+}
+
+.admin-profile .mat-raised-button {
+  line-height: 45px !important;
+  min-width: 130px !important;
+  font-size: 1.3em !important;
+  margin-right: 20px;
+}
+
+.admin-profile .changePass {
+  text-align: right;
 }

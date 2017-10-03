@@ -6,34 +6,21 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./admin-profile.component.scss']
 })
 export class AdminProfileComponent implements OnInit {
-  // @Input('email') email = "adminFoody@gmail.com";
-  fname:string = "Tuan";
-  lname:string = "Pham";
-  email:string = "adminFoody@gmail.com";
-  pass = "123456";
-  log(){
-    console.log("email" + this.email);
-  }
+  adminProfile: FormGroup;
   constructor() { 
-
-  }
-  user: FormGroup;
-  applyTheme(pop: any) {
-    setTimeout(() => {
-      pop.show();
-    });
   }
   onSubmit() {
   }
   ngOnInit() {
-    this.user = new FormGroup({
-      email: new FormControl(),
-      gender: new FormControl(),
-      lastname: new FormControl(),
-      firstname: new FormControl(),
-      password: new FormControl(),
-      confirmPassword: new FormControl(),
-      DOB: new FormControl(),
+    this.adminProfile = new FormGroup({
+      email: new FormControl("adminFoody@gmail.com"),
+      gender: new FormControl("Nữ"),
+      lastname: new FormControl("Pham"),
+      firstname: new FormControl("Tuan"),
+      password: new FormControl("123456"),
+      DOB: new FormControl("31/12/1990"),
+      phone:new FormControl("0123456789"),
+      address:new FormControl("33 Đường Hưng Hòa, Quận Bình Tân")
     });
   }
 
