@@ -1,45 +1,52 @@
 .searchFilter {
+    [class*="__item"] {
+        display: inline-block;
+    }
     &__item button{
         background-color: #008489;
         color: white;
-        // font-weight: bold;
         font-size: 1.1em;
         border-radius: 0px !important;
-        // box-shadow: 2px 2px 2px #e5e5e5;
         border-color:#008489;
-        //overflow: hidden;
-        margin-bottom: 10px !important
+        margin-bottom: 10px !important;
+        &:hover {
+            background-color: #017377;
+        }
+        &:visited {
+            background-color: #113C3D;
+        }
     }
 
-    &__item button:hover {
-        // font-size: 1.4em !important;
-        background-color: #017377;
-    }
-
+   
     &__item:nth-child(1) button {
-        // font-size: 1.4em !important;
         background-color: #C04324;
         border-color: #C04324;
-    }
-
-    &__item:nth-child(1) button:hover {
-        // font-size: 1.4em !important;
-        background-color: #D6705A;
-        border-color: #D6705A;
+        &:hover {
+            background-color: #D6705A;
+            border-color: #D6705A;
+        }
     }
 
     &__item__area, &__item__type {
-        position: relative;
+        // position: relative;
         display: table;
+        button {
+            font-size: 1.1em;
+            border-radius: 0px !important;
+            margin-bottom: 10px !important;
+            &:hover {
+                background-color: #9C8F8F;
+            }
+        }
         div {
             right: 0 !important;
             display: table-row;
-            @media screen and (min-width:769px){
-                width:100% !important;
-            }        
-            @media screen and (max-width:768px){
-                width:100% !important;
-            }
+            // @media screen and (min-width:769px){
+            //     width:100% !important;
+            // }        
+            // @media screen and (max-width:768px){
+            //     width:100% !important;
+            // }
     
         }
         .well {
