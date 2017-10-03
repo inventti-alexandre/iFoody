@@ -1,0 +1,24 @@
+.store-item img {
+  border-radius: 50%;
+}
+
+.store-item__name {
+  position: absolute;
+  top: 5px;
+  left: 90px;
+  font-weight: bold;
+}
+
+.store-item__address {
+  position: absolute;
+  top: 30px;
+  left: 90px;
+  cursor: pointer;
+}
+
+.store-item .text-overflow {
+  width: calc(100% - 100px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -9,6 +9,8 @@ import { CommonModule } from '@angular/common';
 import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 import { FormsModule, NgForm, NgModel, ReactiveFormsModule } from '@angular/forms';
+import { AdminStoreComponent } from './admin-store/admin-store.component';
+import { StoreItemComponent } from './admin-store/store-item/store-item.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -33,7 +35,11 @@ import { FormsModule, NgForm, NgModel, ReactiveFormsModule } from '@angular/form
     
   AdminLayoutComponent,
     
-  AdminProfileComponent
+  AdminProfileComponent,
+    
+  AdminStoreComponent,
+    
+  StoreItemComponent
 ]
 })
 export class AdminModule { }
