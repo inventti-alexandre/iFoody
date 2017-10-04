@@ -10,6 +10,9 @@ import { MapComponent } from './components/map/map.component';
 import { AgmCoreModule } from '@agm/core';
 import { ReviewComponent } from './components/review/review.component';
 import { BsRatingComponent } from '../shared/components/bs-rating/bs-rating.component';
+import { SimilarProductComponent } from './components/similar-product/similar-product.component';
+import { ProductDetailComponent } from './components/product-detail/product-detail.component';
+import { SearchResultComponent } from './components/search-result/search-result.component';
 
 @NgModule({
   imports: [
@@ -27,12 +30,18 @@ import { BsRatingComponent } from '../shared/components/bs-rating/bs-rating.comp
   exports: [
     SearchFilterComponent,
     MapComponent,
-    ReviewComponent
+    ReviewComponent,
+    SimilarProductComponent,
+    ProductDetailComponent,
+    SearchResultComponent
   ],
   declarations: [
     SearchFilterComponent,
     MapComponent,
-    ReviewComponent
+    ReviewComponent,
+    SimilarProductComponent,
+    ProductDetailComponent,
+    SearchResultComponent
   ]
 })
 export class SearchingModule { }

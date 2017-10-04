@@ -1,0 +1,28 @@
+.similarProduct {
+    font-size: 1.2em;
+    &__photo {
+        height:120px;
+        overflow: hidden;
+        img {
+            max-height: 120px;
+            border-radius: 4px;
+            box-shadow: 2px 2px 2px #A095A3;
+        }
+    }
+
+    &__content {
+        h3 {
+            margin-top: 0;
+            height: 40px;
+            span {
+                float: right
+            }
+        }
+        div {
+            height:40px;
+           :last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+}

@@ -1,3 +1,4 @@
+import { PaginationModule } from 'ngx-bootstrap/ng2-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RatingModule } from 'ngx-bootstrap/rating';
@@ -21,7 +22,8 @@ import { BsRatingComponent } from './components/bs-rating/bs-rating.component';
     RouterModule,
     NgbModule,
     RatingModule.forRoot(),
-    FormsModule
+    FormsModule,
+    PaginationModule.forRoot()
   ],
   exports: [
     BsBreadcrumbComponent,
