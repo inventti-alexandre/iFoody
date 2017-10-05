@@ -1,0 +1,40 @@
+.review {
+    &__head {
+        display: table;
+        &__avatar, &__username {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        &__rating {
+            display: table;
+            vertical-align: middle;
+            div {
+                display: table-row;
+            }
+            rating {
+                color:#6EEC3C;
+                font-size: 1.4em
+            }
+        }
+    }   
+    &__content {
+        margin-top: 5px;
+        .jumbotron {
+            margin-bottom:0 !important;
+            padding-top:15px !important;
+            padding-bottom:20px !important
+        }
+    }
+
+    &__footer {
+        width:100%;
+        padding-right:0;
+        &__btn {
+            margin-right:0 !important;
+            top:15px !important;
+        }
+    }
+
+  
+}

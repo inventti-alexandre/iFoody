@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./bs-pagination.component.scss']
 })
 export class BsPaginationComponent  {
-  page = 10;
+  public maxSize = 5;
+  public bigTotalItems = 175;
+  public bigCurrentPage = 1;
+  public numPages = 0;
 }
