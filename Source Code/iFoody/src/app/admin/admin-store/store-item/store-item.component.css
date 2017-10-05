@@ -1,3 +1,7 @@
+.store-item {
+  width: 100%;
+}
+
 .store-item img {
   border-radius: 50%;
 }
@@ -21,4 +25,23 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.store-item .btnSetting {
+  top: 5px;
+  margin-bottom: 5px;
+  right: 0px;
+}
+
+.store-item .btnSetting button {
+  margin-left: 10px !important;
+}
+
+.store-item .store-type span {
+  top: 5px;
+  font-weight: bold;
+}
+
+.store-item .mat-select {
+  padding-top: 0px;
 }

@@ -12,19 +12,26 @@ export class BsNavbarComponent implements OnInit {
   isMobile= false;
   nameApp = global.nameApp;
   constructor() {
-    //console.log("tset", window.outerWidth);
+    this.onLoad();
   }
 
   ngOnInit() {
   }
+  checkIsMobile(width){
+    if(width<=768){
+      return true;
+    }else return false;
+  }
   
   onResize(event) {
     let innerWidth = event.target.innerWidth;
-    if (innerWidth >= 768) {
-      this.isMobile = false;
-      return;
-    }
-    this.isMobile = true;
+    this.isMobile = this.checkIsMobile(innerWidth);
+    return;
+  }
+  onLoad(){
+    let innerWidth = window.innerWidth;
+    //console.log("onload", innerWidth);
+    this.isMobile = this.checkIsMobile(innerWidth);
     return;
   }
 }

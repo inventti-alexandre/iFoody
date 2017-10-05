@@ -7,6 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminStoreComponent implements OnInit {
 
+  listStore = [
+    {
+      type:"Tra"
+    }
+  ]
   constructor() { }
 
   ngOnInit() {

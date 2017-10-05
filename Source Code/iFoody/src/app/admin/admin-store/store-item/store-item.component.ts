@@ -10,8 +10,11 @@ export class StoreItemComponent implements OnInit {
   avatar="http://lorempixel.com/50/50/cats/";
   name="Trà sữa Mộc";
   address = "22 Bửu Long Quận 10 Hồ Chí Minh";
-  type = "Trà sữa";
-  
+  types = [
+    {value: 'drink-1', viewValue: 'Trà sữa'},
+    {value: 'food-2', viewValue: 'Bún bò'},
+    {value: 'drink-3', viewValue: 'Coffee'}
+  ];
   constructor() { }
 
   ngOnInit() {
