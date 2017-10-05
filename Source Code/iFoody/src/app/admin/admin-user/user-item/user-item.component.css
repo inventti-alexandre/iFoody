@@ -1,0 +1,54 @@
+.user-item {
+  min-height: 60px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.user-item img {
+  border-radius: 50%;
+}
+
+.user-item__name {
+  position: absolute;
+  top: 5px;
+  left: 90px;
+  font-weight: bold;
+}
+
+.user-item__day {
+  position: absolute;
+  top: 30px;
+  left: 90px;
+  cursor: pointer;
+}
+
+.user-item .text-overflow {
+  width: calc(100% - 100px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-item__setting {
+  top: 20px;
+  margin-bottom: 15px;
+  right: 0px;
+}
+
+.user-item__setting button {
+  margin-left: 10px !important;
+}
+
+@media screen and (max-width: 768px) {
+  .user-item__setting button {
+    float: right;
+  }
+}
+
+.user-item__email span {
+  font-weight: bold;
+}
+
+.user-item .display {
+  opacity: 0;
+}

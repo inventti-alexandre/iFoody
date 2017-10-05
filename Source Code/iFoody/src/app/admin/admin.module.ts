@@ -11,6 +11,8 @@ import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 import { FormsModule, NgForm, NgModel, ReactiveFormsModule } from '@angular/forms';
 import { AdminStoreComponent } from './admin-store/admin-store.component';
 import { StoreItemComponent } from './admin-store/store-item/store-item.component';
+import { AdminUserComponent } from './admin-user/admin-user.component';
+import { UserItemComponent } from './admin-user/user-item/user-item.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -37,7 +39,11 @@ import { StoreItemComponent } from './admin-store/store-item/store-item.componen
 
     AdminStoreComponent,
 
-    StoreItemComponent
+    StoreItemComponent,
+
+    AdminUserComponent,
+    
+    UserItemComponent
   ],
   declarations: [
 
@@ -47,7 +53,11 @@ import { StoreItemComponent } from './admin-store/store-item/store-item.componen
 
     AdminStoreComponent,
 
-    StoreItemComponent
+    StoreItemComponent,
+
+    AdminUserComponent,
+
+    UserItemComponent
   ]
 })
 export class AdminModule { }

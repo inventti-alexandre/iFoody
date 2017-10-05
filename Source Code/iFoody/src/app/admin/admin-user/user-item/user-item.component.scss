@@ -1,0 +1,46 @@
+.user-item{
+    min-height: 60px;
+    margin-bottom: 10px;
+    width: 100%;
+    img{
+        border-radius: 50%;
+    }
+    &__name{
+        position: absolute;
+        top:5px;
+        left:90px;
+        font-weight: bold;
+    }
+    &__day{
+        position: absolute;
+        top: 30px;
+        left: 90px;
+        cursor: pointer;
+    }
+    .text-overflow{
+        width: calc(100% - 100px);
+        white-space: nowrap; 
+        overflow: hidden;
+        text-overflow: ellipsis; 
+    }
+    &__setting{
+        //position: absolute;
+        top: 20px;
+        margin-bottom: 15px;
+        right: 0px;
+        button{
+            margin-left: 10px!important;
+            @media screen and (max-width:768px) {
+                float: right;
+            }
+        }
+    }
+    &__email{
+        span{
+            font-weight: bold;
+        }
+    }
+    .display{
+        opacity: 0;
+    }       
+}
