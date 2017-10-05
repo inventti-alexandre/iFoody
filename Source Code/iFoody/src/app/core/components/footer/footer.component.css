@@ -1,12 +1,14 @@
 .footer {
-  background-color: white;
+  background-color: #31708f;
   margin: unset;
   line-height: 50px;
+  color: white;
 }
 
 .footer__left {
   float: left;
   padding-left: 20px;
+  cursor: pointer;
 }
 
 .footer__left img {
@@ -24,6 +26,7 @@
 }
 
 .footer__right a {
+  color: white;
   font-style: italic;
   font-weight: bold;
   padding-right: 15px;

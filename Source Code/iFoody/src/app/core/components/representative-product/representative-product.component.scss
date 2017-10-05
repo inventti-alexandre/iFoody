@@ -1,0 +1,21 @@
+.listCategory{
+    height:auto;
+    p{
+        font-size: 18px;
+        font-weight: bold;
+        color: #537DCC;
+        margin-top: 10px;
+    }
+    .category{
+        &--border{
+            border-bottom: solid 1.2px rgba(233, 232, 230, 0.95);            
+        }
+        &__row{
+            div{
+                @media screen and (max-width: 480px) {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

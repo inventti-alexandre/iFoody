@@ -1,0 +1,44 @@
+.admin-profile{
+    width: 100%;
+    background-color: wheat;
+    .control-label{
+        text-align: right;
+    }
+    h2{
+        text-align: center;
+        color: #1d89e6;
+    }
+    a{
+        font-style: italic;
+    }
+    form{
+        i {
+            position: absolute;
+            right: 15px;
+            bottom:8px;
+            color: #4B4747;
+        }
+        div {
+            position: relative;
+            margin-bottom: 10px;
+        }
+        
+        .btn {
+            text-align: center;
+            width:100%
+        }
+    }
+    .btn-calendar {
+        width: 60px!important;
+    }
+    .mat-raised-button {
+        line-height: 45px !important;  
+        min-width:130px !important;
+        font-size: 1.3em !important;
+        margin-right: 20px
+    }
+    .changePass{
+        text-align: right;
+    }
+}
+

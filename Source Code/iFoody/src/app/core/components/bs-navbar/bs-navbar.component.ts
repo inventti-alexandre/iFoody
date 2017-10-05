@@ -1,16 +1,30 @@
 import * as global from './../../../constant/global';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
+import * as $ from 'jquery';
 
-@Component({  
+@HostListener('window:resize', ['$event'])
+@Component({
   selector: 'bs-navbar',
   templateUrl: './bs-navbar.component.html',
-  styleUrls: ['./bs-navbar.component.css']
+  styleUrls: ['./bs-navbar.component.css'],
 })
 export class BsNavbarComponent implements OnInit {
-
-  constructor() { }
+  isMobile= false;
+  nameApp = global.nameApp;
+  constructor() {
+    //console.log("tset", window.outerWidth);
+  }
 
   ngOnInit() {
   }
-  nameApp = global.nameApp;
+  
+  onResize(event) {
+    let innerWidth = event.target.innerWidth;
+    if (innerWidth >= 768) {
+      this.isMobile = false;
+      return;
+    }
+    this.isMobile = true;
+    return;
+  }
 }

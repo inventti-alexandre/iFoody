@@ -5,21 +5,17 @@
         </li>
 </ol> -->
 
-<div class="container">
-	<div class="row">
-		<ul class="breadcrumb">
-    		        <!-- <li class="completed"><a href="javascript:void(0);">about</a></li>
+<div class="container breadcrumb-container">
+        <div class="row no-margin">
+                <ul class="breadcrumb">
+                        <!-- <li class="completed"><a href="javascript:void(0);">about</a></li>
 			<li class="active"><a href="javascript:void(0);">business</a></li>
                         <li><a href="javascript:void(0);">gallery</a></li> -->
-                        <li *ngFor="let breadcrumb of breadcrumbs"  class="active">
-                                <a
-                                        [routerLink]="[breadcrumb.url, breadcrumb.params]" 
-                                        href="javascript:void(0);"
-                                       >
+                        <li *ngFor="let breadcrumb of breadcrumbs" class="active">
+                                <a [routerLink]="[breadcrumb.url, breadcrumb.params]" href="javascript:void(0);">
                                               {{ breadcrumb.label }}
                                 </a>
                         </li>
                 </ul>
-	</div>
+        </div>
 </div>
-

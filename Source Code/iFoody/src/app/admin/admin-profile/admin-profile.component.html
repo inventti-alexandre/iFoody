@@ -1,0 +1,55 @@
+<div class="container admin-profile">
+  <h2>Thông tin Admin</h2>
+  <form [formGroup]="adminProfile" (ngSubmit)="onSubmit()">
+
+    <div>
+      <input type="text" formControlName="lastname" class="form-control input-lg" placeholder="Họ...">
+      <i class="fa fa-user fa-2x"></i>
+    </div>
+
+    <div>
+      <input type="text" formControlName="firstname" class="form-control input-lg" placeholder="Tên...">
+      <i class="fa fa-user-circle fa-2x"></i>
+    </div>
+    <div>
+      <input type="text" formControlName="email" class="form-control input-lg" placeholder="Email...">
+      <i class="fa fa-envelope fa-2x"></i>
+    </div>
+    <div>
+      <input type="password" formControlName="password" class="form-control input-lg" placeholder="Password...">
+      <i class="fa fa-lock fa-2x"></i>
+    </div>
+    <div class="changePass">
+      <a href="#">Thay đổi mật khẩu</a>
+    </div>
+    <div>
+      <input type="text" formControlName="phone" class="form-control input-lg" placeholder="Số điện thoại">
+      <i class="fa fa-phone fa-2x"></i>
+    </div>
+    <div>
+      <input type="text" formControlName="address" class="form-control input-lg" placeholder="Địa chỉ">
+      <i class="fa fa-address-card-o fa-2x"></i>
+    </div>
+    <div>
+      <input type="text" formControlName="gender" class="form-control input-lg" placeholder="Giới tính...">
+      <i class="fa fa-venus-mars fa-2x"></i>
+    </div>
+    <div class="row ">
+      <div class="col-xs-12 col-sm-12">
+        <div class="form-group">
+          <div class="input-group">
+            <input type="text" formControlName="DOB" class="form-control  input-lg" bsDatepicker #dp="bsDatepicker" placeholder="Ngày tháng năm sinh...">
+            <div class="input-group-btn ">
+              <button type="button" class="btn btn-success btn-calendar" (click)="dp.show()"><i class="fa fa-calendar fa-2x"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="btn">
+      <button type="button" class="btn-update" md-raised-button color="primary">Lưu thay đổi</button>
+      <button type="button" class="btn-cancel" md-raised-button color="link">Hủy</button>
+    </div>
+  </form>
+</div>
