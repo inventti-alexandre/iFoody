@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input  } from '@angular/core';
 
 @Component({
   selector: 'store-item',
   templateUrl: './store-item.component.html',
-  styleUrls: ['./store-item.component.scss']
+  styleUrls: ['./store-item.component.scss'],
 })
 export class StoreItemComponent implements OnInit {
   
@@ -15,9 +15,15 @@ export class StoreItemComponent implements OnInit {
     {value: 'food-2', viewValue: 'Bún bò'},
     {value: 'drink-3', viewValue: 'Coffee'}
   ];
-  constructor() { }
+  @Input('type') type: string;
+  @Input('index') index: string;
+  
+  constructor() { 
+    
+  }
 
   ngOnInit() {
+    console.log(this.type, this.index);
   }
 
 }

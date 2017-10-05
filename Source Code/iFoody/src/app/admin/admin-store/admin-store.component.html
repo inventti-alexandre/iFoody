@@ -1,4 +1,9 @@
 <div class="admin-store col-sm-12 col-xs-12">
   <h2>Danh sách cửa hàng</h2>
-  <store-item></store-item>
+
+  <div *ngFor="let store of listStore; let i=index" class="store">
+    <div class="row">
+        <store-item [type]= "store.type" [index]="i"></store-item>        
+    </div>
+  </div>
 </div>

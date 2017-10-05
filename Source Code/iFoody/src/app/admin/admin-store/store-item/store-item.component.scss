@@ -1,5 +1,6 @@
 .store-item{
-    // min-height: 60px;
+    min-height: 60px;
+    margin-bottom: 10px;
     width: 100%;
     img{
         border-radius: 50%;
@@ -24,7 +25,7 @@
     }
     .btnSetting{
         //position: absolute;
-        top: 5px;
+        top: 30px;
         margin-bottom: 5px;
         right: 0px;
         button{
@@ -39,8 +40,12 @@
         }
     }
     .mat-select {
-        padding-top: 0px;
+        padding-top: 10px;
     } 
-    .mat-raised-button{
+    /deep/ .mat-select-placeholder{
+        color: #092fff;
+    }
+    .display{
+        opacity: 0;
     }       
 }
