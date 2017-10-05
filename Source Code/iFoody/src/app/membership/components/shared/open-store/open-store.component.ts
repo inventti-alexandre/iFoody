@@ -2,18 +2,14 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'edit-profile',
-  templateUrl: './edit-profile.component.html',
-  styleUrls: ['./edit-profile.component.scss']
+  selector: 'open-store',
+  templateUrl: './open-store.component.html',
+  styleUrls: ['./open-store.component.scss']
 })
-export class EditProfileComponent implements OnInit {
+export class OpenStoreComponent implements OnInit {
 
-  user: FormGroup;
-  // closeResult: string;
-  //public modalRef: BsModalRef;
-
-  constructor () {}
-
+  store: FormGroup;
+ 
 
   applyTheme(pop: any) {
     setTimeout(() => {
@@ -22,7 +18,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.user = new FormGroup({
+    this.store = new FormGroup({
       email: new FormControl(),
       gender: new FormControl(),
       lastname: new FormControl(),
@@ -30,10 +26,10 @@ export class EditProfileComponent implements OnInit {
       password: new FormControl(),
       confirmPassword: new FormControl(),
       DOB: new FormControl(),
+      readPolicy: new FormControl(),
     });
   }
 
   onSubmit() {
   }
-
 }

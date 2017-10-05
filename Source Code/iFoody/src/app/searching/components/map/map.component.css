@@ -1,0 +1,7 @@
+.google-map {
+  padding: 20px 10px;
+}
+
+.google-map agm-map {
+  height: 300px;
+}

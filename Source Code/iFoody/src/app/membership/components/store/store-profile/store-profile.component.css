@@ -1,0 +1,35 @@
+.form-open-store .signup-social {
+  text-align: center;
+}
+
+.form-open-store .line-signup {
+  height: 20px;
+  text-align: center;
+}
+
+.form-open-store .address i {
+  float: left;
+}
+
+.form-open-store i {
+  position: absolute;
+  right: 15px;
+  bottom: 8px;
+  color: #4B4747;
+}
+
+.form-open-store div {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.form-open-store .fa-times {
+  top: 6px;
+  z-index: 1000;
+}
+
+.form-open-store button {
+  width: 30%;
+  text-align: center;
+  margin-right: 20px;
+}

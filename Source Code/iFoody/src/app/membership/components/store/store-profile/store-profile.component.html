@@ -1,0 +1,52 @@
+<p>Store Profile works!</p>
+<div>
+    <div class="modal-body form-open-store ">
+  
+      <form [formGroup]="store" (ngSubmit)="onSubmit(user)">
+        <div>
+          <input type="text" formControlName="email" class="form-control input-lg" placeholder="Email...">
+          <i class="fa fa-envelope fa-2x"></i>
+        </div>
+  
+        <div>
+          <input type="password" formControlName="password" class="form-control input-lg" placeholder="Mật Khẩu...">
+          <i class="fa fa-lock fa-2x"></i>
+        </div>
+  
+        <div>
+          <input type="password" formControlName="confirmPassword" class="form-control input-lg" placeholder="Xác Nhận Mật Khẩu...">
+          <i class="fa fa-lock fa-2x"></i>
+        </div>
+  
+        <div>
+          <input type="text" formControlName="name" class="form-control input-lg" placeholder="Tên Cửa Hàng...">
+          <i class="fa fa-user fa-2x"></i>
+        </div>
+  
+        <div>
+          <input type="text" formControlName="address" class="form-control input-lg" placeholder="Địa chỉ Cửa hàng...">
+          <i class="fa fa-user-circle fa-2x"></i>
+        </div>
+  
+        <div class="address">
+          <a href="#"><span class="fa fa-plus pull-left"></span>Thêm Địa chỉ</a>
+        </div>
+  
+        <div>
+          <input type="select" formControlName="address" class="form-control input-lg" placeholder="Địa chỉ Cửa hàng...">
+          <i class="fa fa-user-circle fa-2x"></i>
+        </div>
+  
+        <div>
+          <div><label for="">Ảnh đại diện</label></div>
+          <div>
+            <span class="fa fa-picture-o fa-5x"></span>
+            <a href="#">Thay đổi ảnh đại diện</a>
+          </div>
+        </div>
+  
+        <button type="submit" class="btn btn-primary btn-signup btn-lg col-xs-12 col-sm-4 col-sm-offset-2">UPDATE</button>
+        <button type="submit" class="btn btn-default btn-signup btn-lg col-xs-12 col-sm-4 ">HỦY</button>
+      </form>
+    </div>
+  </div>
