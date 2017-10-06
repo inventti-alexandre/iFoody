@@ -1,0 +1,30 @@
+.similarStore {
+    height: 300px;
+    overflow: hidden;
+    text-align: center;
+    &__photo {
+        text-align: center;
+        img {
+            max-height: 150px;
+            height: auto;
+            width: auto;
+            border-radius: 7px;
+            box-shadow: 3px 3px 3px goldenrod;
+        }
+    }
+
+    &__rating {
+        max-height: 35px;
+        @media screen and (min-width: 769px){
+            font-size:0.71em !important;
+        }
+
+        @media screen and (max-width: 768px){
+            font-size:0.64em !important;
+        }
+    }
+
+    &__address {
+        text-align: center
+    }
+}

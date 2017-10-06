@@ -1,0 +1,53 @@
+.storeDetail {
+    &__info {
+
+    }
+
+    &__menu {
+        > div {
+            margin-bottom: 30px;
+            padding-right:10%;
+            box-shadow: 1px 2px 0px lightgray;
+            // border-bottom: 1px dashed grey;
+            overflow: hidden;
+            @media screen and (max-width: 992px) {
+                font-size: 0.9em !important
+            }
+            @media screen and (max-width: 768px) {
+                font-size: 0.85em !important;
+                max-height:130px !important;
+                img {
+                    max-height:130px !important;
+                }
+            }
+            @media screen and (max-width: 524px) {
+                font-size: 0.75em !important;
+                max-height:90px !important;
+                img {
+                    max-height:90px !important;
+                }
+            }
+        }
+    }
+
+    &__review {
+        div {
+            margin: 30px 15px;
+            border-bottom: 1px solid gray;
+            box-shadow: 0px 1px 0px grey;
+            padding-bottom: 25px
+        }
+    }
+
+    &__similarStore {
+        display: table;
+        vertical-align: middle;
+        div {
+            display: table-row;
+        }
+        rating {
+            color:#6EEC3C;
+            font-size: 1.4em
+        }
+    }
+}

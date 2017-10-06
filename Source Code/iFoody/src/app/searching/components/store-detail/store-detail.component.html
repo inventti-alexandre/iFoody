@@ -1,0 +1,32 @@
+<div class="storeDetail col-xs-12 col-sm-12">
+  <div class="row storeDetail__info">
+    <store-detail-info></store-detail-info>
+  </div>
+  <hr/>
+
+  <div class="row storeDetail__menu">
+    <div class="col-xs-6 col-sm-6" *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]">
+      <div class="row" >
+        <store-detail-menu></store-detail-menu>
+      </div>
+    </div>
+  </div>
+  <hr/>
+
+  <div class="row storeDetail__review">
+    <div class="col-xs-12 col-sm-12" *ngFor="let i of [1,2,3,4,5,6]">
+      <review></review>
+    </div>
+  </div>
+  <hr/>
+
+  <div class="row storeDetail__similarStore">
+    <div class="col-xs-6 col-sm-4" *ngFor="let i of [1,2,3,4,5,6,7,8,9]">
+      <div class="row no-pad-left-right">
+        <similar-store></similar-store>
+      </div>
+    </div>
+  </div>
+
+
+</div>

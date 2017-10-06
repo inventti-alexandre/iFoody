@@ -1,0 +1,80 @@
+.storeDetailInfo {
+    &__main {
+        h2 {
+            @media screen and (max-width: 823px ) {
+                max-height: 65px !important
+            }
+            height: 40px;
+        }
+
+        div {
+            position: relative;
+            line-height: 200%;
+            span {
+                position: absolute;
+                left: 18px;
+            }
+        }
+
+        .type {
+            display: table;
+            vertical-align: middle;
+        }
+        .rating {
+            @media screen and (max-width: 992px ) {
+                font-size: 0.8em !important
+            }
+            @media screen and (max-width: 823px ) {
+                font-size: 0.72em !important
+            }
+            @media screen and (max-width: 768px ) {
+                font-size: 1em !important
+            }
+            @media screen and (max-width: 524px ) {
+                font-size: 0.8em !important
+            }
+        }
+
+        .others div {
+            padding-left: 38px;
+        }
+        .photo {
+            &__main {
+                overflow: hidden;
+                text-align: center; 
+                height:auto;
+                img {
+                    // display: block;
+                    max-height: 250px;
+                    box-shadow: 2px 2px 2px #A095A3;
+                    width: 100%;
+                    height: 290px;
+                }
+            }
+
+            &__minor {
+                text-align: center; 
+                height: auto;
+                div {
+                    margin-top: 3px;
+                    overflow: hidden;
+                    padding: 15px 5px !important;
+                    // border: 1px dashed white;
+                    // box-shadow: 0 0  2px #4375FF
+                }
+                img {
+                    // display: block;
+                    max-height: 70px;
+                    width: auto;
+                    height: 70px;
+                }
+            }
+        }
+    }
+
+    &__map {
+        @media screen and (min-width: 768px ) {
+            margin-top: 160px;
+        }
+    }
+}

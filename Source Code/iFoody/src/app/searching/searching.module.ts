@@ -13,6 +13,10 @@ import { BsRatingComponent } from '../shared/components/bs-rating/bs-rating.comp
 import { SimilarProductComponent } from './components/similar-product/similar-product.component';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 import { SearchResultComponent } from './components/search-result/search-result.component';
+import { StoreDetailComponent } from './components/store-detail/store-detail.component';
+import { StoreDetailInfoComponent } from './components/store-detail/store-detail-info/store-detail-info.component';
+import { StoreDetailMenuComponent } from './components/store-detail/store-detail-menu/store-detail-menu.component';
+import { SimilarStoreComponent } from './components/store-detail/similar-store/similar-store.component';
 
 @NgModule({
   imports: [
@@ -33,7 +37,10 @@ import { SearchResultComponent } from './components/search-result/search-result.
     ReviewComponent,
     SimilarProductComponent,
     ProductDetailComponent,
-    SearchResultComponent
+    SearchResultComponent,
+    MapComponent,
+    StoreDetailComponent,
+    StoreDetailMenuComponent
   ],
   declarations: [
     SearchFilterComponent,
@@ -41,7 +48,11 @@ import { SearchResultComponent } from './components/search-result/search-result.
     ReviewComponent,
     SimilarProductComponent,
     ProductDetailComponent,
-    SearchResultComponent
+    SearchResultComponent,
+    StoreDetailComponent,
+    StoreDetailInfoComponent,
+    StoreDetailMenuComponent,
+    SimilarStoreComponent
   ]
 })
 export class SearchingModule { }
