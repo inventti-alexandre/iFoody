@@ -13,6 +13,8 @@ import { AdminStoreComponent } from './admin-store/admin-store.component';
 import { StoreItemComponent } from './admin-store/store-item/store-item.component';
 import { AdminUserComponent } from './admin-user/admin-user.component';
 import { UserItemComponent } from './admin-user/user-item/user-item.component';
+import { AdminProductComponent } from './admin-product/admin-product.component';
+import { AdminProductItemComponent } from './admin-product/admin-product-item/admin-product-item.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -43,7 +45,12 @@ import { UserItemComponent } from './admin-user/user-item/user-item.component';
 
     AdminUserComponent,
     
-    UserItemComponent
+    UserItemComponent,
+
+    AdminProductComponent,
+    
+    AdminProductItemComponent
+    
   ],
   declarations: [
 
@@ -57,7 +64,13 @@ import { UserItemComponent } from './admin-user/user-item/user-item.component';
 
     AdminUserComponent,
 
-    UserItemComponent
+    UserItemComponent,
+
+    AdminProductComponent,
+
+    AdminProductItemComponent,
+
+
   ]
 })
 export class AdminModule { }

@@ -20,7 +20,9 @@ export class BsNavbarComponent implements OnInit {
   checkIsMobile(width){
     if(width<=768){
       return true;
-    }else return false;
+    }else {
+      return false;
+    }
   }
   
   onResize(event) {
