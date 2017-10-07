@@ -58,3 +58,9 @@ bs-datepicker-container {
         text-shadow: 1px 1px 1px lightcyan !important;
     }
 }
+.text-overflow{
+    width: calc(100% - 100px);
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}

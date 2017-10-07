@@ -1,0 +1,12 @@
+<div class=" admin-user col-sm-12 col-xs-12">
+    <h2>Danh sách thành viên</h2>
+    
+      <div *ngFor="let user of listUsers; let i=index" class="user">
+        <div class="row">
+            <user-item [user]= "user" [index]="i"></user-item>        
+        </div>
+      </div>
+      <div class="row admin-user__pagination">
+          <bs-pagination></bs-pagination>
+      </div>
+</div>
