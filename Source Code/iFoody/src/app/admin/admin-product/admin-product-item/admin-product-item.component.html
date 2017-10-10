@@ -1,6 +1,6 @@
 <div class="admin-product-item col-sm-12 col-xs-12" (window:resize)="onResize($event)">
   <div class="row tilte" [ngClass]="index!=0 ? 'display': ''">
-      <div class="col-md-2 col-sm-4 col-xs-4">
+      <div class="col-md-3 col-sm-4 col-xs-4">
         Sản phẩm
       </div>
   
@@ -12,7 +12,7 @@
         Giá
       </div>
   
-      <div class="col-md-3 col-sm-3 col-xs-3 text-overflow">
+      <div class="col-md-2 col-sm-3 col-xs-3 text-overflow">
         Mô tả
       </div>
   
@@ -20,7 +20,7 @@
       </div>
   </div>
   <div class="row">
-    <div class="col-md-2 col-sm-4 col-xs-4">
+    <div class="col-md-3 col-sm-4 col-xs-4">
       <img src={{productInfo.avatar}}/>
       <span class="admin-product-item__name text-overflow">{{productInfo.name}}</span>
     </div>
@@ -37,7 +37,7 @@
       {{productInfo.price}}
     </div>
 
-    <div class="col-md-3 col-sm-3 col-xs-3 text-overflow admin-product-item__info ">
+    <div class="col-md-2 col-sm-3 col-xs-3 text-overflow admin-product-item__info ">
       {{productInfo.description}}
     </div>
 

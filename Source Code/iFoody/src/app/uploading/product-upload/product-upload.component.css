@@ -1,0 +1,25 @@
+.product-upload h2 {
+  text-align: center;
+  color: #227d24;
+}
+
+.product-upload form div {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.product-upload form .settingBtn {
+  text-align: right;
+  width: 100%;
+}
+
+.product-upload .chooseFile {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.product-upload .chooseFile p {
+  color: #2ca5e1;
+  font-size: 16px;
+  font-style: italic;
+}
