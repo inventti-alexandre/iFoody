@@ -1,3 +1,6 @@
+import { ProfileItemContainerComponent } from './components/shared/profile-layout/profile-item-container';
+import { NgSwitch } from '@angular/common';
+import { ProfileService } from './services/profile.service';
 import { SharedModule } from './../shared/shared.module';
 import { WishListComponent } from './components/user/wish-list/wish-list.component';
 // import { NgbDatepicker, NgbDatepickerModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';  // For Angular Material
@@ -20,6 +23,7 @@ import { ResetPasswordComponent } from './components/shared/reset-password/reset
 import { OpenStoreComponent } from './components/shared/open-store/open-store.component';
 import { StoreProfileComponent } from './components/store/store-profile/store-profile.component';
 import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
+import { ProfileDirective } from './directives/profile.directive';
 
 @NgModule({
   imports: [
@@ -36,12 +40,14 @@ import { UserProfileComponent } from './components/user/user-profile/user-profil
     BsDatepickerModule.forRoot(), 
     MatButtonModule,
     MdCheckboxModule,
-    SharedModule
+    SharedModule,
   ],  
   exports:[
     SignupComponent,
     LoginComponent,
     ProfileComponent,
+    ProfileItemContainerComponent,
+    NgSwitch  
   ],
   declarations: [
     SignupComponent,
@@ -52,7 +58,19 @@ import { UserProfileComponent } from './components/user/user-profile/user-profil
     OpenStoreComponent,
     StoreProfileComponent,
     UserProfileComponent,
-    WishListComponent
+    WishListComponent,
+    ProfileDirective,
+    ProfileItemContainerComponent
+  ],
+  entryComponents: [
+    ChangePasswordComponent,
+    ResetPasswordComponent,
+    UserProfileComponent,
+    StoreProfileComponent,
+    WishListComponent,
+  ],
+  providers: [
+    ProfileService
   ]
 })
 export class MembershipModule { }

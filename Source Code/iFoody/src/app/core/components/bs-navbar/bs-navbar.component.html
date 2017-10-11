@@ -1,3 +1,6 @@
+<login #login></login>
+<signup #signup></signup>
+
 <div class="iFoodyNav">
   <nav class="navbar navbar-inverse" (window:resize)="onResize($event)" [ngClass]="isMobile ?  '' : 'navbar-fixed-top'">
     <div class="container-fluid col-md-12 no-padding">
@@ -9,7 +12,7 @@
         </button>
         <div>
           <div class="col-md-3 col-sm-4 col-xs-2 col-lg-5">
-            <a href="#" class="navbar-brand row no-padding-left-right no-margin-left-right  ">
+            <a routerLink="/home" class="navbar-brand row no-padding-left-right no-margin-left-right  ">
                   <img src="../../../../assets/images/core/logo.png" alt="logoApp" id="logoApp">
                   <span>{{nameApp}}</span>
                 </a>
@@ -21,9 +24,12 @@
       </div>
       <div class="collapse navbar-collapse col-md-7 col-sm-5 col-xs-12 col-lg-5" id="myNavbar">
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#"><span class="glyphicon glyphicon-home"></span> Mở cửa hàng</a></li>
-          <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-          <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+          <li><a (click)="redirect('open-store')"><span class="glyphicon glyphicon-home"></span> Mở cửa hàng</a></li>
+          <!-- <li><a routerLink="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li> -->
+          <li><button class="btn btn-link btn-signup" (click)="signup.show()"><span class="glyphicon glyphicon-user"></span> Đăng Ký</button></li>
+          
+          <li><button class="btn btn-link btn-login" (click)="login.show()"><span class="glyphicon glyphicon-log-in"></span> Đăng Nhập</button></li>
+          
         </ul>
       </div>
     </div>

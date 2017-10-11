@@ -1,0 +1,64 @@
+<div class="container-fluid profile">
+    <nav class="navbar navbar-inverse profile__navbar">
+      <div class="container-fluid ">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+            aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <!-- <span class=""><i class="fa fa-chevron-down" style="color:white"></i></span> -->
+            
+          </button>
+        </div>
+  
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="active"><a (click)="loadChildrenComponent($event)" id="overview">Thông Tin Chung<span class="sr-only">(current)</span></a></li>
+            <li><a (click)="loadChildrenComponent($event)" id="security">Bảo Mật</a></li>
+            <li><a (click)="loadChildrenComponent($event)" id="wish-list">Danh sách yêu thích</a></li>
+            <li><a (click)="loadChildrenComponent($event)" id="comment">Bình Luận</a></li>
+            <li><a (click)="loadChildrenComponent($event)" id="review">Đánh Giá</a></li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container-fluid -->
+    </nav>
+    <div class="row">
+      <div class="profile__leftBar col-xs-12 col-sm-3">
+        <ul class="nav nav-pills nav-stacked">
+          <li role="presentation" class="active"><a (click)="loadChildrenComponent($event)" id="admin-profile">Thông tin cá nhân</a></li>
+          <li role="presentation"><a (click)="loadChildrenComponent($event)" id="admin-layout">Layout</a></li>
+          <li role="presentation"><a (click)="loadChildrenComponent($event)" id="admin-product">Sản phẩm</a></li>
+          <li role="presentation"><a (click)="loadChildrenComponent($event)" id="admin-store">Cửa Hàng</a></li>
+          <li role="presentation"><a (click)="loadChildrenComponent($event)" id="admin-user">User</a></li>
+        </ul>
+      </div>
+  
+      <div class="profile__content col-xs-12 col-sm-9">
+        <div class="page-header">
+          <h1>Dashboard</h1>
+        </div>
+        <div class="row">
+          <!-- Render Dynamically Child Component -->
+          <!-- <profile-item-container  [profileItems]="profileItems"></profile-item-container> -->
+          <div [ngSwitch]="childComponent">
+            <div *ngSwitchCase="'admin-layout'"><admin-layout></admin-layout></div>
+            <div  *ngSwitchCase="'admin-profile'"><admin-profile></admin-profile></div>
+            <div  *ngSwitchCase="'admin-product'"><admin-product></admin-product></div>
+            <div *ngSwitchCase="'admin-store'"><admin-store></admin-store></div>
+            <div *ngSwitchCase="'admin-user'"><admin-user></admin-user></div>
+            <div *ngSwitchDefaul><admin-layout></admin-layout></div>
+          </div>
+          <!-- <wish-list></wish-list> -->
+          <!-- <open-store></open-store> -->
+          <!-- <change-password></change-password> -->
+          <!-- <edit-profile></edit-profile> -->
+        </div>
+      </div>
+    </div>
+  </div>

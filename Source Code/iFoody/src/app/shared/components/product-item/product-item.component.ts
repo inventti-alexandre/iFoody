@@ -1,3 +1,4 @@
+import { Product } from '../../models/product';
 import { CurrencyPipe } from '@angular/common/src/pipes/number_pipe';
 import { Component, OnInit } from '@angular/core';
 
@@ -7,15 +8,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./product-item.component.css']
 })
 export class ProductItemComponent implements OnInit {
-
-  name: string;
-  price: number;
+  product: Product = new Product();
+  // name: string;
+  // price: number;
   constructor() { 
-    this.name = "Cơm Tấm Hà Tiên";
-    this.price = 25000;
+    this.product.id = "1234";
+    this.product.name = "Cơm Tấm Hà Tiên";
+    this.product.price = 25000;
   }
 
   ngOnInit() {
   }
 
 }
+  

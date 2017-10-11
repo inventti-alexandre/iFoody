@@ -25,11 +25,11 @@
     }
 }
 .navbar-brand:hover{
-    font-weight: bold;
+    // font-weight: bold;
 }
 .navbar-inverse{
-    background-color: #31708f;
-    border-color: #31708f;
+    border-color: #FFA947;
+    background-color: #FFA947; //Tuan edit
 }
 .navbar-inverse .navbar-nav > li > a{
     color: white;
@@ -40,14 +40,20 @@
 .searchBar{
     float: right;
     padding-top: 10px;
-    height: 55px;
+    height: 50px;
 }
 .navbar-right{
     margin-right: 0px;
 }
 #myNavbar{
     float: right;
-    background-color: #31708F; //Tuan edit
+    li {
+        line-height:50px;
+        display: inline-block;
+        .btn-login {
+           color:white
+        }
+    }
 }
 
 .navbar-header > span:first-child {

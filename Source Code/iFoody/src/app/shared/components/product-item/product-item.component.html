@@ -1,11 +1,12 @@
 <div class="product-item col-xs-12 col-sm-12">
   <div class="image row">
+    <a [routerLink]="['/product', product.id]"></a>
     <img src="http://znews-photo-td.zadn.vn/w480/Uploaded/wyhktpu/2017_03_01/1.jpg" alt="Food">
   </div>
 
   <bs-rating></bs-rating>
 
-  <h4>{{ name }}</h4>
+  <h4>{{ product.name }}</h4>
   
-  <h5>{{ price | currency:'vnd':4.0}}</h5>
+  <h5>{{ product.price | currency:'vnd':4.0}}</h5>
 </div>

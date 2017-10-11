@@ -1,0 +1,42 @@
+<div class="product-upload col-sm-12 col-xs-12">
+  <h2>Hot & Cold</h2>
+  <form [formGroup]="uploadProduct" (ngSubmit)="onSubmit()">
+
+    <div>
+      <input type="text" formControlName="name" class="form-control input-lg" placeholder="Tên sản phẩm...">
+    </div>
+
+    <div>
+      <select formControlName="type" class="form-control input-lg" (change)="select()">
+        <option [ngValue]="null" disabled hidden>Loại sản phẩm</option>
+        <option *ngFor="let type of listTypes" [value]="type">
+          {{type}}
+        </option>
+      </select>
+    </div>
+
+    <div>
+      <select formControlName="price" class="form-control input-lg">
+          <option [ngValue]="null" disabled hidden>Giá sản phẩm</option>
+          <option *ngFor="let price of listPrice" [value]="price.value">
+            {{ price.viewValue }} VNĐ
+          </option>
+      </select>
+    </div>
+
+    <div class="chooseFile">
+      <p> Ảnh sản phẩm </p>
+      <file-upload [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-upload>
+    </div>
+
+    <div>
+      <textarea rows='7' type="text" formControlName="decription" class="form-control input-lg" placeholder="Thêm mô tả sản phẩm"></textarea>
+    </div>
+
+
+    <div class="settingBtn">
+      <button type="button" class="btn-update" md-raised-button color="primary">Thêm sản phẩm</button>
+      <button type="button" class="btn-cancel" md-raised-button color="link">Xóa hết</button>
+    </div>
+  </form>
+</div>

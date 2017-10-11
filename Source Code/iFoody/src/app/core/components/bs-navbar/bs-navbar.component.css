@@ -30,13 +30,9 @@
   }
 }
 
-.navbar-brand:hover {
-  font-weight: bold;
-}
-
 .navbar-inverse {
-  background-color: #31708f;
-  border-color: #31708f;
+  border-color: #FFA947;
+  background-color: #FFA947;
 }
 
 .navbar-inverse .navbar-nav > li > a {
@@ -50,7 +46,7 @@
 .searchBar {
   float: right;
   padding-top: 10px;
-  height: 55px;
+  height: 50px;
 }
 
 .navbar-right {
@@ -59,7 +55,15 @@
 
 #myNavbar {
   float: right;
-  background-color: #31708F;
+}
+
+#myNavbar li {
+  line-height: 50px;
+  display: inline-block;
+}
+
+#myNavbar li .btn-login {
+  color: white;
 }
 
 .navbar-header > span:first-child {

@@ -55,3 +55,7 @@ bs-datepicker-container {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.my-modal-open {
+  overflow: hidden;
+}

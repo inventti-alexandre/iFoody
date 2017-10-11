@@ -1,15 +1,17 @@
+import { ProfileChildren } from '../../../models/profileChildren';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Store } from '../../../../shared/models/store';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'store-profile',
   templateUrl: './store-profile.component.html',
   styleUrls: ['./store-profile.component.scss']
 })
-export class StoreProfileComponent implements OnInit {
+export class StoreProfileComponent implements OnInit, ProfileChildren {
 
   store;
+  @Input() data: any;
 
   constructor() { }
 

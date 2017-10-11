@@ -1,0 +1,32 @@
+.product-upload{
+    h2{
+        text-align: center;
+        color:#227d24;
+    }
+    form{
+        // i {
+        //     position: absolute;
+        //     right: 15px;
+        //     bottom:8px;
+        //     color: #4B4747;
+        // }
+        div {
+            position: relative;
+            margin-bottom: 10px;
+        }
+        
+        .settingBtn {
+            text-align: right;
+            width:100%
+        }
+    }
+    .chooseFile{
+        padding-left: 15px;
+        padding-right: 15px;
+        p{
+            color: #2ca5e1;
+            font-size: 16px;
+            font-style: italic;
+        }
+    }
+}

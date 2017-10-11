@@ -1,5 +1,4 @@
 .modal-dialog {
-  margin-top: 15%;
   background-color: white;
   opacity: 1;
 }
@@ -13,16 +12,17 @@
 @media screen and (min-width: 1050px) {
   .modal-dialog {
     width: 40% !important;
+    top: 5px;
   }
   .modal-dialog .btn {
-    line-height: 190% !important;
+    line-height: 140% !important;
   }
 }
 
 @media screen and (max-width: 1050px) {
   .modal-dialog {
     width: 65% !important;
-    top: 100px;
+    top: 5px;
     margin: auto;
   }
   .modal-dialog .btn {
@@ -32,7 +32,7 @@
 
 .modal {
   background-color: #807474;
-  opacity: 0.95;
+  opacity: 0.90;
 }
 
 .modal .modal-content {
@@ -72,7 +72,7 @@
   position: absolute;
   height: 0.4px;
   width: 100%;
-  margin-top: 20px;
+  margin-top: 18px;
   border-top: 0.4px solid #E9DEDE;
 }
 
@@ -106,7 +106,7 @@
 
 .form-signup-by-email div {
   position: relative;
-  margin-bottom: 10px;
+  margin-bottom: 4px;
 }
 
 .form-signup-by-email .fa-times {

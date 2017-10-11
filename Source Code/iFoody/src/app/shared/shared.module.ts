@@ -44,6 +44,6 @@ import { BsRatingComponent } from './components/bs-rating/bs-rating.component';
     ProductService,
     StoreService,
     AuthService
-  ]
+  ],
 })
 export class SharedModule { }

@@ -13,8 +13,8 @@ export class SliderComponent implements OnInit {
   ngOnInit() {
   }
   slider=[
-    {src: "http://lorempixel.com/400/200/animals/",name:"Lẩu cá", title:"Siêu cay, siêu ngon"},
-    {src: "http://lorempixel.com/400/200/food/", name:"Bún riêu cua", title:"Bí quyết thất truyền đã trở lại"},
-    {src: "http://lorempixel.com/400/200/nature/", name: "Kem xicola", title:"Mùa hè thiệt mát"}
+    {src: "http://lorempixel.com/1200/600/animals/",name:"Lẩu cá", title:"Siêu cay, siêu ngon"},
+    {src: "http://lorempixel.com/1200/600/food/", name:"Bún riêu cua", title:"Bí quyết thất truyền đã trở lại"},
+    {src: "http://lorempixel.com/1200/600/nature/", name: "Kem xicola", title:"Mùa hè thiệt mát"}
   ]
 }

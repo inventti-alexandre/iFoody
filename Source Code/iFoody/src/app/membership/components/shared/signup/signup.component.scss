@@ -1,5 +1,5 @@
 .modal-dialog {
-    margin-top: 15%;    
+    // margin-top: 15%;    
     background-color: white;
     opacity:1;
     // background-color:rgba(0, 0, 0, 0.5);
@@ -11,14 +11,15 @@
     
     @media screen and (min-width: 1050px) {
         width: 40% !important; 
+        top: 5px;                
         .btn {
-            line-height:190% !important;
+            line-height:140% !important;
         }
     }
 
     @media screen and (max-width: 1050px) {
         width: 65% !important;
-        top: 100px;
+        top: 5px;
         // bottom: 0;
         // left: 0;
         // right: 0;
@@ -31,13 +32,13 @@
 
 .modal {
     background-color: #807474;
-    opacity: 0.95;
+    opacity: 0.90;
+    // overflow-y: auto;
+    // z-index: 1800;
     .modal-content {
         border-radius: 1px !important;
     }
 } 
-
-
 
 .btn-signup-facebook, .btn-signup-google, .btn-signup {
     width: 100%;
@@ -72,7 +73,7 @@
             position: absolute;
             height:0.4px;
             width:100%;
-            margin-top: 20px;
+            margin-top: 18px;
             border-top: 0.4px solid #E9DEDE; 
         }
         span {
@@ -104,7 +105,7 @@
     }
     div {
         position: relative;
-        margin-bottom: 10px
+        margin-bottom: 4px
     }
     .fa-times {
         top: 6px;

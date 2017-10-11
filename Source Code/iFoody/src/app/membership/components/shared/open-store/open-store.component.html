@@ -1,7 +1,8 @@
-<div>
-  <div class="modal-body form-open-store ">
+<div class="open-store col-xs-12 col-sm-6 col-sm-offset-3">
 
-    <form [formGroup]="store" (ngSubmit)="onSubmit(user)">
+  <h2>Mở Cửa Hàng</h2>
+  <div class="modal-body form-open-store ">
+    <form [formGroup]="store" (ngSubmit)="onSubmit(store)">
       <div>
         <input type="text" formControlName="email" class="form-control input-lg" placeholder="Email...">
         <i class="fa fa-envelope fa-2x"></i>

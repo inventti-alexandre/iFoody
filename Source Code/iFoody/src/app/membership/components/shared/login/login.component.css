@@ -10,9 +10,11 @@
   }
 }
 
-@media screen and (min-width: 1050px) {
+@media screen and (min-width: 1051px) {
   .modal-dialog {
     width: 40% !important;
+    top: 50px;
+    margin: auto;
   }
   .modal-dialog .btn {
     line-height: 190% !important;
@@ -22,7 +24,7 @@
 @media screen and (max-width: 1050px) {
   .modal-dialog {
     width: 65% !important;
-    top: 100px;
+    top: 50px;
     margin: auto;
   }
   .modal-dialog .btn {
@@ -32,7 +34,8 @@
 
 .modal {
   background-color: #807474;
-  opacity: 0.95;
+  z-index: 1200 !important;
+  opacity: 0.90;
 }
 
 .modal .modal-content {

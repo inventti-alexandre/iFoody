@@ -1,8 +1,14 @@
+import { AdminComponent } from './admin/admin.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { MdCheckboxModule, MdDatepickerModule, MdNativeDateModule, MatInputModule, MatButtonModule, MdSelectModule } from '@angular/material';
+import { MdCheckboxModule,
+          MdDatepickerModule, 
+          MdNativeDateModule, 
+          MatInputModule, 
+          MatButtonModule, 
+          MdSelectModule } from '@angular/material';
 import { SharedModule } from './../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -49,7 +55,8 @@ import { AdminProductItemComponent } from './admin-product/admin-product-item/ad
 
     AdminProductComponent,
     
-    AdminProductItemComponent
+    AdminProductItemComponent,
+    AdminComponent
     
   ],
   declarations: [
@@ -69,6 +76,8 @@ import { AdminProductItemComponent } from './admin-product/admin-product-item/ad
     AdminProductComponent,
 
     AdminProductItemComponent,
+
+    AdminComponent,
 
 
   ]

@@ -1,3 +1,6 @@
+import { HashLocationStrategy } from '@angular/common/src/location/hash_location_strategy';
+import { LocationStrategy } from '@angular/common/src/location/location_strategy';
+import { ProfileDirective } from './membership/directives/profile.directive';
 import { MdDatepickerModule, MdNativeDateModule } from '@angular/material';
 // import { NgbModule } from '@ng-bootstrap/ng-bootstrap'; // For Angular Material
 import { AppRoutingModule } from './app.routing';
@@ -14,6 +17,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations'; // 
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import 'hammerjs';
+import { ROUTER_PROVIDERS } from '@angular/router/src/router_module';
 
 @NgModule({
   declarations: [
@@ -22,7 +26,6 @@ import 'hammerjs';
   imports: [
     BrowserModule,
     BrowserAnimationsModule, // For Angular Material. Just need to add elementModule to children Module
-    AppRoutingModule,
     AdminModule,
     CoreModule,
     MembershipModule,
@@ -31,8 +34,8 @@ import 'hammerjs';
     UploadingModule,
     // NgbModule.forRoot(),  // For Angular Material
     MdDatepickerModule,
-    MdNativeDateModule
-
+    MdNativeDateModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

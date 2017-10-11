@@ -1,3 +1,11 @@
+import { AdminComponent } from './admin/admin/admin.component';
+import { AdminLayoutComponent } from './admin/admin-layout/admin-layout.component';
+import { ProductDetailComponent } from './searching/components/product-detail/product-detail.component';
+import { ProfileComponent } from './membership/components/shared/profile-layout/profile.component';
+import { SearchResultComponent } from './searching/components/search-result/search-result.component';
+import { OpenStoreComponent } from './membership/components/shared/open-store/open-store.component';
+import { SignupComponent } from './membership/components/shared/signup/signup.component';
+import { LoginComponent } from './membership/components/shared/login/login.component';
 import { HomeComponent } from './core/components/home/home.component';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { ProductItemComponent } from './shared/components/product-item/product-item.component';
@@ -9,58 +17,42 @@ import { NgModule } from '@angular/core';
 //  routing configuration const
 const routes: Routes = [
     {
-        path: 'bs-breadcrumb',
-        component: BsBreadcrumbComponent,
-        data: {
-            breadcrumb: "breadcrumb"
-        }
+        path: 'home',
+        component: HomeComponent   
     },
     {
-        path: 'pagination',
-        component: BsPaginationComponent,
-        data: {
-            breadcrumb: "pagination"
-        }
+        path: 'login',
+        component: LoginComponent   
     },
     {
-        path: 'product-item',
-        component: ProductItemComponent,
-        data: {
-            breadcrumb: "product-item"
-        }
+        path: 'signup',
+        component: SignupComponent
     },
-    { // This path is just for testing breadcrumb
-        path: 'product-item1',
-        component: ProductItemComponent,
-        data: {
-            breadcrumb: "product-item"
-        },
-        children: [
-            {
-                path: 'a', 
-                component: ProductItemComponent,
-                data: {
-                    breadcrumb: "home"
-                },
-                children: [
-                    {
-                        path: 'a1', 
-                        component: ProductItemComponent,
-                        data: {
-                            breadcrumb: "library"
-                        }
-                    }
-                ]
-            },
-            { 
-                path: 'b', 
-                component: BsPaginationComponent,
-                data: {
-                    breadcrumb: "b"
-                },
-            },
-            { path: 'c', component: BsPaginationComponent }
-          ]
+    {
+        path: 'open-store',
+        component: OpenStoreComponent
+    },
+    {
+        path: 'search',
+        component: SearchResultComponent
+    },
+    {
+        path: 'profile',
+        component: ProfileComponent
+    }, 
+    {
+        path: 'product',
+        component: ProductDetailComponent
+    }, 
+    {
+        path: 'admin',
+        component: AdminComponent
+    }, 
+    {
+        path: '',
+        redirectTo: '/home',
+        pathMatch: 'full'   
+        // 'full' property to match exactly the same with URL (another is 'prefix'  - not recommend)
     },
     {
         path: '**',

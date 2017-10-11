@@ -7,7 +7,7 @@
 
       <div class="productDetail__photo__minor row">
         <div class="col-xs-3 col-sm-3" *ngFor="let i of [1,2,3,4]">
-            <img src="http://www.cardy.vn/upload/images/h11/images/diem-uu-dai/640x480/2/chatime.jpg" alt="">
+          <img src="http://www.cardy.vn/upload/images/h11/images/diem-uu-dai/640x480/2/chatime.jpg" alt="">
         </div>
       </div>
     </div>
@@ -18,6 +18,22 @@
       <div><span><i class="fa fa-location-arrow fa-1x"></i></span>6/13 Cửu Long - Quận 10</div>
       <div><span><i class="fa fa-clock-o fa-1x"></i></span>Đang mở cửa: 8:30 - 22:00</div>
       <div><span><i class="fa fa-money fa-1x"></i></span>Giá: 20.000đ</div>
+    </div>
+  </div>
+  <hr/>
+
+  <div class="row">
+    <h4>Đánh Giá</h4>
+    <div class="productDetail__review col-xs-12 col-sm-12" *ngFor="let i of [1,2,3,4,5,6,7]">
+      <review></review>
+    </div>
+  </div>
+  <hr/>
+
+  <div class="row">
+    <h4>Sản Phẩm Tương Tự</h4>
+    <div class="productDetail__similar col-xs-6 col-sm-6" *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12]">
+      <similar-product></similar-product>
     </div>
   </div>
 </div>

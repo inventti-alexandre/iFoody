@@ -20,12 +20,12 @@ export class OpenStoreComponent implements OnInit {
   ngOnInit() {
     this.store = new FormGroup({
       email: new FormControl(),
-      gender: new FormControl(),
-      lastname: new FormControl(),
-      firstname: new FormControl(),
       password: new FormControl(),
       confirmPassword: new FormControl(),
-      DOB: new FormControl(),
+      name: new FormControl(),
+      address: new FormControl(),
+      // confirmPassword: new FormControl(),
+      // DOB: new FormControl(),
       readPolicy: new FormControl(),
     });
   }

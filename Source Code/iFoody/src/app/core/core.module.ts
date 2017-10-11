@@ -1,3 +1,9 @@
+import { FormsModule } from '@angular/forms';
+import { SearchingModule } from './../searching/searching.module';
+import { UploadingModule } from './../uploading/uploading.module';
+import { AdminModule } from './../admin/admin.module';
+import { MembershipModule } from '../membership/membership.module';
+import { Route, RouterModule } from '@angular/router';
 import { SharedModule } from './../shared/shared.module';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -11,7 +17,14 @@ import { RepresentativeProductComponent } from './components/representative-prod
 @NgModule({
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+    RouterModule,
+    MembershipModule,
+    AdminModule,
+    SharedModule,
+    UploadingModule,
+    SearchingModule,
+    FormsModule
   ],
   exports: [
     BsNavbarComponent,
