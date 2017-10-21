@@ -12,15 +12,20 @@ namespace DataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class USER
+    public partial class User
     {
-        public int ID { get; set; }
-        public string LNAME { get; set; }
-        public string FNAME { get; set; }
-        public int GENDER { get; set; }
-        public string EMAIL { get; set; }
-        public string PASSWORD { get; set; }
-        public Nullable<System.DateTime> DOB { get; set; }
-        public bool IS_ADMIN { get; set; }
+        public int Id { get; set; }
+        public string LastName { get; set; }
+        public string FirstName { get; set; }
+        public byte Gender { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public Nullable<System.DateTime> Birthday { get; set; }
+        public bool IsAdmin { get; set; }
+    
+        public virtual Comment Comment { get; set; }
+        public virtual FavoriteList FavoriteList { get; set; }
+        public virtual Review Review { get; set; }
+        public virtual UserImage UserImage { get; set; }
     }
 }

@@ -12,9 +12,14 @@ namespace DataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class IMAGE
+    public partial class Image
     {
-        public int ID { get; set; }
-        public string LINK { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Path { get; set; }
+    
+        public virtual ProductImage ProductImage { get; set; }
+        public virtual StoreImage StoreImage { get; set; }
+        public virtual UserImage UserImage { get; set; }
     }
 }

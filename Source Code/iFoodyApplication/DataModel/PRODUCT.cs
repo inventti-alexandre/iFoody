@@ -12,13 +12,18 @@ namespace DataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class PRODUCT
+    public partial class Product
     {
-        public int ID { get; set; }
-        public string NAME { get; set; }
-        public int CATEGORY_ID { get; set; }
-        public decimal PRICE { get; set; }
-        public string DESCRIPTION { get; set; }
-        public int STORE_ID { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int CategoryId { get; set; }
+        public decimal Price { get; set; }
+        public string Description { get; set; }
+        public int StoreId { get; set; }
+    
+        public virtual FavoriteList FavoriteList { get; set; }
+        public virtual ProductImage ProductImage { get; set; }
+        public virtual Store Store { get; set; }
+        public virtual Review Review { get; set; }
     }
 }

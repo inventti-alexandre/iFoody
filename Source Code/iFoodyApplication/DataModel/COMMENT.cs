@@ -12,14 +12,17 @@ namespace DataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class COMMENT
+    public partial class Comment
     {
-        public int ID { get; set; }
-        public string REVIEW_CONTENT { get; set; }
-        public Nullable<double> RATING { get; set; }
-        public System.DateTime DAY { get; set; }
-        public Nullable<int> USER_ID { get; set; }
-        public Nullable<int> PRODUCT_ID { get; set; }
-        public Nullable<int> STORE_ID { get; set; }
+        public int Id { get; set; }
+        public string ReviewContent { get; set; }
+        public Nullable<double> Rating { get; set; }
+        public System.DateTime Date { get; set; }
+        public Nullable<int> UserId { get; set; }
+        public Nullable<int> ProductId { get; set; }
+        public Nullable<int> StoreId { get; set; }
+    
+        public virtual Store Store { get; set; }
+        public virtual User User { get; set; }
     }
 }

@@ -12,20 +12,27 @@ namespace DataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class STORE
+    public partial class Store
     {
-        public int ID { get; set; }
-        public string NAME { get; set; }
-        public Nullable<double> RATING { get; set; }
-        public System.TimeSpan OPEN_HOUR { get; set; }
-        public System.TimeSpan CLOSE_HOUR { get; set; }
-        public Nullable<decimal> LOWEST_PRICE { get; set; }
-        public Nullable<decimal> HIGHTEST_PRICE { get; set; }
-        public string DESCRIPTION { get; set; }
-        public int CATELOGY_ID { get; set; }
-        public System.DateTime REGISTRATION_DAY { get; set; }
-        public string ADDRESS { get; set; }
-        public string DISTRICT { get; set; }
-        public string CITY { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public Nullable<double> Rating { get; set; }
+        public System.TimeSpan OpenHour { get; set; }
+        public System.TimeSpan CloseHour { get; set; }
+        public Nullable<decimal> LowestPrice { get; set; }
+        public Nullable<decimal> HighestPrice { get; set; }
+        public string Description { get; set; }
+        public int CategoryId { get; set; }
+        public System.DateTime RegistrationDate { get; set; }
+        public string Address { get; set; }
+        public string District { get; set; }
+        public string City { get; set; }
+    
+        public virtual Category Category { get; set; }
+        public virtual Comment Comment { get; set; }
+        public virtual FavoriteList FavoriteList { get; set; }
+        public virtual Product Product { get; set; }
+        public virtual Review Review { get; set; }
+        public virtual StoreImage StoreImage { get; set; }
     }
 }

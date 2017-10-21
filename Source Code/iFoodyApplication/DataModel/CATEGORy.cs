@@ -12,9 +12,11 @@ namespace DataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class CATEGORy
+    public partial class Category
     {
-        public int ID { get; set; }
-        public string NAME { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+    
+        public virtual Store Store { get; set; }
     }
 }
