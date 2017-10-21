@@ -14,9 +14,10 @@ namespace DataModel
     
     public partial class Category
     {
-        public int Id { get; set; }
+        public System.Guid Id { get; set; }
         public string Name { get; set; }
     
+        public virtual Product Product { get; set; }
         public virtual Store Store { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace DataModel
     
     public partial class Image
     {
-        public int Id { get; set; }
+        public System.Guid Id { get; set; }
         public string Name { get; set; }
         public string Path { get; set; }
     

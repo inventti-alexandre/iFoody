@@ -14,14 +14,15 @@ namespace DataModel
     
     public partial class Comment
     {
-        public int Id { get; set; }
+        public System.Guid Id { get; set; }
         public string ReviewContent { get; set; }
         public Nullable<double> Rating { get; set; }
         public System.DateTime Date { get; set; }
-        public Nullable<int> UserId { get; set; }
-        public Nullable<int> ProductId { get; set; }
-        public Nullable<int> StoreId { get; set; }
+        public Nullable<System.Guid> UserId { get; set; }
+        public Nullable<System.Guid> ProductId { get; set; }
+        public Nullable<System.Guid> StoreId { get; set; }
     
+        public virtual Product Product { get; set; }
         public virtual Store Store { get; set; }
         public virtual User User { get; set; }
     }

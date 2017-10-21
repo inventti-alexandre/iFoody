@@ -14,9 +14,9 @@ namespace DataModel
     
     public partial class UserImage
     {
-        public int Id { get; set; }
-        public int UserId { get; set; }
-        public int ImageId { get; set; }
+        public System.Guid Id { get; set; }
+        public Nullable<System.Guid> UserId { get; set; }
+        public Nullable<System.Guid> ImageId { get; set; }
     
         public virtual Image Image { get; set; }
         public virtual User User { get; set; }

@@ -14,10 +14,10 @@ namespace DataModel
     
     public partial class FavoriteList
     {
-        public int Id { get; set; }
-        public string UserId { get; set; }
-        public string PRODUCT_ID { get; set; }
-        public string STORE_ID { get; set; }
+        public System.Guid Id { get; set; }
+        public Nullable<System.Guid> UserId { get; set; }
+        public Nullable<System.Guid> StoreId { get; set; }
+        public Nullable<System.Guid> ProductId { get; set; }
     
         public virtual Product Product { get; set; }
         public virtual Store Store { get; set; }

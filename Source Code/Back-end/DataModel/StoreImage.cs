@@ -14,9 +14,9 @@ namespace DataModel
     
     public partial class StoreImage
     {
-        public int Id { get; set; }
-        public int StoreId { get; set; }
-        public int ImageId { get; set; }
+        public System.Guid Id { get; set; }
+        public Nullable<System.Guid> StoreId { get; set; }
+        public Nullable<System.Guid> ImageId { get; set; }
     
         public virtual Image Image { get; set; }
         public virtual Store Store { get; set; }

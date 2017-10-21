@@ -51,56 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CATEGORy.cs">
-      <DependentUpon>iFoodyDataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Class1.cs" />
-    <Compile Include="COMMENT.cs">
-      <DependentUpon>iFoodyDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="FAVOURITE_LISTS.cs">
-      <DependentUpon>iFoodyDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="iFoodyDataModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>iFoodyDataModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="iFoodyDataModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>iFoodyDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="iFoodyDataModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>iFoodyDataModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="IMAGE.cs">
-      <DependentUpon>iFoodyDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PRODUCT.cs">
-      <DependentUpon>iFoodyDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PRODUCT_IMAGES.cs">
-      <DependentUpon>iFoodyDataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="REVIEW.cs">
-      <DependentUpon>iFoodyDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="STORE.cs">
-      <DependentUpon>iFoodyDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="STORE_IMAGES.cs">
-      <DependentUpon>iFoodyDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="USER.cs">
-      <DependentUpon>iFoodyDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="USER_IMAGES.cs">
-      <DependentUpon>iFoodyDataModel.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="IRepository\" />
@@ -109,29 +61,8 @@
     <Folder Include="UnitOfWork\" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="iFoodyDataModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>iFoodyDataModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.Config" />
-    <None Include="iFoodyDataModel.edmx.diagram">
-      <DependentUpon>iFoodyDataModel.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="iFoodyDataModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>iFoodyDataModel.edmx</DependentUpon>
-      <LastGenOutput>iFoodyDataModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="iFoodyDataModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>iFoodyDataModel.edmx</DependentUpon>
-      <LastGenOutput>iFoodyDataModel.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

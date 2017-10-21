@@ -14,13 +14,15 @@ namespace DataModel
     
     public partial class Product
     {
-        public int Id { get; set; }
+        public System.Guid Id { get; set; }
         public string Name { get; set; }
-        public int CategoryId { get; set; }
         public decimal Price { get; set; }
         public string Description { get; set; }
-        public int StoreId { get; set; }
+        public Nullable<System.Guid> CategoryId { get; set; }
+        public Nullable<System.Guid> StoreId { get; set; }
     
+        public virtual Category Category { get; set; }
+        public virtual Comment Comment { get; set; }
         public virtual FavoriteList FavoriteList { get; set; }
         public virtual ProductImage ProductImage { get; set; }
         public virtual Store Store { get; set; }

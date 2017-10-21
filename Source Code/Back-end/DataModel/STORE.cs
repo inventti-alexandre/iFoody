@@ -14,7 +14,7 @@ namespace DataModel
     
     public partial class Store
     {
-        public int Id { get; set; }
+        public System.Guid Id { get; set; }
         public string Name { get; set; }
         public Nullable<double> Rating { get; set; }
         public System.TimeSpan OpenHour { get; set; }
@@ -22,11 +22,11 @@ namespace DataModel
         public Nullable<decimal> LowestPrice { get; set; }
         public Nullable<decimal> HighestPrice { get; set; }
         public string Description { get; set; }
-        public int CategoryId { get; set; }
         public System.DateTime RegistrationDate { get; set; }
         public string Address { get; set; }
         public string District { get; set; }
         public string City { get; set; }
+        public Nullable<System.Guid> CategoryId { get; set; }
     
         public virtual Category Category { get; set; }
         public virtual Comment Comment { get; set; }
