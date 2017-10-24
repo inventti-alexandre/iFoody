@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace BusinessEntities
+namespace WebApi.DTOs
 {
-    public class StoreImageBusinessEntity
+    class StoreImageDto
     {
         public Guid Id { get; set; }
         public Guid? StoreId { get; set; }

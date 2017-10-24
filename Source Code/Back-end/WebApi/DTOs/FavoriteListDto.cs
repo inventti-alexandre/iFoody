@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace BusinessEntities
+namespace WebApi.DTOs
 {
-    public class FavoriteListBusinessEntity
+    class FavoriteListDto
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }

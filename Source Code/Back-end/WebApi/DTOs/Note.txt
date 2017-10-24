@@ -1,0 +1,4 @@
+﻿-------Note of Tuan Pham--------
+
+DTOs are classes, uses for transferring Data in WebApi to outside. 
+Use AutoMapper to map DTOs and data which return from Business Layer

@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace BusinessEntities
+namespace WebApi.DTOs
 {
-    public class ReviewBusinessEntity
+    class ReviewDto
     {
         public Guid Id { get; set; }
         public string ReviewContent { get; set; }

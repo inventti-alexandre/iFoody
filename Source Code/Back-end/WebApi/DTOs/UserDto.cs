@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace BusinessEntities
+namespace WebApi.DTOs
 {
-    public class UserBusinessEntity
+    class UserDto
     {
         public Guid Id { get; set; }
         public string LastName { get; set; }

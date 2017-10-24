@@ -2,7 +2,7 @@
 
 namespace BusinessEntities
 {
-    class UserImageBusinessEntity
+    public class UserImageBusinessEntity
     {
         public Guid Id { get; set; }
         public Guid? UserId { get; set; }
