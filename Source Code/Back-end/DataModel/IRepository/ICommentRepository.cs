@@ -1,6 +1,6 @@
 ﻿namespace DataModel.IRepository
 {
-    interface ICommentRepository : IGenericRepository<Comment>
+    public interface ICommentRepository : IGenericRepository<Comment>
     {
     }
 }

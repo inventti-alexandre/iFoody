@@ -1,6 +1,6 @@
 ﻿namespace DataModel.IRepository
 {
-    interface IFavoriteListRepository : IGenericRepository<FavoriteList>
+    public interface IFavoriteListRepository : IGenericRepository<FavoriteList>
     {
     }
 }

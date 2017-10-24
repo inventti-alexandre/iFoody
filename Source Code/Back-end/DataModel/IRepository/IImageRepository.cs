@@ -1,6 +1,6 @@
 ﻿namespace DataModel.IRepository
 {
-    interface IImageRepository : IGenericRepository<Image>
+    public interface IImageRepository : IGenericRepository<Image>
     {
     }
 }

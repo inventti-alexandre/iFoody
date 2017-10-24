@@ -1,6 +1,6 @@
 ﻿namespace DataModel.IRepository
 {
-    interface IReviewRepository : IGenericRepository<Review>
+    public interface IReviewRepository : IGenericRepository<Review>
     {
     }
 }

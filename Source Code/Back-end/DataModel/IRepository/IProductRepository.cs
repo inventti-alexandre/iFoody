@@ -1,6 +1,6 @@
 ﻿namespace DataModel.IRepository
 {
-    interface IProductRepository : IGenericRepository<Product>
+    public interface IProductRepository : IGenericRepository<Product>
     {
     }
 }
