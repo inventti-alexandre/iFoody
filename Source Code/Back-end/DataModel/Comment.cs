@@ -10,8 +10,7 @@
 namespace DataModel
 {
     using System;
-    using System.Collections.Generic;
-    
+
     public partial class Comment
     {
         public System.Guid Id { get; set; }
@@ -21,7 +20,7 @@ namespace DataModel
         public Nullable<System.Guid> UserId { get; set; }
         public Nullable<System.Guid> ProductId { get; set; }
         public Nullable<System.Guid> StoreId { get; set; }
-    
+
         public virtual Product Product { get; set; }
         public virtual Store Store { get; set; }
         public virtual User User { get; set; }
