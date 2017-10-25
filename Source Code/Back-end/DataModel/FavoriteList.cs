@@ -15,7 +15,7 @@ namespace DataModel
     public partial class FavoriteList
     {
         public System.Guid Id { get; set; }
-        public Nullable<System.Guid> UserId { get; set; }
+        public System.Guid UserId { get; set; }
         public Nullable<System.Guid> StoreId { get; set; }
         public Nullable<System.Guid> ProductId { get; set; }
     

@@ -10,7 +10,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Name" Type="varchar(max)" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Comments">
           <Key>
@@ -29,7 +29,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="UserId" Type="uniqueidentifier" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="StoreId" Type="uniqueidentifier" />
           <Property Name="ProductId" Type="uniqueidentifier" />
         </EntityType>
@@ -38,7 +38,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Name" Type="varchar(max)" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Path" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductImages">
@@ -46,15 +46,15 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="ProductId" Type="uniqueidentifier" />
-          <Property Name="ImageId" Type="uniqueidentifier" />
+          <Property Name="ProductId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ImageId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="8" Scale="0" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="CategoryId" Type="uniqueidentifier" />
@@ -68,7 +68,7 @@
           <Property Name="ReviewContent" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Rating" Type="float" Nullable="false" />
           <Property Name="Date" Type="datetime" Nullable="false" />
-          <Property Name="UserId" Type="uniqueidentifier" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ProductId" Type="uniqueidentifier" />
           <Property Name="StoreId" Type="uniqueidentifier" />
         </EntityType>
@@ -77,8 +77,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="StoreId" Type="uniqueidentifier" />
-          <Property Name="ImageId" Type="uniqueidentifier" />
+          <Property Name="StoreId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ImageId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="Stores">
           <Key>
@@ -103,8 +103,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="UserId" Type="uniqueidentifier" />
-          <Property Name="ImageId" Type="uniqueidentifier" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ImageId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -120,218 +120,218 @@
           <Property Name="IsAdmin" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK_Comments_Products">
-          <End Role="Products" Type="Self.Products" Multiplicity="1" />
-          <End Role="Comments" Type="Self.Comments" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Comments">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Comments_Stores">
-          <End Role="Stores" Type="Self.Stores" Multiplicity="1" />
-          <End Role="Comments" Type="Self.Comments" Multiplicity="0..1" />
+          <End Role="Stores" Type="Self.Stores" Multiplicity="0..1" />
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Stores">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Comments">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="StoreId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Comments_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="Comments" Type="Self.Comments" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Comments">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_FavoriteLists_Products">
-          <End Role="Products" Type="Self.Products" Multiplicity="1" />
-          <End Role="FavoriteLists" Type="Self.FavoriteLists" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="FavoriteLists" Type="Self.FavoriteLists" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="FavoriteLists">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_FavoriteLists_Stores">
-          <End Role="Stores" Type="Self.Stores" Multiplicity="1" />
-          <End Role="FavoriteLists" Type="Self.FavoriteLists" Multiplicity="0..1" />
+          <End Role="Stores" Type="Self.Stores" Multiplicity="0..1" />
+          <End Role="FavoriteLists" Type="Self.FavoriteLists" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Stores">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="FavoriteLists">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="StoreId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_FavoriteLists_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="FavoriteLists" Type="Self.FavoriteLists" Multiplicity="0..1" />
+          <End Role="FavoriteLists" Type="Self.FavoriteLists" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="FavoriteLists">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ProductImages_Images">
           <End Role="Images" Type="Self.Images" Multiplicity="1" />
-          <End Role="ProductImages" Type="Self.ProductImages" Multiplicity="0..1" />
+          <End Role="ProductImages" Type="Self.ProductImages" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Images">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="ProductImages">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="ImageId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ProductImages_Products">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
-          <End Role="ProductImages" Type="Self.ProductImages" Multiplicity="0..1" />
+          <End Role="ProductImages" Type="Self.ProductImages" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="ProductImages">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Products_Categories">
-          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
-          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Categories">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Products">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="CategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Products_Stores">
-          <End Role="Stores" Type="Self.Stores" Multiplicity="1" />
-          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="Stores" Type="Self.Stores" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Stores">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Products">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="StoreId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Reviews_Products">
-          <End Role="Products" Type="Self.Products" Multiplicity="1" />
-          <End Role="Reviews" Type="Self.Reviews" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Reviews">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Reviews_Stores">
-          <End Role="Stores" Type="Self.Stores" Multiplicity="1" />
-          <End Role="Reviews" Type="Self.Reviews" Multiplicity="0..1" />
+          <End Role="Stores" Type="Self.Stores" Multiplicity="0..1" />
+          <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Stores">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Reviews">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="StoreId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Reviews_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="Reviews" Type="Self.Reviews" Multiplicity="0..1" />
+          <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Reviews">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_StoreImages_Images">
           <End Role="Images" Type="Self.Images" Multiplicity="1" />
-          <End Role="StoreImages" Type="Self.StoreImages" Multiplicity="0..1" />
+          <End Role="StoreImages" Type="Self.StoreImages" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Images">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="StoreImages">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="ImageId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_StoreImages_Stores">
           <End Role="Stores" Type="Self.Stores" Multiplicity="1" />
-          <End Role="StoreImages" Type="Self.StoreImages" Multiplicity="0..1" />
+          <End Role="StoreImages" Type="Self.StoreImages" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Stores">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="StoreImages">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="StoreId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Stores_Categories">
-          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
-          <End Role="Stores" Type="Self.Stores" Multiplicity="0..1" />
+          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+          <End Role="Stores" Type="Self.Stores" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Categories">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Stores">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="CategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserImages_Images">
           <End Role="Images" Type="Self.Images" Multiplicity="1" />
-          <End Role="UserImages" Type="Self.UserImages" Multiplicity="0..1" />
+          <End Role="UserImages" Type="Self.UserImages" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Images">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="UserImages">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="ImageId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserImages_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="UserImages" Type="Self.UserImages" Multiplicity="0..1" />
+          <End Role="UserImages" Type="Self.UserImages" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="UserImages">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -430,9 +430,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_Products_Categories" FromRole="Categories" ToRole="Products" />
-          <NavigationProperty Name="Store" Relationship="Self.FK_Stores_Categories" FromRole="Categories" ToRole="Stores" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Products_Categories" FromRole="Categories" ToRole="Products" />
+          <NavigationProperty Name="Stores" Relationship="Self.FK_Stores_Categories" FromRole="Categories" ToRole="Stores" />
         </EntityType>
         <EntityType Name="Comment">
           <Key>
@@ -454,7 +454,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="UserId" Type="Guid" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
           <Property Name="StoreId" Type="Guid" />
           <Property Name="ProductId" Type="Guid" />
           <NavigationProperty Name="Product" Relationship="Self.FK_FavoriteLists_Products" FromRole="FavoriteLists" ToRole="Products" />
@@ -466,19 +466,19 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="ProductImage" Relationship="Self.FK_ProductImages_Images" FromRole="Images" ToRole="ProductImages" />
-          <NavigationProperty Name="StoreImage" Relationship="Self.FK_StoreImages_Images" FromRole="Images" ToRole="StoreImages" />
-          <NavigationProperty Name="UserImage" Relationship="Self.FK_UserImages_Images" FromRole="Images" ToRole="UserImages" />
+          <NavigationProperty Name="ProductImages" Relationship="Self.FK_ProductImages_Images" FromRole="Images" ToRole="ProductImages" />
+          <NavigationProperty Name="StoreImages" Relationship="Self.FK_StoreImages_Images" FromRole="Images" ToRole="StoreImages" />
+          <NavigationProperty Name="UserImages" Relationship="Self.FK_UserImages_Images" FromRole="Images" ToRole="UserImages" />
         </EntityType>
         <EntityType Name="ProductImage">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="ProductId" Type="Guid" />
-          <Property Name="ImageId" Type="Guid" />
+          <Property Name="ProductId" Type="Guid" Nullable="false" />
+          <Property Name="ImageId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Image" Relationship="Self.FK_ProductImages_Images" FromRole="ProductImages" ToRole="Images" />
           <NavigationProperty Name="Product" Relationship="Self.FK_ProductImages_Products" FromRole="ProductImages" ToRole="Products" />
         </EntityType>
@@ -487,17 +487,17 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Price" Type="Decimal" Precision="8" Scale="0" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CategoryId" Type="Guid" />
           <Property Name="StoreId" Type="Guid" />
           <NavigationProperty Name="Category" Relationship="Self.FK_Products_Categories" FromRole="Products" ToRole="Categories" />
-          <NavigationProperty Name="Comment" Relationship="Self.FK_Comments_Products" FromRole="Products" ToRole="Comments" />
-          <NavigationProperty Name="FavoriteList" Relationship="Self.FK_FavoriteLists_Products" FromRole="Products" ToRole="FavoriteLists" />
-          <NavigationProperty Name="ProductImage" Relationship="Self.FK_ProductImages_Products" FromRole="Products" ToRole="ProductImages" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_Products" FromRole="Products" ToRole="Comments" />
+          <NavigationProperty Name="FavoriteLists" Relationship="Self.FK_FavoriteLists_Products" FromRole="Products" ToRole="FavoriteLists" />
+          <NavigationProperty Name="ProductImages" Relationship="Self.FK_ProductImages_Products" FromRole="Products" ToRole="ProductImages" />
           <NavigationProperty Name="Store" Relationship="Self.FK_Products_Stores" FromRole="Products" ToRole="Stores" />
-          <NavigationProperty Name="Review" Relationship="Self.FK_Reviews_Products" FromRole="Products" ToRole="Reviews" />
+          <NavigationProperty Name="Reviews" Relationship="Self.FK_Reviews_Products" FromRole="Products" ToRole="Reviews" />
         </EntityType>
         <EntityType Name="Review">
           <Key>
@@ -507,7 +507,7 @@
           <Property Name="ReviewContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Rating" Type="Double" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UserId" Type="Guid" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
           <Property Name="ProductId" Type="Guid" />
           <Property Name="StoreId" Type="Guid" />
           <NavigationProperty Name="Product" Relationship="Self.FK_Reviews_Products" FromRole="Reviews" ToRole="Products" />
@@ -519,8 +519,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="StoreId" Type="Guid" />
-          <Property Name="ImageId" Type="Guid" />
+          <Property Name="StoreId" Type="Guid" Nullable="false" />
+          <Property Name="ImageId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Image" Relationship="Self.FK_StoreImages_Images" FromRole="StoreImages" ToRole="Images" />
           <NavigationProperty Name="Store" Relationship="Self.FK_StoreImages_Stores" FromRole="StoreImages" ToRole="Stores" />
         </EntityType>
@@ -542,19 +542,19 @@
           <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="CategoryId" Type="Guid" />
           <NavigationProperty Name="Category" Relationship="Self.FK_Stores_Categories" FromRole="Stores" ToRole="Categories" />
-          <NavigationProperty Name="Comment" Relationship="Self.FK_Comments_Stores" FromRole="Stores" ToRole="Comments" />
-          <NavigationProperty Name="FavoriteList" Relationship="Self.FK_FavoriteLists_Stores" FromRole="Stores" ToRole="FavoriteLists" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_Products_Stores" FromRole="Stores" ToRole="Products" />
-          <NavigationProperty Name="Review" Relationship="Self.FK_Reviews_Stores" FromRole="Stores" ToRole="Reviews" />
-          <NavigationProperty Name="StoreImage" Relationship="Self.FK_StoreImages_Stores" FromRole="Stores" ToRole="StoreImages" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_Stores" FromRole="Stores" ToRole="Comments" />
+          <NavigationProperty Name="FavoriteLists" Relationship="Self.FK_FavoriteLists_Stores" FromRole="Stores" ToRole="FavoriteLists" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Products_Stores" FromRole="Stores" ToRole="Products" />
+          <NavigationProperty Name="Reviews" Relationship="Self.FK_Reviews_Stores" FromRole="Stores" ToRole="Reviews" />
+          <NavigationProperty Name="StoreImages" Relationship="Self.FK_StoreImages_Stores" FromRole="Stores" ToRole="StoreImages" />
         </EntityType>
         <EntityType Name="UserImage">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="UserId" Type="Guid" />
-          <Property Name="ImageId" Type="Guid" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="ImageId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Image" Relationship="Self.FK_UserImages_Images" FromRole="UserImages" ToRole="Images" />
           <NavigationProperty Name="User" Relationship="Self.FK_UserImages_Users" FromRole="UserImages" ToRole="Users" />
         </EntityType>
@@ -570,224 +570,224 @@
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Birthday" Type="DateTime" Precision="0" />
           <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Comment" Relationship="Self.FK_Comments_Users" FromRole="Users" ToRole="Comments" />
-          <NavigationProperty Name="FavoriteList" Relationship="Self.FK_FavoriteLists_Users" FromRole="Users" ToRole="FavoriteLists" />
-          <NavigationProperty Name="Review" Relationship="Self.FK_Reviews_Users" FromRole="Users" ToRole="Reviews" />
-          <NavigationProperty Name="UserImage" Relationship="Self.FK_UserImages_Users" FromRole="Users" ToRole="UserImages" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_Users" FromRole="Users" ToRole="Comments" />
+          <NavigationProperty Name="FavoriteLists" Relationship="Self.FK_FavoriteLists_Users" FromRole="Users" ToRole="FavoriteLists" />
+          <NavigationProperty Name="Reviews" Relationship="Self.FK_Reviews_Users" FromRole="Users" ToRole="Reviews" />
+          <NavigationProperty Name="UserImages" Relationship="Self.FK_UserImages_Users" FromRole="Users" ToRole="UserImages" />
         </EntityType>
         <Association Name="FK_Products_Categories">
-          <End Role="Categories" Type="Self.Category" Multiplicity="1" />
-          <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Categories">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Products">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="CategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Stores_Categories">
-          <End Role="Categories" Type="Self.Category" Multiplicity="1" />
-          <End Role="Stores" Type="Self.Store" Multiplicity="0..1" />
+          <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Stores" Type="Self.Store" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Categories">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Stores">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="CategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Comments_Products">
-          <End Role="Products" Type="Self.Product" Multiplicity="1" />
-          <End Role="Comments" Type="Self.Comment" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Comments" Type="Self.Comment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Comments">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Comments_Stores">
-          <End Role="Stores" Type="Self.Store" Multiplicity="1" />
-          <End Role="Comments" Type="Self.Comment" Multiplicity="0..1" />
+          <End Role="Stores" Type="Self.Store" Multiplicity="0..1" />
+          <End Role="Comments" Type="Self.Comment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Stores">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Comments">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="StoreId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Comments_Users">
-          <End Role="Users" Type="Self.User" Multiplicity="1" />
-          <End Role="Comments" Type="Self.Comment" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Comments" Type="Self.Comment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Comments">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_FavoriteLists_Products">
-          <End Role="Products" Type="Self.Product" Multiplicity="1" />
-          <End Role="FavoriteLists" Type="Self.FavoriteList" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="FavoriteLists" Type="Self.FavoriteList" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="FavoriteLists">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_FavoriteLists_Stores">
-          <End Role="Stores" Type="Self.Store" Multiplicity="1" />
-          <End Role="FavoriteLists" Type="Self.FavoriteList" Multiplicity="0..1" />
+          <End Role="Stores" Type="Self.Store" Multiplicity="0..1" />
+          <End Role="FavoriteLists" Type="Self.FavoriteList" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Stores">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="FavoriteLists">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="StoreId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_FavoriteLists_Users">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
-          <End Role="FavoriteLists" Type="Self.FavoriteList" Multiplicity="0..1" />
+          <End Role="FavoriteLists" Type="Self.FavoriteList" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="FavoriteLists">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ProductImages_Images">
           <End Role="Images" Type="Self.Image" Multiplicity="1" />
-          <End Role="ProductImages" Type="Self.ProductImage" Multiplicity="0..1" />
+          <End Role="ProductImages" Type="Self.ProductImage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Images">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="ProductImages">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="ImageId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_StoreImages_Images">
           <End Role="Images" Type="Self.Image" Multiplicity="1" />
-          <End Role="StoreImages" Type="Self.StoreImage" Multiplicity="0..1" />
+          <End Role="StoreImages" Type="Self.StoreImage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Images">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="StoreImages">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="ImageId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserImages_Images">
           <End Role="Images" Type="Self.Image" Multiplicity="1" />
-          <End Role="UserImages" Type="Self.UserImage" Multiplicity="0..1" />
+          <End Role="UserImages" Type="Self.UserImage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Images">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="UserImages">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="ImageId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ProductImages_Products">
           <End Role="Products" Type="Self.Product" Multiplicity="1" />
-          <End Role="ProductImages" Type="Self.ProductImage" Multiplicity="0..1" />
+          <End Role="ProductImages" Type="Self.ProductImage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="ProductImages">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Products_Stores">
-          <End Role="Stores" Type="Self.Store" Multiplicity="1" />
-          <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Stores" Type="Self.Store" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Stores">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Products">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="StoreId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Reviews_Products">
-          <End Role="Products" Type="Self.Product" Multiplicity="1" />
-          <End Role="Reviews" Type="Self.Review" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Reviews" Type="Self.Review" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Reviews">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Reviews_Stores">
-          <End Role="Stores" Type="Self.Store" Multiplicity="1" />
-          <End Role="Reviews" Type="Self.Review" Multiplicity="0..1" />
+          <End Role="Stores" Type="Self.Store" Multiplicity="0..1" />
+          <End Role="Reviews" Type="Self.Review" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Stores">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Reviews">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="StoreId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Reviews_Users">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
-          <End Role="Reviews" Type="Self.Review" Multiplicity="0..1" />
+          <End Role="Reviews" Type="Self.Review" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Reviews">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_StoreImages_Stores">
           <End Role="Stores" Type="Self.Store" Multiplicity="1" />
-          <End Role="StoreImages" Type="Self.StoreImage" Multiplicity="0..1" />
+          <End Role="StoreImages" Type="Self.StoreImage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Stores">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="StoreImages">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="StoreId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserImages_Users">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
-          <End Role="UserImages" Type="Self.UserImage" Multiplicity="0..1" />
+          <End Role="UserImages" Type="Self.UserImage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="UserImages">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

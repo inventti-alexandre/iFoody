@@ -12,13 +12,18 @@ namespace DataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class StoreImage
+    public partial class Review
     {
         public System.Guid Id { get; set; }
-        public System.Guid StoreId { get; set; }
-        public System.Guid ImageId { get; set; }
+        public string ReviewContent { get; set; }
+        public double Rating { get; set; }
+        public System.DateTime Date { get; set; }
+        public System.Guid UserId { get; set; }
+        public Nullable<System.Guid> ProductId { get; set; }
+        public Nullable<System.Guid> StoreId { get; set; }
     
-        public virtual Image Image { get; set; }
+        public virtual Product Product { get; set; }
         public virtual Store Store { get; set; }
+        public virtual User User { get; set; }
     }
 }
