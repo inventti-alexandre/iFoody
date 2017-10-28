@@ -39,6 +39,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -58,6 +59,7 @@
     <Compile Include="Comment.cs">
       <DependentUpon>IFoodyDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DependencyResolver.cs" />
     <Compile Include="FavoriteList.cs">
       <DependentUpon>IFoodyDataModel.tt</DependentUpon>
     </Compile>
@@ -128,7 +130,12 @@
       <DependentUpon>IFoodyDataModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Resolver\Resolver.csproj">
+      <Project>{155f1d80-e96f-4502-8450-85cf6538cd0a}</Project>
+      <Name>Resolver</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
     <EntityDeploy Include="IFoodyDataModel.edmx">
