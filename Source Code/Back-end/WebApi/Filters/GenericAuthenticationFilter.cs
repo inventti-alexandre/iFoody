@@ -39,7 +39,7 @@ namespace WebApi.Filters
             var genericPrincipal = new GenericPrincipal(identity, null);
             Thread.CurrentPrincipal = genericPrincipal;
 
-            if (!OnAuthorizeUser(identity.Email, identity.Password, filterContext)
+            if (!OnAuthorizeUser(identity.Email, identity.Password, filterContext))
             {
                 ChallengeAuthRequest(filterContext);
                 return;
@@ -82,7 +82,7 @@ namespace WebApi.Filters
         }
 
         // Virtual method.Can be overriden with the custom Authorization.
-        protected virtual bool OnAuthorizeUser(string email, string password, HttpActionExecutedContext filterContext)
+        protected virtual bool OnAuthorizeUser(string email, string password, HttpActionContext filterContext)
         {
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {

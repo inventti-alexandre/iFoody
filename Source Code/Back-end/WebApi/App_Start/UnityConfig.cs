@@ -11,7 +11,7 @@ namespace WebApi
         public static void RegisterComponents()
         {
             var container = new UnityContainer();
-            System.Web.Mvc.DependencyResolver.SetResolver(new UnityDependencyResolver(container));
+            // System.Web.Mvc.DependencyResolver.SetResolver(new UnityDependencyResolver(container));
             // register all your components with the container here
             // it is NOT necessary to register your controllers
 
@@ -21,7 +21,7 @@ namespace WebApi
             // End Code Tuan dep chai
             // e.g. container.RegisterType<ITestService, TestService>();
 
-            GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
+            GlobalConfiguration.Configuration.DependencyResolver = new Unity.WebApi.UnityDependencyResolver(container);
         }
 
         private static IUnityContainer UnityContainer()
