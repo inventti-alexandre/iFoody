@@ -15,6 +15,7 @@ namespace BusinessLayer.Services
         }
 
         // Bla bla
+        // Bla Bla 2
         // Authenticated method by Email and password
         public Guid Authenticate(string email, string password)
         {
