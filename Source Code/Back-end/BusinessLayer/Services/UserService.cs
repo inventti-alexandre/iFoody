@@ -14,7 +14,7 @@ namespace BusinessLayer.Services
             _unitOfWork = unitOfWork;
         }
 
-
+        // Bla bla
         // Authenticated method by Email and password
         public Guid Authenticate(string email, string password)
         {
