@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLayer
+namespace Resolver
 {
-    public class Class1
+    interface IComponent
     {
+        void SetUp(IRegisterComponent registerComponent);
     }
 }

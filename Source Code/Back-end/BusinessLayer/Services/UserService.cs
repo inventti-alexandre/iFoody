@@ -1,12 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BusinessLayer.IServices;
+using DataModel.IUnitOfWork;
+using System;
 
 namespace BusinessLayer.Services
 {
-    class UserService
+    public class UserService : IUserService
     {
+        private readonly IUnitOfWork _unitOfWork;
+
+        // Constructor
+        public UserService(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+
+
+        // Authenticated method by Email and password
+        public Guid Authenticate(string email, string password)
+        {
+            var user = _unitOfWork.Users.Get(u => u.Email == email && u.Password == password);
+
+            if (user != null)
+            {
+                return user.Id;
+            }
+            return new Guid(); // Check again!!!!!!!
+        }
     }
 }
