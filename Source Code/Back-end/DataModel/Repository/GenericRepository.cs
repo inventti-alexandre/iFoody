@@ -35,6 +35,11 @@ namespace DataModel.IRepository
             return this.dbSet.ToList();
         }
 
+        //Generic Insert method 
+        public virtual void Insert(TEntity entity)
+        {
+            dbSet.Add(entity);
+        }
         // Generic Delete method 
         public virtual void Delete(object id)
         {

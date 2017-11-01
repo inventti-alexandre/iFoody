@@ -11,6 +11,8 @@ namespace DataModel.IRepository
 
         IEnumerable<TEntity> GetAll();
 
+        void Insert(TEntity entity);
+
         void Delete(object id);
 
         void Delete(TEntity entityToDelete);

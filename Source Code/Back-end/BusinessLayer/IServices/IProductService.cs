@@ -11,7 +11,7 @@ namespace BusinessLayer.IServices
     {
         ProductBusinessEntity GetProductById(Guid productId);
         IEnumerable<ProductBusinessEntity> GetAllProducts();
-        void CreateProduct(ProductBusinessEntity productEntity);
+        Guid CreateProduct(ProductBusinessEntity productEntity);
         void UpdateProduct(Guid productId, ProductBusinessEntity productEntity);
         void DeleteProduct(Guid productId);
     }

@@ -20,11 +20,9 @@ namespace DataModel.UnitOfWork
         public IUserRepository Users { get; private set; }
 
 
-
-        // Constructor for Creating Context
-        public UnitOfWork(iFoodyEntities iFoodyContext)
+        public UnitOfWork()
         {
-            _iFoodyContext = iFoodyContext;
+            _iFoodyContext = new iFoodyEntities();
             Categories = new CategoryRepository(_iFoodyContext);
             Comments = new CommentRepository(_iFoodyContext);
             FavoriteLists = new FavoriteListRepository(_iFoodyContext);
@@ -37,6 +35,22 @@ namespace DataModel.UnitOfWork
             UserImages = new UserImageRepository(_iFoodyContext);
             Users = new UserRepository(_iFoodyContext);
         }
+        // Constructor for Creating Context
+        //public UnitOfWork(iFoodyEntities iFoodyContext)
+        //{
+        //    _iFoodyContext = iFoodyContext;
+        //    Categories = new CategoryRepository(_iFoodyContext);
+        //    Comments = new CommentRepository(_iFoodyContext);
+        //    FavoriteLists = new FavoriteListRepository(_iFoodyContext);
+        //    Images = new ImageRepository(_iFoodyContext);
+        //    ProductImages = new ProductImageRepository(_iFoodyContext);
+        //    Products = new ProductRepository(_iFoodyContext);
+        //    Reviews = new ReviewRepository(_iFoodyContext);
+        //    StoreImages = new StoreImageRepository(_iFoodyContext);
+        //    Stores = new StoreRepository(_iFoodyContext);
+        //    UserImages = new UserImageRepository(_iFoodyContext);
+        //    Users = new UserRepository(_iFoodyContext);
+        //}
 
         // Complete One transaction 
         public void Complete()

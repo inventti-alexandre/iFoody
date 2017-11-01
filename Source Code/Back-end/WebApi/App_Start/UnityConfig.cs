@@ -1,7 +1,10 @@
+using BusinessLayer.IServices;
+using BusinessLayer.Services;
 using Microsoft.Practices.Unity;
 using Resolver;
 using System.Web.Http;
 using Unity.WebApi;
+using WebApi.ApiController;
 
 
 namespace WebApi
@@ -11,7 +14,7 @@ namespace WebApi
         public static void RegisterComponents()
         {
             var container = new UnityContainer();
-            // System.Web.Mvc.DependencyResolver.SetResolver(new UnityDependencyResolver(container));
+             //System.Web.Mvc.DependencyResolver.SetResolver(new UnityDependencyResolver(container));
             // register all your components with the container here
             // it is NOT necessary to register your controllers
 
@@ -30,9 +33,9 @@ namespace WebApi
 
             // register all your components with the container here
             // it is NOT necessary to register your controllers
-
+            //container.RegisterType<ProductController>();
             // e.g. container.RegisterType<ITestService, TestService>();       
-            // container.RegisterType<IProductServices, ProductServices>().RegisterType<UnitOfWork>(new HierarchicalLifetimeManager());
+            container.RegisterType<IProductService, ProductService>();
 
             RegisterTypes(container);
 
