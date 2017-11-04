@@ -1,9 +1,8 @@
 ﻿using BusinessLayer.IServices;
 using BusinessLayer.Services;
 using Resolver;
-using System;
-using System.ComponentModel;
 using System.ComponentModel.Composition;
+using IComponent = Resolver.IComponent;
 
 namespace BusinessLayer
 {
@@ -17,12 +16,12 @@ namespace BusinessLayer
 
         }
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
+        //public void Dispose()
+        //{
+        //    // throw new NotImplementedException();
+        //}
 
-        public ISite Site { get; set; }
-        public event EventHandler Disposed;
+        //public ISite Site { get; set; }
+        //public event EventHandler Disposed;
     }
 }

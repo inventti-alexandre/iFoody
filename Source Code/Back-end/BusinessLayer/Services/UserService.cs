@@ -1,6 +1,11 @@
-﻿using BusinessLayer.IServices;
+﻿using AutoMapper;
+using BusinessEntities;
+using BusinessLayer.IServices;
+using DataModel;
 using DataModel.IUnitOfWork;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BusinessLayer.Services
 {
@@ -26,6 +31,27 @@ namespace BusinessLayer.Services
                 return user.Id;
             }
             return new Guid(); // Check again!!!!!!!
+        }
+
+        public IEnumerable<UserBusinessEntity> GetAllUsers()
+        {
+            try
+            {
+                var users = _unitOfWork.Users.GetAll().ToList();
+                if (users.Any())
+                {
+                    Mapper.CreateMap<User, UserBusinessEntity>();
+                    var userModel = Mapper.Map<List<User>, List<UserBusinessEntity>>(users);
+                    return userModel;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                return null;
+
+            }
+
         }
     }
 }
