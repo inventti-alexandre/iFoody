@@ -1,9 +1,7 @@
 ﻿using Resolver;
-using System;
-using System.ComponentModel;
 using System.ComponentModel.Composition;
-using DataModel.IRepository;
-using DataModel.Repository;
+using IComponent = Resolver.IComponent;
+
 
 namespace DataModel
 {
@@ -17,12 +15,12 @@ namespace DataModel
             registerComponent.RegisterType<IProductRepository, ProductRepository>();
         }
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
+        //public void Dispose()
+        //{
+        //    // throw new NotImplementedException();
+        //}
 
-        public ISite Site { get; set; }
-        public event EventHandler Disposed;
+        //public ISite Site { get; set; }
+        //public event EventHandler Disposed;
     }
 }
