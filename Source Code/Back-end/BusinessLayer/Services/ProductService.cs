@@ -13,31 +13,28 @@ namespace BusinessLayer.Services
 {
     public class ProductService: IProductService
     {
-        //private readonly IUnitOfWork _unitOfWork;
-        // Constructor
-        //public ProductService(IUnitOfWork unitOfWork)
-        //{
-        //    _unitOfWork = unitOfWork;
-        //    var config = new MapperConfiguration(cfg => {
-        //        cfg.CreateMap<UserBusinessEntity, User>();
-        //    });
-        //}
-
-        private readonly UnitOfWork _unitOfWork;
-
-        public ProductService()
+        private readonly IUnitOfWork _unitOfWork;
+        //Constructor
+        public ProductService(IUnitOfWork unitOfWork)
         {
-            _unitOfWork = new UnitOfWork();
-          
+            _unitOfWork = unitOfWork;         
         }
+
+        //private readonly UnitOfWork _unitOfWork;
+
+        //public ProductService()
+        //{
+        //    _unitOfWork = new UnitOfWork();
+          
+        //}
 
 
         public Guid CreateProduct(ProductBusinessEntity productEntity)
         {
             using (var scope = new TransactionScope())
             {
-              
-                Mapper.CreateMap<ProductBusinessEntity,Product>();
+                //productEntity.Id = Guid.NewGuid();
+                Mapper.CreateMap<ProductBusinessEntity,Product>().ForMember(x=>x.Id,opt=>opt.Ignore());
                 var product = Mapper.Map<ProductBusinessEntity, Product>(productEntity);
                 _unitOfWork.Products.Insert(product);
                 _unitOfWork.Complete();

@@ -12,7 +12,7 @@ namespace DataModel
         {
             // Mew Mew... Add new Dependency Resolver below 
             registerComponent.RegisterType<IUnitOfWork.IUnitOfWork, UnitOfWork.UnitOfWork>();
-            registerComponent.RegisterType<IProductRepository, ProductRepository>();
+//            registerComponent.RegisterType<IProductRepository, ProductRepository>();
         }
 
         //public void Dispose()

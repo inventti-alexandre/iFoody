@@ -15,16 +15,16 @@ namespace WebApi.ApiController
         //private readonly IProductService _productServices;
         private readonly ProductService _productService;
 
-     
-//        public ProductController(ProductService productServices)
-//        {
-//            _productServices = productServices;
-//
-//        }
-        public ProductController()
+
+        public ProductController(ProductService productServices)
         {
-            _productService = new ProductService();
+            _productService = productServices;
+
         }
+//        public ProductController()
+//        {
+//            _productService = new ProductService();
+//        }
         // GET api/product
         [HttpGet]
         public IHttpActionResult Get()
