@@ -12,7 +12,7 @@ namespace BusinessLayer.IServices
         ProductBusinessEntity GetProductById(Guid productId);
         IEnumerable<ProductBusinessEntity> GetAllProducts();
         Guid CreateProduct(ProductBusinessEntity productEntity);
-        void UpdateProduct(Guid productId, ProductBusinessEntity productEntity);
-        void DeleteProduct(Guid productId);
+        bool UpdateProduct(ProductBusinessEntity productEntity);
+        bool DeleteProduct(Guid productId);
     }
 }

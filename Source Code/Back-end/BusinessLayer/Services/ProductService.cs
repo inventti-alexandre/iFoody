@@ -11,41 +11,13 @@ using System.Transactions;
 
 namespace BusinessLayer.Services
 {
-    public class ProductService: IProductService
+    public class ProductService : IProductService
     {
         private readonly IUnitOfWork _unitOfWork;
         //Constructor
         public ProductService(IUnitOfWork unitOfWork)
         {
-            _unitOfWork = unitOfWork;         
-        }
-
-        //private readonly UnitOfWork _unitOfWork;
-
-        //public ProductService()
-        //{
-        //    _unitOfWork = new UnitOfWork();
-          
-        //}
-
-
-        public Guid CreateProduct(ProductBusinessEntity productEntity)
-        {
-            using (var scope = new TransactionScope())
-            {
-                //productEntity.Id = Guid.NewGuid();
-                Mapper.CreateMap<ProductBusinessEntity,Product>().ForMember(x=>x.Id,opt=>opt.Ignore());
-                var product = Mapper.Map<ProductBusinessEntity, Product>(productEntity);
-                _unitOfWork.Products.Insert(product);
-                _unitOfWork.Complete();
-                scope.Complete();
-                return product.Id;
-            }
-        }
-
-        public void DeleteProduct(Guid productId)
-        {
-            throw new NotImplementedException();
+            _unitOfWork = unitOfWork;
         }
 
         public IEnumerable<ProductBusinessEntity> GetAllProducts()
@@ -64,7 +36,7 @@ namespace BusinessLayer.Services
         public ProductBusinessEntity GetProductById(Guid productId)
         {
             var product = _unitOfWork.Products.GetById(productId);
-            if (product!=null)
+            if (product != null)
             {
                 Mapper.CreateMap<Product, ProductBusinessEntity>();
                 var productModel = Mapper.Map<Product, ProductBusinessEntity>(product);
@@ -72,12 +44,60 @@ namespace BusinessLayer.Services
                 return productModel;
             }
             return null;
-
+        }
+        public Guid CreateProduct(ProductBusinessEntity productEntity)
+        {
+            using (var scope = new TransactionScope())
+            {
+                //productEntity.Id = Guid.NewGuid();
+                Mapper.CreateMap<ProductBusinessEntity, Product>().ForMember(x => x.Id, opt => opt.Ignore());
+                var product = Mapper.Map<ProductBusinessEntity, Product>(productEntity);
+                _unitOfWork.Products.Insert(product);
+                _unitOfWork.Complete();
+                scope.Complete();
+                return product.Id;
+            }
         }
 
-        public void UpdateProduct(Guid productId, ProductBusinessEntity productEntity)
+        public bool DeleteProduct(Guid productId)
         {
-            throw new NotImplementedException();
-        }   
+            var success = false;
+
+            using (var scope = new TransactionScope())
+            {
+                var product = _unitOfWork.Products.GetById(productId);
+                if (product != null)
+                {
+                    _unitOfWork.Products.Delete(product);
+                    _unitOfWork.Complete();
+                    scope.Complete();
+                    success = true;
+                }
+            }
+
+            return success;
+        }
+
+        public bool UpdateProduct(ProductBusinessEntity productEntity)
+        {
+            var success = false;
+            if (productEntity != null)
+            {
+                using (var scope = new TransactionScope())
+                {
+                    var product = _unitOfWork.Products.GetById(productEntity.Id);
+                    if (product != null)
+                    {
+                        Mapper.CreateMap<ProductBusinessEntity, Product>().ForMember(x => x.Id, opt => opt.Ignore());
+                        Mapper.Map(productEntity, product);
+                        _unitOfWork.Products.Update(product);
+                        _unitOfWork.Complete();
+                        scope.Complete();
+                        success = true;
+                    }
+                }
+            }
+            return success;
+        }
     }
 }

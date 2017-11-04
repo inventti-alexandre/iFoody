@@ -21,10 +21,7 @@ namespace WebApi.ApiController
             _productService = productServices;
 
         }
-//        public ProductController()
-//        {
-//            _productService = new ProductService();
-//        }
+
         // GET api/product
         [HttpGet]
         public IHttpActionResult Get()
@@ -53,10 +50,28 @@ namespace WebApi.ApiController
         }
         //POST api/product
         [HttpPost]
-        // POST api/product
         public Guid Post([FromBody] ProductBusinessEntity productEntity)
         {
             return _productService.CreateProduct(productEntity);
+        }
+
+        // DELETE api/product/?id=
+        [HttpDelete]
+        public bool Delete(Guid id)
+        {
+            if (id!=null)
+                return _productService.DeleteProduct(id);
+            return false;
+        }
+        // PUT api/product/?id=
+        [HttpPut]
+        public bool Put([FromBody]ProductBusinessEntity productEntity)
+        {
+            if (productEntity.Id !=null)
+            {
+                return _productService.UpdateProduct(productEntity);
+            }
+            return false;
         }
     }
 }
