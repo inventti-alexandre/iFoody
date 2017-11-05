@@ -5,11 +5,13 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using BusinessEntities;
 using BusinessLayer.Services;
 
 namespace WebApi.ApiController
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ProductController : System.Web.Http.ApiController
     {
         //private readonly IProductService _productServices;
