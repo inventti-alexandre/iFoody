@@ -15,6 +15,7 @@ namespace DataModel.IUnitOfWork
         IStoreRepository Stores { get; }
         IUserImageRepository UserImages { get; }
         IUserRepository Users { get; }
+        ITokenRepository Tokens { get; }
 
         void Complete();
     }

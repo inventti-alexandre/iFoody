@@ -1,3 +1,5 @@
+import { HttpModule } from '@angular/http';
+import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { SearchingModule } from './../searching/searching.module';
 import { UploadingModule } from './../uploading/uploading.module';
@@ -24,7 +26,9 @@ import { RepresentativeProductComponent } from './components/representative-prod
     SharedModule,
     UploadingModule,
     SearchingModule,
-    FormsModule
+    FormsModule,
+    BrowserModule,
+    HttpModule
   ],
   exports: [
     BsNavbarComponent,

@@ -14,13 +14,13 @@ namespace WebApi.Areas.HelpPage.Controllers
         private const string ErrorViewName = "Error";
 
         //public HelpController()
-        //    : this(GlobalConfiguration.Configuration)
+        //    : this(GlobalConfiguration.ConfigurationIdentity)
         //{
         //}
 
         //public HelpController(HttpConfiguration config)
         //{
-        //    Configuration = config;
+        //    ConfigurationIdentity = config;
         //}
 
         protected static HttpConfiguration Configuration

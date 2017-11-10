@@ -50,6 +50,7 @@
     <Compile Include="ReviewBusinessEntity.cs" />
     <Compile Include="StoreBusinessEntity.cs" />
     <Compile Include="StoreImageBusinessEntity.cs" />
+    <Compile Include="TokenBusinessEntity.cs" />
     <Compile Include="UserBusinessEntity.cs" />
     <Compile Include="UserImageBusinessEntity.cs" />
   </ItemGroup>
