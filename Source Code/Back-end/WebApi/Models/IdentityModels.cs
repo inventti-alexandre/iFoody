@@ -1,4 +1,6 @@
-﻿using System.Security.Claims;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -21,13 +23,37 @@ namespace WebApi.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("iFoodyEntities", throwIfV1Schema: false)
         {
         }
         
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            var entity = modelBuilder.Entity<ApplicationUser>();
+
+            entity.ToTable("Users");
+
+            entity.HasKey(x => x.Id); // Set the primary key
+            entity.Ignore(x => x.Id); // Ignore the defined key
+            entity.Property(x => x.PasswordHash).HasColumnName("Password");
+            entity.Ignore(x => x.PhoneNumber);
+            entity.Ignore(x => x.PhoneNumberConfirmed);
+            entity.Ignore(x => x.EmailConfirmed);
+            entity.Ignore(x => x.LockoutEnabled);
+            entity.Ignore(x => x.LockoutEndDateUtc);
+            entity.Ignore(x => x.PhoneNumber);
+            entity.Ignore(x => x.PhoneNumberConfirmed);
+            entity.Ignore(x => x.SecurityStamp);
+            entity.Ignore(x => x.TwoFactorEnabled);
+            entity.Ignore(x => x.AccessFailedCount);
+            entity.Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
         }
     }
 }

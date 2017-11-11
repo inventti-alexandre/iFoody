@@ -34,6 +34,7 @@ namespace DataModel
         public virtual DbSet<Review> Reviews { get; set; }
         public virtual DbSet<StoreImage> StoreImages { get; set; }
         public virtual DbSet<Store> Stores { get; set; }
+        public virtual DbSet<Token> Tokens { get; set; }
         public virtual DbSet<UserImage> UserImages { get; set; }
         public virtual DbSet<User> Users { get; set; }
     }

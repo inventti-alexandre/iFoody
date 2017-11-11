@@ -80,6 +80,7 @@
     <Compile Include="Image.cs">
       <DependentUpon>iFoodyDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="IRepository\ITokenRepository.cs" />
     <Compile Include="IUnitOfWork\IUnitOfWork.cs" />
     <Compile Include="Product.cs">
       <DependentUpon>iFoodyDataModel.tt</DependentUpon>
@@ -110,6 +111,7 @@
     <Compile Include="Repository\ReviewRepository.cs" />
     <Compile Include="Repository\StoreImageRepository.cs" />
     <Compile Include="Repository\StoreRepository.cs" />
+    <Compile Include="Repository\TokenRepository.cs" />
     <Compile Include="Repository\UserImageRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Review.cs">
@@ -119,6 +121,9 @@
       <DependentUpon>iFoodyDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="StoreImage.cs">
+      <DependentUpon>iFoodyDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Token.cs">
       <DependentUpon>iFoodyDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="UnitOfWork\UnitOfWork.cs" />

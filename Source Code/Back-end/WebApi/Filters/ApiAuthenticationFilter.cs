@@ -32,7 +32,7 @@ namespace WebApi.Filters
 
                     if (basicAuthenticationIdentity != null)
                     {
-                        basicAuthenticationIdentity.UserId = userId;
+                        basicAuthenticationIdentity.UserId = userId.GetValueOrDefault();
                     }
                     return true;
                 }

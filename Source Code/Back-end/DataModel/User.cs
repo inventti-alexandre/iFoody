@@ -20,6 +20,7 @@ namespace DataModel
             this.Comments = new HashSet<Comment>();
             this.FavoriteLists = new HashSet<FavoriteList>();
             this.Reviews = new HashSet<Review>();
+            this.Tokens = new HashSet<Token>();
             this.UserImages = new HashSet<UserImage>();
         }
     
@@ -38,6 +39,8 @@ namespace DataModel
         public virtual ICollection<FavoriteList> FavoriteLists { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Review> Reviews { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Token> Tokens { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserImage> UserImages { get; set; }
     }

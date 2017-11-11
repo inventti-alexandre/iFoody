@@ -1,17 +1,13 @@
-﻿using BusinessLayer.IServices;
+﻿using BusinessEntities;
+using BusinessLayer.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Cors;
-using BusinessEntities;
-using BusinessLayer.Services;
+using WebApi.ActionFilters;
 
 namespace WebApi.ApiController
 {
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ProductController : System.Web.Http.ApiController
     {
         //private readonly IProductService _productServices;
@@ -26,7 +22,7 @@ namespace WebApi.ApiController
 
         // GET api/product
         [HttpGet]
-        public IHttpActionResult Get()
+        public HttpResponseMessage Get()
         {
             try
             {
@@ -45,9 +41,10 @@ namespace WebApi.ApiController
            
 
         }
+
         // GET api/product/?id=
         [HttpGet]
-        public IHttpActionResult Get( Guid id)
+        public IHttpActionResult Get(Guid id)
         {
             try
             {

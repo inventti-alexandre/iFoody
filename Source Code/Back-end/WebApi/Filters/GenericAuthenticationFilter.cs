@@ -55,7 +55,7 @@ namespace WebApi.Filters
 
             filterContext.Response = filterContext.Request.CreateResponse(HttpStatusCode.Unauthorized);
 
-            filterContext.Response.Headers.Add("WWW-Authenticate", string.Format("Basic realm=\"{0}\""));
+            filterContext.Response.Headers.Add("WWW-Authenticate", string.Format("Basic realm=\"{0}\"", dnsHost));
         }
 
         // Checks for autrhorization header in the request and parses it, creates user credentials and returns as BasicAuthenticationIdentity
@@ -63,8 +63,12 @@ namespace WebApi.Filters
         {
             string authHeaderValue = null;
             var authRequest = filterContext.Request.Headers.Authorization;
+            if (authRequest == null)
+            {
+                return null;
+            }
 
-            if (authRequest != null & !String.IsNullOrEmpty(authRequest.Scheme) && authRequest.Scheme == "Basic")
+            if (!String.IsNullOrEmpty(authRequest.Scheme) && authRequest.Scheme == "Basic")
             {
                 authHeaderValue = authRequest.Parameter;
             }

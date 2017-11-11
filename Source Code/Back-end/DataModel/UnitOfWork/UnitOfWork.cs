@@ -18,6 +18,7 @@ namespace DataModel.UnitOfWork
         public IStoreRepository Stores { get; private set; }
         public IUserImageRepository UserImages { get; private set; }
         public IUserRepository Users { get; private set; }
+        public ITokenRepository Tokens { get; private set; }
 
 
         public UnitOfWork()
@@ -34,6 +35,7 @@ namespace DataModel.UnitOfWork
             Stores = new StoreRepository(_iFoodyContext);
             UserImages = new UserImageRepository(_iFoodyContext);
             Users = new UserRepository(_iFoodyContext);
+            Tokens = new TokenRepository(_iFoodyContext);
         }
         // Constructor for Creating Context
         //public UnitOfWork(iFoodyEntities iFoodyContext)
