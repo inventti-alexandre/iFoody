@@ -4,10 +4,13 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
+using BusinessLayer.IServices;
 using WebApi.ActionFilters;
 
 namespace WebApi.ApiController
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ProductController : System.Web.Http.ApiController
     {
         //private readonly IProductService _productServices;
@@ -22,7 +25,7 @@ namespace WebApi.ApiController
 
         // GET api/product
         [HttpGet]
-        public HttpResponseMessage Get()
+        public IHttpActionResult Get()
         {
             try
             {

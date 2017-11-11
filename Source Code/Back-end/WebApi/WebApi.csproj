@@ -287,7 +287,10 @@
   <ItemGroup>
     <Compile Include="ActionFilters\AuthorizationRequiredAttribute.cs" />
     <Compile Include="ApiController\AuthenticateController.cs" />
+    <Compile Include="ApiController\CategoriesController.cs" />
+    <Compile Include="ApiController\FavoriteListController.cs" />
     <Compile Include="ApiController\ProductController.cs" />
+    <Compile Include="ApiController\ProductImageController.cs" />
     <Compile Include="ApiController\UserController.cs" />
     <Compile Include="App_Start\AttributeRoutingHttpConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
