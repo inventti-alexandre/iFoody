@@ -15,6 +15,8 @@ namespace BusinessLayer
             registerComponent.RegisterType<IUserService, UserService>();
             registerComponent.RegisterType<IProductService, ProductService>();
             registerComponent.RegisterType<IProductImagesService, ProductImageService>();
+            registerComponent.RegisterType<IFavoritesListService,FavoriteListService>();
+            registerComponent.RegisterType<ICategoriesService,CategoriesService>();
 
         }
 

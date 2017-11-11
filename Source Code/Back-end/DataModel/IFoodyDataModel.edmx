@@ -28,7 +28,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="StoreId" Type="uniqueidentifier" />
           <Property Name="ProductId" Type="uniqueidentifier" />
@@ -102,7 +102,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ImageId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
@@ -453,7 +453,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="Guid" Nullable="false" />
           <Property Name="StoreId" Type="Guid" />
           <Property Name="ProductId" Type="Guid" />
@@ -552,7 +552,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="Guid" Nullable="false" />
           <Property Name="ImageId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Image" Relationship="Self.FK_UserImages_Images" FromRole="UserImages" ToRole="Images" />

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="69b77d77870f4547b07231d1b11d1858" Name="Diagram1">
+      <Diagram DiagramId="69b77d77870f4547b07231d1b11d1858" Name="Diagram1" ZoomLevel="94">
         <EntityTypeShape EntityType="iFoodyModel.Category" Width="1.5" PointX="0.75" PointY="9.75" IsExpanded="true" />
         <EntityTypeShape EntityType="iFoodyModel.Comment" Width="1.5" PointX="7.5" PointY="13" IsExpanded="true" />
         <EntityTypeShape EntityType="iFoodyModel.FavoriteList" Width="1.5" PointX="10.5" PointY="13.25" IsExpanded="true" />

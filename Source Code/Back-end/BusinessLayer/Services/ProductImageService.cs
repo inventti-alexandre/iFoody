@@ -20,9 +20,22 @@ namespace BusinessLayer.Services
         {
             _unitOfWork = unitOfWork;
         }
-        public IEnumerable<ProductImageBusinessEntity> GetAllProductImagesByProductId(Guid Id)
+
+        public ProductImageBusinessEntity GetProductImageById(Guid id)
         {
-           //  var productImages = _unitOfWork.ProductImages.GetManyQueryable(productId => productId.ToString() == Id.ToString()).ToList();
+            var productImage = _unitOfWork.ProductImages.GetById(id);
+            if (productImage != null)
+            {
+                Mapper.CreateMap<ProductImage, ProductImageBusinessEntity>();
+                var productImageModel = Mapper.Map<ProductImage, ProductImageBusinessEntity>(productImage);
+                //var productsModel = new List<ProductBusinessEntity>();
+                return productImageModel;
+            }
+            return null;
+        }
+
+        public IEnumerable<ProductImageBusinessEntity> GetAllProductImagesByProductId(Guid Id)
+        {         
             var productImages = _unitOfWork.ProductImages.GetManyQueryable(x => x.ProductId == Id).ToList();
             if (productImages.Any())
             {

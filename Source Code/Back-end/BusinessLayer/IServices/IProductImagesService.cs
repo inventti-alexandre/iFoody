@@ -9,7 +9,7 @@ namespace BusinessLayer.IServices
 {
     public interface IProductImagesService
     {
-//        ProductImageBusinessEntity GetProductImagesById(Guid productId);
+        ProductImageBusinessEntity GetProductImageById(Guid id);
         IEnumerable<ProductImageBusinessEntity> GetAllProductImagesByProductId(Guid productId);
         Guid CreateProductImage(ProductImageBusinessEntity productEntity);    
         bool DeleteProductImage(Guid ImageId);

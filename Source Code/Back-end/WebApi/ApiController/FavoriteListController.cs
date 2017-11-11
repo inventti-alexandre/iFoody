@@ -6,34 +6,54 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using BusinessEntities;
-using BusinessLayer.Services;
 using BusinessLayer.IServices;
 
 namespace WebApi.ApiController
 {
+
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class ProductImageController : System.Web.Http.ApiController
+    public class FavoriteListController : System.Web.Http.ApiController
     {
         //private readonly IProductService _productServices;
-        private readonly IProductImagesService _productImageService;
-    
-        public ProductImageController(IProductImagesService productImageService)
+        private readonly IFavoritesListService _favoritesListService;
+
+        public FavoriteListController(IFavoritesListService favoritesListService)
         {
-            _productImageService = productImageService;
+            _favoritesListService = favoritesListService;
 
         }
-        // GET api/productImage/?id=
+        // GET api/favoritelist/?userId=
+        [HttpGet]
+        public IHttpActionResult GetByUserId(Guid userId)
+        {
+            try
+            {
+                var favoriteList = _favoritesListService.GetFavoriteByUserId(userId);
+                if (favoriteList == null)
+                {
+                    return NotFound(); // Returns a NotFoundResult
+                }
+                return Ok(favoriteList);  // Returns an OkNegotiatedContentResult
+
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+
+        }
+        // GET api/favoritelist/?id=
         [HttpGet]
         public IHttpActionResult GetById(Guid id)
         {
             try
             {
-                var productImage = _productImageService.GetProductImageById(id);
-                if (productImage == null)
+                var favoriteItem = _favoritesListService.GetFavoriteById(id);
+                if (favoriteItem == null)
                 {
                     return NotFound(); // Returns a NotFoundResult
                 }
-                return Ok(productImage);  // Returns an OkNegotiatedContentResult
+                return Ok(favoriteItem);  // Returns an OkNegotiatedContentResult
 
             }
             catch (Exception e)
@@ -42,59 +62,37 @@ namespace WebApi.ApiController
             }
 
         }
-
-        // GET api/productimage/?id=
-        [HttpGet]
-        public IHttpActionResult GetByProductId(Guid productId)
-        {
-            try
-            {
-                var productImages = _productImageService.GetAllProductImagesByProductId(productId);
-                if (productImages == null)
-                {
-                    return NotFound(); // Returns a NotFoundResult
-                }
-                return Ok(productImages);  // Returns an OkNegotiatedContentResult
-
-            }
-            catch (Exception e)
-            {
-                return NotFound();
-            }
-            
-
-        }
-        //POST api/productimage
+        //POST api/favoritelist
         [HttpPost]
-        public IHttpActionResult Post([FromBody] ProductImageBusinessEntity productImageEntity)
+        public IHttpActionResult Post([FromBody] FavoriteListBusinessEntity favoriteListEntity)
         {
             try
             {
-                return Ok(_productImageService.CreateProductImage(productImageEntity));
+                return Ok(_favoritesListService.CreateFavoriteItem(favoriteListEntity));
 
             }
             catch (Exception e)
             {
                 return NotFound();
             }
-           
+
         }
 
-        // DELETE api/productimage/?id=
+        // DELETE api/favoritelist/?id=
         [HttpDelete]
         public IHttpActionResult Delete(Guid id)
         {
             try
             {
-                return Ok(_productImageService.DeleteProductImage(id));
+                return Ok(_favoritesListService.DeleteFavoriteItem(id));
 
             }
             catch (Exception e)
             {
                 return NotFound();
             }
-        
-            
+
+
         }
 
     }
