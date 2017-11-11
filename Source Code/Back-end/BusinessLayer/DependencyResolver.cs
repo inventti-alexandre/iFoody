@@ -14,6 +14,7 @@ namespace BusinessLayer
             // Mew Mew... Add new Dependency Resolver below 
             registerComponent.RegisterType<IUserService, UserService>();
             registerComponent.RegisterType<IProductService, ProductService>();
+            registerComponent.RegisterType<IProductImagesService, ProductImageService>();
 
         }
 

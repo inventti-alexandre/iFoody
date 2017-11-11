@@ -73,7 +73,7 @@ namespace DataModel.IRepository
             iFoodyContext.Entry(entityToUpdate).State = EntityState.Modified;
         }
 
-        // Generic Get Many Records method with Lamda Expression, like x => x*2
+        // Generic Get Many Records method with Lamda Expression, like x => x*2, not use
         public virtual IEnumerable<TEntity> GetMany(Func<TEntity, bool> where)
         {
             return dbSet.Where(where).ToList();

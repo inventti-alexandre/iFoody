@@ -15,10 +15,10 @@ namespace WebApi.ApiController
     public class ProductController : System.Web.Http.ApiController
     {
         //private readonly IProductService _productServices;
-        private readonly ProductService _productService;
+        private readonly IProductService _productService;
 
 
-        public ProductController(ProductService productServices)
+        public ProductController(IProductService productServices)
         {
             _productService = productServices;
 
@@ -28,52 +28,86 @@ namespace WebApi.ApiController
         [HttpGet]
         public IHttpActionResult Get()
         {
-
-            var products = _productService.GetAllProducts();
-            if (products == null)
+            try
             {
-                return NotFound(); // Returns a NotFoundResult
+                var products = _productService.GetAllProducts();
+                if (products == null)
+                {
+                    return NotFound(); // Returns a NotFoundResult
+                }
+                return Ok(products);  // Returns an OkNegotiatedContentResult
             }
-            return Ok(products);  // Returns an OkNegotiatedContentResult
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+
+           
 
         }
         // GET api/product/?id=
         [HttpGet]
         public IHttpActionResult Get( Guid id)
         {
-
-            var product = _productService.GetProductById(id);
-            if (product == null)
+            try
             {
-                return NotFound(); // Returns a NotFoundResult
+                var product = _productService.GetProductById(id);
+                if (product == null)
+                {
+                    return NotFound(); // Returns a NotFoundResult
+                }
+                return Ok(product);  // Returns an OkNegotiatedContentResult
             }
-            return Ok(product);  // Returns an OkNegotiatedContentResult
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+       
 
         }
         //POST api/product
         [HttpPost]
-        public Guid Post([FromBody] ProductBusinessEntity productEntity)
+        public IHttpActionResult Post([FromBody] ProductBusinessEntity productEntity)
         {
-            return _productService.CreateProduct(productEntity);
+            try
+            {
+                return Ok(_productService.CreateProduct(productEntity));
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+          
         }
 
         // DELETE api/product/?id=
         [HttpDelete]
-        public bool Delete(Guid id)
+        public IHttpActionResult Delete(Guid id)
         {
-            if (id!=null)
-                return _productService.DeleteProduct(id);
-            return false;
+            try
+            {
+                return Ok(_productService.DeleteProduct(id));
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+                
+
         }
         // PUT api/product/?id=
         [HttpPut]
-        public bool Put([FromBody]ProductBusinessEntity productEntity)
+        public IHttpActionResult Put([FromBody]ProductBusinessEntity productEntity)
         {
-            if (productEntity.Id !=null)
+            try
             {
-                return _productService.UpdateProduct(productEntity);
+                return Ok(_productService.UpdateProduct(productEntity));
             }
-            return false;
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+         
         }
     }
 }
