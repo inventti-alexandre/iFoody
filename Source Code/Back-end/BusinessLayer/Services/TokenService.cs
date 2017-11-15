@@ -5,6 +5,7 @@ using DataModel.IUnitOfWork;
 using System;
 using System.Configuration;
 using System.Linq;
+using System.Text;
 
 namespace BusinessLayer.Services
 {
@@ -37,17 +38,53 @@ namespace BusinessLayer.Services
             var tokenModel = new TokenBusinessEntity()
             {
                 UserId = userId,
+                AuthToken = token,
                 IssuedOn = issuedOn,
-                ExpiresOn = expiredOn,
-                AuthToken = token
+                ExpiresOn = expiredOn
             };
 
             return tokenModel;
         }
 
-        public bool ValidateToken(string tokenId)
+        // Check User Credentials
+        public Guid? CheckUserCredential(string userCredential)
         {
-            var token = _unitOfWork.Tokens.Get(t => t.AuthToken == tokenId && t.ExpiresOn > DateTime.Now);
+            try
+            {
+                String[] decodedStringArray = DecodedStringBase64(userCredential);
+                var email = decodedStringArray[0];
+                var password = decodedStringArray[1];
+
+                if (_unitOfWork.Users.EmailExist(email))
+                {
+                    return null;
+                }
+
+                if (_unitOfWork.Users.Get(e => e.Email == email).Password == password)
+                {
+                    return _unitOfWork.Users.Get(e => e.Email == email).Id;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        // Decoded Base64 to String
+        public String[] DecodedStringBase64(string input)
+        {
+            byte[] data = Convert.FromBase64String(input);
+            string decodedString = Encoding.UTF8.GetString(data);
+            String[] decodedStringArray = decodedString.Split(':');
+            return decodedStringArray;
+        }
+
+        // Validate Auth Token from Client
+        public bool ValidateToken(string authToken)
+        {
+            var token = _unitOfWork.Tokens.Get(t => t.AuthToken == authToken && t.ExpiresOn > DateTime.Now);
             if (token != null && !(DateTime.Now > token.ExpiresOn))
             {
                 token.ExpiresOn = token.ExpiresOn.AddSeconds(
@@ -57,6 +94,25 @@ namespace BusinessLayer.Services
                 return true;
             }
             return false;
+        }
+
+        // Return User Id from Auth Token
+        public Guid? GetUserId(string authToken)
+        {
+            try
+            {
+                if (authToken != null)
+                {
+                    var firstOrDefault = _unitOfWork.Tokens.GetManyQueryable(a => a.AuthToken == authToken).FirstOrDefault();
+                    if (firstOrDefault != null)
+                        return firstOrDefault.UserId;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public bool Kill(string tokenId)

@@ -8,7 +8,13 @@ namespace BusinessLayer.IServices
 
         TokenBusinessEntity GenerateToken(Guid userId);
 
+        Guid? CheckUserCredential(string signInIuserCredential);
+
+        String[] DecodedStringBase64(string input);
+
         bool ValidateToken(string tokenId);
+
+        Guid? GetUserId(string authToken);
 
         bool Kill(string tokenId);
 

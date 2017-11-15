@@ -16,7 +16,7 @@ namespace DataModel.Repository
         public bool EmailExist(string email)
         {
             var firstOrDefault = _iFoodyContext.Users.FirstOrDefault(e => e.Email == email);
-            return firstOrDefault == null;
+            return firstOrDefault != null;
         }
     }
 }
