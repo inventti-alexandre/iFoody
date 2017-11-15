@@ -99,5 +99,30 @@ namespace BusinessLayer.Services
             }
             return success;
         }
+
+        public IEnumerable<ImageBusinessEntity> GetAllImageByProductId(Guid productId)
+        {
+            try
+            {
+                {
+                    var productImages = _unitOfWork.ProductImages.GetManyQueryable(x=>x.ProductId==productId).ToList();
+
+                    if (productImages.Any())
+                    {
+                        var images = _unitOfWork.Images.GetManyQueryable(x => productImages.Any(y => y.Id == x.Id)).ToList();
+                
+                        Mapper.CreateMap<Image, ImageBusinessEntity>();
+                        var imagesModel = Mapper.Map<List<Image>, List<ImageBusinessEntity>>(images);
+
+                        return imagesModel;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+            return null;
+        }
     }
 }
