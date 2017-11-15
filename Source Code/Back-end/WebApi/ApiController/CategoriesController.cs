@@ -1,113 +1,111 @@
-﻿using BusinessEntities;
-using BusinessLayer.Services;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using BusinessEntities;
 using BusinessLayer.IServices;
-using WebApi.ActionFilters;
 
 namespace WebApi.ApiController
 {
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class ProductController : System.Web.Http.ApiController
+    public class CategoriesController : System.Web.Http.ApiController
     {
         //private readonly IProductService _productServices;
-        private readonly IProductService _productService;
+        private readonly ICategoriesService _categoriesService;
 
 
-        public ProductController(IProductService productServices)
+        public CategoriesController(ICategoriesService categoriesService)
         {
-            _productService = productServices;
+            _categoriesService = categoriesService;
 
         }
-
-        // GET api/product
+        // GET api/categories
         [HttpGet]
         public IHttpActionResult Get()
         {
             try
             {
-                var products = _productService.GetAllProducts();
-                if (products == null)
+                var categories = _categoriesService.GetAllCategories();
+                if (categories == null)
                 {
                     return NotFound(); // Returns a NotFoundResult
                 }
-                return Ok(products);  // Returns an OkNegotiatedContentResult
+                return Ok(categories);  // Returns an OkNegotiatedContentResult
             }
             catch (Exception e)
             {
                 return NotFound();
             }
 
-           
+
 
         }
-
-        // GET api/product/?id=
+        // GET api/categories/?id=
         [HttpGet]
         public IHttpActionResult Get(Guid id)
         {
             try
             {
-                var product = _productService.GetProductById(id);
-                if (product == null)
+                var category = _categoriesService.GetCategoryById(id);
+                if (category == null)
                 {
                     return NotFound(); // Returns a NotFoundResult
                 }
-                return Ok(product);  // Returns an OkNegotiatedContentResult
+                return Ok(category);  // Returns an OkNegotiatedContentResult
             }
             catch (Exception e)
             {
                 return NotFound();
             }
-       
+
 
         }
-        //POST api/product
+        //POST api/categories
         [HttpPost]
-        public IHttpActionResult Post([FromBody] ProductBusinessEntity productEntity)
+        public IHttpActionResult Post([FromBody] CategoryBusinessEntity categoryEntity)
         {
             try
             {
-                return Ok(_productService.CreateProduct(productEntity));
+                return Ok(_categoriesService.CreateCategory(categoryEntity));
             }
             catch (Exception e)
             {
                 return NotFound();
             }
-          
+
         }
 
-        // DELETE api/product/?id=
+        // DELETE api/categories/?id=
         [HttpDelete]
         public IHttpActionResult Delete(Guid id)
         {
             try
             {
-                return Ok(_productService.DeleteProduct(id));
+                return Ok(_categoriesService.DeleteCategory(id));
             }
             catch (Exception e)
             {
                 return NotFound();
             }
-                
+
 
         }
-        // PUT api/product/?id=
+        // PUT api/categories/?id=
         [HttpPut]
-        public IHttpActionResult Put([FromBody]ProductBusinessEntity productEntity)
+        public IHttpActionResult Put([FromBody]CategoryBusinessEntity categoryEntity)
         {
             try
             {
-                return Ok(_productService.UpdateProduct(productEntity));
+                return Ok(_categoriesService.UpdateCategory(categoryEntity));
             }
             catch (Exception e)
             {
                 return NotFound();
             }
-         
+
         }
     }
 }
