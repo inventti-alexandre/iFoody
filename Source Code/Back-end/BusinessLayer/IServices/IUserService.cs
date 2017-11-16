@@ -12,5 +12,6 @@ namespace BusinessLayer.IServices
         bool DeleteUser(Guid userId);
         Guid? SignUp(UserBusinessEntity user);
         Guid? Authenticate(string email, string password);
+        bool CheckReviewExist(Guid? userId, Guid? reviewId);
     }
 }

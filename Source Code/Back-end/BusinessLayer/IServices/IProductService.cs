@@ -1,9 +1,6 @@
-﻿using System;
+﻿using BusinessEntities;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BusinessEntities;
 
 namespace BusinessLayer.IServices
 {
@@ -11,7 +8,7 @@ namespace BusinessLayer.IServices
     {
         ProductBusinessEntity GetProductById(Guid productId);
         IEnumerable<ProductBusinessEntity> GetAllProducts();
-        Guid CreateProduct(ProductBusinessEntity productEntity);
+        Guid? CreateProduct(ProductBusinessEntity productEntity);
         bool UpdateProduct(ProductBusinessEntity productEntity);
         bool DeleteProduct(Guid productId);
     }

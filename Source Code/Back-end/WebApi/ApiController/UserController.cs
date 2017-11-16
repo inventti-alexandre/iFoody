@@ -19,16 +19,19 @@ namespace WebApi.ApiController
         private readonly ITokenService _tokenService;
         private readonly IImageService _imageService;
         private readonly IProductService _productService;
-        //public UserController(IUserService userService)
-        //{
-        //    _userService = userService;
-        //}
-        public UserController(IUserService userService, ITokenService tokenService, IImageService imageService, IProductService productService)
+        private readonly IStoreService _storeService;
+        private readonly IReviewService _reviewService;
+        private readonly ICommentService _commentService;
+
+        public UserController(IUserService userService, ITokenService tokenService, IImageService imageService, IProductService productService, IStoreService storeService, IReviewService reviewService, ICommentService commentService)
         {
             _userService = userService;
             _tokenService = tokenService;
             _imageService = imageService;
             _productService = productService;
+            _storeService = storeService;
+            _reviewService = reviewService;
+            _commentService = commentService;
         }
 
         // Get api/user
@@ -87,7 +90,6 @@ namespace WebApi.ApiController
         {
             try
             {
-                //var userJson = JsonConvert.DeserializeObject<UserBusinessEntity>(user);
                 var signUpUserId = _userService.SignUp(user);
                 return Request.CreateResponse(HttpStatusCode.OK, signUpUserId);
             }
@@ -108,9 +110,57 @@ namespace WebApi.ApiController
                 {
                     var authToken = Request.Headers.GetValues("Token").FirstOrDefault();
                     var userToken = _tokenService.GetUserId(authToken);
-                    _imageService.UploadImage(images, userToken.GetValueOrDefault());
+                    _imageService.UploadImage(images, userToken.GetValueOrDefault(), null);
 
                     return Request.CreateResponse(HttpStatusCode.OK);
+                }
+                return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Cannot upload Images");
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Error unexpected");
+            }
+        }
+
+        // POST api/user/review
+        [HttpPost]
+        [Route("review")]
+        public HttpResponseMessage Post([FromBody] ReviewBusinessEntity review)
+        {
+            try
+            {
+                if (review != null)
+                {
+                    var authToken = Request.Headers.GetValues("Token").FirstOrDefault();
+                    var userToken = _tokenService.GetUserId(authToken);
+
+                    _reviewService.InsertReview(review);
+
+                    return Request.CreateResponse(HttpStatusCode.OK, review.Id);
+                }
+                return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Cannot upload Images");
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Error unexpected");
+            }
+        }
+
+        // POST api/user/comment
+        [HttpPost]
+        [Route("comment")]
+        public HttpResponseMessage Post([FromBody] CommentBusinessEntity comment)
+        {
+            try
+            {
+                if (comment != null)
+                {
+                    var authToken = Request.Headers.GetValues("Token").FirstOrDefault();
+                    var userToken = _tokenService.GetUserId(authToken);
+
+                    _commentService.InsertComment(comment);
+
+                    return Request.CreateResponse(HttpStatusCode.OK, comment.Id);
                 }
                 return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Cannot upload Images");
             }
@@ -125,7 +175,6 @@ namespace WebApi.ApiController
         [AllowAnonymous]
         [HttpPost]
         [Route("signin")]
-        //public HttpResponseMessage SignIn([FromBody] string userCredential)
         public HttpResponseMessage SignIn()
         {
             try
@@ -175,7 +224,37 @@ namespace WebApi.ApiController
             }
         }
 
-        // Put api/put/5
+        // Create Store
+        // Post api/user/store
+        [HttpPost]
+        [Route("store")]
+        public HttpResponseMessage Post([FromBody] StoreBusinessEntity store, [FromBody] List<ImageBusinessEntity> images)
+        {
+            try
+            {
+                if (store != null)
+                {
+                    var storeId = _storeService.OpenStore(store);
+
+                    if (images != null)
+                    {
+                        var authToken = Request.Headers.GetValues("Token").FirstOrDefault();
+                        var userToken = _tokenService.GetUserId(authToken);
+                        _imageService.UploadImage(images, userToken.GetValueOrDefault(), storeId);
+
+                        return Request.CreateResponse(HttpStatusCode.OK, storeId);
+                    }
+                    return Request.CreateResponse(HttpStatusCode.OK, storeId);
+                }
+                return Request.CreateResponse(HttpStatusCode.NotImplemented);
+            }
+            catch (Exception)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Exception error");
+            }
+        }
+
+        // Put api/user/put/5
         [HttpPut]
         [Route("profile")]
         public HttpResponseMessage Put(Guid id, [FromBody] UserBusinessEntity user)
@@ -195,7 +274,7 @@ namespace WebApi.ApiController
             return Request.CreateResponse(HttpStatusCode.NotFound, "User Not Found!");
         }
 
-        // Put api/put/5
+        // Put api/user/put/5
         [HttpPut]
         [Route("image")]
         public HttpResponseMessage Put([FromBody] ImageBusinessEntity image)
@@ -205,7 +284,69 @@ namespace WebApi.ApiController
                 if (image != null)
                 {
                     _imageService.UpdateImage(image);
-                    return Request.CreateResponse(HttpStatusCode.OK);
+                    return Request.CreateResponse(HttpStatusCode.OK, image.Id);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.NotImplemented);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Exception Error!!!");
+            }
+        }
+
+        // Put api/user/store/5
+        [HttpPut]
+        [Route("store")]
+        public HttpResponseMessage Put([FromBody] StoreBusinessEntity store)
+        {
+            try
+            {
+                if (store != null)
+                {
+                    _storeService.UpdateStore(store);
+                    return Request.CreateResponse(HttpStatusCode.OK, store.Id);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.NotImplemented);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Exception Error!!!");
+            }
+        }
+
+        [HttpPut]
+        [Route("review")]
+        public HttpResponseMessage Put([FromBody] ReviewBusinessEntity review)
+        {
+            try
+            {
+                if (review != null)
+                {
+                    _reviewService.UpdateReview(review);
+                    return Request.CreateResponse(HttpStatusCode.OK, review.Id);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.NotImplemented);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Exception Error!!!");
+            }
+        }
+
+        // PUT api/user/comment/5
+        [HttpPut]
+        [Route("comment")]
+        public HttpResponseMessage Put([FromBody] CommentBusinessEntity comment)
+        {
+            try
+            {
+                if (comment != null)
+                {
+                    _commentService.UpdateComment(comment);
+                    return Request.CreateResponse(HttpStatusCode.OK, comment.Id);
                 }
 
                 return Request.CreateResponse(HttpStatusCode.NotImplemented);
@@ -246,13 +387,67 @@ namespace WebApi.ApiController
         [Route("image/{id}")]
         public HttpResponseMessage DeleteImage(Guid id)
         {
-            if (!id.Equals(null))
+            try
             {
-                _imageService.DeleteImage(id);
-                return Request.CreateResponse(HttpStatusCode.OK);
+                if (!id.Equals(null))
+                {
+                    _imageService.DeleteImage(id);
+                    return Request.CreateResponse(HttpStatusCode.OK);
+                }
+                return Request.CreateResponse(HttpStatusCode.NotImplemented, "Not Implemented!");
             }
-            return Request.CreateResponse(HttpStatusCode.NotImplemented, "Not Implemented!");
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Exception Fail!");
+            }
         }
 
+        // Delete Store
+        [HttpDelete]
+        [Route("store/{id}")]
+        public HttpResponseMessage DeleteStore(Guid id)
+        {
+            try
+            {
+                _storeService.DeleteStore(id);
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.ExpectationFailed, "Exception Fail!");
+            }
+        }
+
+        // Delete Review
+        [HttpDelete]
+        [Route("review/{id}")]
+        public HttpResponseMessage DeleteReview(Guid id)
+        {
+            try
+            {
+                _reviewService.DeleteReview(id);
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.ExpectationFailed, "Exception Fail!");
+            }
+        }
+
+        // Delete Comment
+        [HttpDelete]
+        [Route("comment/{id}")]
+        public HttpResponseMessage DeleteComment(Guid id)
+        {
+            try
+            {
+                _commentService.DeleteComment(id);
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.ExpectationFailed, "Exception Fail!");
+            }
+        }
     }
 }

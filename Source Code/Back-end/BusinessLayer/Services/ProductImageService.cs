@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
-using AutoMapper;
+﻿using AutoMapper;
 using BusinessEntities;
 using BusinessLayer.IServices;
 using DataModel;
 using DataModel.IUnitOfWork;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Transactions;
 
 namespace BusinessLayer.Services
 {
-    public class ProductImageService:IProductImagesService
+    public class ProductImageService : IProductImagesService
     {
         private readonly IUnitOfWork _unitOfWork;
         //Constructor
@@ -35,7 +33,7 @@ namespace BusinessLayer.Services
         }
 
         public IEnumerable<ProductImageBusinessEntity> GetAllProductImagesByProductId(Guid Id)
-        {         
+        {
             var productImages = _unitOfWork.ProductImages.GetManyQueryable(x => x.ProductId == Id).ToList();
             if (productImages.Any())
             {
@@ -50,7 +48,7 @@ namespace BusinessLayer.Services
         public Guid CreateProductImage(ProductImageBusinessEntity productImageEntity)
         {
             using (var scope = new TransactionScope())
-            {            
+            {
                 Mapper.CreateMap<ProductImageBusinessEntity, ProductImage>().ForMember(x => x.Id, opt => opt.Ignore());
                 var productImage = Mapper.Map<ProductImageBusinessEntity, ProductImage>(productImageEntity);
                 _unitOfWork.ProductImages.Insert(productImage);
@@ -59,7 +57,7 @@ namespace BusinessLayer.Services
                 return productImage.Id;
             }
         }
-   
+
         public bool DeleteProductImage(Guid ImageId)
         {
             var success = false;

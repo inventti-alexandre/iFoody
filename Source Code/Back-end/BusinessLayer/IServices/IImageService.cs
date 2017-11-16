@@ -14,7 +14,7 @@ namespace BusinessLayer.IServices
         IEnumerable<ImageBusinessEntity> GetImage(Guid id);
 
         // Upload Image
-        bool UploadImage(List<ImageBusinessEntity> imagesEntity, Guid? userId);
+        bool UploadImage(List<ImageBusinessEntity> imagesEntity, Guid? userId, Guid? storeId);
 
         // Delete method
         bool DeleteImage(Guid id);

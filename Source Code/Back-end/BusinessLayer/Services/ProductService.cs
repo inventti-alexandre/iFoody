@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using BusinessEntities;
 using BusinessLayer.IServices;
 using DataModel;
 using DataModel.IUnitOfWork;
-using DataModel.UnitOfWork;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Transactions;
 
 namespace BusinessLayer.Services
@@ -20,6 +19,8 @@ namespace BusinessLayer.Services
             _unitOfWork = unitOfWork;
         }
 
+
+        // Get All Products
         public IEnumerable<ProductBusinessEntity> GetAllProducts()
         {
             var products = _unitOfWork.Products.GetAll().ToList();
@@ -33,6 +34,7 @@ namespace BusinessLayer.Services
             return null;
         }
 
+        // Get Product By Id
         public ProductBusinessEntity GetProductById(Guid productId)
         {
             var product = _unitOfWork.Products.GetById(productId);
@@ -45,20 +47,31 @@ namespace BusinessLayer.Services
             }
             return null;
         }
-        public Guid CreateProduct(ProductBusinessEntity productEntity)
+
+        // Store upload Product
+        public Guid? CreateProduct(ProductBusinessEntity productEntity)
         {
-            using (var scope = new TransactionScope())
+            try
             {
-                //productEntity.Id = Guid.NewGuid();
-                Mapper.CreateMap<ProductBusinessEntity, Product>().ForMember(x => x.Id, opt => opt.Ignore());
-                var product = Mapper.Map<ProductBusinessEntity, Product>(productEntity);
-                _unitOfWork.Products.Insert(product);
-                _unitOfWork.Complete();
-                scope.Complete();
-                return product.Id;
+                using (var scope = new TransactionScope())
+                {
+
+                    //productEntity.Id = Guid.NewGuid();
+                    Mapper.CreateMap<ProductBusinessEntity, Product>().ForMember(x => x.Id, opt => opt.Ignore());
+                    var product = Mapper.Map<ProductBusinessEntity, Product>(productEntity);
+                    _unitOfWork.Products.Insert(product);
+                    _unitOfWork.Complete();
+                    scope.Complete();
+                    return product.Id;
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
             }
         }
 
+        // Store delete Product
         public bool DeleteProduct(Guid productId)
         {
             var success = false;
@@ -78,6 +91,7 @@ namespace BusinessLayer.Services
             return success;
         }
 
+        // Store update Product
         public bool UpdateProduct(ProductBusinessEntity productEntity)
         {
             var success = false;

@@ -55,8 +55,8 @@ namespace BusinessLayer.Services
             }
         }
 
-        // Upload Image
-        public bool UploadImage(List<ImageBusinessEntity> imagesEntity, Guid? userId)
+        // Upload Image (Simplied User or User has Store)
+        public bool UploadImage(List<ImageBusinessEntity> imagesEntity, Guid? userId, Guid? storeId)
         {
             try
             {
@@ -78,17 +78,34 @@ namespace BusinessLayer.Services
                                 if (firstOrDefault != null)
                                 {
                                     var imageId = firstOrDefault.Id;
-                                    var newUserImage = new UserImage
+
+                                    // Check if User is uploading into Store
+                                    if (storeId != null)
                                     {
-                                        UserId = userId.GetValueOrDefault(),
-                                        ImageId = imageId
-                                    };
+                                        var newStoreImage = new StoreImage
+                                        {
+                                            StoreId = storeId.GetValueOrDefault(),
+                                            ImageId = imageId
+                                        };
+
+                                        _unitOfWork.StoreImages.Insert(newStoreImage);
+                                        _unitOfWork.Complete();
+                                    }
+                                    else
+                                    {
+                                        // User upload normally
+                                        var newUserImage = new UserImage
+                                        {
+                                            UserId = userId.GetValueOrDefault(),
+                                            ImageId = imageId
+                                        };
+
+                                        _unitOfWork.UserImages.Insert(newUserImage);
+                                        _unitOfWork.Complete();
+                                    }
                                 }
-                                _unitOfWork.UserImages.Insert(new UserImage());
                             }
                         }
-
-                        _unitOfWork.Complete();
                         scope.Complete();
                         return true;
                     }
