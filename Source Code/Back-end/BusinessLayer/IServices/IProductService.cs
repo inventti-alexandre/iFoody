@@ -14,5 +14,6 @@ namespace BusinessLayer.IServices
         Guid CreateProduct(ProductBusinessEntity productEntity);
         bool UpdateProduct(ProductBusinessEntity productEntity);
         bool DeleteProduct(Guid productId);
+        IEnumerable<ImageBusinessEntity> GetAllImageByProductId(Guid productId);
     }
 }
