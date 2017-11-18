@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="iFoodyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="iFoodyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="Id" />
@@ -97,6 +97,7 @@
           <Property Name="District" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CategoryId" Type="uniqueidentifier" />
+          <Property Name="UserId" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="Tokens">
           <Key>
@@ -128,6 +129,7 @@
           <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Birthday" Type="date" />
           <Property Name="IsAdmin" Type="bit" Nullable="false" />
+          <Property Name="hasStore" Type="bit" />
         </EntityType>
         <Association Name="FK_Comments_Products">
           <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
@@ -321,6 +323,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Stores_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Stores" Type="Self.Stores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Stores">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tokens_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Tokens" Type="Self.Tokens" Multiplicity="*" />
@@ -434,6 +448,10 @@
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Stores" EntitySet="Stores" />
           </AssociationSet>
+          <AssociationSet Name="FK_Stores_Users" Association="Self.FK_Stores_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Stores" EntitySet="Stores" />
+          </AssociationSet>
           <AssociationSet Name="FK_Tokens_Users" Association="Self.FK_Tokens_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Tokens" EntitySet="Tokens" />
@@ -447,8 +465,7 @@
             <End Role="UserImages" EntitySet="UserImages" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="iFoodyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -568,12 +585,14 @@
           <Property Name="District" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="CategoryId" Type="Guid" />
+          <Property Name="UserId" Type="Guid" />
           <NavigationProperty Name="Category" Relationship="Self.FK_Stores_Categories" FromRole="Stores" ToRole="Categories" />
           <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_Stores" FromRole="Stores" ToRole="Comments" />
           <NavigationProperty Name="FavoriteLists" Relationship="Self.FK_FavoriteLists_Stores" FromRole="Stores" ToRole="FavoriteLists" />
           <NavigationProperty Name="Products" Relationship="Self.FK_Products_Stores" FromRole="Stores" ToRole="Products" />
           <NavigationProperty Name="Reviews" Relationship="Self.FK_Reviews_Stores" FromRole="Stores" ToRole="Reviews" />
           <NavigationProperty Name="StoreImages" Relationship="Self.FK_StoreImages_Stores" FromRole="Stores" ToRole="StoreImages" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Stores_Users" FromRole="Stores" ToRole="Users" />
         </EntityType>
         <EntityType Name="Token">
           <Key>
@@ -608,9 +627,11 @@
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Birthday" Type="DateTime" Precision="0" />
           <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
+          <Property Name="hasStore" Type="Boolean" />
           <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_Users" FromRole="Users" ToRole="Comments" />
           <NavigationProperty Name="FavoriteLists" Relationship="Self.FK_FavoriteLists_Users" FromRole="Users" ToRole="FavoriteLists" />
           <NavigationProperty Name="Reviews" Relationship="Self.FK_Reviews_Users" FromRole="Users" ToRole="Reviews" />
+          <NavigationProperty Name="Stores" Relationship="Self.FK_Stores_Users" FromRole="Users" ToRole="Stores" />
           <NavigationProperty Name="Tokens" Relationship="Self.FK_Tokens_Users" FromRole="Users" ToRole="Tokens" />
           <NavigationProperty Name="UserImages" Relationship="Self.FK_UserImages_Users" FromRole="Users" ToRole="UserImages" />
         </EntityType>
@@ -818,6 +839,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Stores_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Stores" Type="Self.Store" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Stores">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tokens_Users">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
           <End Role="Tokens" Type="Self.Token" Multiplicity="*" />
@@ -922,6 +955,10 @@
           <AssociationSet Name="FK_StoreImages_Stores" Association="Self.FK_StoreImages_Stores">
             <End Role="Stores" EntitySet="Stores" />
             <End Role="StoreImages" EntitySet="StoreImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stores_Users" Association="Self.FK_Stores_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Stores" EntitySet="Stores" />
           </AssociationSet>
           <AssociationSet Name="FK_Tokens_Users" Association="Self.FK_Tokens_Users">
             <End Role="Users" EntitySet="Users" />
@@ -1037,6 +1074,7 @@
                 <ScalarProperty Name="District" ColumnName="District" />
                 <ScalarProperty Name="City" ColumnName="City" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1071,6 +1109,7 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Birthday" ColumnName="Birthday" />
                 <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+                <ScalarProperty Name="hasStore" ColumnName="hasStore" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

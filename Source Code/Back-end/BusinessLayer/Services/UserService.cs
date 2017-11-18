@@ -25,9 +25,6 @@ namespace BusinessLayer.Services
         {
             try
             {
-                //var signUpUser = new JavaScriptSerializer().Deserialize<UserBusinessEntity>(signUpUser);
-                //var userModel = Mapper.Map<UserBusinessEntity>(userJson);
-
                 // Check Exist user
                 if (_unitOfWork.Users.EmailExist(user.Email))
                 {
@@ -35,45 +32,22 @@ namespace BusinessLayer.Services
                 }
                 using (var scope = new TransactionScope())
                 {
-                    //var newUser = new UserBusinessEntity
-                    //{
-                    //    LastName = user.LastName,
-                    //    FirstName = user.FirstName,
-                    //    Gender = user.Gender,
-                    //    Email = user.Email,
-                    //    Password = user.Password,
-                    //    Birthday = user.Birthday,
-                    //};
-
                     Mapper.CreateMap<UserBusinessEntity, User>().ForMember(x => x.Id, opt => opt.Ignore());
                     var newUserModel = Mapper.Map<UserBusinessEntity, User>(user);
+
                     _unitOfWork.Users.Insert(newUserModel);
+
                     _unitOfWork.Complete();
                     scope.Complete();
+
                     return newUserModel.Id;
                 }
-                //var request = new HttpClient();
-                //string json = JsonConvert.SerializeObject(newUser);
-                //byte[] bytes = Encoding.UTF8.GetBytes(json);
-
-                //using (Stream stream = await request.GetStreamAsync(request.BaseAddress))
-                //{
-                //    stream.Write(bytes, 0, bytes.Length);
-                //}
-                //try
-                //{
-                //    await request.GetAsync(request.BaseAddress);
-                //}
-                //catch (Exception ex)
-                //{
-                //}
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 throw;
             }
-
         }
 
         // Get User By Id
@@ -187,6 +161,25 @@ namespace BusinessLayer.Services
 
             }
 
+        }
+
+        // Check Review Exist
+        public bool CheckReviewExist(Guid? userId, Guid? reviewId)
+        {
+            try
+            {
+                if (userId != null & reviewId != null)
+                {
+                    var reviewCounts = _unitOfWork.Reviews.GetManyQueryable(r => r.UserId == userId).Count();
+
+                    return reviewCounts > 0;
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
     }
 }
