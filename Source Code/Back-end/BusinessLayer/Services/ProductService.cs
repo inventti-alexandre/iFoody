@@ -50,9 +50,7 @@ namespace BusinessLayer.Services
                         var storeEntity = Mapper.Map<Store, StoreBusinessEntity>(store);
 
                         // Get category
-                        var category =
-                            _unitOfWork.Categories.GetManyQueryable(
-                                c => c.Id == productEntity.CategoryId.GetValueOrDefault()).FirstOrDefault();
+                        var category = _unitOfWork.Categories.GetById(productEntity.CategoryId.GetValueOrDefault());
                         Mapper.CreateMap<Category, CategoryBusinessEntity>();
                         var categoryEntity = Mapper.Map<Category, CategoryBusinessEntity>(category);
 
@@ -68,7 +66,7 @@ namespace BusinessLayer.Services
                         var productDto = new ProductDto ()
                         {
                             Product = productEntity,
-                            //Store = storeEntity,
+                            Store = storeEntity,
                             Category = categoryEntity,
                             Images = imageEntities,
                             
