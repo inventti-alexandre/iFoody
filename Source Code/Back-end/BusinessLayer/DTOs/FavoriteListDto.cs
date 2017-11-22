@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WebApi.DTOs
+namespace BusinessLayer.DTOs
 {
     class FavoriteListDto
     {

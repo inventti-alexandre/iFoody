@@ -1,12 +1,11 @@
 ﻿using System;
 
-namespace WebApi.DTOs
+namespace BusinessLayer.DTOs
 {
-    class UserImageDto
+    class StoreImageDto
     {
         public Guid Id { get; set; }
-        public Guid? UserId { get; set; }
+        public Guid? StoreId { get; set; }
         public Guid? ImageId { get; set; }
-
     }
 }
