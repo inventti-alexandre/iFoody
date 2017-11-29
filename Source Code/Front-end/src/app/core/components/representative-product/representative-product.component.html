@@ -4,25 +4,10 @@
       <p>{{product.name}}</p>
       <div class="col-md-12 category" [ngClass]="[i < listProducts.length-1 ? 'category--border' : '']">
         <div class="row category__row">
-          <div class="col-sm-4 col-xs-6">
+          <div class="col-sm-4 col-xs-6" *ngFor="let number of [0,1,2,3,4,5]">
             <product-item></product-item>
           </div>
-          <div class="col-sm-4 col-xs-6">
-            <product-item></product-item>
-          </div>
-          <div class="col-sm-4 col-xs-6">
-            <product-item></product-item>
-          </div>
-
-          <div class="col-sm-4 col-xs-6">
-            <product-item></product-item>
-          </div>
-          <div class="col-sm-4 col-xs-6">
-            <product-item></product-item>
-          </div>
-          <div class="col-sm-4 col-xs-6">
-            <product-item></product-item>
-          </div>
+        
         </div>
       </div>
     </div>

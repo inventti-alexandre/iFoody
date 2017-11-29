@@ -1,33 +1,24 @@
 import { element } from 'protractor';
+import { Category } from './../models/allModel';
 import * as apiUrl from './../../constant/apiUrl';
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import 'rxjs/Rx';
 import {Observable} from 'rxjs/Rx';
-import {CategoryService} from './category.service';
 
 @Injectable()
-export class ProductService {
+export class CategoryService {
   private actionUrl: string;
 
   constructor(private _http: Http) {
-    this.actionUrl = apiUrl.GetAllProduct;
+    this.actionUrl = apiUrl.GetAllCategories;
   }
 
   public GetAll = (): Observable<any> => {
-    var listProduct = [];
+    var categories = [];
     return this._http.get(this.actionUrl)
         .map((response: Response) => <any>response.json())
-        .do(x => listProduct.push(x));
-  }
-
-  public GetProductByCategory=(categoryName, products, result): Observable<any> => {
-    var temp = products.filter(i => i.category.name ==categoryName);
-    if(temp.length!==0){
-      result.categoryName = categoryName;
-      result.products = temp;
-    }
-    return result;
+        .do(x => categories.push(x));
   }
 
 }
