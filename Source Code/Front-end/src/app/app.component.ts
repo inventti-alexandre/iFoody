@@ -1,7 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { MdCheckboxModule } from '@angular/material';
+import { MatCheckboxModule } from '@angular/material';
 import { Component } from '@angular/core';
-import {MatCheckboxModule} from '@angular/material';
 
 @Component({
     selector: 'app-root',

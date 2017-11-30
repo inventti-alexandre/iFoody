@@ -2,7 +2,7 @@ import { ProfileItemContainerComponent } from './profile-item-container';
 import { ProfileService } from './../../../services/profile.service';
 import { ProfileItem } from './profile-item';
 import { ProfileChildren } from '../../../models/profileChildren';
-import { WishListComponent } from './../../user/wish-list/wish-list.component';
+import { FavoriteListComponent } from './../../user/favorite-list/favorite-list.component';
 import { ResetPasswordComponent } from '../reset-password/reset-password.component';
 import { UserProfileComponent } from './../../user/user-profile/user-profile.component';
 import { componentFactoryName } from '@angular/compiler';
@@ -32,10 +32,11 @@ export class ProfileComponent implements OnInit{
   // @ViewChild(ProfileItemContainerComponent) child: ProfileItemContainerComponent; 
   @ViewChild('profile-item-container') profileItem;
   @Input() childComponent;
-  constructor(private profileService: ProfileService){}
+  constructor(private profileService: ProfileService) {}
 
   ngOnInit() {
     // this.profileItems = this.profileService.getProfileItem();
+    this.childComponent = 'user-profile';
   }
 
   public loadChildrenComponent(event?) {

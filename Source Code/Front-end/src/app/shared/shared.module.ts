@@ -1,3 +1,4 @@
+import { StoreItemComponent } from './components/store-item/store-item.component';
 import { PaginationModule } from 'ngx-bootstrap/ng2-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -16,6 +17,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BsRatingComponent } from './components/bs-rating/bs-rating.component';
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -30,14 +32,16 @@ import { BsRatingComponent } from './components/bs-rating/bs-rating.component';
     BsPaginationComponent,
     ProductItemComponent,
     NotFoundComponent,
-    BsRatingComponent
+    BsRatingComponent,
+    StoreItemComponent
   ],
   declarations: [
     BsBreadcrumbComponent,
     BsPaginationComponent,
     ProductItemComponent,
     NotFoundComponent,
-    BsRatingComponent
+    BsRatingComponent,
+    StoreItemComponent
   ],
   providers: [
     UserService,

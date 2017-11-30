@@ -10,6 +10,9 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 
 export class ProfileItemContainerComponent{
   childComponent;
+  constructor() {
+    this.childComponent = "user-profile";
+  }
 
   setChildComponent(child) {
     this.childComponent = child;

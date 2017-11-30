@@ -20,9 +20,9 @@
         </div>
 
 
-        <form [formGroup]="user" (ngSubmit)="onSubmit(user)">
+        <form [formGroup]="user" (ngSubmit)="SignIn(user)">
           <div>
-            <input type="text" formControlName="email" class="form-control input-lg" placeholder="Your Email">
+            <input type="text" autofocus="true"  formControlName="email" class="form-control input-lg" placeholder="Your Email">
             <i class="fa fa-envelope fa-2x"></i>
           </div>
 
@@ -30,11 +30,10 @@
             <input type="password" formControlName="password" class="form-control input-lg" placeholder="Password">
             <i class="fa fa-lock fa-2x"></i>
           </div>
+        <hr/>
+        <button type="submit" class="btn btn-login-email btn-lg"><i class="fa fa-email"></i>ĐĂNG NHẬP</button>
         </form>
 
-        <hr/>
-
-        <button type="submit" class="btn btn-login-email btn-lg" (click)="checkLogin()"><i class="fa fa-email"></i>ĐĂNG NHẬP</button>
         <hr/>
         <p>Chưa có tài khoản iFoody? <a href="#">Đăng Ký</a></p>
       </div>

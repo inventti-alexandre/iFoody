@@ -2,7 +2,7 @@ import { ProfileItemContainerComponent } from './components/shared/profile-layou
 import { NgSwitch } from '@angular/common';
 import { ProfileService } from './services/profile.service';
 import { SharedModule } from './../shared/shared.module';
-import { WishListComponent } from './components/user/wish-list/wish-list.component';
+import { FavoriteListComponent } from './components/user/favorite-list/favorite-list.component';
 // import { NgbDatepicker, NgbDatepickerModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';  // For Angular Material
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -10,7 +10,7 @@ import { SignupComponent } from './components/shared/signup/signup.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { MdCheckboxModule, MdDatepickerModule, MdNativeDateModule, MatInputModule } from '@angular/material';  // For Angular Material
+import { MatCheckboxModule, MatDatepickerModule, MatNativeDateModule, MatInputModule } from '@angular/material';  // For Angular Material
 import 'hammerjs';
 import {FormBuilder, FormGroup, Validators, FormsModule} from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -31,15 +31,15 @@ import { ProfileDirective } from './directives/profile.directive';
     RouterModule,
     BrowserModule,
     ReactiveFormsModule,
-    MdCheckboxModule, // For Angular Material
-    MdDatepickerModule,
-    MdNativeDateModule,
+    MatCheckboxModule, // For Angular Material
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatInputModule,
     FormsModule,
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(), 
     MatButtonModule,
-    MdCheckboxModule,
+    MatCheckboxModule,
     SharedModule,
   ],  
   exports:[
@@ -58,7 +58,7 @@ import { ProfileDirective } from './directives/profile.directive';
     OpenStoreComponent,
     StoreProfileComponent,
     UserProfileComponent,
-    WishListComponent,
+    FavoriteListComponent,
     ProfileDirective,
     ProfileItemContainerComponent
   ],
@@ -67,7 +67,7 @@ import { ProfileDirective } from './directives/profile.directive';
     ResetPasswordComponent,
     UserProfileComponent,
     StoreProfileComponent,
-    WishListComponent,
+    FavoriteListComponent,
   ],
   providers: [
     ProfileService

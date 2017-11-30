@@ -23,8 +23,7 @@ namespace BusinessLayer.Services
         {
             string token = Guid.NewGuid().ToString();
             DateTime issuedOn = DateTime.Now;
-            DateTime expiredOn = DateTime.Now.AddSeconds(
-                                              Convert.ToDouble(ConfigurationManager.AppSettings["AuthTokenExpiry"]));
+            DateTime expiredOn = DateTime.Now.AddSeconds(Convert.ToDouble(ConfigurationManager.AppSettings["AuthTokenExpiry"]));
             var tokendomain = new Token
             {
                 UserId = userId,
@@ -55,7 +54,7 @@ namespace BusinessLayer.Services
                 var email = decodedStringArray[0];
                 var password = decodedStringArray[1];
 
-                if (_unitOfWork.Users.EmailExist(email))
+                if (!_unitOfWork.Users.EmailExist(email))
                 {
                     return null;
                 }

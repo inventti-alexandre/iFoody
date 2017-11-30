@@ -26,8 +26,8 @@
     </div>
 
     <div class="col-md-2 col-sm-3 admin-product-item__type col-xs-3">
-      <md-select floatPlaceholder="never" placeholder={{productInfo.type}} class="row no-margin">
-        <md-option *ngFor="let type of types" [value]="type.value">
+      <md-select floatPlaceholder="never" placeholder="productInfo.type" class="row no-margin">
+        <md-option *ngFor="let type of types" value="type.value">
           {{ type.viewValue }}
         </md-option>
       </md-select>

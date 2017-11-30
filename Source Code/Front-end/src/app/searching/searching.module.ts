@@ -1,7 +1,7 @@
 import { FormsModule } from '@angular/forms';
 import { RatingModule } from 'ngx-bootstrap/rating';
 import { SharedModule } from '../shared/shared.module';
-import { MdCheckboxModule, MatButtonModule } from '@angular/material';
+import { MatCheckboxModule, MatButtonModule } from '@angular/material';
 import { CollapseModule } from 'ngx-bootstrap';
 import { SearchFilterComponent } from './components/search-filter/search-filter.component';
 import { NgModule } from '@angular/core';
@@ -22,7 +22,7 @@ import { SimilarStoreComponent } from './components/store-detail/similar-store/s
   imports: [
     CommonModule,
     CollapseModule.forRoot(),
-    MdCheckboxModule,
+    MatCheckboxModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCiZd64MtnFqNtuhvpWcGjBBjfzi0feu0Q'
     }),

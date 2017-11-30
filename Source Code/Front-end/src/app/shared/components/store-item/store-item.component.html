@@ -1,0 +1,12 @@
+<div class="store-item col-xs-12 col-sm-12" *ngIf="store != null">
+  <div class="image row">
+    <a [routerLink]="['/store', store.id]"></a>
+    <img src="http://znews-photo-td.zadn.vn/w480/Uploaded/wyhktpu/2017_03_01/1.jpg" alt="Food">
+  </div>
+
+  <bs-rating></bs-rating>
+
+  <h4>{{ store.name }}</h4>
+  
+  <!-- <h5>{{ store.price | currency:'vnd':4.0}}</h5> -->
+</div>

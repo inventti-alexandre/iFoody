@@ -1,4 +1,4 @@
-import { WishListComponent } from './../components/user/wish-list/wish-list.component';
+import { FavoriteListComponent } from './../components/user/favorite-list/favorite-list.component';
 import { ChangePasswordComponent } from '../components/shared/change-password/change-password.component';
 import { ResetPasswordComponent } from '../components/shared/reset-password/reset-password.component';
 import { UserProfileComponent } from './../components/user/user-profile/user-profile.component';
@@ -12,7 +12,7 @@ export class ProfileService {
       new ProfileItem(UserProfileComponent, null),
       new ProfileItem(ResetPasswordComponent, null),
       new ProfileItem(ChangePasswordComponent, null),
-      new ProfileItem(WishListComponent, null),
+      new ProfileItem(FavoriteListComponent, null),
 
     ];
   }

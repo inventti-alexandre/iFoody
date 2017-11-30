@@ -1,35 +1,41 @@
+import { IUser } from '../../../../shared/models/user';
+import { UserService } from '../../../../shared/services/user.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Component, Inject, OnDestroy, OnInit, Renderer2, TemplateRef, ViewChild } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { FormControl, FormGroup } from '@angular/forms';
-import { DOCUMENT } from '@angular/platform-browser'
+import { DOCUMENT } from '@angular/platform-browser';
 @Component({
   selector: 'signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent implements OnInit, OnDestroy {
-  user: FormGroup;
+  userForm: FormGroup;
+  user: IUser;
   // closeResult: string;
   @ViewChild('signupModal') signupModal;
   @ViewChild('signupByEmailModal') signupByEmailModal;
   body = document.getElementsByTagName('body')[0];
   
-  
- 
-  
-  
   isSignUpByEmailModal: boolean;
   public modalRef: BsModalRef;
 
-  constructor(private modalService: BsModalService, private renderer: Renderer2 ) { 
+  constructor(
+    private modalService: BsModalService,
+    private renderer: Renderer2,
+    private _userService: UserService ) { 
     // this.renderer.addClass(document.body, 'modal-open');
     // let body = document.getElementsByTagName('body')[0];
-    
   }
 
-
+  /**
+   * SignUp
+   */
+  public signup() {
+    
+  }
   public show() {
     this.signupModal.show();
   }
@@ -37,13 +43,11 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   public hide() {
     this.signupModal.hide();
-    
   }
 
   public showSecondModal() {
     // this.body.classList.add("my-modal-open"); //remove the class  
     this.signupByEmailModal.show();
-    
   }
 
   public hideSecondModal() {
@@ -74,7 +78,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.user = new FormGroup({
+    this.userForm = new FormGroup({
       email: new FormControl(),
       gender: new FormControl(),
       lastname: new FormControl(),

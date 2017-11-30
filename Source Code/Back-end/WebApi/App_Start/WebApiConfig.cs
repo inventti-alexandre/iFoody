@@ -7,7 +7,7 @@ namespace WebApi
         public static void Register(HttpConfiguration config)
         {
             // New code
-            config.EnableCors();
+            //config.EnableCors();
 
             // Web API configuration and services
             // Configure Web API to use only bearer token authentication.
@@ -27,7 +27,7 @@ namespace WebApi
             config.Routes.MapHttpRoute(
                 name: "ActionBased",
                 routeTemplate: "api/{controller}/{action}/{id}",
-                defaults: new {id = RouteParameter.Optional}
+                defaults: new { id = RouteParameter.Optional }
             );
         }
     }

@@ -48,7 +48,7 @@
             <span>or</span>
           </div>
 
-          <form [formGroup]="user" (ngSubmit)="onSubmit(user)">
+          <form [formGroup]="userForm" (ngSubmit)="onSubmit(user)">
             <div>
               <input type="text" formControlName="email" class="form-control input-lg" placeholder="Email...">
               <i class="fa fa-envelope fa-2x"></i>

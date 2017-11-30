@@ -3,12 +3,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { MdCheckboxModule,
-          MdDatepickerModule, 
-          MdNativeDateModule, 
+import { MatCheckboxModule,
+          MatDatepickerModule, 
+          MatNativeDateModule, 
           MatInputModule, 
           MatButtonModule, 
-          MdSelectModule } from '@angular/material';
+          MatSelectModule } from '@angular/material';
 import { SharedModule } from './../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -29,11 +29,11 @@ import { AdminProductItemComponent } from './admin-product/admin-product-item/ad
     ReactiveFormsModule,
     SharedModule,
     FormsModule,
-    MdCheckboxModule,
-    MdDatepickerModule,
-    MdNativeDateModule,
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatInputModule,
-    MdSelectModule,
+    MatSelectModule,
     MatButtonModule,
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),

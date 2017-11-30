@@ -1,0 +1,34 @@
+<p>
+  favorite-list works!
+</p>
+<div class="col-xs-12 col-sm-12 favoriteList">
+
+  <div class="row favoriteList__header">
+    <h2>Món Yêu Thích</h2>
+  </div>
+
+  <div class="row favoriteList__content">
+    <div class="col-xs-6 col-sm-6" *ngFor="let productId of productIds">
+      <product-item [productId]="productId"></product-item>
+    </div>
+    <!-- <div class="col-xs-6 col-sm-6">
+      <product-item></product-item>
+    </div> -->
+  </div>
+
+  <div class="row favoriteList__loadMore"><a href="#" class="pull-right">Xem thêm</a></div>
+
+  <div class="row favoriteList__header">
+      <h2>Cửa Hàng yêu thích</h2>
+    </div>
+    <div class="row favoriteList__content">
+      <div class="col-xs-6 col-sm-6" *ngFor="let storeId of storeIds">
+        <favorite-store-item [storeId]="storeId"></favorite-store-item>
+      </div>
+      <!-- <div class="col-xs-6 col-sm-6">
+        <product-item></product-item>
+      </div> -->
+    </div>
+
+    <div class="row favoriteList__loadMore"><a href="#" class="pull-right">Xem thêm</a></div>
+</div>

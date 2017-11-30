@@ -1,4 +1,4 @@
-import { MdSelectModule, MatButtonModule } from '@angular/material';
+import { MatSelectModule, MatButtonModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -9,7 +9,7 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MdSelectModule,
+    MatSelectModule,
     FormsModule,
     MatButtonModule,
   ],

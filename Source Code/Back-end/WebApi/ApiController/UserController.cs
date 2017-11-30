@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Routing;
 using WebApi.ActionFilters;
 
 namespace WebApi.ApiController
@@ -22,8 +23,9 @@ namespace WebApi.ApiController
         private readonly IStoreService _storeService;
         private readonly IReviewService _reviewService;
         private readonly ICommentService _commentService;
+        private readonly IFavoritesListService _favoritesListService;
 
-        public UserController(IUserService userService, ITokenService tokenService, IImageService imageService, IProductService productService, IStoreService storeService, IReviewService reviewService, ICommentService commentService)
+        public UserController(IUserService userService, ITokenService tokenService, IImageService imageService, IProductService productService, IStoreService storeService, IReviewService reviewService, ICommentService commentService, IFavoritesListService favoritesListService)
         {
             _userService = userService;
             _tokenService = tokenService;
@@ -32,6 +34,7 @@ namespace WebApi.ApiController
             _storeService = storeService;
             _reviewService = reviewService;
             _commentService = commentService;
+            _favoritesListService = favoritesListService;
         }
 
         // Get api/user
@@ -63,7 +66,7 @@ namespace WebApi.ApiController
 
         // GET api/user/5
         [HttpGet]
-        [Route("id")]
+        //[Route("id")]
         public HttpResponseMessage Get(Guid id)
         {
             try
@@ -81,6 +84,47 @@ namespace WebApi.ApiController
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No User found for this id");
 
         }
+
+        // GET api/favorite-list/42fsvvsg0-gsevsevsev
+        [HttpGet]
+        [Route("favorite-list/{id}")]
+        public HttpResponseMessage GetFavoriteList(Guid id)
+        {
+            try
+            {
+                var favoriteList = _favoritesListService.GetFavoriteByUserId(id).ToList();
+                if (favoriteList.Count > 0)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, favoriteList);
+                }
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Got Exception");
+            }
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No Favorite Item found for this user");
+        }
+
+        // GET api/store/42fsvvsg0-gsevsevsev...
+        [HttpGet]
+        [Route("store/{id}")]
+        public HttpResponseMessage GetStore(Guid id)
+        {
+            try
+            {
+                var store = _storeService.GetStoreById(id);
+                if (store != null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, store);
+                }
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Got Exception");
+            }
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No Store found");
+        }
+
 
         // POST api/user
         [HttpPost]
@@ -100,6 +144,7 @@ namespace WebApi.ApiController
         }
 
         // POST api/user/upload
+        // Upload Image
         [HttpPost]
         [Route("upload")]
         public HttpResponseMessage Post([FromBody] List<ImageBusinessEntity> images)
@@ -224,7 +269,7 @@ namespace WebApi.ApiController
             }
         }
 
-        // Create Store
+        // Open Store
         // Post api/user/store
         [HttpPost]
         [Route("store")]
@@ -369,18 +414,19 @@ namespace WebApi.ApiController
             return Request.CreateResponse(HttpStatusCode.NotImplemented, "Not Implemented!");
         }
 
-        // Delete Image
+        // Delete Product In Favorite List
         [HttpDelete]
-        [Route("favoritelist/{id}")]
-        public HttpResponseMessage DeleteProduct(Guid id)
+        [Route("favorite-list/{id}")]
+        public HttpResponseMessage DeleteProductInFavoriteList(Guid id)
         {
             if (!id.Equals(null))
             {
-                _productService.DeleteProduct(id);
+                _favoritesListService.DeleteFavoriteItem(id);
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             return Request.CreateResponse(HttpStatusCode.NotImplemented, "Not Implemented!");
         }
+
 
         // Delete Image
         [HttpDelete]

@@ -21,6 +21,8 @@ namespace BusinessLayer
             registerComponent.RegisterType<IImageService, ImageService>();
             registerComponent.RegisterType<IStoreService, StoreService>();
             registerComponent.RegisterType<IReviewService, ReviewService>();
+            registerComponent.RegisterType<ICommentService, CommentService>();
+
 
         }
 

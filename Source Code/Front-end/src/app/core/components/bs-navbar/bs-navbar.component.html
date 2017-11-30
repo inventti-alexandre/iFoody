@@ -24,13 +24,39 @@
       </div>
       <div class="collapse navbar-collapse col-md-7 col-sm-5 col-xs-12 col-lg-5" id="myNavbar">
         <ul class="nav navbar-nav navbar-right">
-          <li><a (click)="redirect('open-store')"><span class="glyphicon glyphicon-home"></span> Mở cửa hàng</a></li>
+          
+          <ng-template [ngIf]="userId">
+            <li><a (click)="redirect('open-store')"><span class="glyphicon glyphicon-home"></span> Mở cửa hàng</a></li>
+          </ng-template>
+
           <!-- <li><a routerLink="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li> -->
-          <li><button class="btn btn-link btn-signup" (click)="signup.show()"><span class="glyphicon glyphicon-user"></span> Đăng Ký</button></li>
+          <ng-template [ngIf]="!userId">
+            <li><button type="button" class="btn btn-link btn-signup" (click)="signup.show()"><span class="glyphicon glyphicon-user"></span> Đăng Ký</button></li>
+          </ng-template>
+              
+          <ng-template [ngIf]="userId">
+            <!-- <li> -->
+              <!-- <button  class="btn btn-link btn-login" (click)="login.show()"><span class="glyphicon glyphicon-user"></span> {{userName}}</button> -->
+              <!-- Doing -->
+              <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{userName}}</a>
+                   <ul class="dropdown-menu" role="menu">
+                      <li>
+                        <a [routerLink]="[x.url, x.param]"  *ngFor="let x of urls">{{x.name}}</a>
+                      </li>
+                      <li class="divider"></li>
+                      <li><a routerLink="/" (click)="signOut()">Thoát</a></li>
+                   </ul>
+               </li>
+              <!-- End Doing -->
+          </ng-template>
           
-          <li><button class="btn btn-link btn-login" (click)="login.show()"><span class="glyphicon glyphicon-log-in"></span> Đăng Nhập</button></li>
-          
-        </ul>
+          <ng-template [ngIf]="!userId">
+              <li>
+              <button  type="button" class="btn btn-link btn-login" (click)="login.show()"><span class="glyphicon glyphicon-log-in"></span> Đăng Nhập</button>
+            </li>
+            </ng-template>
+          </ul>
       </div>
     </div>
   </nav>

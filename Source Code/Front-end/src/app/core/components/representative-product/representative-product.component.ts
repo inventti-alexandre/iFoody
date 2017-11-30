@@ -10,17 +10,6 @@ import { Http } from '@angular/http';
   providers: [ProductService]
 })
 export class RepresentativeProductComponent implements OnInit {
-
-  public values: any[];
-  constructor(private _dataService: ProductService) {}
-  ngOnInit() {
-    this._dataService
-        .GetAll()
-        .subscribe(data => this.values = data,
-        error => console.log(error),
-        () => console.log('Get all complete',this.values));
-  }
-
   listProducts = [
     {
       name: "Coffee",
@@ -32,5 +21,16 @@ export class RepresentativeProductComponent implements OnInit {
     {
       name: "Sản phẩm đề xuất",
     }
-  ]
+  ];
+  
+  public values: any[];
+  constructor(private _dataService: ProductService) {}
+  ngOnInit() {
+    this._dataService
+        .GetAll()
+        .subscribe(data => this.values = data,
+        );
+  }
+
+  
 }

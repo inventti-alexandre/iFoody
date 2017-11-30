@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
-using AutoMapper;
+﻿using AutoMapper;
 using BusinessEntities;
 using BusinessLayer.IServices;
 using DataModel;
 using DataModel.IUnitOfWork;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Transactions;
 
 namespace BusinessLayer.Services
 {
@@ -20,7 +18,7 @@ namespace BusinessLayer.Services
         {
             _unitOfWork = unitOfWork;
         }
-        public Guid CreateFavoriteItem(FavoriteListBusinessEntity favoriteEntity)
+        public Guid InsertFavoriteItem(FavoriteListBusinessEntity favoriteEntity)
         {
             using (var scope = new TransactionScope())
             {
@@ -33,13 +31,13 @@ namespace BusinessLayer.Services
             }
         }
 
-        public bool DeleteFavoriteItem(Guid Id)
+        public bool DeleteFavoriteItem(Guid id)
         {
             var success = false;
 
             using (var scope = new TransactionScope())
             {
-                var favoriteItem = _unitOfWork.FavoriteLists.GetById(Id);
+                var favoriteItem = _unitOfWork.FavoriteLists.GetById(id);
                 if (favoriteItem != null)
                 {
                     _unitOfWork.FavoriteLists.Delete(favoriteItem);
@@ -64,9 +62,9 @@ namespace BusinessLayer.Services
             return null;
         }
 
-        public FavoriteListBusinessEntity GetFavoriteById(Guid Id)
+        public FavoriteListBusinessEntity GetFavoriteById(Guid id)
         {
-            var favoriteItem = _unitOfWork.FavoriteLists.GetById(Id);
+            var favoriteItem = _unitOfWork.FavoriteLists.GetById(id);
             if (favoriteItem != null)
             {
                 Mapper.CreateMap<FavoriteList, FavoriteListBusinessEntity>();

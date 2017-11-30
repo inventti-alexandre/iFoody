@@ -1,17 +1,14 @@
-﻿using System;
+﻿using BusinessEntities;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BusinessEntities;
 
 namespace BusinessLayer.IServices
 {
     public interface IFavoritesListService
     {
-        FavoriteListBusinessEntity GetFavoriteById(Guid Id);
+        FavoriteListBusinessEntity GetFavoriteById(Guid id);
         IEnumerable<FavoriteListBusinessEntity> GetFavoriteByUserId(Guid userId);
-        Guid CreateFavoriteItem(FavoriteListBusinessEntity favoriteEntity);
-        bool DeleteFavoriteItem(Guid Id);
+        Guid InsertFavoriteItem(FavoriteListBusinessEntity favoriteEntity);
+        bool DeleteFavoriteItem(Guid id);
     }
 }

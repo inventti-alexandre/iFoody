@@ -1,8 +1,74 @@
 <p>Store Profile works!</p>
 <div>
-    <div class="modal-body form-open-store ">
+    <div class="modal-body form-open-store">
+      <form [formGroup]="store">
+        <div>
+          <input type="text" formControlName="name" class="form-control input-lg" placeholder="Tên cửa hàng...">
+          <i class="fa fa-envelope fa-2x"></i>
+        </div>
   
-      <form [formGroup]="store" (ngSubmit)="onSubmit(user)">
+        <div>
+          <input formControlName="rating" class="form-control input-lg" placeholder="Đánh giá">
+          <i class="fa fa-lock fa-2x"></i>
+        </div>
+  
+        <div>
+          <input type="text" formControlName="openHour" class="form-control input-lg" placeholder="Giờ mở cửa...">
+          <i class="fa fa-lock fa-2x"></i>
+        </div>
+  
+        <div>
+          <input type="text" formControlName="closeHour" class="form-control input-lg" placeholder="Giờ đóng cửa...">
+          <i class="fa fa-user fa-2x"></i>
+        </div>
+  
+        <div>
+          <input type="text" formControlName="lowestPrice" class="form-control input-lg" placeholder="Giá thấp nhất...">
+          <i class="fa fa-user-circle fa-2x"></i>
+        </div>
+
+        <div>
+          <input type="text" formControlName="description" class="form-control input-lg" placeholder="Mô tả...">
+          <i class="fa fa-user-circle fa-2x"></i>
+        </div>
+        
+        <div>
+          <input type="text" formControlName="address" class="form-control input-lg" placeholder="Địa chỉ...">
+          <i class="fa fa-user-circle fa-2x"></i>
+        </div>
+
+        <div>
+          <input type="text" formControlName="district" class="form-control input-lg" placeholder="Quận...">
+          <i class="fa fa-user-circle fa-2x"></i>
+        </div>
+  
+        <div>
+          <input type="select" formControlName="address" class="form-control input-lg" placeholder="Địa chỉ Cửa hàng...">
+          <i class="fa fa-user-circle fa-2x"></i>
+        </div>
+
+        <div class="address">
+          <a href="#"><span class="fa fa-plus pull-left"></span>Thêm Địa chỉ</a>
+        </div>
+  
+          
+        <div>
+          <input type="select" formControlName="categoryId" class="form-control input-lg" placeholder="Loại cửa hàng...">
+          <i class="fa fa-user-circle fa-2x"></i>
+        </div>
+
+        <div>
+          <div><label for="">Ảnh đại diện</label></div>
+          <div>
+            <span class="fa fa-picture-o fa-5x"></span>
+            <a href="#">Thay đổi ảnh đại diện</a>
+          </div>
+        </div>
+  
+        <button type="submit" class="btn btn-primary btn-signup btn-lg col-xs-12 col-sm-4 col-sm-offset-2">UPDATE</button>
+        <button type="submit" class="btn btn-default btn-signup btn-lg col-xs-12 col-sm-4 ">HỦY</button>
+      </form>
+      <!-- <form [formGroup]="store" (ngSubmit)="onSubmit(user)">
         <div>
           <input type="text" formControlName="email" class="form-control input-lg" placeholder="Email...">
           <i class="fa fa-envelope fa-2x"></i>
@@ -47,6 +113,6 @@
   
         <button type="submit" class="btn btn-primary btn-signup btn-lg col-xs-12 col-sm-4 col-sm-offset-2">UPDATE</button>
         <button type="submit" class="btn btn-default btn-signup btn-lg col-xs-12 col-sm-4 ">HỦY</button>
-      </form>
+      </form> -->
     </div>
   </div>

@@ -1,3 +1,6 @@
+import { AuthGuardService as AuthGuard } from './shared/services/auth-guard.service';
+import { TestComponent } from './test/test.component';
+import { UserProfileComponent } from './membership/components/user/user-profile/user-profile.component';
 import { AdminComponent } from './admin/admin/admin.component';
 import { AdminLayoutComponent } from './admin/admin-layout/admin-layout.component';
 import { ProductDetailComponent } from './searching/components/product-detail/product-detail.component';
@@ -37,8 +40,9 @@ const routes: Routes = [
         component: SearchResultComponent
     },
     {
-        path: 'profile',
-        component: ProfileComponent
+        path: 'profile/:id',
+        component: ProfileComponent,
+
     }, 
     {
         path: 'product',
@@ -47,6 +51,15 @@ const routes: Routes = [
     {
         path: 'admin',
         component: AdminComponent
+    }, 
+    {
+        path: 'test/:id',
+        component: TestComponent,
+    }, 
+    {
+        path: 'auth-guard',
+        component: ProfileComponent,
+        canActivate: [AuthGuard]
     }, 
     {
         path: '',
