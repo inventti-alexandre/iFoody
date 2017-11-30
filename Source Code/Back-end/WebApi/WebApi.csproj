@@ -287,8 +287,11 @@
   <ItemGroup>
     <Compile Include="ActionFilters\AuthorizationRequiredAttribute.cs" />
     <Compile Include="ApiController\AuthenticateController.cs" />
+    <Compile Include="ApiController\CategoriesController.cs" />
+    <Compile Include="ApiController\FavoriteListController.cs" />
     <Compile Include="ApiController\ImageController.cs" />
     <Compile Include="ApiController\ProductController.cs" />
+    <Compile Include="ApiController\ProductImageController.cs" />
     <Compile Include="ApiController\UserController.cs" />
     <Compile Include="App_Start\AttributeRoutingHttpConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -329,17 +332,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
-    <Compile Include="DTOs\CategoryDto.cs" />
-    <Compile Include="DTOs\CommentDto.cs" />
-    <Compile Include="DTOs\FavoriteListDto.cs" />
-    <Compile Include="DTOs\ImageDto.cs" />
-    <Compile Include="DTOs\ProductDto.cs" />
-    <Compile Include="DTOs\ProductImageDto.cs" />
-    <Compile Include="DTOs\ReviewDto.cs" />
-    <Compile Include="DTOs\StoreDto.cs" />
-    <Compile Include="DTOs\StoreImageDto.cs" />
-    <Compile Include="DTOs\UserDto.cs" />
-    <Compile Include="DTOs\UserImageDto.cs" />
     <Compile Include="Filters\ApiAuthenticationFilter.cs" />
     <Compile Include="Filters\BasicAuthenticationIdentity.cs" />
     <Compile Include="Filters\GenericAuthenticationFilter.cs" />
@@ -363,7 +355,6 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="DTOs\Note.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

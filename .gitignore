@@ -6,4 +6,9 @@ Document/~$TTTN_Tuan_Phuong.xlsx
 Source Code/Database/iFoody_log.ldf
 Source Code/Database/iFoody.ldf
 Source Code/Database/iFoody.mdf
+<<<<<<< HEAD
 Source Code/Back-end/.vs/config/applicationhost.config
+=======
+
+Source Code/Back-end/\.vs/config/applicationhost\.config
+>>>>>>> origin/Phuong_Dev

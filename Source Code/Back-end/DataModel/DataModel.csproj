@@ -53,40 +53,40 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Category.cs">
-      <DependentUpon>iFoodyDataModel.tt</DependentUpon>
+      <DependentUpon>IFoodyDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Comment.cs">
-      <DependentUpon>iFoodyDataModel.tt</DependentUpon>
+      <DependentUpon>IFoodyDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DependencyResolver.cs" />
     <Compile Include="FavoriteList.cs">
-      <DependentUpon>iFoodyDataModel.tt</DependentUpon>
+      <DependentUpon>IFoodyDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="iFoodyDataModel.Context.cs">
+    <Compile Include="IFoodyDataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>iFoodyDataModel.Context.tt</DependentUpon>
+      <DependentUpon>IFoodyDataModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="iFoodyDataModel.cs">
+    <Compile Include="IFoodyDataModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>iFoodyDataModel.tt</DependentUpon>
+      <DependentUpon>IFoodyDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="iFoodyDataModel.Designer.cs">
+    <Compile Include="IFoodyDataModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>iFoodyDataModel.edmx</DependentUpon>
+      <DependentUpon>IFoodyDataModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Image.cs">
-      <DependentUpon>iFoodyDataModel.tt</DependentUpon>
+      <DependentUpon>IFoodyDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="IRepository\ITokenRepository.cs" />
     <Compile Include="IUnitOfWork\IUnitOfWork.cs" />
     <Compile Include="Product.cs">
-      <DependentUpon>iFoodyDataModel.tt</DependentUpon>
+      <DependentUpon>IFoodyDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ProductImage.cs">
-      <DependentUpon>iFoodyDataModel.tt</DependentUpon>
+      <DependentUpon>IFoodyDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\CategoryRepository.cs" />
     <Compile Include="Repository\CommentRepository.cs" />
@@ -115,23 +115,23 @@
     <Compile Include="Repository\UserImageRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Review.cs">
-      <DependentUpon>iFoodyDataModel.tt</DependentUpon>
+      <DependentUpon>IFoodyDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Store.cs">
-      <DependentUpon>iFoodyDataModel.tt</DependentUpon>
+      <DependentUpon>IFoodyDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="StoreImage.cs">
-      <DependentUpon>iFoodyDataModel.tt</DependentUpon>
+      <DependentUpon>IFoodyDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Token.cs">
-      <DependentUpon>iFoodyDataModel.tt</DependentUpon>
+      <DependentUpon>IFoodyDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
     <Compile Include="User.cs">
-      <DependentUpon>iFoodyDataModel.tt</DependentUpon>
+      <DependentUpon>IFoodyDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="UserImage.cs">
-      <DependentUpon>iFoodyDataModel.tt</DependentUpon>
+      <DependentUpon>IFoodyDataModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -142,12 +142,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <EntityDeploy Include="iFoodyDataModel.edmx">
+    <EntityDeploy Include="IFoodyDataModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>iFoodyDataModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>IFoodyDataModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="iFoodyDataModel.edmx.diagram">
-      <DependentUpon>iFoodyDataModel.edmx</DependentUpon>
+    <None Include="IFoodyDataModel.edmx.diagram">
+      <DependentUpon>IFoodyDataModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -155,15 +155,15 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="iFoodyDataModel.Context.tt">
+    <Content Include="IFoodyDataModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>iFoodyDataModel.edmx</DependentUpon>
-      <LastGenOutput>iFoodyDataModel.Context.cs</LastGenOutput>
+      <DependentUpon>IFoodyDataModel.edmx</DependentUpon>
+      <LastGenOutput>IFoodyDataModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="iFoodyDataModel.tt">
+    <Content Include="IFoodyDataModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>iFoodyDataModel.edmx</DependentUpon>
-      <LastGenOutput>iFoodyDataModel.cs</LastGenOutput>
+      <DependentUpon>IFoodyDataModel.edmx</DependentUpon>
+      <LastGenOutput>IFoodyDataModel.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

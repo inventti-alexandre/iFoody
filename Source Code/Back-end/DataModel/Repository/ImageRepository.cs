@@ -10,6 +10,5 @@ namespace DataModel.Repository
         {
             this._iFoodyContext = iFoodyEntities;
         }
-
     }
 }

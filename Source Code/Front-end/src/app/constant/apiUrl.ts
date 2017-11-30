@@ -24,3 +24,7 @@ export const UserId = "user_id";
 
 
 
+=======
+export const GetAllProduct = Domain + 'product';
+export const GetAllCategories = Domain + 'categories';
+>>>>>>> origin/Phuong_Dev

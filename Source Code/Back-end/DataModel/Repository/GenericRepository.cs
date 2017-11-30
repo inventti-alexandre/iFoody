@@ -35,6 +35,7 @@ namespace DataModel.IRepository
             return this.dbSet.ToList();
         }
 
+
         //Generic Insert method 
         public virtual void Insert(TEntity entity)
         {
