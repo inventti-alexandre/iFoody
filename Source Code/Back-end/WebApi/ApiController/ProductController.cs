@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
@@ -40,9 +41,24 @@ namespace WebApi.ApiController
             {
                 return NotFound();
             }
-
-
-
+        }
+        // GET api/product/?page=?&count={?}
+        [HttpGet]
+        public IHttpActionResult Get(int page, int ?count)
+        {
+            try
+            {
+                var products = _productService.GetProductsByPage(page,count);
+                if (products == null)
+                {
+                    return NotFound(); // Returns a NotFoundResult
+                }
+                return Ok(products);  // Returns an OkNegotiatedContentResult
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
         }
 
         // GET api/product/?id=

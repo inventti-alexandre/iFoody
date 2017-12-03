@@ -13,5 +13,6 @@ namespace BusinessLayer.IServices
         bool UpdateProduct(ProductBusinessEntity productEntity);
         bool DeleteProduct(Guid productId);
         IEnumerable<ImageBusinessEntity> GetAllImageByProductId(Guid productId);
+        PagingReturnDto<ProductDto> GetProductsByPage(int page, int? count);
     }
 }

@@ -7,6 +7,7 @@ using DataModel.IUnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Transactions;
 
 namespace BusinessLayer.Services
@@ -14,10 +15,13 @@ namespace BusinessLayer.Services
     public class ProductService : IProductService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private int DefaultPageRecordCount;
+
         //Constructor
         public ProductService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+            DefaultPageRecordCount = 10;
         }
 
 
@@ -238,5 +242,85 @@ namespace BusinessLayer.Services
             }
             return null;
         }
+        //test 
+        public PagingReturnDto<ProductDto> GetProductsByPage(int page, int? count)
+        {          
+            try
+            {
+                var takePage = page;
+                var takeCount = count ?? DefaultPageRecordCount;
+                // Get All Products Entity List 
+                var allProducts = _unitOfWork.Products.GetAll();
+                var totalProducts = allProducts.Count();
+                var products = allProducts
+                               .OrderByDescending(x => x.CategoryId)
+                               .Skip((takePage - 1) * takeCount)
+                               .Take(takeCount)
+                               .ToList();
+                
+                Mapper.CreateMap<Product, ProductBusinessEntity>();
+                var productEntities = Mapper.Map<List<Product>, List<ProductBusinessEntity>>(products);
+                                         
+                // Get All Images Entity List
+                var images = _unitOfWork.Images.GetAll().ToList();
+
+                // Map to DTO
+                if (products.Any())
+                {
+                    var productDtos = new List<ProductDto>();
+
+
+                    foreach (var productEntity in productEntities)
+                    {
+                        // Get Store 
+                        var store = _unitOfWork.Stores.GetById(productEntity.StoreId.GetValueOrDefault());
+                        Mapper.CreateMap<Store, StoreBusinessEntity>();
+                        var storeEntity = Mapper.Map<Store, StoreBusinessEntity>(store);
+
+                        // Get category
+                        var category = _unitOfWork.Categories.GetById(productEntity.CategoryId.GetValueOrDefault());
+                        Mapper.CreateMap<Category, CategoryBusinessEntity>();
+                        var categoryEntity = Mapper.Map<Category, CategoryBusinessEntity>(category);
+
+                        // Filter Images
+                        var filteredIdImageEntities = _unitOfWork.ProductImages.GetManyQueryable(i => i.ProductId == productEntity.Id).Select(i => i.ImageId);
+                        var filteredImageEntities =
+                            _unitOfWork.Images.GetManyQueryable(i => filteredIdImageEntities.Any(x => x == i.Id)).ToList();
+
+                        // Map to Image Business Entity
+                        Mapper.CreateMap<Image, ImageBusinessEntity>();
+                        var imageEntities = Mapper.Map<List<Image>, List<ImageBusinessEntity>>(filteredImageEntities).AsEnumerable();
+
+                        var productDto = new ProductDto()
+                        {
+                            Product = productEntity,
+                            Store = storeEntity,
+                            Category = categoryEntity,
+                            Images = imageEntities,
+
+                        };
+
+                        // Add to Product DTO List
+                        productDtos.Add(productDto);
+                    }
+                    double tempTotalPage = (double)totalProducts / (double)takeCount;
+                    var productPagingReturnDto = new PagingReturnDto<ProductDto>()
+                    {
+                        currentPage = takeCount,
+                        totalRecord = totalProducts,
+                        totalPage = Convert.ToInt32(Math.Ceiling(tempTotalPage)),
+                        Results = productDtos.AsEnumerable(),
+                    };
+                    //var productsModel = new List<ProductBusinessEntity>();
+                    return productPagingReturnDto;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }   
+     
     }
 }

@@ -15,8 +15,13 @@ export class RepresentativeProductComponent implements OnInit {
   public products: any[];
   public categories: any[];
   public productsGroupByCategory: any[];
+  public initPage;
+  public initCount;
+
   constructor(private _productService: ProductService, private _categoryService: CategoryService) {
     this.productsGroupByCategory = [];
+    this.initPage = 1;
+    this.initCount = 6;
   }
   ngOnInit() {
     // get all cetegory:
@@ -27,9 +32,9 @@ export class RepresentativeProductComponent implements OnInit {
         console.log("category", this.categories);
       }
       );
-    // get all products
+    // get all products by page index
     this._productService
-      .GetAll()
+    .GetProductByPage(this.initPage,this.initCount)
       .subscribe(data => this.products = data,
       error => console.log(error),
       () => {
@@ -47,6 +52,7 @@ export class RepresentativeProductComponent implements OnInit {
         console.log("Products group by category", this.productsGroupByCategory);
       }
       );
+    //list
   }
 
 // >>>>>>> origin/Phuong_Dev
