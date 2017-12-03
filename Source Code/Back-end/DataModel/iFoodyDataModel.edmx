@@ -9,14 +9,14 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Comments">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ReviewContent" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Rating" Type="float" />
           <Property Name="Date" Type="datetime" Nullable="false" />
@@ -37,7 +37,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Path" Type="varchar(max)" Nullable="false" />
         </EntityType>
@@ -45,7 +45,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ProductId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ImageId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
@@ -53,7 +53,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="8" Scale="0" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
@@ -64,7 +64,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ReviewContent" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Rating" Type="float" Nullable="false" />
           <Property Name="Date" Type="datetime" Nullable="false" />
@@ -76,7 +76,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="StoreId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ImageId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
@@ -84,7 +84,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Rating" Type="float" />
           <Property Name="OpenHour" Type="time" Precision="0" Nullable="false" />
@@ -97,6 +97,7 @@
           <Property Name="District" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CategoryId" Type="uniqueidentifier" />
+          <Property Name="UserId" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="Tokens">
           <Key>
@@ -120,7 +121,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Gender" Type="tinyint" Nullable="false" />
@@ -128,7 +129,7 @@
           <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Birthday" Type="date" />
           <Property Name="IsAdmin" Type="bit" Nullable="false" />
-          <Property Name="hasStore" Type="bit" />
+          <Property Name="HasStore" Type="bit" />
         </EntityType>
         <Association Name="FK_Comments_Products">
           <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
@@ -322,6 +323,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Stores_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Stores" Type="Self.Stores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Stores">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tokens_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Tokens" Type="Self.Tokens" Multiplicity="*" />
@@ -435,6 +448,10 @@
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Stores" EntitySet="Stores" />
           </AssociationSet>
+          <AssociationSet Name="FK_Stores_Users" Association="Self.FK_Stores_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Stores" EntitySet="Stores" />
+          </AssociationSet>
           <AssociationSet Name="FK_Tokens_Users" Association="Self.FK_Tokens_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Tokens" EntitySet="Tokens" />
@@ -457,7 +474,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Products" Relationship="Self.FK_Products_Categories" FromRole="Categories" ToRole="Products" />
           <NavigationProperty Name="Stores" Relationship="Self.FK_Stores_Categories" FromRole="Categories" ToRole="Stores" />
@@ -466,7 +483,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="ReviewContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Rating" Type="Double" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
@@ -493,7 +510,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="ProductImages" Relationship="Self.FK_ProductImages_Images" FromRole="Images" ToRole="ProductImages" />
@@ -504,7 +521,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="ProductId" Type="Guid" Nullable="false" />
           <Property Name="ImageId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Image" Relationship="Self.FK_ProductImages_Images" FromRole="ProductImages" ToRole="Images" />
@@ -514,7 +531,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Price" Type="Decimal" Precision="8" Scale="0" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -531,7 +548,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="ReviewContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Rating" Type="Double" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
@@ -546,7 +563,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="StoreId" Type="Guid" Nullable="false" />
           <Property Name="ImageId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Image" Relationship="Self.FK_StoreImages_Images" FromRole="StoreImages" ToRole="Images" />
@@ -556,7 +573,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Rating" Type="Double" />
           <Property Name="OpenHour" Type="Time" Nullable="false" Precision="0" />
@@ -569,12 +586,14 @@
           <Property Name="District" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="CategoryId" Type="Guid" />
+          <Property Name="UserId" Type="Guid" />
           <NavigationProperty Name="Category" Relationship="Self.FK_Stores_Categories" FromRole="Stores" ToRole="Categories" />
           <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_Stores" FromRole="Stores" ToRole="Comments" />
           <NavigationProperty Name="FavoriteLists" Relationship="Self.FK_FavoriteLists_Stores" FromRole="Stores" ToRole="FavoriteLists" />
           <NavigationProperty Name="Products" Relationship="Self.FK_Products_Stores" FromRole="Stores" ToRole="Products" />
           <NavigationProperty Name="Reviews" Relationship="Self.FK_Reviews_Stores" FromRole="Stores" ToRole="Reviews" />
           <NavigationProperty Name="StoreImages" Relationship="Self.FK_StoreImages_Stores" FromRole="Stores" ToRole="StoreImages" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Stores_Users" FromRole="Stores" ToRole="Users" />
         </EntityType>
         <EntityType Name="Token">
           <Key>
@@ -601,7 +620,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Gender" Type="Byte" Nullable="false" />
@@ -609,10 +628,11 @@
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Birthday" Type="DateTime" Precision="0" />
           <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
-          <Property Name="hasStore" Type="Boolean" />
+          <Property Name="HasStore" Type="Boolean" />
           <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_Users" FromRole="Users" ToRole="Comments" />
           <NavigationProperty Name="FavoriteLists" Relationship="Self.FK_FavoriteLists_Users" FromRole="Users" ToRole="FavoriteLists" />
           <NavigationProperty Name="Reviews" Relationship="Self.FK_Reviews_Users" FromRole="Users" ToRole="Reviews" />
+          <NavigationProperty Name="Stores" Relationship="Self.FK_Stores_Users" FromRole="Users" ToRole="Stores" />
           <NavigationProperty Name="Tokens" Relationship="Self.FK_Tokens_Users" FromRole="Users" ToRole="Tokens" />
           <NavigationProperty Name="UserImages" Relationship="Self.FK_UserImages_Users" FromRole="Users" ToRole="UserImages" />
         </EntityType>
@@ -820,6 +840,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Stores_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Stores" Type="Self.Store" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Stores">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tokens_Users">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
           <End Role="Tokens" Type="Self.Token" Multiplicity="*" />
@@ -924,6 +956,10 @@
           <AssociationSet Name="FK_StoreImages_Stores" Association="Self.FK_StoreImages_Stores">
             <End Role="Stores" EntitySet="Stores" />
             <End Role="StoreImages" EntitySet="StoreImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stores_Users" Association="Self.FK_Stores_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Stores" EntitySet="Stores" />
           </AssociationSet>
           <AssociationSet Name="FK_Tokens_Users" Association="Self.FK_Tokens_Users">
             <End Role="Users" EntitySet="Users" />
@@ -1039,6 +1075,7 @@
                 <ScalarProperty Name="District" ColumnName="District" />
                 <ScalarProperty Name="City" ColumnName="City" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1073,7 +1110,7 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Birthday" ColumnName="Birthday" />
                 <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
-                <ScalarProperty Name="hasStore" ColumnName="hasStore" />
+                <ScalarProperty Name="HasStore" ColumnName="HasStore" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
