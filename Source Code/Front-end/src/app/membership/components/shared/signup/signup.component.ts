@@ -1,4 +1,4 @@
-import { IUser } from '../../../../shared/models/user';
+import { IUser } from '../../../../shared/models/allModel';
 import { UserService } from '../../../../shared/services/user.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Component, Inject, OnDestroy, OnInit, Renderer2, TemplateRef, ViewChild } from '@angular/core';

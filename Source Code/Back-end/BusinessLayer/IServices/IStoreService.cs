@@ -1,6 +1,7 @@
 ﻿using BusinessEntities;
 using System;
 using System.Collections.Generic;
+using BusinessLayer.DTOs;
 
 namespace BusinessLayer.IServices
 {
@@ -12,7 +13,7 @@ namespace BusinessLayer.IServices
         // Get Many Store by List Id
         IEnumerable<StoreBusinessEntity> GetManyStore(List<Guid> ids);
         // Get One Store By Id
-        StoreBusinessEntity GetStoreById(Guid? id);
+        StoreDto GetStoreById(Guid? id);
 
         // User Open Store
         Guid? OpenStore(StoreBusinessEntity storeEntity);

@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using BusinessEntities;
+using BusinessLayer.DTOs;
 using BusinessLayer.IServices;
 using DataModel;
 using DataModel.IUnitOfWork;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Transactions;
 
 namespace BusinessLayer.Services
@@ -15,6 +18,67 @@ namespace BusinessLayer.Services
         public ReviewService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+        }
+
+        // Get Review from Product Id
+        public IEnumerable<ReviewDto> GetReviews(Guid id)
+        {
+            try
+            {
+                var reviews = _unitOfWork.Reviews.GetManyQueryable(r => r.ProductId == id).ToList();
+                if (reviews.Count > 0)
+                {
+                    Mapper.CreateMap<Review, ReviewBusinessEntity>();
+                    var reviewEntities = Mapper.Map<List<Review>, List<ReviewBusinessEntity>>(reviews);
+                    //var productsModel = new List<ProductBusinessEntity>();
+
+                    // Map to DTO
+                    if (reviewEntities != null)
+                    {
+                        var reviewDtos = new List<ReviewDto>();
+                        foreach (var reviewEntity in reviewEntities)
+                        {
+                            // Get Store 
+                            var store = _unitOfWork.Stores.GetById(reviewEntity.StoreId.GetValueOrDefault());
+                            Mapper.CreateMap<Store, StoreBusinessEntity>();
+                            var storeEntity = Mapper.Map<Store, StoreBusinessEntity>(store);
+
+                            // Get User
+                            var user = _unitOfWork.Users.GetById(reviewEntity.UserId);
+                            Mapper.CreateMap<User, UserBusinessEntity>();
+                            var userEntity = Mapper.Map<User, UserBusinessEntity>(user);
+
+                            // Get Product
+                            var product = _unitOfWork.Products.GetById(reviewEntity.ProductId);
+                            Mapper.CreateMap<Product, ProductBusinessEntity>();
+                            var productEntity = Mapper.Map<Product, ProductBusinessEntity>(product);
+
+                            var reviewDto = new ReviewDto()
+                            {
+                                Review = reviewEntity,
+                                Store = storeEntity,
+                                User = userEntity,
+                                Product = productEntity
+
+                            };
+
+                            reviewDtos.Add(reviewDto);
+                        }
+                        return reviewDtos;
+
+                    }
+
+                    //var productsModel = new List<ProductBusinessEntity>();
+
+                    // return productModel;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                return null;
+                throw;
+            }
         }
 
         // User insert Review

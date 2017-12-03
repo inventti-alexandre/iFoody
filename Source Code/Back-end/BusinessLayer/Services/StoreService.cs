@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using BusinessEntities;
+using BusinessLayer.DTOs;
+using BusinessLayer.IServices;
 using DataModel;
 using DataModel.IUnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
-using BusinessLayer.IServices;
 
 namespace BusinessLayer.Services
 {
@@ -60,7 +61,7 @@ namespace BusinessLayer.Services
         }
 
         // Get One Store By Id
-        public StoreBusinessEntity GetStoreById(Guid? id)
+        public StoreDto GetStoreById(Guid? id)
         {
             try
             {
@@ -69,9 +70,39 @@ namespace BusinessLayer.Services
                     var store = _unitOfWork.Stores.GetById(id);
 
                     Mapper.CreateMap<Store, StoreBusinessEntity>();
-                    var storeModel = Mapper.Map<Store, StoreBusinessEntity>(store);
+                    var storeEntity = Mapper.Map<Store, StoreBusinessEntity>(store);
+                    if (storeEntity != null)
+                    {
+                        // Get User
+                        var user = _unitOfWork.Users.GetById(storeEntity.UserId.GetValueOrDefault());
+                        Mapper.CreateMap<User, UserBusinessEntity>();
+                        var userEntity = Mapper.Map<User, UserBusinessEntity>(user);
 
-                    return storeModel;
+                        // Get Category
+                        var category = _unitOfWork.Categories.GetById(storeEntity.CategoryId.GetValueOrDefault());
+                        Mapper.CreateMap<Category, CategoryBusinessEntity>();
+                        var categoryEntity = Mapper.Map<Category, CategoryBusinessEntity>(category);
+
+                        // Filter Images
+                        var filteredIdImageEntities = _unitOfWork.StoreImages.GetManyQueryable(i => i.StoreId == storeEntity.Id).Select(i => i.ImageId);
+                        var filteredImageEntities =
+                            _unitOfWork.Images.GetManyQueryable(i => filteredIdImageEntities.Any(x => x == i.Id)).ToList();
+
+                        Mapper.CreateMap<Image, ImageBusinessEntity>();
+                        var imageEntities = Mapper.Map<List<Image>, List<ImageBusinessEntity>>(filteredImageEntities).AsEnumerable();
+
+
+                        var storeDto = new StoreDto()
+                        {
+                            Store = storeEntity,
+                            User = userEntity,
+                            Category = categoryEntity,
+                            Images = imageEntities,
+
+                        };
+                        return storeDto;
+
+                    }
                 }
             }
             catch (Exception e)

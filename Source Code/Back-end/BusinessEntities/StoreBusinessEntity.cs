@@ -17,5 +17,6 @@ namespace BusinessEntities
         public string District { get; set; }
         public string City { get; set; }
         public Guid? CategoryId { get; set; }
+        public Guid? UserId { get; set; }
     }
 }

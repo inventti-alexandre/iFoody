@@ -1,9 +1,10 @@
 export const Domain = 'http://localhost:62025/api/';
 // Product URL
 export const GetAllProduct = Domain + 'product';
-
+export const GetAllCategories = Domain + 'categories';
+export const ProductReview = Domain + 'product/review';
 // User URL
-export const Get = Domain + 'user';
+export const GetUser = Domain + 'user';
 export const SignUp = Domain + 'user/signup';
 export const SignIn = Domain + 'user/signin';
 export const Upload = Domain + 'user/upload';
@@ -20,11 +21,3 @@ export const Settings = Domain + 'user/settings';
 export const AuthToken = "auth_token";
 export const UserId = "user_id";
 
-
-
-
-
-=======
-export const GetAllProduct = Domain + 'product';
-export const GetAllCategories = Domain + 'categories';
->>>>>>> origin/Phuong_Dev

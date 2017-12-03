@@ -1,5 +1,5 @@
 import { ActivatedRoute, NavigationEnd, Params, PRIMARY_OUTLET, Router , RouterModule} from '@angular/router';
-import { IBsBreadcrumb } from './../../models/IBsBreadcrumb';
+import { IBsBreadcrumb } from './../../models/allModel';
 import { Component, OnInit } from '@angular/core';
 import 'rxjs/add/operator/filter';
 

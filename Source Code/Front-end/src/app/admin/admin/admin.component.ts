@@ -1,4 +1,4 @@
-import { IUser } from './../../shared/models/user';
+import { IUser } from './../../shared/models/allModel';
 // import { AdminLayout } from '../admin-layout/admin-layout.component';
 // import { AdminProfile } from '../admin-profile/admin-profile.component';
 // import { AdminProduct } from '../admin-product/admin-product.component';

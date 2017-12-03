@@ -1,4 +1,4 @@
-import { IUser } from './../../../../shared/models/user';
+import { IUser } from './../../../../shared/models/allModel';
 import { UserService } from './../../../../shared/services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
 // import {  } from 'ngx-bootstrap/ng2-bootstrap';

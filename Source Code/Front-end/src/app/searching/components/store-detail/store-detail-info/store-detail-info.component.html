@@ -2,10 +2,10 @@
   <div class="row">
     <div class="storeDetailInfo__main col-xs-12 col-sm-6">
       
-      <h2>Starbucks Coffee Đề Thám</h2>
+      <h2>{{ storeModel.store.name }}</h2>
 
       <div class="row">
-        <div class="type col-xs-4 col-sm-4">Café/Giải khát</div>
+        <div class="type col-xs-4 col-sm-4"> {{ storeModel.category.name }}</div>
         <div class="rating col-xs-8 col-sm-8">
           <bs-rating></bs-rating>
         </div>
@@ -15,9 +15,9 @@
 
 
       <div class="others row">
-        <div><span><i class="fa fa-location-arrow fa-1x"></i></span>60/13 Cửu Long - Quận 10</div>
-        <div><span><i class="fa fa-clock-o fa-1x"></i></span>Đang mở cửa: 8:30 - 22:00</div>
-        <div><span><i class="fa fa-money fa-1x"></i></span>Giá: 20.000đ</div>
+        <div><span><i class="fa fa-location-arrow fa-1x"></i></span>{{ storeModel.store.address }}</div>
+        <div><span><i class="fa fa-clock-o fa-1x"></i></span>{{ storeModel.store.openHour }} - {{ storeModel.store.closeHour }}</div>
+        <div><span><i class="fa fa-money fa-1x"></i></span>{{ storeModel.store.price }}</div>
           <!-- <div><span><i class="fa fa-location-arrow fa-1x"></i></span><span>60/13 Cửu Long - Quận 10</span></div>
           <div><span><i class="fa fa-clock-o fa-1x"></i></span><span>Đang mở cửa: 8:30 - 22:00</span></div>
           <div><span><i class="fa fa-money fa-1x"></i></span><span>Giá: 20.000đ</span> -->
@@ -25,13 +25,13 @@
 
       <div class="photo row">
         <div class="photo__main col-xs-12 col-sm-12">
-          <img src="https://hd1.hotdeal.vn/images/13-10-2014/effoc%20cafe/99947-body-%20%2817%29.jpg" alt="">
+          <img [src]="storeModel.images[0].path" alt="">
         </div>
 
         <div class="photo__minor col-xs-12 col-sm-12">
           <div class="row">
-            <div class="col-xs-3 col-sm-3" *ngFor="let i of [1,2,3,4]">
-              <img src="http://resources.cungmua.com/FTPProduct/24068/tong-hoa-don-nuoc-uong-tai-Effoc-Take-Away-Coffee%20(22).jpg" alt="">
+            <div class="col-xs-3 col-sm-3" *ngFor="let image of storeModel.images">
+              <img [src]="image.path" alt="">
             </div>
           </div>
         </div>

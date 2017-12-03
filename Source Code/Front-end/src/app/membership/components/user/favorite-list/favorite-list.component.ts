@@ -1,4 +1,4 @@
-import { IFavoriteList } from './../../../../shared/models/favorite-list';
+import { IFavoriteList } from './../../../../shared/models/allModel';
 import { UserService } from '../../../../shared/services/user.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { ProfileChildren } from '../../../models/profileChildren';

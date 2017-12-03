@@ -1,12 +1,15 @@
-<div class="product-item col-xs-12 col-sm-12" *ngIf="product != null">
+<div class="product-item col-xs-12 col-sm-12" *ngIf="productModel != null">
   <div class="image row">
-    <a [routerLink]="['/product', product.id]"></a>
-    <img src="http://znews-photo-td.zadn.vn/w480/Uploaded/wyhktpu/2017_03_01/1.jpg" alt="Food">
+    <a [routerLink]="['/product', productId]" (click)="getProductDetail()">
+      <img [src]="productModel.images[0].path" alt="Product">
+  </a>
   </div>
 
   <bs-rating></bs-rating>
 
-  <h4>{{ product.name }}</h4>
+  <h4>{{ productModel.product.name }}</h4>
   
-  <h5>{{ product.price | currency:'vnd':4.0}}</h5>
+  <h5>{{ productModel.product.price | currency:'vnd':4.0}}</h5>
 </div>
+
+ 

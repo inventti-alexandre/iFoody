@@ -1,13 +1,13 @@
 ﻿using BusinessEntities;
+using BusinessLayer.DTOs;
 using System;
 using System.Collections.Generic;
-using BusinessLayer.DTOs;
 
 namespace BusinessLayer.IServices
 {
     public interface IProductService
     {
-        ProductBusinessEntity GetProductById(Guid productId);
+        ProductDto GetProductById(Guid productId);
         IEnumerable<ProductDto> GetAllProducts();
         Guid? CreateProduct(ProductBusinessEntity productEntity);
         bool UpdateProduct(ProductBusinessEntity productEntity);

@@ -11,7 +11,7 @@ namespace DataModel
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class Store
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,7 +23,7 @@ namespace DataModel
             this.Reviews = new HashSet<Review>();
             this.StoreImages = new HashSet<StoreImage>();
         }
-    
+
         public System.Guid Id { get; set; }
         public string Name { get; set; }
         public Nullable<double> Rating { get; set; }
@@ -37,8 +37,10 @@ namespace DataModel
         public string District { get; set; }
         public string City { get; set; }
         public Nullable<System.Guid> CategoryId { get; set; }
-    
+        public Nullable<System.Guid> UserId { get; set; }
+
         public virtual Category Category { get; set; }
+        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

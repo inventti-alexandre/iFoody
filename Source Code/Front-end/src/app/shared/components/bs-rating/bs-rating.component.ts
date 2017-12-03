@@ -16,11 +16,11 @@ export class BsRatingComponent  {
   isBad: boolean; // "bad" for rating which less than 3.5
  
   public overStar:number;
-  //public percent:number;
+  // public percent:number;
  
   public hoveringOver(value:number):void {
     this.overStar = value;
-    //this.percent = 100 * (value / this.max);
+    // this.percent = 100 * (value / this.max);
   }
  
   // public resetStar():void {

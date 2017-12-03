@@ -12,9 +12,6 @@ import { forEach } from '@angular/router/src/utils/collection';
   providers: [ProductService, CategoryService]
 })
 export class RepresentativeProductComponent implements OnInit {
-<<<<<<< HEAD
-=======
-
   public products: any[];
   public categories: any[];
   public productsGroupByCategory: any[];
@@ -22,7 +19,7 @@ export class RepresentativeProductComponent implements OnInit {
     this.productsGroupByCategory = [];
   }
   ngOnInit() {
-    //get all cetegory:
+    // get all cetegory:
     this._categoryService.GetAll()
       .subscribe(data => this.categories = data,
       error => console.log(error),
@@ -30,15 +27,15 @@ export class RepresentativeProductComponent implements OnInit {
         console.log("category", this.categories);
       }
       );
-    //get all products
+    // get all products
     this._productService
       .GetAll()
       .subscribe(data => this.products = data,
       error => console.log(error),
       () => {
-        //group products by category
+        // group products by category
         this.categories.forEach(category => {
-          var productsByCategory = {
+          let productsByCategory = {
             categoryName: "",
             products: []
           };
@@ -52,28 +49,28 @@ export class RepresentativeProductComponent implements OnInit {
       );
   }
 
->>>>>>> origin/Phuong_Dev
-  listProducts = [
-    {
-      name: "Coffee",
+// >>>>>>> origin/Phuong_Dev
+//   listProducts = [
+//     {
+//       name: "Coffee",
 
-    },
-    {
-      name: "Trà sữa",
-    },
-    {
-      name: "Sản phẩm đề xuất",
-    }
-  ];
+//     },
+//     {
+//       name: "Trà sữa",
+//     },
+//     {
+//       name: "Sản phẩm đề xuất",
+//     }
+//   ];
   
-  public values: any[];
-  constructor(private _dataService: ProductService) {}
-  ngOnInit() {
-    this._dataService
-        .GetAll()
-        .subscribe(data => this.values = data,
-        );
-  }
+  // public values: any[];
+  // constructor(private _dataService: ProductService) {}
+  // ngOnInit() {
+  //   this._dataService
+  //       .GetAll()
+  //       .subscribe(data => this.values = data,
+  //       );
+  // }
 
   
 }

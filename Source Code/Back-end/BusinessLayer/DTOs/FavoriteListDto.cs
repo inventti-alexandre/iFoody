@@ -2,7 +2,7 @@
 
 namespace BusinessLayer.DTOs
 {
-    class FavoriteListDto
+    public class FavoriteListDto
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }

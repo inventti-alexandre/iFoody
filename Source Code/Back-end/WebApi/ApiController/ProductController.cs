@@ -1,12 +1,11 @@
 ﻿using BusinessEntities;
-using BusinessLayer.Services;
+using BusinessLayer.IServices;
 using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using BusinessLayer.IServices;
-using WebApi.ActionFilters;
 
 namespace WebApi.ApiController
 {
@@ -15,12 +14,13 @@ namespace WebApi.ApiController
     {
         //private readonly IProductService _productServices;
         private readonly IProductService _productService;
+        private readonly IReviewService _reviewService;
 
 
-        public ProductController(IProductService productServices)
+        public ProductController(IProductService productServices, IReviewService reviewService)
         {
             _productService = productServices;
-
+            _reviewService = reviewService;
         }
 
         // GET api/product
@@ -41,7 +41,7 @@ namespace WebApi.ApiController
                 return NotFound();
             }
 
-           
+
 
         }
 
@@ -62,9 +62,30 @@ namespace WebApi.ApiController
             {
                 return NotFound();
             }
-       
+
 
         }
+
+        // GET api/product/review/{id}
+        [HttpGet]
+        [Route("api/product/review/{id}")]
+        public HttpResponseMessage GetReview(Guid id)
+        {
+            try
+            {
+                var reviews = _reviewService.GetReviews(id).ToList();
+                if (reviews.Count > 0)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, reviews);
+                }
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Got Exception");
+            }
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No Review found for this Product");
+        }
+
         //POST api/product
         [HttpPost]
         public IHttpActionResult Post([FromBody] ProductBusinessEntity productEntity)
@@ -77,7 +98,7 @@ namespace WebApi.ApiController
             {
                 return NotFound();
             }
-          
+
         }
 
         // DELETE api/product/?id=
@@ -92,9 +113,10 @@ namespace WebApi.ApiController
             {
                 return NotFound();
             }
-                
+
 
         }
+
         // PUT api/product/?id=
         [HttpPut]
         public IHttpActionResult Put([FromBody]ProductBusinessEntity productEntity)
@@ -107,7 +129,7 @@ namespace WebApi.ApiController
             {
                 return NotFound();
             }
-         
+
         }
     }
 }

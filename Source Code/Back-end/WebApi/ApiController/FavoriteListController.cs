@@ -68,7 +68,7 @@ namespace WebApi.ApiController
         {
             try
             {
-                return Ok(_favoritesListService.CreateFavoriteItem(favoriteListEntity));
+                return Ok(_favoritesListService.InsertFavoriteItem(favoriteListEntity));
 
             }
             catch (Exception e)
