@@ -332,7 +332,7 @@ namespace BusinessLayer.Services
                 double tempTotalPage = (double)totalProducts / (double)takeCount;
                 var productPagingReturnDto = new PagingReturnDto<ProductDto>()
                 {
-                    currentPage = takeCount,
+                    currentPage = takePage,
                     totalRecord = totalProducts,
                     totalPage = Convert.ToInt32(Math.Ceiling(tempTotalPage)),
                     Results = ChangeProductsToProductDto(products),

@@ -5,12 +5,16 @@
       <div class="row category" [ngClass]="[i < products.length-1 ? 'category--border' : '']">
         <div class="col-md-12 category__row">
           <div class="row">
-            <div class="col-sm-4 col-xs-6" *ngFor="let p of group.results">
+            <div class="col-sm-4  col-md-4 col-xs-6" *ngFor="let p of group.results">
               <div class="row">
                 <product-item [productId]="p.product.id"></product-item>
               </div>
             </div>
           </div>
+        </div>
+        <div class="row no-margin seeMoreBtn">
+            <i  (click)="seeMore(group.results[0].category.id,group.currentPage,group.totalPage)" class="fa fa-angle-double-down" style="font-size:36px"></i>
+            <!-- <button type="button" class="btn btn-primary">Xem thêm</button> -->
         </div>
       </div>
     </div>

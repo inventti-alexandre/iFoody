@@ -2,14 +2,12 @@
   <div class="image row">
     <a [routerLink]="['/product', productId]" (click)="getProductDetail()">
       <img [src]="productModel.images[0]?.path" alt="Image Product">
-  </a>
+    </a>
   </div>
 
   <bs-rating></bs-rating>
 
   <h4>{{ productModel.product.name }}</h4>
-  
+
   <h5>{{ productModel.product.price | currency:'vnd':4.0}}</h5>
 </div>
-
- 

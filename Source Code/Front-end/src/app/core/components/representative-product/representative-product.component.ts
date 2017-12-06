@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, group } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { Http } from '@angular/http';
 import { ProductService } from './../../../shared/services/product.service';
@@ -28,13 +28,11 @@ export class RepresentativeProductComponent implements OnInit {
       .subscribe(data => this.categories = data,
       error => console.log(error),
       () => {
-        console.log("category", this.categories);
         //get products by category (1 page)
         this.categories.forEach(item=>{
           this._productService.PagingAllProductsByCategory(item.id,this.initPage,this.initCount).subscribe(data=>{
             if(data!==null){
               this.products.push(data);
-              console.log(this.products);
             }else{
               console.log("emptty");
             }
@@ -47,29 +45,30 @@ export class RepresentativeProductComponent implements OnInit {
       }
       );
   }
-
-// >>>>>>> origin/Phuong_Dev
-//   listProducts = [
-//     {
-//       name: "Coffee",
-
-//     },
-//     {
-//       name: "Trà sữa",
-//     },
-//     {
-//       name: "Sản phẩm đề xuất",
-//     }
-//   ];
-  
-  // public values: any[];
-  // constructor(private _dataService: ProductService) {}
-  // ngOnInit() {
-  //   this._dataService
-  //       .GetAll()
-  //       .subscribe(data => this.values = data,
-  //       );
-  // }
-
+  getNextPage(id,page){
+    this._productService.PagingAllProductsByCategory(id,page,this.initCount).subscribe(data=>{
+      if(data!==null){
+        this.products.forEach(group=>{
+          if(group.results[0].category.id==id){
+            group.currentPage=data.currentPage;
+            data.results.forEach(product=>{
+              group.results.push(product);
+            })
+          }
+        });
+        console.log('more', this.products);
+      }else{
+        console.log("emptty");
+      }
+    },
+      //error => console.log(error),
+      () => {}
+    );
+  }
+  seeMore(id, currentPage, totalPage){
+    if(currentPage<totalPage){
+      this.getNextPage(id,currentPage+1);
+    }
+  }
   
 }
