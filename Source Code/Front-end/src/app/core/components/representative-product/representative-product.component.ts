@@ -14,12 +14,11 @@ import { forEach } from '@angular/router/src/utils/collection';
 export class RepresentativeProductComponent implements OnInit {
   public products: any[];
   public categories: any[];
-  public productsGroupByCategory: any[];
   public initPage;
   public initCount;
 
   constructor(private _productService: ProductService, private _categoryService: CategoryService) {
-    this.productsGroupByCategory = [];
+    this.products = [];
     this.initPage = 1;
     this.initCount = 6;
   }
@@ -30,29 +29,23 @@ export class RepresentativeProductComponent implements OnInit {
       error => console.log(error),
       () => {
         console.log("category", this.categories);
-      }
-      );
-    // get all products by page index
-    this._productService
-    .GetProductByPage(this.initPage,this.initCount)
-      .subscribe(data => this.products = data,
-      error => console.log(error),
-      () => {
-        // group products by category
-        this.categories.forEach(category => {
-          let productsByCategory = {
-            categoryName: "",
-            products: []
-          };
-          this._productService.GetProductByCategory(category.name, this.products, productsByCategory);
-          if(productsByCategory.categoryName!==""){
-            this.productsGroupByCategory.push(productsByCategory);
-          }
+        //get products by category (1 page)
+        this.categories.forEach(item=>{
+          this._productService.PagingAllProductsByCategory(item.id,this.initPage,this.initCount).subscribe(data=>{
+            if(data!==null){
+              this.products.push(data);
+              console.log(this.products);
+            }else{
+              console.log("emptty");
+            }
+          },
+            //error => console.log(error),
+            () => {}
+          );
         });
-        console.log("Products group by category", this.productsGroupByCategory);
+        console.log("category", this.products);
       }
       );
-    //list
   }
 
 // >>>>>>> origin/Phuong_Dev

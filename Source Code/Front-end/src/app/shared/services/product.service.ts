@@ -27,18 +27,18 @@ export class ProductService {
         });
   }
 
-  public GetProductByCategory=(categoryName, products, result): Observable<any> => {
-    console.log('GetProductByCategory works');
-    if(products != null) {
-      let temp = products.results.filter(i => i.category.name === categoryName);
-      if(temp.length!==0){
-        result.categoryName = categoryName;
-        result.products = temp;
-      }
-      return result;
+  public GetProductByCategoryId=(categoryId): Observable<any> => {
+    let listProduct = [];
+    if(categoryId != null) {
+      return this._http.get(this.actionUrl + '/' + categoryId.replace(/['"]+/g, ''))
+            .map((response: Response) => <any>response.json())
+            .do(x => {
+              listProduct.push(x);
+              console.log(x);
+            });
     }
   }
-  public GetProductByPage=(page, count?): Observable<any> => {
+  public PagingAllProducts=(page, count?): Observable<any> => {
     let listProduct = [];
     let url;
     if(count){
@@ -51,6 +51,20 @@ export class ProductService {
         .do(x => {
           listProduct.push(x);
           console.log(x);
+        });
+  }
+  public PagingAllProductsByCategory=(categoryId,page, count?): Observable<any> => {
+    let listProduct = [];
+    let url;
+    if(count){
+      url = this.actionUrl + "/?categoryId=" +categoryId +"&page=" + page + "&count=" + count;
+    }else{
+      url = this.actionUrl +   "/?categoryId=" +categoryId +"&page=" + page + "&count";
+    }
+    return this._http.get(url)
+        .map((response: Response) => <any>response.json())
+        .do(x => {
+          listProduct.push(x);   
         });
   }
 
