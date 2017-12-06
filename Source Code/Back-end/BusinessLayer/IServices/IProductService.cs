@@ -12,7 +12,9 @@ namespace BusinessLayer.IServices
         Guid? CreateProduct(ProductBusinessEntity productEntity);
         bool UpdateProduct(ProductBusinessEntity productEntity);
         bool DeleteProduct(Guid productId);
+        IEnumerable<ProductDto> GetProductsByCategory(Guid categoryId);
         IEnumerable<ImageBusinessEntity> GetAllImageByProductId(Guid productId);
-        PagingReturnDto<ProductDto> GetProductsByPage(int page, int? count);
+        PagingReturnDto<ProductDto> PagingAllProducts(int page, int? count);
+        PagingReturnDto<ProductDto> PagingAllProductsByCategory(Guid categoryId,int page, int? count);
     }
 }

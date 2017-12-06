@@ -48,7 +48,43 @@ namespace WebApi.ApiController
         {
             try
             {
-                var products = _productService.GetProductsByPage(page,count);
+                var products = _productService.PagingAllProducts(page,count);
+                if (products == null)
+                {
+                    return NotFound(); // Returns a NotFoundResult
+                }
+                return Ok(products);  // Returns an OkNegotiatedContentResult
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+        }
+        // GET api/product/?categoryId=?&page=?&count={?}
+        [HttpGet]
+        public IHttpActionResult GetProductByCategoryPaging(Guid categoryId,int page, int? count)
+        {
+            try
+            {
+                var products = _productService.PagingAllProductsByCategory(categoryId,page, count);
+                if (products == null)
+                {
+                    return NotFound(); // Returns a NotFoundResult
+                }
+                return Ok(products);  // Returns an OkNegotiatedContentResult
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+        }
+        // GET api/product/?categoryId=
+        [HttpGet]     
+        public IHttpActionResult GetProductByCategory(Guid categoryId)
+        {
+            try
+            {
+                var products = _productService.GetProductsByCategory(categoryId);
                 if (products == null)
                 {
                     return NotFound(); // Returns a NotFoundResult
@@ -62,7 +98,7 @@ namespace WebApi.ApiController
         }
 
         // GET api/product/?id=
-        [HttpGet]
+        [HttpGet]   
         public IHttpActionResult Get(Guid id)
         {
             try

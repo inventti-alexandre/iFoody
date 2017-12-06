@@ -24,6 +24,7 @@ namespace BusinessLayer.Services
             DefaultPageRecordCount = 10;
         }
 
+        #region public implement   
 
         // Get All Products
         public IEnumerable<ProductDto> GetAllProducts()
@@ -32,58 +33,37 @@ namespace BusinessLayer.Services
             {
                 // Get All Products Entity List
                 var products = _unitOfWork.Products.GetAll().ToList();
-                Mapper.CreateMap<Product, ProductBusinessEntity>();
-                var productEntities = Mapper.Map<List<Product>, List<ProductBusinessEntity>>(products);
-
-                // Get All Images Entity List
-                var images = _unitOfWork.Images.GetAll().ToList();
-
-
-
-                // Map to DTO
                 if (products.Any())
                 {
-                    var productDtos = new List<ProductDto>();
-
-
-                    foreach (var productEntity in productEntities)
-                    {
-                        // Get Store 
-                        var store = _unitOfWork.Stores.GetById(productEntity.StoreId.GetValueOrDefault());
-                        Mapper.CreateMap<Store, StoreBusinessEntity>();
-                        var storeEntity = Mapper.Map<Store, StoreBusinessEntity>(store);
-
-                        // Get category
-                        var category = _unitOfWork.Categories.GetById(productEntity.CategoryId.GetValueOrDefault());
-                        Mapper.CreateMap<Category, CategoryBusinessEntity>();
-                        var categoryEntity = Mapper.Map<Category, CategoryBusinessEntity>(category);
-
-                        // Filter Images
-                        var filteredIdImageEntities = _unitOfWork.ProductImages.GetManyQueryable(i => i.ProductId == productEntity.Id).Select(i => i.ImageId);
-                        var filteredImageEntities =
-                            _unitOfWork.Images.GetManyQueryable(i => filteredIdImageEntities.Any(x => x == i.Id)).ToList();
-
-                        // Map to Image Business Entity
-                        Mapper.CreateMap<Image, ImageBusinessEntity>();
-                        var imageEntities = Mapper.Map<List<Image>, List<ImageBusinessEntity>>(filteredImageEntities).AsEnumerable();
-
-                        var productDto = new ProductDto()
-                        {
-                            Product = productEntity,
-                            Store = storeEntity,
-                            Category = categoryEntity,
-                            Images = imageEntities,
-
-                        };
-
-                        // Add to Product DTO List
-                        productDtos.Add(productDto);
-                    }
-
-                    //var productsModel = new List<ProductBusinessEntity>();
-                    return productDtos.AsEnumerable();
+                    return ChangeProductsToProductDto(products);
                 }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
                 return null;
+            }
+        }
+
+        // Get All Products by category
+        public IEnumerable<ProductDto> GetProductsByCategory(Guid categoryId)
+        {
+            try
+            {
+                // Get All Products Entity List
+                var products = _unitOfWork.Products.GetManyQueryable(x => x.CategoryId == categoryId).ToList();
+                if (products.Any())
+                {
+                    return ChangeProductsToProductDto(products);
+                }
+                else
+                {
+                    return null;
+                }
+
             }
             catch (Exception e)
             {
@@ -242,85 +222,131 @@ namespace BusinessLayer.Services
             }
             return null;
         }
-        //test 
-        public PagingReturnDto<ProductDto> GetProductsByPage(int page, int? count)
-        {          
+
+        //paging
+        public PagingReturnDto<ProductDto> PagingAllProducts(int page, int? count)
+        {
             try
             {
-                var takePage = page;
-                var takeCount = count ?? DefaultPageRecordCount;
-                // Get All Products Entity List 
-                var allProducts = _unitOfWork.Products.GetAll();
-                var totalProducts = allProducts.Count();
-                var products = allProducts
-                               .OrderByDescending(x => x.CategoryId)
-                               .Skip((takePage - 1) * takeCount)
-                               .Take(takeCount)
-                               .ToList();
-                
-                Mapper.CreateMap<Product, ProductBusinessEntity>();
-                var productEntities = Mapper.Map<List<Product>, List<ProductBusinessEntity>>(products);
-                                         
-                // Get All Images Entity List
-                var images = _unitOfWork.Images.GetAll().ToList();
-
-                // Map to DTO
-                if (products.Any())
+                var allProducts = _unitOfWork.Products.GetAll().ToList();
+                if (allProducts.Any())
                 {
-                    var productDtos = new List<ProductDto>();
-
-
-                    foreach (var productEntity in productEntities)
-                    {
-                        // Get Store 
-                        var store = _unitOfWork.Stores.GetById(productEntity.StoreId.GetValueOrDefault());
-                        Mapper.CreateMap<Store, StoreBusinessEntity>();
-                        var storeEntity = Mapper.Map<Store, StoreBusinessEntity>(store);
-
-                        // Get category
-                        var category = _unitOfWork.Categories.GetById(productEntity.CategoryId.GetValueOrDefault());
-                        Mapper.CreateMap<Category, CategoryBusinessEntity>();
-                        var categoryEntity = Mapper.Map<Category, CategoryBusinessEntity>(category);
-
-                        // Filter Images
-                        var filteredIdImageEntities = _unitOfWork.ProductImages.GetManyQueryable(i => i.ProductId == productEntity.Id).Select(i => i.ImageId);
-                        var filteredImageEntities =
-                            _unitOfWork.Images.GetManyQueryable(i => filteredIdImageEntities.Any(x => x == i.Id)).ToList();
-
-                        // Map to Image Business Entity
-                        Mapper.CreateMap<Image, ImageBusinessEntity>();
-                        var imageEntities = Mapper.Map<List<Image>, List<ImageBusinessEntity>>(filteredImageEntities).AsEnumerable();
-
-                        var productDto = new ProductDto()
-                        {
-                            Product = productEntity,
-                            Store = storeEntity,
-                            Category = categoryEntity,
-                            Images = imageEntities,
-
-                        };
-
-                        // Add to Product DTO List
-                        productDtos.Add(productDto);
-                    }
-                    double tempTotalPage = (double)totalProducts / (double)takeCount;
-                    var productPagingReturnDto = new PagingReturnDto<ProductDto>()
-                    {
-                        currentPage = takeCount,
-                        totalRecord = totalProducts,
-                        totalPage = Convert.ToInt32(Math.Ceiling(tempTotalPage)),
-                        Results = productDtos.AsEnumerable(),
-                    };
-                    //var productsModel = new List<ProductBusinessEntity>();
-                    return productPagingReturnDto;
+                    return ChangeProductsToPagingReturnDto(page, count, allProducts);
                 }
-                return null;
+                else
+                {
+                    return null;
+                }
             }
             catch (Exception e)
             {
                 return null;
             }
-        }   
-     
+        }
+        public PagingReturnDto<ProductDto> PagingAllProductsByCategory(Guid categoryId,int page, int? count)
+        {
+            try
+            {
+                var allProducts = _unitOfWork.Products.GetManyQueryable(x=>x.CategoryId==categoryId).ToList();
+                if (allProducts.Any())
+                {
+                    return ChangeProductsToPagingReturnDto(page, count, allProducts);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+
+        #endregion
+
+        #region private implement
+        private IEnumerable<ProductDto> ChangeProductsToProductDto(List<Product> products)
+        {
+            Mapper.CreateMap<Product, ProductBusinessEntity>();
+            var productEntities = Mapper.Map<List<Product>, List<ProductBusinessEntity>>(products);
+
+            // Get All Images Entity List
+            var images = _unitOfWork.Images.GetAll().ToList();
+
+            // Map to DTO         
+            var productDtos = new List<ProductDto>();
+
+            foreach (var productEntity in productEntities)
+            {
+                // Get Store 
+                var store = _unitOfWork.Stores.GetById(productEntity.StoreId.GetValueOrDefault());
+                Mapper.CreateMap<Store, StoreBusinessEntity>();
+                var storeEntity = Mapper.Map<Store, StoreBusinessEntity>(store);
+
+                // Get category
+                var category = _unitOfWork.Categories.GetById(productEntity.CategoryId.GetValueOrDefault());
+                Mapper.CreateMap<Category, CategoryBusinessEntity>();
+                var categoryEntity = Mapper.Map<Category, CategoryBusinessEntity>(category);
+
+                // Filter Images
+                var filteredIdImageEntities = _unitOfWork.ProductImages.GetManyQueryable(i => i.ProductId == productEntity.Id).Select(i => i.ImageId);
+                var filteredImageEntities =
+                    _unitOfWork.Images.GetManyQueryable(i => filteredIdImageEntities.Any(x => x == i.Id)).ToList();
+
+                // Map to Image Business Entity
+                Mapper.CreateMap<Image, ImageBusinessEntity>();
+                var imageEntities = Mapper.Map<List<Image>, List<ImageBusinessEntity>>(filteredImageEntities).AsEnumerable();
+
+                var productDto = new ProductDto()
+                {
+                    Product = productEntity,
+                    Store = storeEntity,
+                    Category = categoryEntity,
+                    Images = imageEntities,
+
+                };
+
+                // Add to Product DTO List
+                productDtos.Add(productDto);
+            }
+            //var productsModel = new List<ProductBusinessEntity>();
+            return productDtos.AsEnumerable();
+
+        }
+
+        private PagingReturnDto<ProductDto> ChangeProductsToPagingReturnDto(int page, int? count,List<Product> allProducts)
+        {
+            var takePage = page;
+            var takeCount = count ?? DefaultPageRecordCount;
+            var totalProducts = allProducts.Count();
+            var products = allProducts
+                           .OrderByDescending(x => x.CategoryId)
+                           .Skip((takePage - 1) * takeCount)
+                           .Take(takeCount)
+                           .ToList();
+            // Map to DTO
+            if (products.Any())
+            {
+                double tempTotalPage = (double)totalProducts / (double)takeCount;
+                var productPagingReturnDto = new PagingReturnDto<ProductDto>()
+                {
+                    currentPage = takeCount,
+                    totalRecord = totalProducts,
+                    totalPage = Convert.ToInt32(Math.Ceiling(tempTotalPage)),
+                    Results = ChangeProductsToProductDto(products),
+                };
+                //var productsModel = new List<ProductBusinessEntity>();
+                return productPagingReturnDto;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+        #endregion
+
     }
 }
