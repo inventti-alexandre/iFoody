@@ -17,6 +17,7 @@ namespace BusinessLayer.IServices
 
         // User Open Store
         Guid? OpenStore(StoreBusinessEntity storeEntity);
+        StoreBusinessEntity GetStoreByUserId(Guid userId);
 
         // Update Store 
         bool UpdateStore(StoreBusinessEntity storeEntity);

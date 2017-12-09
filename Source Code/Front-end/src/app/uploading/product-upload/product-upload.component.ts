@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import * as apiUrl from '../../constant/apiUrl';
 
 @Component({
   selector: 'product-upload',
@@ -7,7 +8,7 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./product-upload.component.scss'],
 })
 export class ProductUploadComponent implements OnInit {
-
+  userId: string;
   uploadProduct: FormGroup;
   listPrice= [
     {value:'1',viewValue:'10 000'},
@@ -20,6 +21,8 @@ export class ProductUploadComponent implements OnInit {
     'Cơm tấm'
   ];
   constructor() { 
+    this.userId = localStorage.getItem(apiUrl.UserId);
+    console.log('userId', this.userId);
   }
   onSubmit() {
   }

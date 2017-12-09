@@ -112,7 +112,33 @@ namespace BusinessLayer.Services
 
             return null;
         }
+        // Get One Store By UserId
+        public StoreBusinessEntity GetStoreByUserId(Guid userId)
+        {
+            try
+            {
+               
+                    var store = _unitOfWork.Stores.GetManyQueryable(x=>x.UserId==userId).ToList().FirstOrDefault();
 
+                    Mapper.CreateMap<Store, StoreBusinessEntity>();
+                    var storeEntity = Mapper.Map<Store, StoreBusinessEntity>(store);
+                    if (storeEntity != null)
+                    {
+                        return storeEntity;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+               
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+
+            return null;
+        }
         // User Open Store
         public Guid? OpenStore(StoreBusinessEntity storeEntity)
         {
