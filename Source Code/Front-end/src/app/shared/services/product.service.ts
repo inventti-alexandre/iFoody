@@ -2,8 +2,12 @@ import { IProduct } from './../models/allModel';
 import { element } from 'protractor';
 import * as apiUrl from './../../constant/apiUrl';
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers } from '@angular/http';
+import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import 'rxjs/Rx';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/catch';
+import { tryCatch } from 'rxjs/util/tryCatch';
 import {Observable} from 'rxjs/Rx';
 import {CategoryService} from './category.service';
 
@@ -15,6 +19,11 @@ export class ProductService {
   constructor(private _http: Http) {
     this.actionUrl = apiUrl.GetAllProduct;
     this.reviewUrl = apiUrl.ProductReview;
+  }
+  private handleError(error: Response) {
+    console.log("handleError works.");
+    console.error(error);
+    return Observable.throw(error.json().error || 'Server error');
   }
 
   public GetAll = (): Observable<any> => {
@@ -66,6 +75,16 @@ export class ProductService {
         .do(x => {
           listProduct.push(x);   
         });
+  }
+   // POST - Product updload
+  public AddNewProduct=(product:IProduct):Observable<any>=> {
+    let body = JSON.stringify(product);
+    let headers = new Headers({'Content-Type' : 'application/json'});
+    let options = new RequestOptions( {headers: headers});
+
+    return this._http.post(this.actionUrl, body, options)
+      .map((response: Response) => <IProduct>response.json())
+      .catch(this.handleError);
   }
 
   // Tuan made

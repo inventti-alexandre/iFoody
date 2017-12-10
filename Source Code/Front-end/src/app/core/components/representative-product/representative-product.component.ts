@@ -28,7 +28,7 @@ export class RepresentativeProductComponent implements OnInit {
       .subscribe(data => this.categories = data,
       error => console.log(error),
       () => {
-        //get products by category (1 page)
+        // get products by category (1 page)
         this.categories.forEach(item=>{
           this._productService.PagingAllProductsByCategory(item.id,this.initPage,this.initCount).subscribe(data=>{
             if(data!==null){
@@ -37,7 +37,7 @@ export class RepresentativeProductComponent implements OnInit {
               console.log("emptty");
             }
           },
-            //error => console.log(error),
+            // error => console.log(error),
             () => {}
           );
         });
@@ -49,11 +49,11 @@ export class RepresentativeProductComponent implements OnInit {
     this._productService.PagingAllProductsByCategory(id,page,this.initCount).subscribe(data=>{
       if(data!==null){
         this.products.forEach(group=>{
-          if(group.results[0].category.id==id){
+          if(group.results[0].category.id===id){
             group.currentPage=data.currentPage;
             data.results.forEach(product=>{
               group.results.push(product);
-            })
+            });
           }
         });
         console.log('more', this.products);
@@ -61,7 +61,7 @@ export class RepresentativeProductComponent implements OnInit {
         console.log("emptty");
       }
     },
-      //error => console.log(error),
+      // error => console.log(error),
       () => {}
     );
   }

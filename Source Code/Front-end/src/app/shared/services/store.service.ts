@@ -7,8 +7,10 @@ import * as apiUrl from './../../constant/apiUrl';
 @Injectable()
 export class StoreService {
   private storeUrl: string;
+  private storeControllerUrl: string
   constructor(private _http: Http) { 
     this.storeUrl = apiUrl.Store;
+    this.storeControllerUrl = apiUrl.GetStore;
   }
 
   public GetStoreById(id: string): Observable<any> {
@@ -16,6 +18,12 @@ export class StoreService {
     console.log(id);
     if(id != null) {
       return this._http.get(this.storeUrl + '/' + id.replace(/['"]+/g, ''))
+            .map((response: Response) => <any>response.json());
+    }
+  }
+  public GetStoreByUserId(userId:string): Observable<any> {
+    if(userId != null) {
+      return this._http.get(this.storeControllerUrl + "/?userId=" + userId.replace(/['"]+/g, ''))
             .map((response: Response) => <any>response.json());
     }
   }

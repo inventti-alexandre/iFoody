@@ -3,6 +3,8 @@ export const Domain = 'http://localhost:62025/api/';
 export const GetAllProduct = Domain + 'product';
 export const GetAllCategories = Domain + 'categories';
 export const ProductReview = Domain + 'product/review';
+// Store URL
+export const GetStore = Domain + 'store';
 // User URL
 export const GetUser = Domain + 'user';
 export const SignUp = Domain + 'user/signup';

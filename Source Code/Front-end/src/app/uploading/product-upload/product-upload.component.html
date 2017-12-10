@@ -1,6 +1,6 @@
 <div class="product-upload col-sm-12 col-xs-12">
   <h2>Hot & Cold</h2>
-  <form [formGroup]="uploadProduct" (ngSubmit)="onSubmit()">
+  <form [formGroup]="uploadProduct">
 
     <div>
       <input type="text" formControlName="name" class="form-control input-lg" placeholder="Tên sản phẩm...">
@@ -9,19 +9,20 @@
     <div>
       <select formControlName="type" class="form-control input-lg" (change)="select()">
         <option [ngValue]="null" disabled hidden>Loại sản phẩm</option>
-        <option *ngFor="let type of listTypes" [value]="type">
-          {{type}}
+        <option *ngFor="let type of category" [value]="type.id">
+          {{type.name}}
         </option>
       </select>
     </div>
 
     <div>
-      <select formControlName="price" class="form-control input-lg">
+        <input formControlName="price"  type="number" class="form-control input-lg" placeholder="Giá sản phẩm...VNĐ">
+      <!-- <select formControlName="price" class="form-control input-lg">
           <option [ngValue]="null" disabled hidden>Giá sản phẩm</option>
           <option *ngFor="let price of listPrice" [value]="price.value">
             {{ price.viewValue }} VNĐ
           </option>
-      </select>
+      </select> -->
     </div>
 
     <div class="chooseFile">
@@ -35,7 +36,7 @@
 
 
     <div class="settingBtn">
-      <button type="button" class="btn-update" md-raised-button color="primary">Thêm sản phẩm</button>
+      <button type="submit" (click)="onSubmit($event)" class="btn-update" md-raised-button color="primary">Thêm sản phẩm</button>
       <button type="button" class="btn-cancel" md-raised-button color="link">Xóa hết</button>
     </div>
   </form>

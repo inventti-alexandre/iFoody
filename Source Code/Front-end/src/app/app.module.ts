@@ -1,3 +1,4 @@
+import { StoreService } from './shared/services/store.service';
 import { AuthGuardService as AuthGuard } from './shared/services/auth-guard.service';
 import { AuthService } from './shared/services/auth.service';
 import { ProductService } from './shared/services/product.service';
@@ -24,6 +25,7 @@ import { ROUTER_PROVIDERS } from '@angular/router/src/router_module';
 import { TestComponent } from './test/test.component';
 import { UserService } from './shared/services/user.service';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { CategoryService } from './shared/services/category.service';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,8 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
   providers: [
     UserService,
     ProductService,
+    CategoryService,
+    StoreService,
     AuthService,
     AuthGuard
   ],
