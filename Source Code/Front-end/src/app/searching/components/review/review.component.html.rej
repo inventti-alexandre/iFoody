@@ -1,0 +1,30 @@
+diff a/Source Code/Front-end/src/app/searching/components/review/review.component.html b/Source Code/Front-end/src/app/searching/components/review/review.component.html	(rejected hunks)
+@@ -1,24 +0,21 @@
+-<div class="row review">
+-
++<div class="row review"  *ngFor="let reviewModel of reviewsModel">
+   <div class="col-xs-12 col-sm-12 review__head">
+-
+     <div class="row">
+-
+       <div class="col-xs-6 col-sm-4">
+         <div class="review__head__avatar">
+           <i class="fa fa-user-circle fa-2x"></i>
+         </div>
+-        <div class="review__head__username">{{user.name}}</div>
++        <div class="review__head__username">{{ reviewModel.user.lastName}} {{ reviewModel.user.firstName }}</div>
+       </div>
+ 
+       <div class="col-xs-6 col-sm-8 review__head__rating">
+         <div class="row">
+           <div class="col-xs-12 col-sm-4 pull-right">
+-            <rating [(ngModel)]="rate" [max]="max" [readonly]="isReadonly" (onHover)="hoveringOver($event)" [titles]="['one','two','three']"
++            <rating [(ngModel)]="reviewModel.review.rating" [max]="max" [readonly]="true" (onHover)="hoveringOver($event)" [titles]="['one','two','three']"
+               class="filled pull-right"></rating>
+           </div>
+           <div class="col-xs-12 col-sm-8 pull-left">
+-            <span class="pull-right">03/10/2017</span>
++            <span class="pull-right">{{ reviewModel.date }}</span>
+           </div>
+         </div>
+       </div>
