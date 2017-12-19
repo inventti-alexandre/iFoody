@@ -20,6 +20,7 @@ namespace DataModel
             this.Comments = new HashSet<Comment>();
             this.FavoriteLists = new HashSet<FavoriteList>();
             this.Reviews = new HashSet<Review>();
+            this.Stores = new HashSet<Store>();
             this.Tokens = new HashSet<Token>();
             this.UserImages = new HashSet<UserImage>();
         }
@@ -32,7 +33,7 @@ namespace DataModel
         public string Password { get; set; }
         public Nullable<System.DateTime> Birthday { get; set; }
         public bool IsAdmin { get; set; }
-        public Nullable<bool> hasStore { get; set; }
+        public Nullable<bool> HasStore { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
@@ -40,6 +41,8 @@ namespace DataModel
         public virtual ICollection<FavoriteList> FavoriteLists { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Review> Reviews { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Store> Stores { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Token> Tokens { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

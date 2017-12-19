@@ -1,5 +1,5 @@
 import { UserService } from './../shared/services/user.service';
-import { IUser } from './../shared/models/user';
+import { IUser } from './../shared/models/allModel';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -22,8 +22,8 @@ export class TestComponent implements OnInit {
     "isAdmin":false,
     "hasStore" : false  
   };
-    //this._userService.getUserById("52da82fd-f624-4260-8617-00759c715d08")
-    //this._userService.signUp(this.results)
+    // this._userService.getUserById("52da82fd-f624-4260-8617-00759c715d08")
+    // this._userService.signUp(this.results)
     this._userService.signIn("hoailinhtinh@gmail.com","8899");
   }
 

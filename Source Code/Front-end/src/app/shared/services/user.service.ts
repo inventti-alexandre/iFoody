@@ -1,8 +1,8 @@
+import { forEach } from '@angular/router/src/utils/collection';
 import { FavoriteList } from './../../constant/apiUrl';
 import { tryCatch } from 'rxjs/util/tryCatch';
 import { AuthService } from './auth.service';
-import { IUser } from '../models/user';
-import { IToken } from '../models/token';
+import { IUser, IToken } from '../models/allModel';
 import { ObserveOnMessage } from 'rxjs/operators/observeOn';
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
@@ -35,7 +35,7 @@ export class UserService {
 
   constructor(private _http: Http) {
     this.domain = apiUrl.Domain;
-    this.getUrl = apiUrl.Get;
+    this.getUrl = apiUrl.GetUser;
     this.signUpUrl = apiUrl.SignUp;
     this.signInUrl = apiUrl.SignIn;
     this.uploadUrl = apiUrl.Upload;
@@ -65,8 +65,23 @@ export class UserService {
   
   // GET Many Users
   // For Admin
-  getManyUser(idList: string[]) {
-    // To do
+  getManyUser(idList: string[]): Observable<any> {
+    console.log("getManyUser works");
+    console.log(idList);
+    if(idList.length > 0) {
+      let users: IUser[];
+      idList.forEach(element => {
+        this._http.get(this.getUrl + element.replace(/['"]+/g, ''))
+                    .map((response: Response) => <any>response.json())
+                    .catch(this.handleError)
+                    .subscribe(u => {
+                      console.log("User trong Review list ne");
+                      console.log(u);
+                      users.push(u);
+                    });
+      });
+      return null;
+    }
   }
 
   // GET User By Id
@@ -104,7 +119,15 @@ export class UserService {
     return null;
   }
 
-  
+  // GET Review List of User by UserId
+  getReviewListByUserId(id: string): Observable<any> {
+    console.log("getReviewListByUserId works");
+    console.log(id);
+    if(id != null) {
+      return this._http.get(this.reviewUrl + '/' + id.replace(/['"]+/g,''))
+            .map((response: Response) => <any>response.json());
+    }
+  }
 
   // POST - User Sign up 
   signUp(user: IUser): Observable<any> {

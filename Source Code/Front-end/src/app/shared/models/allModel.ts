@@ -1,6 +1,7 @@
+import { Params } from '@angular/router';
 import { DatePipe } from '@angular/common/src/pipes';
 
-export class Product {
+export interface IProduct {
     id: string;
     name: string;
     price: number;
@@ -9,7 +10,7 @@ export class Product {
     storeId: string;
 }
 
-export class Store{
+export interface IStore{
     id: string;
     name:string;
     rating:number;
@@ -23,15 +24,57 @@ export class Store{
     district: string;
     city: string;
     categoryId: string;
+    userId: string;
 }
 
-export class Category{
+export interface ICategory{
     id: string;
     name: string;
 }
 
-export class Images{
+export interface IImages{
     id: string;
     name: string;
     path: string;
+}
+
+export interface IUser {
+    email: string;
+    lastName: string;
+    firstName: string;
+    gender: string;
+    password: string;
+    birthday: string;
+    isAdmin: boolean; 
+    hasStore: boolean;
+}
+
+export interface IToken {
+    userId: string;
+    authToken: string;
+    issuedOn: Date;
+    ExpiresOn: Date;
+}
+
+export interface IBsBreadcrumb {
+    label: string;
+    params: Params;
+    url: string;
+}
+
+export interface IFavoriteList {
+    id: string;
+    userId: string;
+    productId: string;
+    storeId: string;
+}
+
+export interface IReview {
+    id: string;
+    reviewContent: string;
+    rating: number;
+    date: Date;
+    userId: string;
+    productId: string;
+    storeId: string;
 }

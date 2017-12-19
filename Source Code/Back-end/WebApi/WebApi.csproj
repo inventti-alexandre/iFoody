@@ -292,6 +292,7 @@
     <Compile Include="ApiController\ImageController.cs" />
     <Compile Include="ApiController\ProductController.cs" />
     <Compile Include="ApiController\ProductImageController.cs" />
+    <Compile Include="ApiController\StoreController.cs" />
     <Compile Include="ApiController\UserController.cs" />
     <Compile Include="App_Start\AttributeRoutingHttpConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />

@@ -1,7 +1,7 @@
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from './../../../../shared/services/user.service';
-import { IUser } from './../../../../shared/models/user';
 import { ProfileChildren } from '../../../models/profileChildren';
+import { IUser } from './../../../../shared/models/allModel';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 

@@ -1,6 +1,6 @@
 import { ProfileChildren } from '../../../models/profileChildren';
 import { FormGroup, FormControl } from '@angular/forms';
-import { IStore } from '../../../../shared/models/store';
+import { IStore } from '../../../../shared/models/allModel';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({

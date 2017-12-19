@@ -18,3 +18,12 @@
     width: 100%;
   }
 }
+
+.listCategory .seeMoreBtn {
+  float: right;
+  cursor: pointer;
+}
+
+.listCategory .seeMoreBtn i:hover {
+  color: #337ab7;
+}

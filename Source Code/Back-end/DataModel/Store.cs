@@ -37,6 +37,7 @@ namespace DataModel
         public string District { get; set; }
         public string City { get; set; }
         public Nullable<System.Guid> CategoryId { get; set; }
+        public Nullable<System.Guid> UserId { get; set; }
     
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -49,5 +50,6 @@ namespace DataModel
         public virtual ICollection<Review> Reviews { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StoreImage> StoreImages { get; set; }
+        public virtual User User { get; set; }
     }
 }

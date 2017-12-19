@@ -1,3 +1,5 @@
+import { StoreDetailInfoComponent } from './searching/components/store-detail/store-detail-info/store-detail-info.component';
+import { StoreDetailComponent } from './searching/components/store-detail/store-detail.component';
 import { AuthGuardService as AuthGuard } from './shared/services/auth-guard.service';
 import { TestComponent } from './test/test.component';
 import { UserProfileComponent } from './membership/components/user/user-profile/user-profile.component';
@@ -16,6 +18,7 @@ import { BsPaginationComponent } from './shared/components/bs-pagination/bs-pagi
 import { BsBreadcrumbComponent } from './shared/components/bs-breadcrumb/bs-breadcrumb.component';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
+import {ProductUploadComponent} from './uploading/product-upload/product-upload.component'
 
 //  routing configuration const
 const routes: Routes = [
@@ -45,7 +48,7 @@ const routes: Routes = [
 
     }, 
     {
-        path: 'product',
+        path: 'product/:id',
         component: ProductDetailComponent
     }, 
     {
@@ -53,14 +56,18 @@ const routes: Routes = [
         component: AdminComponent
     }, 
     {
-        path: 'test/:id',
-        component: TestComponent,
+        path: 'test',
+        component: StoreDetailInfoComponent,
     }, 
     {
         path: 'auth-guard',
         component: ProfileComponent,
         canActivate: [AuthGuard]
-    }, 
+    },
+    {
+        path:'upload',
+        component: ProductUploadComponent,
+    },  
     {
         path: '',
         redirectTo: '/home',

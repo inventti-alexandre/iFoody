@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, group } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { Http } from '@angular/http';
 import { ProductService } from './../../../shared/services/product.service';
@@ -12,68 +12,63 @@ import { forEach } from '@angular/router/src/utils/collection';
   providers: [ProductService, CategoryService]
 })
 export class RepresentativeProductComponent implements OnInit {
-<<<<<<< HEAD
-=======
-
   public products: any[];
   public categories: any[];
-  public productsGroupByCategory: any[];
+  public initPage;
+  public initCount;
+
   constructor(private _productService: ProductService, private _categoryService: CategoryService) {
-    this.productsGroupByCategory = [];
+    this.products = [];
+    this.initPage = 1;
+    this.initCount = 6;
   }
   ngOnInit() {
-    //get all cetegory:
+    // get all cetegory:
     this._categoryService.GetAll()
       .subscribe(data => this.categories = data,
       error => console.log(error),
       () => {
-        console.log("category", this.categories);
+        // get products by category (1 page)
+        this.categories.forEach(item=>{
+          this._productService.PagingAllProductsByCategory(item.id,this.initPage,this.initCount).subscribe(data=>{
+            if(data!==null){
+              this.products.push(data);
+            }else{
+              console.log("emptty");
+            }
+          },
+            // error => console.log(error),
+            () => {}
+          );
+        });
+        console.log("category", this.products);
       }
       );
-    //get all products
-    this._productService
-      .GetAll()
-      .subscribe(data => this.products = data,
-      error => console.log(error),
-      () => {
-        //group products by category
-        this.categories.forEach(category => {
-          var productsByCategory = {
-            categoryName: "",
-            products: []
-          };
-          this._productService.GetProductByCategory(category.name, this.products, productsByCategory);
-          if(productsByCategory.categoryName!==""){
-            this.productsGroupByCategory.push(productsByCategory);
+  }
+  getNextPage(id,page){
+    this._productService.PagingAllProductsByCategory(id,page,this.initCount).subscribe(data=>{
+      if(data!==null){
+        this.products.forEach(group=>{
+          if(group.results[0].category.id===id){
+            group.currentPage=data.currentPage;
+            data.results.forEach(product=>{
+              group.results.push(product);
+            });
           }
         });
-        console.log("Products group by category", this.productsGroupByCategory);
+        console.log('more', this.products);
+      }else{
+        console.log("emptty");
       }
-      );
+    },
+      // error => console.log(error),
+      () => {}
+    );
   }
-
->>>>>>> origin/Phuong_Dev
-  listProducts = [
-    {
-      name: "Coffee",
-
-    },
-    {
-      name: "Trà sữa",
-    },
-    {
-      name: "Sản phẩm đề xuất",
+  seeMore(id, currentPage, totalPage){
+    if(currentPage<totalPage){
+      this.getNextPage(id,currentPage+1);
     }
-  ];
-  
-  public values: any[];
-  constructor(private _dataService: ProductService) {}
-  ngOnInit() {
-    this._dataService
-        .GetAll()
-        .subscribe(data => this.values = data,
-        );
   }
-
   
 }

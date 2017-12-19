@@ -1,6 +1,6 @@
 import { tryCatch } from 'rxjs/util/tryCatch';
 import { AuthService } from './../../../shared/services/auth.service';
-import { IUser } from './../../../shared/models/user';
+import { IUser } from './../../../shared/models/allModel';
 import { LoginComponent } from './../../../membership/components/shared/login/login.component';
 import * as global from './../../../constant/global';
 import { Component, HostListener, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';

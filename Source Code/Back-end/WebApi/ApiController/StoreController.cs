@@ -1,48 +1,40 @@
-﻿using BusinessLayer.IServices;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using BusinessLayer.IServices;
 
 namespace WebApi.ApiController
 {
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    [RoutePrefix("api/store")]
     public class StoreController : System.Web.Http.ApiController
     {
         private readonly IStoreService _storeService;
-
         public StoreController(IStoreService storeService)
         {
             _storeService = storeService;
         }
 
-        // GET api/store
+        // GET api/product
         [HttpGet]
-        [Route("")]
-        public HttpResponseMessage Get()
+        public IHttpActionResult GetStoreByUserId(Guid userId)
         {
             try
             {
-                var stores = _storeService.GetAllStore();
-                if (stores != null)
+                var store = _storeService.GetStoreByUserId(userId);
+                if (store == null)
                 {
-                    var storeEntities = stores.ToList();
-                    if (storeEntities.Any())
-                    {
-                        return Request.CreateResponse(HttpStatusCode.OK, storeEntities);
-                    }
+                    return NotFound(); // Returns a NotFoundResult
                 }
+                return Ok(store);  // Returns an OkNegotiatedContentResult
             }
             catch (Exception e)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Got Exception");
+                return NotFound();
             }
-
-            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Stores not found");
         }
-
     }
 }

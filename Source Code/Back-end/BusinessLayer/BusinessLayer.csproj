@@ -65,6 +65,7 @@
     <Compile Include="DTOs\CommentDto.cs" />
     <Compile Include="DTOs\FavoriteListDto.cs" />
     <Compile Include="DTOs\ImageDto.cs" />
+    <Compile Include="DTOs\PagingReturnDto.cs" />
     <Compile Include="DTOs\ProductDto.cs" />
     <Compile Include="DTOs\ProductImageDto.cs" />
     <Compile Include="DTOs\ReviewDto.cs" />

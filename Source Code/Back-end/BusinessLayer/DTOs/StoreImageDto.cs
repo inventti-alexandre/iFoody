@@ -2,7 +2,7 @@
 
 namespace BusinessLayer.DTOs
 {
-    class StoreImageDto
+    public class StoreImageDto
     {
         public Guid Id { get; set; }
         public Guid? StoreId { get; set; }
