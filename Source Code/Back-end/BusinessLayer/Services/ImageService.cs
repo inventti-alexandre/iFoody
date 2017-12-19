@@ -1,12 +1,16 @@
 ﻿using AutoMapper;
 using BusinessEntities;
+using BusinessLayer.DTOs;
 using BusinessLayer.IServices;
 using DataModel;
 using DataModel.IUnitOfWork;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Transactions;
+using System.Web;
 
 namespace BusinessLayer.Services
 {
@@ -56,67 +60,93 @@ namespace BusinessLayer.Services
         }
 
         // Upload Image (Simplied User or User has Store)
-        public bool UploadImage(List<ImageBusinessEntity> imagesEntity, Guid? userId, Guid? storeId)
+        public Task<List<FileUploadResult>> UploadImage(List<string> imageStrings, string fileName, Guid? userId, Guid? storeId, Guid? productId)
         {
             try
             {
-                if (imagesEntity != null)
+                if (imageStrings.Count > 0)
                 {
-                    using (var scope = new TransactionScope())
+                    var uploadedImageIds = new List<Guid>();
+                    foreach (var imageString in imageStrings)
                     {
-                        Mapper.CreateMap<ImageBusinessEntity, Image>();
-                        var images = Mapper.Map<List<ImageBusinessEntity>, List<Image>>(imagesEntity);
-                        foreach (var image in images)
+                        byte[] fileContent = System.Convert.FromBase64String(imageString);
+                        var uploadPath = HttpContext.Current.Server.MapPath("~/Uploads");
+                        var name = fileName;
+                        var filePath = Path.Combine(uploadPath, name);
+
+                        using (var scope = new TransactionScope())
                         {
-                            if (image != null)
+                            File.WriteAllBytes(filePath, fileContent);
+
+                            var imageEntity = new ImageBusinessEntity()
                             {
-                                _unitOfWork.Images.Insert(image);
-                                _unitOfWork.Complete();
+                                Name = name,
+                                Path = filePath
+                            };
 
-                                var firstOrDefault =
-                                    _unitOfWork.Images.GetManyQueryable(i => i.Id == image.Id).FirstOrDefault();
-                                if (firstOrDefault != null)
+                            Mapper.CreateMap<ImageBusinessEntity, Image>();
+                            var image = Mapper.Map<ImageBusinessEntity, Image>(imageEntity);
+                            _unitOfWork.Images.Insert(image);
+                            _unitOfWork.Complete();
+
+                            var firstOrDefault =
+                                _unitOfWork.Images.GetManyQueryable(i => i.Id == image.Id).FirstOrDefault();
+                            if (firstOrDefault != null)
+                            {
+                                var imageId = firstOrDefault.Id;
+
+                                // Check if Product Image is uploaded
+                                if (productId != null)
                                 {
-                                    var imageId = firstOrDefault.Id;
-
-                                    // Check if User is uploading into Store
-                                    if (storeId != null)
+                                    var newProductImage = new ProductImage
                                     {
-                                        var newStoreImage = new StoreImage
-                                        {
-                                            StoreId = storeId.GetValueOrDefault(),
-                                            ImageId = imageId
-                                        };
+                                        ProductId = productId.GetValueOrDefault(),
+                                        ImageId = imageId
+                                    };
 
-                                        _unitOfWork.StoreImages.Insert(newStoreImage);
-                                        _unitOfWork.Complete();
-                                    }
-                                    else
-                                    {
-                                        // User upload normally
-                                        var newUserImage = new UserImage
-                                        {
-                                            UserId = userId.GetValueOrDefault(),
-                                            ImageId = imageId
-                                        };
-
-                                        _unitOfWork.UserImages.Insert(newUserImage);
-                                        _unitOfWork.Complete();
-                                    }
+                                    _unitOfWork.ProductImages.Insert(newProductImage);
+                                    _unitOfWork.Complete();
                                 }
+                                // Check if User is uploading into Store
+                                if (storeId != null)
+                                {
+                                    var newStoreImage = new StoreImage
+                                    {
+                                        StoreId = storeId.GetValueOrDefault(),
+                                        ImageId = imageId
+                                    };
+
+                                    _unitOfWork.StoreImages.Insert(newStoreImage);
+                                    _unitOfWork.Complete();
+                                }
+
+                                if (userId != null)
+                                {
+                                    // User upload normally
+                                    var newUserImage = new UserImage
+                                    {
+                                        UserId = userId.GetValueOrDefault(),
+                                        ImageId = imageId
+                                    };
+
+                                    _unitOfWork.UserImages.Insert(newUserImage);
+                                    _unitOfWork.Complete();
+                                }
+                                scope.Complete();
+                                uploadedImageIds.Add(firstOrDefault.Id);
                             }
                         }
-                        scope.Complete();
-                        return true;
                     }
                 }
-                return false;
+                // return false;
             }
             catch (Exception e)
             {
-                return false;
+                return null;
             }
+            return null;
         }
+
 
         // Delete method
         public bool DeleteImage(Guid id)

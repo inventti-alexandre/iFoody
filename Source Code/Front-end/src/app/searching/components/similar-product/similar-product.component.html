@@ -1,13 +1,12 @@
-<div class="similarProduct col-xs-12 col-sm-12">
+<div class="similarProduct col-xs-6 col-sm-6" *ngFor="let similarProduct of similarProducts">
   <div class="row">
     <div class="similarProduct__photo col-xs-5 col-sm-5">
-      <img src="https://baomoi-photo-2.zadn.vn/17/04/01/283/21911566/1_1375406.jpg" alt="Tra Sua Tran Chau">
+      <img [src]="similarProduct.images[0].path" alt="similarProduct.name">
     </div>
 
     <div class="similarProduct__content  col-xs-7 col-sm-7">
-      <h3>Trà Sữa Trân Châu<span><i class="fa fa-heart-o fa-1x"></i></span></h3>
-      <div>Số lượng đặt: 3200 lần</div>
-      <div>Giá: 20.000đ</div>
+      <h3>{{ similarProduct.product.name }}<span><i class="fa fa-heart-o fa-1x"></i></span></h3>
+      <div>{{ similarProduct.product.price | currency:'vnd':4.0 }}</div>
     </div>
   </div>
 </div>

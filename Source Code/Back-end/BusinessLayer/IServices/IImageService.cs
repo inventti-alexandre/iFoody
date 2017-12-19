@@ -1,6 +1,8 @@
 ﻿using BusinessEntities;
+using BusinessLayer.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BusinessLayer.IServices
 {
@@ -14,7 +16,7 @@ namespace BusinessLayer.IServices
         IEnumerable<ImageBusinessEntity> GetImage(Guid id);
 
         // Upload Image
-        bool UploadImage(List<ImageBusinessEntity> imagesEntity, Guid? userId, Guid? storeId);
+        Task<List<FileUploadResult>> UploadImage(List<string> imagesEntity, string fileName, Guid? userId, Guid? storeId, Guid? productId);
 
         // Delete method
         bool DeleteImage(Guid id);

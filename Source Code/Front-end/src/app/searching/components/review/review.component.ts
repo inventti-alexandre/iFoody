@@ -1,7 +1,10 @@
-import { IReview } from './../../../shared/models/allModel';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IReview, IUser, IProduct } from './../../../shared/models/allModel';
 import { UserService } from './../../../shared/services/user.service';
 import { ProductService } from '../../../shared/services/product.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
+import * as apiUrl from '../../../constant/apiUrl';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'review',
@@ -9,39 +12,75 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./review.component.scss']
 })
 export class ReviewComponent implements OnInit{
+  rerender = false; // Refresh component when submit Review
   @Input() productId: string;
   reviewsModel: any[];
   reviewQuantity: number;
-  userIds: string[];
-  users: any[]; 
+  currentUserId: string;
+  currentUser: IUser;
+  newRate: number;
+  today: any;
+  newReviewContent: string;
 
-  // user = {
-  //   name : "Tuan Pham"
-  // };
   public max = 5;
   public rate;
-  ratingNumber: number;
-  public isReadonly = false;
+  public isReadonly: boolean;
  
   public overStar:number;
- 
-  public hoveringOver(value:number):void {
-    this.overStar = value;
-  }
-  constructor(private _productService: ProductService, private _userService: UserService) { 
-    // this.user.name = "Tuan Pham";
-    this.rate = 4;
-    console.log("constructor review");
-  }
+
+  constructor(private _productService: ProductService, 
+      private _userService: UserService,
+      private datePipe: DatePipe,
+      private cdRef:ChangeDetectorRef,
+      private router: Router,
+      private activatedRoute: ActivatedRoute) 
+    { 
+      this.isReadonly = false;
+      this.today = new Date(Date.now());
+      this.currentUserId = localStorage.getItem(apiUrl.UserId);
+    }
   
   ngOnInit() {
+    this.getReviewsData();
+    this._userService.getUserById(this.currentUserId)
+      .subscribe(data => {
+        this.currentUser = data;
+      });
+    
+  }
+
+  public hoveringOver(value:number):void {
+    this.newRate = value;
+  }
+  
+  onSubmit() {
+    if(this.newRate === undefined || this.newRate <= 1) {
+      this.newRate = 1;
+    }
+
+    let newReview: IReview = {
+        reviewContent: this.newReviewContent,
+        rating:this.newRate,
+        date: this.today,
+        userId: this.currentUserId.replace(/['"]+/g, ''),
+        productId: this.productId,
+        storeId: null
+    };
+    console.log(newReview);
+    this._userService.insertReview(newReview)
+      .subscribe((response: Response) => {
+        this.getReviewsData();
+        this.newReviewContent = null;
+        this.newRate = 0;
+      });
+  }
+
+  getReviewsData() {
     this._productService.GetReviewListByProductId(this.productId)
       .subscribe(data => {
-        console.log("Review OnInit works.");
-        console.log(data);
         this.reviewsModel = data;
         this.reviewQuantity = this.reviewsModel.length;
       });
-    
-    }
+  
+  }
 }

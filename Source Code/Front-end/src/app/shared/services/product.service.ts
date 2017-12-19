@@ -15,15 +15,23 @@ import {CategoryService} from './category.service';
 export class ProductService {
   private actionUrl: string;
   private reviewUrl: string;
+  private getProductWithCategoryUrl: string;
 
   constructor(private _http: Http) {
     this.actionUrl = apiUrl.GetAllProduct;
     this.reviewUrl = apiUrl.ProductReview;
+    this.getProductWithCategoryUrl = apiUrl.ProductCategory;
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
   }
   private handleError(error: Response) {
     console.log("handleError works.");
     console.error(error);
     return Observable.throw(error.json().error || 'Server error');
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
   }
 
   public GetAll = (): Observable<any> => {
@@ -36,6 +44,9 @@ export class ProductService {
         });
   }
 
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
   public GetProductByCategoryId=(categoryId): Observable<any> => {
     let listProduct = [];
     if(categoryId != null) {
@@ -46,6 +57,31 @@ export class ProductService {
               console.log(x);
             });
     }
+=======
+=======
+>>>>>>> Stashed changes
+  // public GetProductByCategory=(categoryName, products, result): Observable<any> => {
+  //   console.log('GetProductByCategory works');
+  //   if(products != null) {
+  //     let temp = products.filter(i => i.category.name === categoryName);
+  //     if(temp.length!==0){
+  //       result.categoryName = categoryName;
+  //       result.products = temp;
+  //     }
+  //     return result;
+  //   }
+  // }
+
+  // Tuan made
+  public GetProductByCategoryId(id: string): Observable<any> {
+    console.log('GetProductByCategoryId works');
+    console.log(id);
+    if(id != null) {
+      return this._http.get(this.getProductWithCategoryUrl + '/' + id.replace(/['"]+/g, ''))
+            .map((response: Response) => <any>response.json());
+          }
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
   }
   public PagingAllProducts=(page, count?): Observable<any> => {
     let listProduct = [];
@@ -85,6 +121,30 @@ export class ProductService {
     return this._http.post(this.actionUrl, body, options)
       .map((response: Response) => <IProduct>response.json())
       .catch(this.handleError);
+=======
+  // public GetProductByCategory=(categoryName, products, result): Observable<any> => {
+  //   console.log('GetProductByCategory works');
+  //   if(products != null) {
+  //     let temp = products.filter(i => i.category.name === categoryName);
+  //     if(temp.length!==0){
+  //       result.categoryName = categoryName;
+  //       result.products = temp;
+  //     }
+  //     return result;
+  //   }
+  // }
+
+  // Tuan made
+  public GetProductByCategoryId(id: string): Observable<any> {
+    console.log('GetProductByCategoryId works');
+    console.log(id);
+    if(id != null) {
+      return this._http.get(this.getProductWithCategoryUrl + '/' + id.replace(/['"]+/g, ''))
+            .map((response: Response) => <any>response.json());
+          }
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
   }
 
   // Tuan made
@@ -96,6 +156,7 @@ export class ProductService {
             .map((response: Response) => <any>response.json());
           }
   }
+
   // Tuan made
   public GetReviewListByProductId(id: string): Observable<any> {
     console.log("getReviewListByProductId works");

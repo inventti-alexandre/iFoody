@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace BusinessEntities
 {
@@ -7,6 +8,7 @@ namespace BusinessEntities
         public Guid Id { get; set; }
         public string ReviewContent { get; set; }
         public double Rating { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/mm/yyyy}")]
         public DateTime Date { get; set; }
         public Guid UserId { get; set; }
         public Guid? ProductId { get; set; }

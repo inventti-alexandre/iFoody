@@ -1,7 +1,7 @@
 <!-- <button type="button" class="btn btn-primary" (click)="openModal(signup)">Sign Up</button> -->
 
 <!-- <ng-template #signupModal> -->
-<div class="modal fade" bsModal #signupModal="bs-modal" tabindex="-1" role="dialog" aria-hidden="true">
+<!-- <div class="modal fade" bsModal #signupModal="bs-modal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-body form-signup">
@@ -17,25 +17,24 @@
           <div></div>
           <span>or</span>
         </div>
-        <!-- <button type="button" class="btn btn-signup-email btn-lg" (click)="modalRef.hide();openSecondModal(signupByEmail)"><i class="fa fa-email"></i>Đăng ký bằng Email</button> -->
-        <button type="button" class="btn btn-signup-email btn-lg" (click)="signupModal.hide();showSecondModal();"><i class="fa fa-email"></i>Đăng ký bằng Email</button>
+        <button type="button" class="btn btn-signup-email btn-lg" (click)="showSecondModal();"><i class="fa fa-email"></i>Đăng ký bằng Email</button>
         <hr/>
         <p>Đã có tài khoản iFoody? <a href="#">Đăng Nhập</a></p>
       </div>
     </div>
   </div>
-</div>
+</div> -->
 <!-- </ng-template> -->
 
 
-<!-- <ng-template #signupByEmail> -->
-<div class="modal fade signupByEmailModal" bsModal #signupByEmailModal="bs-modal" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="modal fade signupModal" bsModal #signupModal="bs-modal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div>
         <div class="modal-body form-signup-by-email ">
           <div>
-            <button type="button" class="close" aria-label="Close" (click)="signupByEmailModal.hide()">
+            <button type="button" class="close" aria-label="Close" (click)="signupModal.hide()">
             <span aria-hidden="true"><i class="fa fa-times fa-1x"></i></span>
           </button>
           </div>
@@ -48,9 +47,19 @@
             <span>or</span>
           </div>
 
-          <form [formGroup]="userForm" (ngSubmit)="onSubmit(user)">
+          <div class="md-errors-spacer" [hidden]="email.valid || email.untouched">
+            <div  *ngIf="email.errors && email.errors.required">
+                Email is required
+            </div>
+            <div  *ngIf="email.errors && email.errors.pattern">
+                Email is invalid
+            </div>
+        </div>
+
+          <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
             <div>
-              <input type="text" formControlName="email" class="form-control input-lg" placeholder="Email...">
+            <input type="text" #email formControlName="email" class="form-control input-lg" placeholder="Email..." required
+            pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
               <i class="fa fa-envelope fa-2x"></i>
             </div>
 
@@ -60,13 +69,26 @@
             </div>
 
             <div>
-              <input type="text" formControlName="lastname" class="form-control input-lg" placeholder="Last name...">
+              <input type="text" formControlName="lastName" class="form-control input-lg" placeholder="Last name...">
               <i class="fa fa-user fa-2x"></i>
             </div>
 
             <div>
-              <input type="text" formControlName="firstname" class="form-control input-lg" placeholder="First name...">
+              <input type="text" formControlName="firstName" class="form-control input-lg" placeholder="First name...">
               <i class="fa fa-user-circle fa-2x"></i>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12 col-sm-12">
+                <div class="">
+                  <div class="input-group">
+                    <input type="text" formControlName="birthday" class="form-control input-lg" bsDatepicker #dp="bsDatepicker" [(bsValue)]="bsValue" placeholder="Date of Birth...">
+                    <div class="input-group-btn">
+                      <button type="button" class="btn btn-success btn-calendar" (click)="dp.toggle()"><i class="fa fa-calendar fa-2x"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div>
@@ -79,21 +101,9 @@
               <i class="fa fa-lock fa-2x"></i>
             </div>
 
-            <div class="row">
-              <div class="col-xs-12 col-sm-12">
-                <div class="form-group">
-                  <div class="input-group">
-                    <input type="text" formControlName="DOB" class="form-control  input-lg" bsDatepicker #dp="bsDatepicker" placeholder="Date of Birth...">
-                    <div class="input-group-btn ">
-                      <button type="button" class="btn btn-success btn-calendar" (click)="dp.show()"><i class="fa fa-calendar fa-2x"></i></button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
             <div>
-              <input type="checkbox" formControlName="DOB" class="form-control input-md" placeholder="Date of Birth...">
+              <input type="checkbox" formControlName="readPolicy" class="form-control input-md">
               <span>Tôi đã đọc và chấp nhận những điều khoản của iFoody.</span>
             </div>
 
@@ -108,9 +118,4 @@
       </div>
     </div>
   </div>
-  </div>
-
-
-
-
-<!-- </ng-template> -->
+</div>

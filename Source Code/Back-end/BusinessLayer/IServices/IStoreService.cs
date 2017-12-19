@@ -16,8 +16,20 @@ namespace BusinessLayer.IServices
         StoreDto GetStoreById(Guid? id);
 
         // User Open Store
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
         Guid? OpenStore(StoreBusinessEntity storeEntity);
         StoreBusinessEntity GetStoreByUserId(Guid userId);
+=======
+        Guid? OpenStore(StoreDto storeEntity);
+>>>>>>> Stashed changes
+=======
+        Guid? OpenStore(StoreDto storeEntity);
+>>>>>>> Stashed changes
+=======
+        Guid? OpenStore(StoreDto storeEntity);
+>>>>>>> Stashed changes
 
         // Update Store 
         bool UpdateStore(StoreBusinessEntity storeEntity);

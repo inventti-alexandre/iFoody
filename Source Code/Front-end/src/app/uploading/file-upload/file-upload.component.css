@@ -1,4 +1,8 @@
 /* File Uploader Styles  */
+label {
+  width: 160px;
+}
+
 .uploader input {
   display: none;
 }

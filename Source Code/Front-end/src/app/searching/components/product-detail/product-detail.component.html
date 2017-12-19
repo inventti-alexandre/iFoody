@@ -32,8 +32,8 @@
 
   <div class="row">
     <h4>Sản Phẩm Tương Tự</h4>
-    <div class="productDetail__similar col-xs-6 col-sm-6" *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12]">
-      <similar-product></similar-product>
+    <div class="productDetail__similar col-xs-12 col-sm-12">
+      <similar-product [categoryId]="categoryId" [productId]="productId"></similar-product>
     </div>
   </div>
 </div>

@@ -1,3 +1,8 @@
+import { CategoryService } from '../shared/services/category.service';
+import { AuthService } from './../shared/services/auth.service';
+import { StoreService } from './../shared/services/store.service';
+import { ProductService } from './../shared/services/product.service';
+import { UserService } from './../shared/services/user.service';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -47,6 +52,13 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
     HomeComponent,
     SliderComponent,
     RepresentativeProductComponent
-  ]
+  ],
+  providers: [
+    UserService,
+    ProductService,
+    StoreService,
+    AuthService,
+    CategoryService
+  ],
 })
 export class CoreModule { }

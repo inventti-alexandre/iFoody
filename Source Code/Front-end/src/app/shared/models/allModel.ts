@@ -44,7 +44,8 @@ export interface IUser {
     firstName: string;
     gender: string;
     password: string;
-    birthday: string;
+   // birthday: string;
+    birthday: Date;
     isAdmin: boolean; 
     hasStore: boolean;
 }
@@ -70,11 +71,14 @@ export interface IFavoriteList {
 }
 
 export interface IReview {
-    id: string;
+    id?: string;
     reviewContent: string;
     rating: number;
     date: Date;
     userId: string;
     productId: string;
     storeId: string;
+    product?: IProduct;
+    user?: IUser;
+    review?: IReview;
 }

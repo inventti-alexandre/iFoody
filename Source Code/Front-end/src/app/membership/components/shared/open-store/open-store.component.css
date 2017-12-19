@@ -40,3 +40,13 @@
   text-align: center;
   margin-right: 20px;
 }
+
+.open-store .form-open-store input[type=checkbox] {
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+}
+
+.open-store .form-open-store .addNewComponent:hover {
+  cursor: pointer;
+}

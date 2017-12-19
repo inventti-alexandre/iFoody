@@ -1,3 +1,7 @@
+import { AuthService } from './../shared/services/auth.service';
+import { StoreService } from './../shared/services/store.service';
+import { ProductService } from './../shared/services/product.service';
+import { UserService } from './../shared/services/user.service';
 import { AdminComponent } from './admin/admin.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
@@ -80,6 +84,13 @@ import { AdminProductItemComponent } from './admin-product/admin-product-item/ad
     AdminComponent,
 
 
-  ]
+  ],
+  providers: [
+    UserService,
+    ProductService,
+    StoreService,
+    AuthService
+  ],
+    
 })
 export class AdminModule { }

@@ -9,9 +9,10 @@
         }    
     }
     
-    @media screen and (min-width: 1050px) {
+    @media screen and (min-width: 1051px) {
         width: 40% !important; 
         top: 5px;                
+        margin: auto;
         .btn {
             line-height:140% !important;
         }
@@ -32,6 +33,7 @@
 
 .modal {
     background-color: #807474;
+    z-index: 1800 !important;
     opacity: 0.90;
     // overflow-y: auto;
     // z-index: 1800;
@@ -127,3 +129,11 @@ input[type="checkbox"] {
     height:15px;
     display: inline-block;  
 }
+.modal {
+    background-color: #807474;
+    z-index: 1200 !important;
+    opacity: 0.90;
+    .modal-content {
+        border-radius: 1px !important;
+    }
+} 

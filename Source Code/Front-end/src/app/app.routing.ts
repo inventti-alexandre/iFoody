@@ -1,7 +1,6 @@
 import { StoreDetailInfoComponent } from './searching/components/store-detail/store-detail-info/store-detail-info.component';
 import { StoreDetailComponent } from './searching/components/store-detail/store-detail.component';
 import { AuthGuardService as AuthGuard } from './shared/services/auth-guard.service';
-import { TestComponent } from './test/test.component';
 import { UserProfileComponent } from './membership/components/user/user-profile/user-profile.component';
 import { AdminComponent } from './admin/admin/admin.component';
 import { AdminLayoutComponent } from './admin/admin-layout/admin-layout.component';
@@ -54,10 +53,6 @@ const routes: Routes = [
     {
         path: 'admin',
         component: AdminComponent
-    }, 
-    {
-        path: 'test',
-        component: StoreDetailInfoComponent,
     }, 
     {
         path: 'auth-guard',

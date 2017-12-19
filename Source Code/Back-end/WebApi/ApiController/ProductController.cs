@@ -118,6 +118,29 @@ namespace WebApi.ApiController
 
         }
 
+        // Get api/product/?categoryId=
+        [HttpGet]
+        [Route("api/product/category/{categoryId}")]
+        public HttpResponseMessage GetProductByCategoryId(Guid categoryId)
+        {
+            try
+            {
+                var products = _productService.GetProductByCategoryId(categoryId).ToList();
+                if (products.Count > 0)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, products);
+                }
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No Product found for this Catogory");
+
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Got Exception");
+            }
+
+
+        }
+
         // GET api/product/review/{id}
         [HttpGet]
         [Route("api/product/review/{id}")]

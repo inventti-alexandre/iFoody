@@ -7,8 +7,9 @@ namespace BusinessLayer.IServices
 {
     public interface IProductService
     {
-        ProductDto GetProductById(Guid productId);
         IEnumerable<ProductDto> GetAllProducts();
+        ProductDto GetProductById(Guid productId);
+        IEnumerable<ProductDto> GetProductByCategoryId(Guid categoryId);
         Guid? CreateProduct(ProductBusinessEntity productEntity);
         bool UpdateProduct(ProductBusinessEntity productEntity);
         bool DeleteProduct(Guid productId);

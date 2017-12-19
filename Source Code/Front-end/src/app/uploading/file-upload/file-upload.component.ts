@@ -1,25 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, Input } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'file-upload',
   templateUrl: './file-upload.component.html',
   styleUrls: ['./file-upload.component.scss'],
-  inputs:['activeColor','baseColor','overlayColor']
+//   inputs:['activeColor','baseColor','overlayColor']
 })
 export class FileUploadComponent implements OnInit {
+    @Input() activeColor = 'green';
+    @Input() baseColor = '#ccc';
+    @Input() overlayColor = 'rgba(255,255,255,0.5)';
+    @Output() imageContent = new EventEmitter();
+    dragging = false;
+    loaded = false;
+    imageLoaded = false;
+    imageSrc = '';
 
-  constructor() { }
+  constructor() { 
+    
+  }
 
   ngOnInit() {
   }
-  activeColor: string = 'green';
-  baseColor: string = '#ccc';
-  overlayColor: string = 'rgba(255,255,255,0.5)';
   
-  dragging: boolean = false;
-  loaded: boolean = false;
-  imageLoaded: boolean = false;
-  imageSrc: string = '';
+  
   
   handleDragEnter() {
       this.dragging = true;
@@ -41,10 +46,10 @@ export class FileUploadComponent implements OnInit {
   }
 
   handleInputChange(e) {
-      var file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
+      let file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
 
-      var pattern = /image-*/;
-      var reader = new FileReader();
+      let pattern = /image-*/;
+      let reader = new FileReader();
 
       if (!file.type.match(pattern)) {
           alert('invalid format');
@@ -55,12 +60,16 @@ export class FileUploadComponent implements OnInit {
 
       reader.onload = this._handleReaderLoaded.bind(this);
       reader.readAsDataURL(file);
+      console.log("fileupload works");
+      
   }
   
   _handleReaderLoaded(e) {
-      var reader = e.target;
+      let reader = e.target;
       this.imageSrc = reader.result;
       this.loaded = true;
+      this.imageContent.emit(this.imageSrc);
+    //   console.log(reader);
   }
   
   _setActive() {

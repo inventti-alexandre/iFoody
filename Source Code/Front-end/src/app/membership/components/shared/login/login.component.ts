@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
   isAuthenticated: boolean;
   public modalRef: BsModalRef;
   loading: boolean;
+  
   returnUrl: string;
   userId: string;
   userName: string;
@@ -45,7 +46,7 @@ export class LoginComponent implements OnInit {
   // Login (or SignIn)
   public SignIn() {
     this.loading = true;
-   this._userService.signIn(this.user.value.email, this.user.value.password)
+    this._userService.signIn(this.user.value.email, this.user.value.password)
       .subscribe((data: Response) => {
         this.isAuthenticated = true;
         this.hide();
@@ -78,12 +79,12 @@ export class LoginComponent implements OnInit {
     // this.router.navigate(["/profile"],{queryParams:{id:'1234'}});
   // }
 
-  // public openModal(template: TemplateRef<any>) {
-  //     this.modalRef = this.modalService.show(template);
-  // }
+  public openModal(template: TemplateRef<any>) {
+      this.modalRef = this.modalService.show(template);
+  }
 
-  // public openSecondModal(template: TemplateRef<any>) {
-  //   this.modalRef = this.modalService.show(template);
-  // }
+  public openSecondModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+  }
 
 }

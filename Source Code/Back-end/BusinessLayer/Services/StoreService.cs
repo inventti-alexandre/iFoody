@@ -27,7 +27,7 @@ namespace BusinessLayer.Services
             {
                 var stores = _unitOfWork.Stores.GetAll().ToList();
 
-                Mapper.CreateMap<Store, StoreBusinessEntity>().ForMember(x => x.Id, opt => opt.Ignore());
+                Mapper.CreateMap<Store, StoreBusinessEntity>();
                 var storesModel = Mapper.Map<List<Store>, List<StoreBusinessEntity>>(stores);
 
                 return storesModel;
@@ -94,9 +94,18 @@ namespace BusinessLayer.Services
 
                         var storeDto = new StoreDto()
                         {
-                            Store = storeEntity,
-                            User = userEntity,
-                            Category = categoryEntity,
+                            Name = storeEntity.Name,
+                            OpenHour = storeEntity.OpenHour,
+                            CloseHour = storeEntity.CloseHour,
+                            LowestPrice = storeEntity.LowestPrice,
+                            HighestPrice = storeEntity.HighestPrice,
+                            Description = storeEntity.Description,
+                            RegistrationDate = storeEntity.RegistrationDate,
+                            Address = storeEntity.Address,
+                            District = storeEntity.District,
+                            City = storeEntity.City,
+                            //User = userEntity,
+                            //Category = categoryEntity,
                             Images = imageEntities,
 
                         };
@@ -140,15 +149,21 @@ namespace BusinessLayer.Services
             return null;
         }
         // User Open Store
-        public Guid? OpenStore(StoreBusinessEntity storeEntity)
+        public Guid? OpenStore(StoreDto storeDto)
         {
             try
             {
-                if (storeEntity != null)
+                if (storeDto != null)
                 {
+                    Mapper.CreateMap<StoreDto, StoreBusinessEntity>().ForSourceMember(x => x.Images, opt => opt.Ignore()); ;
+                    var storeEntity = Mapper.Map<StoreDto, StoreBusinessEntity>(storeDto);
+
+
                     using (var scope = new TransactionScope())
                     {
-                        Mapper.CreateMap<StoreBusinessEntity, Store>().ForMember(x => x.Id, opt => opt.Ignore());
+
+                        Mapper.CreateMap<StoreBusinessEntity, Store>()
+                            .ForMember(x => x.Id, opt => opt.Ignore());
                         var store = Mapper.Map<StoreBusinessEntity, Store>(storeEntity);
 
                         _unitOfWork.Stores.Insert(store);

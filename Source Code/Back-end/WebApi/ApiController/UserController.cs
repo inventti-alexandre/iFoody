@@ -1,4 +1,5 @@
 ﻿using BusinessEntities;
+using BusinessLayer.DTOs;
 using BusinessLayer.IServices;
 using System;
 using System.Collections.Generic;
@@ -147,7 +148,7 @@ namespace WebApi.ApiController
         // Upload Image
         [HttpPost]
         [Route("upload")]
-        public HttpResponseMessage Post([FromBody] List<ImageBusinessEntity> images)
+        public HttpResponseMessage Post([FromBody] List<string> images)
         {
             try
             {
@@ -155,7 +156,7 @@ namespace WebApi.ApiController
                 {
                     var authToken = Request.Headers.GetValues("Token").FirstOrDefault();
                     var userToken = _tokenService.GetUserId(authToken);
-                    _imageService.UploadImage(images, userToken.GetValueOrDefault(), null);
+                    //_imageService.UploadImage(images, userToken.GetValueOrDefault(), null);
 
                     return Request.CreateResponse(HttpStatusCode.OK);
                 }
@@ -184,6 +185,34 @@ namespace WebApi.ApiController
                     return Request.CreateResponse(HttpStatusCode.OK, review.Id);
                 }
                 return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Cannot upload Images");
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Error unexpected");
+            }
+        }
+
+
+        // POST api/user/openStore
+        // POST api/user/review
+        [HttpPost]
+        [Route("open-store")]
+        public HttpResponseMessage Post([FromBody] StoreDto storeDto)
+        {
+            try
+            {
+                if (storeDto != null)
+                {
+                    var authToken = Request.Headers.GetValues("Token").FirstOrDefault();
+                    var userToken = _tokenService.GetUserId(authToken);
+
+                    storeDto.RegistrationDate = DateTime.Today;
+                    var storeId = this._storeService.OpenStore(storeDto);
+
+                    // _imageService.UploadImage()
+                    return Request.CreateResponse(HttpStatusCode.OK, storeId);
+                }
+                return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Cannot Open Store");
             }
             catch (Exception e)
             {
@@ -269,35 +298,35 @@ namespace WebApi.ApiController
             }
         }
 
-        // Open Store
-        // Post api/user/store
-        [HttpPost]
-        [Route("store")]
-        public HttpResponseMessage Post([FromBody] StoreBusinessEntity store, [FromBody] List<ImageBusinessEntity> images)
-        {
-            try
-            {
-                if (store != null)
-                {
-                    var storeId = _storeService.OpenStore(store);
+        //// Open Store
+        //// Post api/user/store
+        //[HttpPost]
+        //[Route("store")]
+        //public HttpResponseMessage Post([FromBody] StoreBusinessEntity store, [FromBody] List<ImageBusinessEntity> images)
+        //{
+        //    try
+        //    {
+        //        if (store != null)
+        //        {
+        //            var storeId = _storeService.OpenStore(store);
 
-                    if (images != null)
-                    {
-                        var authToken = Request.Headers.GetValues("Token").FirstOrDefault();
-                        var userToken = _tokenService.GetUserId(authToken);
-                        _imageService.UploadImage(images, userToken.GetValueOrDefault(), storeId);
+        //            if (images != null)
+        //            {
+        //                var authToken = Request.Headers.GetValues("Token").FirstOrDefault();
+        //                var userToken = _tokenService.GetUserId(authToken);
+        //                //_imageService.UploadImage(images, userToken.GetValueOrDefault(), storeId);
 
-                        return Request.CreateResponse(HttpStatusCode.OK, storeId);
-                    }
-                    return Request.CreateResponse(HttpStatusCode.OK, storeId);
-                }
-                return Request.CreateResponse(HttpStatusCode.NotImplemented);
-            }
-            catch (Exception)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Exception error");
-            }
-        }
+        //                return Request.CreateResponse(HttpStatusCode.OK, storeId);
+        //            }
+        //            return Request.CreateResponse(HttpStatusCode.OK, storeId);
+        //        }
+        //        return Request.CreateResponse(HttpStatusCode.NotImplemented);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Exception error");
+        //    }
+        //}
 
         // Put api/user/put/5
         [HttpPut]

@@ -1,4 +1,16 @@
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import { StoreService } from './shared/services/store.service';
+=======
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+>>>>>>> Stashed changes
+=======
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+>>>>>>> Stashed changes
+=======
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+>>>>>>> Stashed changes
 import { AuthGuardService as AuthGuard } from './shared/services/auth-guard.service';
 import { AuthService } from './shared/services/auth.service';
 import { ProductService } from './shared/services/product.service';
@@ -22,15 +34,29 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import 'hammerjs';
 import { ROUTER_PROVIDERS } from '@angular/router/src/router_module';
-import { TestComponent } from './test/test.component';
+// import { TestComponent } from './test/test.component';
 import { UserService } from './shared/services/user.service';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import { CategoryService } from './shared/services/category.service';
+=======
+import { RatingModule } from 'ngx-bootstrap/rating';
+import { FormsModule } from '@angular/forms';
+>>>>>>> Stashed changes
+=======
+import { RatingModule } from 'ngx-bootstrap/rating';
+import { FormsModule } from '@angular/forms';
+>>>>>>> Stashed changes
+=======
+import { RatingModule } from 'ngx-bootstrap/rating';
+import { FormsModule } from '@angular/forms';
+>>>>>>> Stashed changes
 
 @NgModule({
   declarations: [
     AppComponent,
-    TestComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +72,8 @@ import { CategoryService } from './shared/services/category.service';
     MatDatepickerModule,
     MatNativeDateModule,
     AppRoutingModule,
-    BsDropdownModule.forRoot()
+    BsDropdownModule.forRoot(),
+    RatingModule.forRoot(),
   ],
   providers: [
     UserService,

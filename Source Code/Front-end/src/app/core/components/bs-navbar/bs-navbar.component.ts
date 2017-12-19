@@ -33,7 +33,7 @@ export class BsNavbarComponent implements OnInit {
   
   constructor(
     private viewContainerRef: ViewContainerRef,
-    private route: Router,
+    private router: Router,
     private _userService: UserService,
     private _authService: AuthService,
     private activatedRoute: ActivatedRoute
@@ -69,7 +69,8 @@ export class BsNavbarComponent implements OnInit {
   }
   
   redirect(pageName) {
-    this.route.navigate([pageName]);
+    console.log("redirect works");
+    return this.router.navigate([pageName]);
   }
   
   onResize(event) {

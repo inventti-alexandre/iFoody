@@ -2,48 +2,88 @@
 
   <h2>Mở Cửa Hàng</h2>
   <div class="modal-body form-open-store ">
-    <form [formGroup]="store" (ngSubmit)="onSubmit(store)">
+    <form [formGroup]="storeForm" (ngSubmit)="onSubmit($event)" enctype="multipart/form-data">
       <div>
-        <input type="text" formControlName="email" class="form-control input-lg" placeholder="Email...">
-        <i class="fa fa-envelope fa-2x"></i>
-      </div>
-
-      <div>
-        <input type="password" formControlName="password" class="form-control input-lg" placeholder="Mật Khẩu...">
-        <i class="fa fa-lock fa-2x"></i>
-      </div>
-
-      <div>
-        <input type="password" formControlName="confirmPassword" class="form-control input-lg" placeholder="Xác Nhận Mật Khẩu...">
-        <i class="fa fa-lock fa-2x"></i>
-      </div>
-
-      <div>
-        <input type="text" formControlName="name" class="form-control input-lg" placeholder="Tên Cửa Hàng...">
+        <input type="text" formControlName="name" class="form-control input-lg" placeholder="Tên cửa hàng...">
         <i class="fa fa-user fa-2x"></i>
       </div>
 
       <div>
-        <input type="text" formControlName="address" class="form-control input-lg" placeholder="Địa chỉ Cửa hàng...">
-        <i class="fa fa-user-circle fa-2x"></i>
+        <select class="form-control input-lg"  formControlName="categoryId">
+          <option [ngValue]="null">------Loại cửa hàng------</option>
+          <option *ngFor="let category of categories" [ngValue]="category.id">{{ category.name }}</option>
+      </select>
+      <i class="fa fa-glass fa-2x"></i>
       </div>
-
-      <div class="address">
-        <a href="#"><span class="fa fa-plus pull-left"></span>Thêm Địa chỉ</a>
+   
+      <div>
+        <!-- <input type="text" formControlName="password" class="form-control input-lg" placeholder="Mật Khẩu..."> -->
+        <!-- <i class="fa fa-lock fa-2x"></i> -->
+        <select class="form-control input-lg"  formControlName="openHour" >
+          <option [ngValue]="null">------Giờ mở cửa------</option>
+          <option *ngFor="let openHour of openHours" [ngValue]="openHour.id">{{ openHour.value }}</option>
+        </select>
+       <i class="fa fa-clock-o fa-2x"></i>
+      
       </div>
 
       <div>
-        <input type="select" formControlName="address" class="form-control input-lg" placeholder="Địa chỉ Cửa hàng...">
-        <i class="fa fa-user-circle fa-2x"></i>
+        <select class="form-control input-lg"  formControlName="closeHour">
+          <option [ngValue]="null">------Giờ đóng cửa------</option>
+          <option *ngFor="let closeHour of closeHours" [ngValue]="closeHour.id">{{ closeHour.value }}</option>
+      </select>
+      <i class="fa fa-clock-o fa-2x"></i>
       </div>
 
       <div>
-        <div><label for="">Ảnh đại diện</label></div>
-        <div><span class="fa fa-picture-o fa-5x"></span></div>
+        <input type="text" formControlName="lowestPrice" class="form-control input-lg" placeholder="Gía sản phẩm thấp nhất...">
+        <i class="fa fa-money fa-2x"></i>
       </div>
 
       <div>
-        <md-checkbox>Tôi đã đọc và chấp nhận những điều khoản của iFoody.</md-checkbox>
+        <input type="text" formControlName="highestPrice" class="form-control input-lg" placeholder="Giá sản phẩm cao nhất...">
+        <i class="fa fa-money fa-2x"></i>
+      </div>
+
+      <div>
+        <input type="text" formControlName="description" class="form-control input-lg" placeholder="Mô tả ngắn gọn về cửa hàng...">
+        <i class="fa fa-edit fa-2x"></i>
+      </div>
+
+       <div>
+        <select class="form-control input-lg"  formControlName="city" (ngModelChange)="onChangeCity($event)">
+        <!-- <select class="form-control"  formControlName="city" [ngModel]="city" #city (ngModelChange)="onChangeCity(city.value)"> -->
+        <!-- <select class="form-control"  formControlName="city" [(ngModel)]="city" #city (ngModelChange)="onChangeCity(city.value)"> -->
+          <option value="null">------Thành phố------</option>
+          <option  *ngFor="let city of cities" [ngValue]="city.id">{{ city.value }}</option>
+        </select>
+        <i class="fa fa-skyatlas fa-2x"></i>
+        
+      </div>
+
+      <div>
+        <select class="form-control input-lg"  formControlName="district">
+          <option [ngValue]="null">------Quận------</option>
+          <option  *ngFor="let district of districts" [ngValue]="district.id">{{ district.value }}</option>
+        </select>
+        <i class="fa fa-subway fa-2x"></i>
+      </div>
+
+      <div>
+        <input type="text" formControlName="address" class="form-control input-lg" placeholder="Địa chỉ....">
+        <i class="fa fa-edit fa-2x"></i>
+      </div>
+
+      <div>
+        <label for="">Ảnh đại diện</label>
+        <file-upload formControlName="image" (imageContent)="handleFile($event)" [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-upload>
+        <ng-template #newUpload></ng-template>
+        <span><a class="addNewComponent" (click)="addNewComponentEvent()">Thêm ảnh</a></span>
+      </div>
+
+      <div>
+        <input type="checkbox" formControlName="readPolicy" class="form-control">
+        <span>Tôi đã đọc và chấp nhận những điều khoản của iFoody.</span>
       </div>
 
       <button type="submit" class="btn btn-primary btn-signup btn-lg col-xs-12 col-sm-4 col-sm-offset-2">ĐĂNG KÝ</button>

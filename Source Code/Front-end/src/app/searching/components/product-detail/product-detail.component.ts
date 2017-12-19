@@ -10,6 +10,9 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ProductDetailComponent implements OnInit {
   productId;
   productModel: any;
+  categoryId: string;
+  reviews: any[];
+
   constructor(private _productService: ProductService, private router: Router, private route: ActivatedRoute) {
    }
 
@@ -23,7 +26,17 @@ export class ProductDetailComponent implements OnInit {
     .subscribe((data: Response) => {
       console.log(data);
       this.productModel = data; 
+      this.categoryId = this.productModel.category.id;
+      console.log( this.categoryId);
     });
+
+    // get ReviewId array from Product
+    this._productService.GetReviewListByProductId(this.productId)
+        .subscribe(data => {
+          console.log("GetReviewListbyProductId works");
+          this.reviews = data;
+          console.log(this.reviews);
+        });
   }
 
 }

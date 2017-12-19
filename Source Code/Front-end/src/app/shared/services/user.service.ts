@@ -180,6 +180,7 @@ export class UserService {
     let headers = new Headers();
     headers.append("Token", this.authToken); 
     headers.append("Content-Type", "application/json");
+    console.log(body);
     let options = new RequestOptions( {headers: headers});
 
     return this._http.post(this.reviewUrl, body, options)
@@ -208,20 +209,7 @@ export class UserService {
     return true;
   }
 
-  // POST - User Open Store
-  openStore(model: any):Observable<any> {
-    console.log("openStore works.");
-    let body = JSON.stringify(model);
-    let headers = new Headers();
-    headers.append("Token", this.authToken); 
-    headers.append("Content-Type", "application/json");
-    let options = new RequestOptions( {headers: headers});
-
-    return this._http.post(this.storeUrl, body, options)
-      .map((response: Response) => <any>response.json())
-      .catch(this.handleError); 
-
-  }
+  
    
   // PUT - Update User
   put(id: string, model: any): Observable<any> {

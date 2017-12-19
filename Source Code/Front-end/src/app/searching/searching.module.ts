@@ -1,3 +1,8 @@
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { AuthService } from './../shared/services/auth.service';
+import { StoreService } from './../shared/services/store.service';
+import { ProductService } from './../shared/services/product.service';
+import { UserService } from './../shared/services/user.service';
 import { FormsModule } from '@angular/forms';
 import { RatingModule } from 'ngx-bootstrap/rating';
 import { SharedModule } from '../shared/shared.module';
@@ -17,7 +22,8 @@ import { StoreDetailComponent } from './components/store-detail/store-detail.com
 import { StoreDetailInfoComponent } from './components/store-detail/store-detail-info/store-detail-info.component';
 import { StoreDetailMenuComponent } from './components/store-detail/store-detail-menu/store-detail-menu.component';
 import { SimilarStoreComponent } from './components/store-detail/similar-store/similar-store.component';
-
+import { NgModel } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 @NgModule({
   imports: [
     CommonModule,
@@ -27,9 +33,10 @@ import { SimilarStoreComponent } from './components/store-detail/similar-store/s
       apiKey: 'AIzaSyCiZd64MtnFqNtuhvpWcGjBBjfzi0feu0Q'
     }),
     SharedModule,
-    RatingModule.forRoot(),
     FormsModule,
     MatButtonModule,
+    RatingModule,
+    ButtonsModule.forRoot()
   ],
   exports: [
     SearchFilterComponent,
@@ -40,7 +47,7 @@ import { SimilarStoreComponent } from './components/store-detail/similar-store/s
     SearchResultComponent,
     MapComponent,
     StoreDetailComponent,
-    StoreDetailMenuComponent
+    StoreDetailMenuComponent,
   ],
   declarations: [
     SearchFilterComponent,
@@ -52,7 +59,14 @@ import { SimilarStoreComponent } from './components/store-detail/similar-store/s
     StoreDetailComponent,
     StoreDetailInfoComponent,
     StoreDetailMenuComponent,
-    SimilarStoreComponent
-  ]
+    SimilarStoreComponent,
+  ],
+  providers: [
+    UserService,
+    ProductService,
+    StoreService,
+    AuthService,
+    DatePipe
+  ],
 })
 export class SearchingModule { }

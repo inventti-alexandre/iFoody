@@ -1,3 +1,8 @@
+import { FileUploadComponent } from './../uploading/file-upload/file-upload.component';
+import { AuthService } from './../shared/services/auth.service';
+import { StoreService } from './../shared/services/store.service';
+import { ProductService } from './../shared/services/product.service';
+import { UserService } from './../shared/services/user.service';
 import { ProfileItemContainerComponent } from './components/shared/profile-layout/profile-item-container';
 import { NgSwitch } from '@angular/common';
 import { ProfileService } from './services/profile.service';
@@ -24,6 +29,7 @@ import { OpenStoreComponent } from './components/shared/open-store/open-store.co
 import { StoreProfileComponent } from './components/store/store-profile/store-profile.component';
 import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
 import { ProfileDirective } from './directives/profile.directive';
+import { UploadingModule } from '../uploading/uploading.module';
 
 @NgModule({
   imports: [
@@ -41,6 +47,7 @@ import { ProfileDirective } from './directives/profile.directive';
     MatButtonModule,
     MatCheckboxModule,
     SharedModule,
+    UploadingModule
   ],  
   exports:[
     SignupComponent,
@@ -68,9 +75,14 @@ import { ProfileDirective } from './directives/profile.directive';
     UserProfileComponent,
     StoreProfileComponent,
     FavoriteListComponent,
+    FileUploadComponent
   ],
   providers: [
-    ProfileService
+    ProfileService,
+    UserService,
+    ProductService,
+    StoreService,
+    AuthService
   ]
 })
 export class MembershipModule { }
