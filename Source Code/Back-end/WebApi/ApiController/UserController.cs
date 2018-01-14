@@ -1,4 +1,5 @@
-﻿using BusinessEntities;
+﻿using AutoMapper;
+using BusinessEntities;
 using BusinessLayer.DTOs;
 using BusinessLayer.IServices;
 using System;
@@ -25,8 +26,10 @@ namespace WebApi.ApiController
         private readonly IReviewService _reviewService;
         private readonly ICommentService _commentService;
         private readonly IFavoritesListService _favoritesListService;
+        private readonly IUploadService _uploadService;
 
-        public UserController(IUserService userService, ITokenService tokenService, IImageService imageService, IProductService productService, IStoreService storeService, IReviewService reviewService, ICommentService commentService, IFavoritesListService favoritesListService)
+
+        public UserController(IUserService userService, ITokenService tokenService, IImageService imageService, IProductService productService, IStoreService storeService, IReviewService reviewService, ICommentService commentService, IFavoritesListService favoritesListService, IUploadService uploadService)
         {
             _userService = userService;
             _tokenService = tokenService;
@@ -36,6 +39,7 @@ namespace WebApi.ApiController
             _reviewService = reviewService;
             _commentService = commentService;
             _favoritesListService = favoritesListService;
+            _uploadService = uploadService;
         }
 
         // Get api/user
@@ -67,7 +71,7 @@ namespace WebApi.ApiController
 
         // GET api/user/5
         [HttpGet]
-        //[Route("id")]
+        [Route("{id}")]
         public HttpResponseMessage Get(Guid id)
         {
             try
@@ -194,22 +198,39 @@ namespace WebApi.ApiController
 
 
         // POST api/user/openStore
-        // POST api/user/review
         [HttpPost]
         [Route("open-store")]
-        public HttpResponseMessage Post([FromBody] StoreDto storeDto)
+        public HttpResponseMessage Post([FromBody] OpenStoreDto openStoreDto)
         {
             try
             {
-                if (storeDto != null)
+                if (openStoreDto != null)
                 {
                     var authToken = Request.Headers.GetValues("Token").FirstOrDefault();
                     var userToken = _tokenService.GetUserId(authToken);
 
-                    storeDto.RegistrationDate = DateTime.Today;
-                    var storeId = this._storeService.OpenStore(storeDto);
+                    Mapper.CreateMap<OpenStoreDto, StoreDto>().ForMember(x => x.Images, opt => opt.Ignore()); ;
+                    var storeDto = Mapper.Map<OpenStoreDto, StoreDto>(openStoreDto);
 
-                    // _imageService.UploadImage()
+                    // Save Store
+                    storeDto.RegistrationDate = DateTime.Today;
+                    var storeId = _storeService.OpenStore(storeDto);
+
+                    // Save Store Image
+                    var imageUploadList = new List<FileUploadResult>();
+                    foreach (var image in openStoreDto.Images)
+                    {
+                        //var imageString = _uploadService.Base64Decode(image.);
+                        //byte[] bytes = Encoding.ASCII.GetBytes(imageString);
+                        imageUploadList.Add(image);
+                    }
+
+                    if (imageUploadList.Any())
+                    {
+                        _uploadService.UploadFile(imageUploadList);
+                    }
+
+                    _userService.UpdateHasToreProperty(storeDto.UserId.GetValueOrDefault());
                     return Request.CreateResponse(HttpStatusCode.OK, storeId);
                 }
                 return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Cannot Open Store");
@@ -330,7 +351,7 @@ namespace WebApi.ApiController
 
         // Put api/user/put/5
         [HttpPut]
-        [Route("profile")]
+        [Route("{id}")]
         public HttpResponseMessage Put(Guid id, [FromBody] UserBusinessEntity user)
         {
             try

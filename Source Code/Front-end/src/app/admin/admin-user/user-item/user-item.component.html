@@ -2,13 +2,13 @@
     <div class="row">
         <div class=" col-md-offset-1 col-md-3 col-sm-4 col-xs-6">
           <img src={{avatar}}/>
-          <span class="user-item__name text-overflow">{{user.name}}</span>
-          <span class="user-item__day text-overflow"><a href="#"> Ngày tham gia: {{user.day}}</a></span>
+          <span class="user-item__name text-overflow">{{name}}</span>
+          <span class="user-item__day text-overflow"><a href="#"> Ngày tham gia: {{day}}</a></span>
         </div>
     
         <div class="col-md-2 col-sm-2 user-item__email col-xs-6">
-          <span class="row no-margin" [ngClass]="index!=0 ?  'display' : ''">Email</span>
-          <p>{{user.email}}</p>
+          <span class="row no-margin" [ngClass]="{'display' : hasIndex}">Email</span>
+          <p>{{email}}</p>
         </div>
     
         <div class="button-row col-md-4 col-md-offset-2  col-sm-offset-1 col-sm-5 col-xs-12  user-item__setting">

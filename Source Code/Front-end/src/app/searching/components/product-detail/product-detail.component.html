@@ -1,39 +1,41 @@
-<div class="productDetail col-xs-12 col-sm-12"  *ngIf="productModel != null">
-  <div class="row">
-    <div class="productDetail__photo col-xs-6 col-sm-6">
-      <div class="productDetail__photo__main row">
-        <img [src]="productModel.images[0].path" alt="" >
-      </div>
+<div class="container">
+  <div class="productDetail col-xs-12 col-sm-12"  *ngIf="productModel != null">
+    <div class="row">
+      <div class="productDetail__photo col-xs-6 col-sm-6">
+        <div class="productDetail__photo__main row">
+          <img [src]="productModel.images[0].path" alt="" >
+        </div>
 
-      <div class="productDetail__photo__minor row">
-        <div class="col-xs-3 col-sm-3" *ngFor="let image of productModel?.images">
-          <img [src]="image.path" alt="Product" *ngIf="(image.id != null)">
+        <div class="productDetail__photo__minor row">
+          <div class="col-xs-3 col-sm-3" *ngFor="let image of productModel?.images">
+            <img [src]="image.path" alt="Product" *ngIf="(image.id != null)">
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="productDetail__info col-xs-6 col-sm-6">
-      <h2> {{ productModel.product.name }} <span><i class="fa fa-heart-o fa-1x"></i></span></h2>
-      <div><span><i class="fa fa-map-marker fa-1x"></i></span> {{ productModel.store.name }} </div>
-      <div><span><i class="fa fa-location-arrow fa-1x"></i></span> {{ productModel.store.address }}</div>
-      <div><span><i class="fa fa-clock-o fa-1x"></i></span> {{ productModel.store.openHour }} -  {{ productModel.store.closeHour }}  </div>
-      <div><span><i class="fa fa-money fa-1x"></i></span> {{ productModel.product.price }} </div>
+      <div class="productDetail__info col-xs-6 col-sm-6">
+        <h2> {{ productModel.product.name }} <span><i class="fa fa-1x" [ngClass]="isFavorited ? 'fa-heart' : 'fa-heart-o'" (click)="addRemoveFavoriteItem($event)"></i></span></h2>
+        <div><span><i class="fa fa-map-marker fa-1x"></i></span> {{ productModel.store.name }} </div>
+        <div><span><i class="fa fa-location-arrow fa-1x"></i></span> {{ productModel.store.address }}</div>
+        <div><span><i class="fa fa-clock-o fa-1x"></i></span> {{ productModel.store.openHour }} -  {{ productModel.store.closeHour }}  </div>
+        <div><span><i class="fa fa-money fa-1x"></i></span> {{ productModel.product.price }} </div>
+      </div>
     </div>
-  </div>
-  <hr/>
+    <hr/>
 
-  <div class="row">
-    <h4>Đánh Giá</h4>
-    <div class="productDetail__review col-xs-12 col-sm-12">
-      <review [productId]="productId"></review>
+    <div class="row">
+      <h4>Đánh Giá</h4>
+      <div class="productDetail__review col-xs-12 col-sm-12">
+        <review [productId]="productId"></review>
+      </div>
     </div>
-  </div>
-  <hr/>
+    <hr/>
 
-  <div class="row">
-    <h4>Sản Phẩm Tương Tự</h4>
-    <div class="productDetail__similar col-xs-12 col-sm-12">
-      <similar-product [categoryId]="categoryId" [productId]="productId"></similar-product>
+    <div class="row">
+      <h4>Sản Phẩm Tương Tự</h4>
+      <div class="productDetail__similar col-xs-12 col-sm-12">
+        <similar-product [categoryId]="categoryId" [productId]="productId"></similar-product>
+      </div>
     </div>
   </div>
 </div>

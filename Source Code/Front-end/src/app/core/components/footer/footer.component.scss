@@ -1,8 +1,8 @@
 .footer{
-    background-color: #31708f;
-    margin: unset;
-    line-height: 50px;
-    color: white;
+    //background-color: #31708f;
+    // margin: unset;
+    line-height: 100px;
+    color: #484848;;
     // border-top: solid 1.2px #51D3B2;
    &__left{
        float: left;
@@ -20,9 +20,10 @@
        float: right;
        padding-right: 20px;
        a{
-            color: white;
-            font-style:italic;
-            font-weight: bold;
+            color: #484848;
+            font-size: 1.2em;
+            // font-style:italic;
+            // font-weight: bold;
             padding-right: 15px;
        }
    } 

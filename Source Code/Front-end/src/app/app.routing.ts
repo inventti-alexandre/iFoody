@@ -60,7 +60,7 @@ const routes: Routes = [
         canActivate: [AuthGuard]
     },
     {
-        path:'upload',
+        path:'user/upload',
         component: ProductUploadComponent,
     },  
     {

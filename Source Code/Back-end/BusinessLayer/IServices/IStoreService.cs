@@ -1,7 +1,7 @@
 ﻿using BusinessEntities;
+using BusinessLayer.DTOs;
 using System;
 using System.Collections.Generic;
-using BusinessLayer.DTOs;
 
 namespace BusinessLayer.IServices
 {
@@ -15,26 +15,26 @@ namespace BusinessLayer.IServices
         // Get One Store By Id
         StoreDto GetStoreById(Guid? id);
 
-        // User Open Store
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        Guid? OpenStore(StoreBusinessEntity storeEntity);
+        // Get Store By User Id
         StoreBusinessEntity GetStoreByUserId(Guid userId);
-=======
+
+        // User Open Store
         Guid? OpenStore(StoreDto storeEntity);
->>>>>>> Stashed changes
-=======
-        Guid? OpenStore(StoreDto storeEntity);
->>>>>>> Stashed changes
-=======
-        Guid? OpenStore(StoreDto storeEntity);
->>>>>>> Stashed changes
 
         // Update Store 
         bool UpdateStore(StoreBusinessEntity storeEntity);
 
         // Delete Store by Id
         bool DeleteStore(Guid? id);
+
+        //// Encode Base 64 String
+        //string Base64Encode(string plainText);
+
+        //// Decode Base 64 String
+        //string Base64Decode(string base64EncodedData);
+
+        //// Get Base64 String For Image
+        //string GetBase64StringForImage(string imagePath);
+
     }
 }

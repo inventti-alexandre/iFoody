@@ -21,6 +21,7 @@ export class SimilarProductComponent implements OnInit {
   ngOnInit() {
     this._productService.GetProductByCategoryId(this.categoryId)
                               .subscribe(data => {
+                                console.log("similar");
                                 console.log(data);
                                 this.similarProducts = data;
                                 if(this.similarProducts.length > 0) {

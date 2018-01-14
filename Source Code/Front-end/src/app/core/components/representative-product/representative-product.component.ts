@@ -67,6 +67,7 @@ export class RepresentativeProductComponent implements OnInit {
   }
   seeMore(id, currentPage, totalPage){
     if(currentPage<totalPage){
+      console.log("aabbbbb");
       this.getNextPage(id,currentPage+1);
     }
   }

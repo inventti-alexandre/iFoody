@@ -1,20 +1,24 @@
 div {
   position: relative;
   font-size: 1.5em;
+  text-align: center;
 }
 
 .star {
   font-size: 1.5rem;
   color: #C5D4E6;
+  transform: scale(0.6, 0.6);
 }
 
 .number {
   color: white;
   font-size: 0.9em;
+  transform: scale(0.8, 0.8);
 }
 
 .filled {
   color: #4B95E9;
+  transform: scale(0.6, 0.6);
 }
 
 span[class^="fa-"] {
@@ -38,6 +42,11 @@ span[class^="fa-"] {
 }
 
 .ratingNumber {
-  font-size: 0.9em;
-  margin-top: 10px;
+  font-size: 0.8em;
+  margin-top: -11px;
+  transform: scale(0.8, 0.8);
+}
+
+.ratingNumber a:hover {
+  text-decoration: none;
 }

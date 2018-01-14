@@ -9,51 +9,70 @@
     margin-bottom: 0px  
 }
 .navbar-brand > span {
-    font-size: 0.80em;   
+    font-size: 1em;
+    animation: blinker 1.7s cubic-bezier(.5, 0, 1, 1) infinite alternate;  
+    color: red;
+    text-shadow: -1px 0 red, 0 1px red, 1px 0 red, 0 -1px red;
 }
+
+@keyframes blinker { to { opacity: 0; } }
+
 .navbar-brand a, .navbar-brand img {
     display: inline-block;   
    
 }
 .navbar-brand, .navbar-collapse {
     padding-top: 0px;
-    color: white;
+    color: grey;
+    text-shadow: -0.3px 0 grey, 0 0.3px grey, 0.3px 0 grey, 0 -0.3px grey; 
     @media screen and (max-width: 991px) {
         span {
             display: none
         }
     }
 }
-.navbar-brand:hover{
-    // font-weight: bold;
-}
+
 .navbar-inverse{
-    border-color: #FFA947;
-    background-color: #FFA947; //Tuan edit
+    border-color: #FFFFFF;
+    background-color: #FFFFFF; //Tuan edit
 }
 .navbar-inverse .navbar-nav > li > a{
-    color: white;
+    color: grey;
+    text-shadow: -0.3px 0 grey, 0 0.3px grey, 0.3px 0 grey, 0 -0.3px grey; 
 }
 .navbar-inverse .navbar-nav > li > a:hover{
-    font-weight: bold;
+    // font-weight: bold;
+    transform: scale(1.01);
 }
 .searchBar{
     float: right;
     padding-top: 10px;
     height: 50px;
+    width: 100%;
 }
 .navbar-right{
     margin-right: 0px;
 }
 #myNavbar{
     float: right;
+    .btn-link {
+        color:grey;
+        text-decoration: none;
+        //text-shadow: -0.3px 0 grey, 0 0.3px grey, 0.3px 0 grey, 0 -0.3px grey; 
+     //}
+    }
+    .btn-link:hover { 
+        transform: scale(1.01);
+    }
     li {
         line-height:50px;
         display: inline-block;
-        .btn-login {
-           color:white
-        }
+        //.btn-login {
+           color:grey;
+           text-shadow: -0.3px 0 grey, 0 0.3px grey, 0.3px 0 grey, 0 -0.3px grey; 
+        //}
     }
+
 }
 
 .navbar-header > span:first-child {
@@ -69,6 +88,7 @@
     .searchBar-mobile {
         display: block;
         //background-color: #31708F;
+        height: 34px;
     }
 }
 .navbar-collapse {

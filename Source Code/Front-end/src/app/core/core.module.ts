@@ -21,6 +21,7 @@ import { HomeComponent } from './components/home/home.component';
 import { SliderComponent } from './components/slider/slider.component';
 import { RepresentativeProductComponent } from './components/representative-product/representative-product.component';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { BottomSliderComponent } from './components/bottom-slider/bottom-slider.component';
 
 @NgModule({
   imports: [
@@ -43,7 +44,8 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
     SearchBarComponent,
     HomeComponent,
     SliderComponent,
-    RepresentativeProductComponent
+    RepresentativeProductComponent,
+    BottomSliderComponent
   ],
   declarations: [
     BsNavbarComponent,
@@ -51,7 +53,8 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
     SearchBarComponent,
     HomeComponent,
     SliderComponent,
-    RepresentativeProductComponent
+    RepresentativeProductComponent,
+    BottomSliderComponent
   ],
   providers: [
     UserService,

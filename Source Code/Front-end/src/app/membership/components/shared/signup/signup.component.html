@@ -63,9 +63,16 @@
               <i class="fa fa-envelope fa-2x"></i>
             </div>
 
-            <div>
+            <!-- <div>
               <input type="text" formControlName="gender" class="form-control input-lg" placeholder="Gender...">
               <i class="fa fa-venus-mars fa-2x"></i>
+            </div> -->
+            <div>
+              <select class="form-control input-lg" id="gender" formControlName="gender" >
+                <option [ngValue]="null">Chọn giới tính...</option>
+                <option value="1">Nam</option>
+                <option value="0">Nữ</option>
+              </select>
             </div>
 
             <div>

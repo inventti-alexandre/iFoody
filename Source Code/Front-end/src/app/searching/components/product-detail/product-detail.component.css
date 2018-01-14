@@ -1,4 +1,5 @@
 .productDetail {
+  margin-top: 25px;
   font-size: 1.2em;
 }
 
@@ -64,4 +65,12 @@
 .productDetail__info div span {
   position: absolute;
   left: 18px;
+}
+
+.productDetail__info i:hover {
+  cursor: pointer;
+}
+
+.productDetail__info .fa-heart {
+  color: red;
 }

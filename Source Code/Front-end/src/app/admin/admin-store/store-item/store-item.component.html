@@ -7,7 +7,7 @@
     </div>
 
     <div class="col-md-2 col-sm-6 store-type col-xs-6">
-      <span class="row no-margin" [ngClass]="index!=0 ?  'display' : ''">Loại</span>
+      <span class="row no-margin" [ngClass]="{'display' : hasIndex}">Loại</span>
       <md-select floatPlaceholder="never" class="row no-margin">
         <!-- <md-option *ngFor="let type of types" [value]="type.value"> -->
         <md-option *ngFor="let type of types">

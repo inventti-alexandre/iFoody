@@ -14,10 +14,12 @@ namespace BusinessLayer.Services
     public class StoreService : IStoreService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUploadService _uploadService;
 
-        public StoreService(IUnitOfWork unitOfWork)
+        public StoreService(IUnitOfWork unitOfWork, IUploadService uploadService)
         {
             _unitOfWork = unitOfWork;
+            _uploadService = uploadService;
         }
 
         // Get All Store
@@ -91,6 +93,12 @@ namespace BusinessLayer.Services
                         Mapper.CreateMap<Image, ImageBusinessEntity>();
                         var imageEntities = Mapper.Map<List<Image>, List<ImageBusinessEntity>>(filteredImageEntities).AsEnumerable();
 
+                        var imageBase64Array = new List<string>();
+                        foreach (var imageEntity in imageEntities)
+                        {
+                            var getbase64String = _uploadService.GetBase64StringForImage(imageEntity.Path);
+                            imageBase64Array.Add(getbase64String);
+                        }
 
                         var storeDto = new StoreDto()
                         {
@@ -106,8 +114,7 @@ namespace BusinessLayer.Services
                             City = storeEntity.City,
                             //User = userEntity,
                             //Category = categoryEntity,
-                            Images = imageEntities,
-
+                            Images = imageBase64Array,
                         };
                         return storeDto;
 
@@ -126,20 +133,20 @@ namespace BusinessLayer.Services
         {
             try
             {
-               
-                    var store = _unitOfWork.Stores.GetManyQueryable(x=>x.UserId==userId).ToList().FirstOrDefault();
 
-                    Mapper.CreateMap<Store, StoreBusinessEntity>();
-                    var storeEntity = Mapper.Map<Store, StoreBusinessEntity>(store);
-                    if (storeEntity != null)
-                    {
-                        return storeEntity;
-                    }
-                    else
-                    {
-                        return null;
-                    }
-               
+                var store = _unitOfWork.Stores.GetManyQueryable(x => x.UserId == userId).ToList().FirstOrDefault();
+
+                Mapper.CreateMap<Store, StoreBusinessEntity>();
+                var storeEntity = Mapper.Map<Store, StoreBusinessEntity>(store);
+                if (storeEntity != null)
+                {
+                    return storeEntity;
+                }
+                else
+                {
+                    return null;
+                }
+
             }
             catch (Exception e)
             {
@@ -235,5 +242,7 @@ namespace BusinessLayer.Services
 
             return false;
         }
+
+
     }
 }

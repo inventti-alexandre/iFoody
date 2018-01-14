@@ -1,21 +1,23 @@
-<div class="searchResult col-xs-12 col-sm-12">
-  <div class="row searchResult__filter">
-    <search-filter></search-filter>
-  </div>
+<div class="container">
+  <div class="searchResult col-xs-12 col-sm-12">
+    <div class="row searchResult__filter">
+      <search-filter></search-filter>
+    </div>
 
-  <div class=" searchResult__map row">
-    <map></map>
-  </div>
+    <div class=" searchResult__map row">
+      <map></map>
+    </div>
 
-  <div class="searchResult__items row">
-    <div class="col-xs-6 col-sm-4" *ngFor="let i of [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]">
-      <div class="row">
-        <product-item></product-item>
+    <div class="searchResult__items row">
+      <div class="col-xs-6 col-sm-4" *ngFor="let result of results">
+        <div class="row">
+          <product-item [productId]="result.product.id"></product-item>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="searchResult__pagination row">
-    <bs-pagination></bs-pagination>
+    <div class="searchResult__pagination row">
+      <bs-pagination></bs-pagination>
+    </div>
   </div>
 </div>

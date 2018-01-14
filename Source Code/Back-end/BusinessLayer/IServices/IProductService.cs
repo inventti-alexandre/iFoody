@@ -9,13 +9,13 @@ namespace BusinessLayer.IServices
     {
         IEnumerable<ProductDto> GetAllProducts();
         ProductDto GetProductById(Guid productId);
-        IEnumerable<ProductDto> GetProductByCategoryId(Guid categoryId);
+        IEnumerable<ProductDto> GetProductsByCategory(Guid categoryId);
         Guid? CreateProduct(ProductBusinessEntity productEntity);
         bool UpdateProduct(ProductBusinessEntity productEntity);
         bool DeleteProduct(Guid productId);
-        IEnumerable<ProductDto> GetProductsByCategory(Guid categoryId);
+        IEnumerable<ProductDto> GetProductByCategoryId(Guid categoryId);
         IEnumerable<ImageBusinessEntity> GetAllImageByProductId(Guid productId);
         PagingReturnDto<ProductDto> PagingAllProducts(int page, int? count);
-        PagingReturnDto<ProductDto> PagingAllProductsByCategory(Guid categoryId,int page, int? count);
+        PagingReturnDto<ProductDto> PagingAllProductsByCategory(Guid categoryId, int page, int? count);
     }
 }

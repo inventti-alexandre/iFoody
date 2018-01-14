@@ -22,8 +22,7 @@ namespace BusinessLayer
             registerComponent.RegisterType<IStoreService, StoreService>();
             registerComponent.RegisterType<IReviewService, ReviewService>();
             registerComponent.RegisterType<ICommentService, CommentService>();
-
-
+            registerComponent.RegisterType<IUploadService, UploadService>();
         }
 
         //public void Dispose()

@@ -65,7 +65,9 @@
     <Compile Include="DTOs\CommentDto.cs" />
     <Compile Include="DTOs\FavoriteListDto.cs" />
     <Compile Include="DTOs\FileUploadResult.cs" />
+    <Compile Include="DTOs\HttpPostedFileBaseCustom.cs" />
     <Compile Include="DTOs\ImageDto.cs" />
+    <Compile Include="DTOs\OpenStoreDto.cs" />
     <Compile Include="DTOs\PagingReturnDto.cs" />
     <Compile Include="DTOs\ProductDto.cs" />
     <Compile Include="DTOs\ProductImageDto.cs" />
@@ -83,6 +85,7 @@
     <Compile Include="IServices\IReviewService.cs" />
     <Compile Include="IServices\IStoreService.cs" />
     <Compile Include="IServices\ITokenService.cs" />
+    <Compile Include="IServices\IUploadService.cs" />
     <Compile Include="IServices\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CommentService.cs" />
@@ -94,6 +97,7 @@
     <Compile Include="Services\ReviewService.cs" />
     <Compile Include="Services\StoreService.cs" />
     <Compile Include="Services\TokenService.cs" />
+    <Compile Include="Services\UploadService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>

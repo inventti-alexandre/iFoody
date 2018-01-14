@@ -10,14 +10,18 @@
   margin-bottom: 10px;
 }
 
-.form-edit-profile .btn {
-  text-align: center;
+.form-edit-profile .button {
   width: 100%;
+  padding-left: 20%;
 }
 
-.mat-raised-button {
-  line-height: 45px !important;
-  min-width: 130px !important;
+.form-edit-profile #gender {
+  display: none;
+}
+
+.form-edit-profile .btn-update, .form-edit-profile .btn-cancel {
+  line-height: 25px !important;
   font-size: 1.3em !important;
   margin-right: 20px;
+  width: 30%;
 }

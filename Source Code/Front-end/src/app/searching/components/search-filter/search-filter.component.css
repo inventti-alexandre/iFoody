@@ -51,4 +51,5 @@
 .searchFilter__item__area .well, .searchFilter__item__type .well {
   position: absolute;
   height: auto;
+  z-index: 1300;
 }

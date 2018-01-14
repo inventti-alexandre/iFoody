@@ -16,7 +16,8 @@ export class FileUploadComponent implements OnInit {
     loaded = false;
     imageLoaded = false;
     imageSrc = '';
-
+    // Tuan Add
+    @Output() file: any;
   constructor() { 
     
   }
@@ -46,12 +47,12 @@ export class FileUploadComponent implements OnInit {
   }
 
   handleInputChange(e) {
-      let file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
+     this.file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
 
       let pattern = /image-*/;
       let reader = new FileReader();
 
-      if (!file.type.match(pattern)) {
+      if (!this.file.type.match(pattern)) {
           alert('invalid format');
           return;
       }
@@ -59,9 +60,10 @@ export class FileUploadComponent implements OnInit {
       this.loaded = false;
 
       reader.onload = this._handleReaderLoaded.bind(this);
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(this.file);
       console.log("fileupload works");
-      
+      console.log(this.file);
+      return this.file;
   }
   
   _handleReaderLoaded(e) {

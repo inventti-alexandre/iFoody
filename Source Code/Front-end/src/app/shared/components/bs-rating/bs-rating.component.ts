@@ -9,7 +9,7 @@ export class BsRatingComponent  {
   public max = 5;
   public currentRate = 3.4;
   ratingNumber: number;
-  public isReadonly = false;
+  public isReadonly = true;
   isGood: boolean; // for rating which greater than 4.5
   isFair: boolean; // "fair" for rating which greater than 4.0
   isMedium: boolean; // "medium" for rating which equal to or greater than 3.5

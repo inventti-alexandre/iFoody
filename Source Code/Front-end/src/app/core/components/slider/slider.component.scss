@@ -1,0 +1,45 @@
+#myCarousel, .carousel-inner {
+    @media screen and (min-width: 920px) {
+        height: 550px;
+        > div {
+            height: 550px;
+        }
+        
+    }
+
+    @media screen and (max-width: 919px) {
+        height: 300px;
+        > div {
+            height:300px;
+        }            
+    }
+
+    @media screen and (max-width: 524px) {
+        height: 240px;
+        > div {
+            height:240px;
+        }            
+    }
+
+    overflow: hidden;
+    img {
+        height: auto;
+        width: 100%
+    }
+
+    ol li {
+        display:none;
+    }
+
+    h3 {
+        color: white;
+        font-size: 2.9em;
+        text-shadow: -1px 0 blue, 0 1px blue, 1px 0 blue, 0 -1px blue;
+    }
+
+    p {
+        color: white;
+        font-size: 1.8em;
+        text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    }
+}

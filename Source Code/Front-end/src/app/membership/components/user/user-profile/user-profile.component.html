@@ -1,11 +1,12 @@
 <form [formGroup]="user" (ngSubmit)="onSubmit()" class="form-edit-profile">
   <div>
-    <input type="text" formControlName="email" class="form-control input-lg" placeholder="Email...">
+    <input type="text" formControlName="email" readonly="true" class="form-control input-lg" placeholder="Email...">
     <i class="fa fa-envelope fa-2x"></i>
   </div>
 
   <div>
-    <input type="text" formControlName="gender" class="form-control input-lg" placeholder="Gender...">
+    <input type="hidden" type="text" id="gender" formControlName="gender" #gender class="form-control input-lg" placeholder="Gender...">
+    <input type="text" class="form-control input-lg" readonly="true" [value]="genderDisplay" placeholder="Gender...">
     <i class="fa fa-venus-mars fa-2x"></i>
   </div>
 
@@ -41,8 +42,9 @@
       </div>
     </div>
   </div>
-  <div class="btn">
-    <button type="button" class="btn-update" md-raised-button color="primary">Update</button>
-    <button type="button" class="btn-cancel" md-raised-button color="link">Hủy</button>
+  <div class="button">
+      <button type="submit" class="btn btn-warning btn-update btn-lg">Cập Nhật</button>
+    <!-- <button type="button" class="btn-update" md-raised-button color="primary">Update</button> -->
+      <button type="submit" class="btn btn-cancel btn-lg">Hủy</button>
   </div>
 </form>

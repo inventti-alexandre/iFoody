@@ -21,6 +21,7 @@ export class BsNavbarComponent implements OnInit {
   nameApp = global.nameApp;
   isAuthenticated: boolean;
   userId: string;
+  hasStore = false;
   userName: string;
   email: string;
   window: Window;
@@ -44,11 +45,11 @@ export class BsNavbarComponent implements OnInit {
     this.urls = [
       {name: 'Thông tin cá nhân', url: 'profile', param: this.userId.replace(/['"]+/g, '')},
       {name: 'Cài đặt tài khoản', url: 'settings', param: this.userId.replace(/['"]+/g, '')},
-      {name: 'Mở Cửa Hàng', url: 'store'}
     ];
     }
 
   ngOnInit() {
+    console.log(this.urls);
     this.isAuthenticated = this._userService.getAuthenticated();
     this._userService.getUserById(this.userId)
       .subscribe((data)=> {
@@ -57,6 +58,13 @@ export class BsNavbarComponent implements OnInit {
           this.user = data;
           this.userName = this.user.lastName + ' ' + this.user.firstName;
           this.email = this.user.email;
+          console.log(data);
+          setTimeout( () => {
+            this.hasStore = data.hasStore;
+            if(this.hasStore === true) {
+              this.urls.push({name: 'Upload sản phẩm', url: 'user', param: 'upload'});
+            }
+          }, 0);
       });
   }
 
@@ -76,12 +84,14 @@ export class BsNavbarComponent implements OnInit {
   onResize(event) {
     let innerWidth = event.target.innerWidth;
     this.isMobile = this.checkIsMobile(innerWidth);
+    console.log("onrezize", this.isMobile);
     return;
   }
   
   onLoad(){
     let innerWidth = window.innerWidth;
     this.isMobile = this.checkIsMobile(innerWidth);
+    console.log("onLoad", this.isMobile);
     return;
   }
 

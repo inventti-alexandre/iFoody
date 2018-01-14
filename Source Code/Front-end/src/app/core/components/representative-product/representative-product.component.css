@@ -2,11 +2,12 @@
   height: auto;
 }
 
-.listCategory p {
-  font-size: 18px;
+.listCategory h3 {
+  font-size: 2em;
   font-weight: bold;
-  color: #537DCC;
-  margin-top: 10px;
+  color: #484848;
+  margin-top: 30px;
+  margin-bottom: 20px;
 }
 
 .listCategory .category--border {

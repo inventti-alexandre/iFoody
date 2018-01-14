@@ -21,10 +21,11 @@ export class FavoriteListComponent implements OnInit, ProfileChildren {
 
   ngOnInit() {
      // Get Favorite List from User Id in Local Storage
+     console.log("test");
      this._userService.getFavoriteList(localStorage.getItem(apiUrl.UserId))
      .subscribe(data => {
        this.favoriteList = data;
-
+      console.log('data',data);
        // Filter Product or Store from favoriteList variable
        this.productIds= this.favoriteList
        .filter(function(x: IFavoriteList) {

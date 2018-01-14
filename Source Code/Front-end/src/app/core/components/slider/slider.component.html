@@ -1,4 +1,4 @@
-<div id="myCarousel" class="carousel slide  offset-pad-left-right" data-ride="carousel">
+<div id="myCarousel" class="carousel slide  offset-pad-left-right" data-ride="carousel" data-interval="3200">
   <!-- Indicators -->
   <ol class="carousel-indicators" *ngFor="let img of slider; let i = index">
     <li data-target="#myCarousel" data-slide-to="i" [ngClass]="[i === 0 ? 'active' : '']"></li>
@@ -7,7 +7,7 @@
   <!-- Wrapper for slides -->
   <div class="carousel-inner">
     <div *ngFor="let img of slider; let i = index" [ngClass]="[i === 0 ? 'item active' : 'item']">
-      <img src={{img.src}} alt="Los Angeles" style="width:100%;">
+      <img src={{img.src}} alt="Los Angeles" style="width:100%">
       <div class="carousel-caption">
         <h3>{{img.name}}</h3>
         <p>{{img.title}}</p>

@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using BusinessEntities;
+using BusinessLayer.IServices;
+using System;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using BusinessEntities;
-using BusinessLayer.IServices;
 
 namespace WebApi.ApiController
 {
 
     [EnableCors(origins: "*", headers: "*", methods: "*")]
+    [RoutePrefix("api/favorite-list")]
     public class FavoriteListController : System.Web.Http.ApiController
     {
         //private readonly IProductService _productServices;
@@ -24,6 +21,7 @@ namespace WebApi.ApiController
         }
         // GET api/favoritelist/?userId=
         [HttpGet]
+        [Route("{userId}")]
         public IHttpActionResult GetByUserId(Guid userId)
         {
             try
@@ -62,14 +60,20 @@ namespace WebApi.ApiController
             }
 
         }
-        //POST api/favoritelist
+
+        ////POST api/favorite-list
+        //[HttpPost]
+        //[Route("favorite-list")]
+        //public IHttpActionResult Post([FromBody] FavoriteListBusinessEntity favoriteListEntity)
+
+        //POST api/favorite-list
         [HttpPost]
+        [Route("")]
         public IHttpActionResult Post([FromBody] FavoriteListBusinessEntity favoriteListEntity)
         {
             try
             {
                 return Ok(_favoritesListService.InsertFavoriteItem(favoriteListEntity));
-
             }
             catch (Exception e)
             {
@@ -77,9 +81,22 @@ namespace WebApi.ApiController
             }
 
         }
+        //{
+        //    try
+        //    {
+        //        return Ok(_favoritesListService.InsertFavoriteItem(favoriteListEntity));
+
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //}
 
         // DELETE api/favoritelist/?id=
         [HttpDelete]
+        [Route("{id}")]
         public IHttpActionResult Delete(Guid id)
         {
             try

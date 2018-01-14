@@ -3,7 +3,7 @@ import { AuthService } from './../shared/services/auth.service';
 import { StoreService } from './../shared/services/store.service';
 import { ProductService } from './../shared/services/product.service';
 import { UserService } from './../shared/services/user.service';
-import { ProfileItemContainerComponent } from './components/shared/profile-layout/profile-item-container';
+// import { ProfileItemContainerComponent } from './components/shared/profile-layout/profile-item-container';
 import { NgSwitch } from '@angular/common';
 import { ProfileService } from './services/profile.service';
 import { SharedModule } from './../shared/shared.module';
@@ -53,7 +53,6 @@ import { UploadingModule } from '../uploading/uploading.module';
     SignupComponent,
     LoginComponent,
     ProfileComponent,
-    ProfileItemContainerComponent,
     NgSwitch  
   ],
   declarations: [
@@ -67,7 +66,6 @@ import { UploadingModule } from '../uploading/uploading.module';
     UserProfileComponent,
     FavoriteListComponent,
     ProfileDirective,
-    ProfileItemContainerComponent
   ],
   entryComponents: [
     ChangePasswordComponent,

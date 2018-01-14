@@ -1,4 +1,5 @@
 ﻿using DataModel.IRepository;
+using System;
 using System.Linq;
 
 namespace DataModel.Repository
@@ -17,6 +18,18 @@ namespace DataModel.Repository
         {
             var firstOrDefault = _iFoodyContext.Users.FirstOrDefault(e => e.Email == email);
             return firstOrDefault != null;
+        }
+
+        // Update HasStore Property
+        public bool UpdateHasStoreProperty(Guid id)
+        {
+            var currentUser = _iFoodyContext.Users.FirstOrDefault(u => u.Id == id);
+            if (currentUser != null)
+            {
+                currentUser.HasStore = true;
+                return true;
+            }
+            return false;
         }
     }
 }

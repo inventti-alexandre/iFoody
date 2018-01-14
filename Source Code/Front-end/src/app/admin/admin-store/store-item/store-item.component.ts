@@ -6,7 +6,7 @@ import { Component, OnInit,Input  } from '@angular/core';
   styleUrls: ['./store-item.component.scss'],
 })
 export class StoreItemComponent implements OnInit {
-  
+  hasIndex = false;
   avatar="http://lorempixel.com/50/50/cats/";
   name="Trà sữa Mộc";
   address = "22 Bửu Long Quận 10 Hồ Chí Minh";
@@ -19,7 +19,9 @@ export class StoreItemComponent implements OnInit {
   @Input('index') index: string;
   
   constructor() { 
-    
+    if(this.index !== '') {
+      this.hasIndex = true;
+    }
   }
 
   ngOnInit() {

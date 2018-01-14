@@ -1,5 +1,9 @@
-$navbar-height: 55px;
+$navbar-height: 51px;
+:host {
+    font-family: 'Varela Round', sans-serif;
+}
 .app-content{
+    
     @media screen and(min-width:768px) {
         margin-top: $navbar-height;
     }

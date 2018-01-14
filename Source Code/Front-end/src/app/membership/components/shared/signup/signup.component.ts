@@ -127,10 +127,11 @@ export class SignupComponent implements OnInit, OnDestroy {
     this._userService.signUp(this.user)
       .subscribe(data => {
         this.hide();
+        alert("Đăng ký thành công!!!");
         this._userService.signIn(this.userForm.get('email').value, this.userForm.get("password").value)
           .subscribe((response: Response) => {
+            console.log("tsst");
             this.router.navigate([this.returnUrl]);
-            alert("Đăng ký thành công!!!");
             this.reload();
           });
       });

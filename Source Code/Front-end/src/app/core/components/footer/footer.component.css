@@ -1,8 +1,6 @@
 .footer {
-  background-color: #31708f;
-  margin: unset;
-  line-height: 50px;
-  color: white;
+  line-height: 100px;
+  color: #484848;
 }
 
 .footer__left {
@@ -26,8 +24,7 @@
 }
 
 .footer__right a {
-  color: white;
-  font-style: italic;
-  font-weight: bold;
+  color: #484848;
+  font-size: 1.2em;
   padding-right: 15px;
 }

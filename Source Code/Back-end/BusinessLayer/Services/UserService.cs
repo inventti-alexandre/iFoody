@@ -71,6 +71,30 @@ namespace BusinessLayer.Services
             }
         }
 
+        // Update HasStore Variable after Openning Store
+        public bool UpdateHasToreProperty(Guid userId)
+        {
+            try
+            {
+                if (_unitOfWork.Users.Exists(userId))
+                {
+                    using (var scope = new TransactionScope())
+                    {
+                        if (_unitOfWork.Users.UpdateHasStoreProperty(userId))
+                        {
+                            _unitOfWork.Complete();
+                        }
+                        scope.Complete();
+                        return true;
+                    }
+                }
+                return false;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Exeption when update HasStore Property");
+            }
+        }
 
         // Update User 
         public bool UpdateUser(Guid userId, UserBusinessEntity userEntity)
@@ -84,9 +108,16 @@ namespace BusinessLayer.Services
                         //var user = _unitOfWork.Users.GetById(userId);
                         if (_unitOfWork.Users.Exists(userId))
                         {
-                            Mapper.CreateMap<UserBusinessEntity, User>();
-                            var user = Mapper.Map<UserBusinessEntity, User>(userEntity);
-                            _unitOfWork.Users.Update(user);
+                            //Mapper.CreateMap<UserBusinessEntity, User>()
+                            //    .ForMember(x => x.Password, opt => opt.Ignore())
+                            //    .ForMember(x => x.HasStore, opt => opt.Ignore());
+                            //var userUpdate = Mapper.Map<UserBusinessEntity, User>(userEntity);
+                            var currentUser = _unitOfWork.Users.GetById(userId);
+                            currentUser.FirstName = userEntity.FirstName;
+                            currentUser.LastName = userEntity.LastName;
+                            currentUser.Birthday = userEntity.Birthday;
+
+                            _unitOfWork.Users.Update(currentUser);
                             _unitOfWork.Complete();
                             scope.Complete();
                             return true;

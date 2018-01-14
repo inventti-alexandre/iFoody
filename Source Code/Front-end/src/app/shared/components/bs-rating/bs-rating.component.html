@@ -15,11 +15,11 @@
     <i class="fa number fa-stack-1x">{{ currentRate }}</i>
   </span>
 
-  <span *ngIf="ratingNumber > 0" class="ratingNumber pull-right">
-    <a href="#">
+  <div *ngIf="ratingNumber > 0" class="ratingNumber">
+    <a href="/">
      &nbsp;&nbsp; {{ ratingNumber }} đánh giá
     </a>
-  </span>
+  </div>
 </div>
 <!-- <span class="label" [ngClass]="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}"
   [ngStyle]="{display: (overStar && !isReadonly) ? 'inline' : 'none'}">{{percent}}%</span> -->

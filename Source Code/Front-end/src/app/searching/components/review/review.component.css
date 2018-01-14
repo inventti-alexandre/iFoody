@@ -1,3 +1,7 @@
+.review {
+  margin-bottom: 25px;
+}
+
 .review__head {
   display: table;
 }
@@ -17,7 +21,7 @@
 }
 
 .review__head__rating rating {
-  color: #6EEC3C;
+  color: mediumblue;
   font-size: 1.4em;
 }
 
@@ -31,10 +35,13 @@
   padding-bottom: 20px !important;
 }
 
+.review__content__new {
+  text-align: center;
+}
+
 .review__content__new input {
-  width: 95%;
+  width: 90%;
   height: 80px;
-  margin-left: 80px;
   box-shadow: 2px 2px grey;
   border-radius: 5px;
 }
@@ -45,6 +52,8 @@
 }
 
 .review__content__new button {
+  margin-top: 15px;
+  margin-right: 27px;
   width: 120px;
 }
 

@@ -4,10 +4,12 @@ using System;
 using System.Configuration;
 using System.Net;
 using System.Net.Http;
+using System.Web.Http.Cors;
 using WebApi.Filters;
 
 namespace WebApi.ApiController
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [ApiAuthenticationFilter]
     public class AuthenticateController : System.Web.Http.ApiController
     {

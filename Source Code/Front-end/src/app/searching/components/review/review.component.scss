@@ -1,4 +1,5 @@
 .review {
+    margin-bottom: 25px;
     &__head {
         display: table;
         &__avatar, &__username {
@@ -13,7 +14,7 @@
                 display: table-row;
             }
             rating {
-                color:#6EEC3C;
+                color:mediumblue;
                 font-size: 1.4em
             }
         }
@@ -27,10 +28,10 @@
         }
 
         &__new {
+            text-align: center;
             input {
-                width: 95%;
+                width: 90%;
                 height: 80px;
-                margin-left: 80px;
                 box-shadow: 2px 2px grey;
                 border-radius: 5px;
                 :focus {
@@ -40,6 +41,8 @@
                 // border: 1px solid #e5e5e5;
             }
             button {
+                margin-top: 15px;   
+                margin-right: 27px;
                 width: 120px
             }
              

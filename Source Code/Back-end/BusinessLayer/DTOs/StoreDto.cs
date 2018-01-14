@@ -1,5 +1,4 @@
-﻿using BusinessEntities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace BusinessLayer.DTOs
@@ -24,7 +23,7 @@ namespace BusinessLayer.DTOs
         public string City { get; set; }
         public Guid? CategoryId { get; set; }
         public Guid? UserId { get; set; }
-        public IEnumerable<ImageBusinessEntity> Images { get; set; }
+        public List<string> Images { get; set; }
 
 
     }

@@ -1,4 +1,15 @@
 .profile {
+    &__navbar__top {
+        ul li:hover {
+            cursor: pointer;
+        }
+    }
+
+    &__leftBar {
+        ul li:hover {
+            cursor: pointer;
+        }
+    }
     .profile__content {
         .page-header {
            margin-top:0;
