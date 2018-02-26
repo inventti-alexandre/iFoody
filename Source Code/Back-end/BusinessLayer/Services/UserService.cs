@@ -13,11 +13,13 @@ namespace BusinessLayer.Services
     public class UserService : IUserService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ITokenService _tokenService;
 
         // Constructor
-        public UserService(IUnitOfWork unitOfWork)
+        public UserService(IUnitOfWork unitOfWork, ITokenService tokenService)
         {
             _unitOfWork = unitOfWork;
+            _tokenService = tokenService;
         }
 
         // SignUp
@@ -132,6 +134,36 @@ namespace BusinessLayer.Services
             return false;
         }
 
+        // Update User's Password
+        public bool UpdateUserPassword(string userCredential)
+        {
+            try
+            {
+                if (userCredential != null)
+                {
+                    using (var scope = new TransactionScope())
+                    {
+                        String[] decodedStringArray = this._tokenService.DecodedStringBase64(userCredential);
+                        var email = decodedStringArray[0];
+                        var password = decodedStringArray[1];
+                     
+                        var currentUser = _unitOfWork.Users.Get(e => e.Email == email);
+                        currentUser.Password = password;
+
+                        _unitOfWork.Users.Update(currentUser);
+                        _unitOfWork.Complete();
+                        scope.Complete();
+                        return true;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return false;
+        }
+        
         // Delete User
         public bool DeleteUser(Guid userId)
         {

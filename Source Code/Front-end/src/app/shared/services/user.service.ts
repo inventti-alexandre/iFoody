@@ -25,7 +25,7 @@ export class UserService {
   imageUrl: string;
   favoriteListUrlWithUser: string;
   favoriteListUrl: string;
-  _authService: AuthService;
+  // _authService: AuthService;
   authToken: any;
   isAuthenticated: boolean;
 
@@ -33,7 +33,7 @@ export class UserService {
   userId: string;
   username: string;
 
-  constructor(private _http: Http) {
+  constructor(private _http: Http, private _authService: AuthService) {
     this.domain = apiUrl.Domain;
     this.getUrl = apiUrl.GetUser;
     this.signUpUrl = apiUrl.SignUp;
@@ -45,7 +45,6 @@ export class UserService {
     this.imageUrl = apiUrl.Image;
     this.favoriteListUrlWithUser = apiUrl.FavoriteListWithUser;
     this.favoriteListUrl = apiUrl.FavoriteList;
-    this._authService = new AuthService();
     this.authToken = this._authService.retriveToken();
     this.userId = localStorage.getItem("user_id");
   }
@@ -89,7 +88,8 @@ export class UserService {
   getUserById(id: string): Observable<any> {
     if(id != null) {
       return this._http.get(this.getUrl + '/' + id.replace(/['"]+/g, ''))
-        .map((response: Response) => <any>response.json())
+        .map((response: Response) => 
+          <any>response.json())
         .catch(this.handleError);
     }
     return null;
@@ -139,9 +139,23 @@ export class UserService {
 
     return this._http.post(this.signUpUrl, body, options)
       .map((response: Response) => <IUser>response.json())
-      .do(x => alert("Đăng ký thành công"))
       .catch(this.handleError);
   }
+
+  //  updateUser(id: string, model: any): Observable<any> {
+  //   console.log("Update User works");
+  //   console.log(id);  
+  //   console.log(model);
+  //   let body = JSON.stringify(model);
+  //   let headers = new Headers();
+  //   headers.append("Token", this.authToken); 
+  //   headers.append("Content-Type", "application/json");
+  //   let options = new RequestOptions({headers: headers});
+    
+  //   return this._http.put(this.getUrl + '/' + id.replace(/['"]+/g,''), body, options)
+  //     .map((response: Response) => <any>response.json())
+  //     .catch(this.handleError);
+  // }
 
   // POST - User Sign In
   signIn(email: string, password: string) {
@@ -212,18 +226,18 @@ export class UserService {
   }
 
   // POST - Insert Favorite Product
-  public InsertFavoriteProduct(userId: string, productId: string, storeId: string) {
-  console.log("InsertFavoriteProduct works");
-  
-  let body = JSON.stringify({'userId': userId.replace(/['"]+/g,''), 'productId': productId, 'storeId': storeId});
-  let headers = new Headers({'Content-Type' : 'application/json'});
-  let options = new RequestOptions( {headers: headers});
+  InsertFavoriteProduct(userId: string, productId: string, storeId: string) {
+    console.log("InsertFavoriteProduct works");
+    
+    let body = JSON.stringify({'userId': userId.replace(/['"]+/g,''), 'productId': productId, 'storeId': storeId});
+    let headers = new Headers({'Content-Type' : 'application/json'});
+    let options = new RequestOptions( {headers: headers});
 
-  return this._http.post(this.favoriteListUrl, body, options)
-    .map((response: Response) => <any>response.json())
-    .do(x => alert("Thêm mục yêu thích thành công!"))
-    .catch(this.handleError);
-}
+    return this._http.post(this.favoriteListUrl, body, options)
+      .map((response: Response) => <any>response.json())
+      .do(x => alert("Thêm mục yêu thích thành công!"))
+      .catch(this.handleError);
+  }
    
   // PUT - Update User
   updateUser(id: string, model: any): Observable<any> {
@@ -237,8 +251,24 @@ export class UserService {
     let options = new RequestOptions({headers: headers});
     
     return this._http.put(this.getUrl + '/' + id.replace(/['"]+/g,''), body, options)
-      .map((response: Response) => <any>response.json())
+      .map((response: Response) =>
+              // <any>response.json()
+              console.log(response)
+      )
+      .do( x => console.log(x))
       .catch(this.handleError);
+  }
+
+  // PUT - Update Password
+  updatePassword(email: string, oldPassword: string, newPassword: string): Observable<any> {
+    if(email != null && oldPassword != null && newPassword != null) {
+      let headers: Headers = new Headers();
+      headers.append("Authorization", "Basic " + btoa(email + ":" + oldPassword + ":" + newPassword)); 
+      headers.append("Content-Type", "application/json");
+      let options = new RequestOptions( {headers: headers});
+  
+      return this._http.put(apiUrl.ChangePassword, null, options);
+    }
   }
 
   // PUT - Update Image

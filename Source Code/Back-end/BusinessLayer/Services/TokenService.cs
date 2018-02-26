@@ -80,6 +80,13 @@ namespace BusinessLayer.Services
             return decodedStringArray;
         }
 
+        // Encode Base64 from String
+        public string EncodedStringBase64(string plainText)
+        {
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            return System.Convert.ToBase64String(plainTextBytes);
+        }
+
         // Validate Auth Token from Client
         public bool ValidateToken(string authToken)
         {

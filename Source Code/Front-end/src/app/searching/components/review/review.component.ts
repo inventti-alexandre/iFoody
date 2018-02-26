@@ -44,7 +44,7 @@ export class ReviewComponent implements OnInit{
     this.getReviewsData();
     this._userService.getUserById(this.currentUserId)
       .subscribe(data => {
-        setTimeout(() => this.currentUser = data, 0);
+        this.currentUser = data;
       });
     
   }

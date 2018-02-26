@@ -1,4 +1,5 @@
-export const Domain = 'https://api.chicken2018.club/api/';
+// `export const Domain = 'https://api.chicken2018.club/api/';
+export const Domain = 'http://localhost:62025/api/';
 // Product URL
 export const GetAllProduct = Domain + 'product';
 export const GetAllCategories = Domain + 'categories';
@@ -21,6 +22,7 @@ export const FavoriteList = Domain + 'favorite-list';
 
 export const Profile = Domain + 'user/profile';
 export const Settings = Domain + 'user/settings';
+export const ChangePassword = Domain + 'user/change-password';
 
 // Store URL
 export const GetStore = Domain + 'store';

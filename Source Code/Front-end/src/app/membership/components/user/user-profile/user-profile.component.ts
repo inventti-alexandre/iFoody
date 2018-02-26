@@ -37,6 +37,7 @@ export class UserProfileComponent implements OnInit, ProfileChildren {
       firstname: new FormControl(),
       birthday: new FormControl(),
     });
+    
     this._userService.getUserById(this.activatedRoute.snapshot.paramMap.get('id'))
       .subscribe(u => {
         this.user.setValue({

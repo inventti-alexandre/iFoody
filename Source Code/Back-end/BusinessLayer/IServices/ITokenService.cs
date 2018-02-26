@@ -12,6 +12,8 @@ namespace BusinessLayer.IServices
 
         String[] DecodedStringBase64(string input);
 
+        string EncodedStringBase64(string plainText);
+
         bool ValidateToken(string tokenId);
 
         Guid? GetUserId(string authToken);

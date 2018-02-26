@@ -130,7 +130,6 @@ namespace WebApi.ApiController
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No Store found");
         }
 
-
         // POST api/user
         [HttpPost]
         [Route("signup")]
@@ -450,6 +449,69 @@ namespace WebApi.ApiController
             {
                 return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Exception Error!!!");
             }
+        }
+
+        [HttpPut]
+        [Route("change-password")]
+        public HttpResponseMessage Put()
+        {
+            try
+            {
+                var authHeader = Request.Headers.Authorization.ToString();
+
+                if (authHeader != "" && authHeader.StartsWith("Basic"))
+                {
+                    //Extract Credentials
+                    string userCredentialWithNewPassword = authHeader.Substring("Basic ".Length).Trim();
+
+                    var decodedBase64String = _tokenService.DecodedStringBase64(userCredentialWithNewPassword);
+                    // Extract Old Credential without newPassword
+                    // var startSemiColonIndex = decodedBase64String.IndexOf(":");
+                    // var secondSemiColonIndex = decodedBase64String.IndexOf(":",
+                    // userCredentialWithNewPassword.IndexOf(":") + 1);
+                    // var email = userCredentialWithNewPassword.Substring(0, startSemiColonIndex);
+                    var email = decodedBase64String[0];
+                    // Get Old and New User Credential
+                    //string oldUserCredential = userCredentialWithNewPassword.Substring(0, secondSemiColonIndex);
+                    var oldUserCredential = String.Join(":", new string[2] { email, decodedBase64String[1] });
+                    //                    string[] newUserCredentialArray = new string[2]; // Include Email and New Password
+                    //                  newUserCredentialArray[0] = email;
+                    //                newUserCredentialArray[1] = decodedBase64String[2];
+                    var newUserCredential = String.Join(":", new string[2] { email, decodedBase64String[2] });
+
+                    // Encode Credential 
+                    var encodedOldUserCredential = this._tokenService.EncodedStringBase64(oldUserCredential);
+                    var encodedNewUserCredential = this._tokenService.EncodedStringBase64(newUserCredential);
+                    // Check Old User Credential
+                    var userId = _tokenService.CheckUserCredential(encodedOldUserCredential);
+                    /////////////////////////////
+
+                    if (userId != null)
+                    {
+                        // Old Credential is OK
+                        if (this._userService.UpdateUserPassword(encodedNewUserCredential))
+                        {
+                            return Request.CreateResponse(HttpStatusCode.OK);
+                        };
+                        return Request.CreateResponse(HttpStatusCode.NotImplemented);
+                    }
+                    else
+                    {
+                        return Request.CreateResponse(HttpStatusCode.Unauthorized);
+                    }
+                }
+                else
+                {
+                    //Handle what happens if that isn't the case
+                    return Request.CreateResponse(HttpStatusCode.NotAcceptable);
+                }
+
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Exception Error!");
+            }
+            return null;
         }
 
         // DELETE api/user/5

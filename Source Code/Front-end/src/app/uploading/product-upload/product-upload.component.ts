@@ -23,6 +23,7 @@ export class ProductUploadComponent implements OnInit {
     this.category = [];
     this._storeService.GetStoreByUserId(this.userId).subscribe(data=>this.store = data.id);
   }
+  
   createIProduct=(info)=>{
     let product={
       id:null,
@@ -34,6 +35,7 @@ export class ProductUploadComponent implements OnInit {
     };
     this.newProduct = product;
   }
+
   onSubmit(event) {
     if(event.detail===1){ // check double click 
       this.createIProduct(this.uploadProduct.value);
@@ -42,9 +44,11 @@ export class ProductUploadComponent implements OnInit {
       );
     }
   }
+
   select(){
      // console.log('type', this.uploadProduct.value);
   }
+  
   ngOnInit() {
     this.uploadProduct = new FormGroup({
       name: new FormControl(),

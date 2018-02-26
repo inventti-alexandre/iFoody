@@ -20,28 +20,28 @@ export class SimilarProductComponent implements OnInit {
 
   ngOnInit() {
     this._productService.GetProductByCategoryId(this.categoryId)
-                              .subscribe(data => {
-                                console.log("similar");
-                                console.log(data);
-                                this.similarProducts = data;
-                                if(this.similarProducts.length > 0) {
-                                  let filterProductId = this.productId;
-                                  this.similarProducts = this.similarProducts.filter(function(item) {
-                                    if(item.product.id === filterProductId) {
-                                      return false;
-                                    }
-                                    return true;
-                                  }); 
-                                  console.log(this.similarProducts);
-                                  
-                                  if (this.similarProducts.length < 20) {
-                                    this.similarProducts.slice(0,this.similarProducts.length);
-                                  }
-                                  else {
-                                    this.similarProducts.slice(0, 20);
-                                  }
-                                }
-                              });
+                      .subscribe(data => {
+                        console.log("similar");
+                        console.log(data);
+                        this.similarProducts = data;
+                        if(this.similarProducts.length > 0) {
+                          let filterProductId = this.productId;
+                          this.similarProducts = this.similarProducts.filter(function(item) {
+                            if(item.product.id === filterProductId) {
+                              return false;
+                            }
+                            return true;
+                          }); 
+                          console.log(this.similarProducts);
+                          
+                          if (this.similarProducts.length < 20) {
+                            this.similarProducts.slice(0,this.similarProducts.length);
+                          }
+                          else {
+                            this.similarProducts.slice(0, 20);
+                          }
+                        }
+                      });
   }
 
 }
