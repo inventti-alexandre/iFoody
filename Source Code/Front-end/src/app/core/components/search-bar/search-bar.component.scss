@@ -1,5 +1,10 @@
 .searchBar{
     width: 100%;
+    .well {
+      position: absolute;
+      height:auto;
+      margin-top: 15px;
+    }
     &__byName{
         width:60%!important;
     }
@@ -9,8 +14,8 @@
         width:40%!important;
     }
     span{
-       font-size: 1.2em; 
-       z-index: 20; 
+       font-size: 1.8em;
+       z-index: 20;
        float: right;
        top:-25px;
        cursor: pointer;
@@ -34,7 +39,7 @@
     input[type="search"]:-moz-placeholder { /* Firefox 18- */
         color: grey;
         //font-weight: bold;
-    }  
+    }
 
     .form-control:first-child {
         // transform: scaleY(1.3) !important;

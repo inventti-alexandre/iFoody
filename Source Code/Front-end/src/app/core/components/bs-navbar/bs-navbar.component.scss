@@ -6,11 +6,15 @@
     }
 }
 .navbar{
-    margin-bottom: 0px  
+    margin-bottom: 0px
+}
+.navbar-inverse .navbar-toggle {
+  border-color: #333;
+  background-color: black;
 }
 .navbar-brand > span {
     font-size: 1em;
-    animation: blinker 1.7s cubic-bezier(.5, 0, 1, 1) infinite alternate;  
+    animation: blinker 1.7s cubic-bezier(.5, 0, 1, 1) infinite alternate;
     color: red;
     text-shadow: -1px 0 red, 0 1px red, 1px 0 red, 0 -1px red;
 }
@@ -18,13 +22,13 @@
 @keyframes blinker { to { opacity: 0; } }
 
 .navbar-brand a, .navbar-brand img {
-    display: inline-block;   
-   
+    display: inline-block;
+
 }
 .navbar-brand, .navbar-collapse {
     padding-top: 0px;
     color: grey;
-    text-shadow: -0.3px 0 grey, 0 0.3px grey, 0.3px 0 grey, 0 -0.3px grey; 
+    text-shadow: -0.3px 0 grey, 0 0.3px grey, 0.3px 0 grey, 0 -0.3px grey;
     @media screen and (max-width: 991px) {
         span {
             display: none
@@ -38,7 +42,7 @@
 }
 .navbar-inverse .navbar-nav > li > a{
     color: grey;
-    text-shadow: -0.3px 0 grey, 0 0.3px grey, 0.3px 0 grey, 0 -0.3px grey; 
+    text-shadow: -0.3px 0 grey, 0 0.3px grey, 0.3px 0 grey, 0 -0.3px grey;
 }
 .navbar-inverse .navbar-nav > li > a:hover{
     // font-weight: bold;
@@ -58,10 +62,10 @@
     .btn-link {
         color:grey;
         text-decoration: none;
-        //text-shadow: -0.3px 0 grey, 0 0.3px grey, 0.3px 0 grey, 0 -0.3px grey; 
+        //text-shadow: -0.3px 0 grey, 0 0.3px grey, 0.3px 0 grey, 0 -0.3px grey;
      //}
     }
-    .btn-link:hover { 
+    .btn-link:hover {
         transform: scale(1.01);
     }
     li {
@@ -69,7 +73,7 @@
         display: inline-block;
         //.btn-login {
            color:grey;
-           text-shadow: -0.3px 0 grey, 0 0.3px grey, 0.3px 0 grey, 0 -0.3px grey; 
+           text-shadow: -0.3px 0 grey, 0 0.3px grey, 0.3px 0 grey, 0 -0.3px grey;
         //}
     }
 

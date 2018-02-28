@@ -2,6 +2,12 @@
   width: 100%;
 }
 
+.searchBar .well {
+  position: absolute;
+  height: auto;
+  margin-top: 15px;
+}
+
 .searchBar__byName {
   width: 60% !important;
 }
@@ -13,7 +19,7 @@
 }
 
 .searchBar span {
-  font-size: 1.2em;
+  font-size: 1.8em;
   z-index: 20;
   float: right;
   top: -25px;
