@@ -1,44 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
+import '../../../../assets/lib/myMap.js';
+
+// import '../../../../assets/lib/map';
+declare var mapObject: any;
+
+// declare var testObject: any;
+// declare var myExtObject: any;
 
 @Component({
   selector: 'map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent {
+export class MapComponent implements OnInit {
 
   lat = 51.678418;
   lng = 7.809007;
+  
+  constructor() {
+  }
+  ngOnInit() {
+    this.initMap();
+  }
+  
+  initMap() {
+    console.log("initMap works");
+    let addressList = [{
+      id:null,
+      address: "268 Lý Thường Kiệt"
+    },
+    {
+      id: null,
+      address: "165 Lý Thái Tổ"
+    }
+  ];
+    mapObject.getAddressList(addressList);
+    return mapObject.initMap1();
+  }
 }
-  // let map;
-  // let service;
-  // let infowindow;
-  
-  // function initialize() {
-  //   let pyrmont = new google.maps.LatLng(-33.8665433,151.1956316);
-  
-  //   map = new google.maps.Map(document.getElementById('map'), {
-  //       center: pyrmont,
-  //       zoom: 15
-  //     });
-  
-  //   let request = {
-  //     location: pyrmont,
-  //     radius: '500',
-  //     type: ['restaurant']
-  //   };
-  
-  //   service = new google.maps.places.PlacesService(map);
-  //   service.nearbySearch(request, callback);
-  // }
-  
-  // function callback(results, status) {
-  //   if (status == google.maps.places.PlacesServiceStatus.OK) {
-  //     for (let i = 0; i < results.length; i++) {
-  //       let place = results[i];
-  //       createMarker(results[i]);
-  //     }
-  //   }
-  // }
-
 

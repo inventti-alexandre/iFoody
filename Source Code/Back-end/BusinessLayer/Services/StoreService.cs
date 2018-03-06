@@ -128,6 +128,7 @@ namespace BusinessLayer.Services
 
             return null;
         }
+
         // Get One Store By UserId
         public StoreBusinessEntity GetStoreByUserId(Guid userId)
         {
@@ -155,6 +156,36 @@ namespace BusinessLayer.Services
 
             return null;
         }
+
+        // Get Store's Address
+        public dynamic GetStoreAddress(List<Guid> ids)
+        {
+            try
+            {
+                var storeAddresses =
+                     _unitOfWork.Stores.GetManyQueryable(x => ids.Any(y => y.Equals(x.Id)))
+                         .Select(i => new { Id = i.Id, Addresses = i.Address });
+                //.AsEnumerable();
+                // var storeAddress1 = _unitOfWork.Stores.GetAll().Select(i => new { Id = i.Id, Addresses = i.Address }).ToList();
+
+                // var storeAddressEntity= new List<StoreAddressBusinessEntity>();
+
+                // storeAddressEntity.AddRange(storeAddresses.ToList());
+
+                return storeAddresses;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        // Convert Geographic and Address with GeoCoder Google Maps API
+        // To DO 04.03
+
+
+
+
         // User Open Store
         public Guid? OpenStore(StoreDto storeDto)
         {

@@ -24,7 +24,7 @@ export class ProductService {
   }
   private handleError(error: Response) {
     console.log("handleError works.");
-    console.error(error);
+    // console.error(error);
     return Observable.throw(error.json().error || 'Server error');
   }
 
@@ -34,7 +34,6 @@ export class ProductService {
         .map((response: Response) => <any>response.json())
         .do(x => {
           listProduct.push(x);
-          console.log(x);
         });
   }
 
@@ -46,7 +45,6 @@ export class ProductService {
             .map((response: Response) => <any>response.json())
             .do(x => {
               listProduct.push(x);
-              // console.log(x);
             });
     }
   }
@@ -63,7 +61,6 @@ export class ProductService {
         .map((response: Response) => <any>response.json())
         .do(x => {
           listProduct.push(x);
-          console.log(x);
         });
   }
   public PagingAllProductsByCategory=(categoryId,page, count?): Observable<any> => {
@@ -125,7 +122,7 @@ export class ProductService {
   // Tuan made
   public GetReviewListByProductId(id: string): Observable<any> {
     console.log("getReviewListByProductId works");
-    console.log(id);
+    // console.log(id);
     if(id != null) {
       return this._http.get(this.reviewUrl + '/' + id.replace(/['"]+/g,''))
             .map((response: Response) => <any>response.json());

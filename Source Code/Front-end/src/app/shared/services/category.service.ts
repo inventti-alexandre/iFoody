@@ -15,13 +15,12 @@ export class CategoryService {
   }
 
   public GetAll = (): Observable<any> => {
-    console.log("tét");
     let categories = [];
     return this._http.get(this.actionUrl)
         .map((response: Response) => <any>response.json())
         .do(x => {
           categories.push(x);
-          console.log(x);}
+          }
         );
   }
 

@@ -8,11 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchResultComponent implements OnInit {
   results: any;
+  addressList: string[]; // To get string Address List, like  ['268 Le Lai', '192 Ly Thai To']
   constructor(private _productService: ProductService) {
      this.results = this._productService.GetAll()
         .subscribe(response => {
-          console.log("get ALL works");
-          console.log(response);
           this.results = response;
         });
    }
