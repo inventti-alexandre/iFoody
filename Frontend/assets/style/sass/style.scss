@@ -1,0 +1,71 @@
+// @import '~bootstrap/dist/css/bootstrap.css';
+
+
+$myColor : #c5c5c5; 
+body {
+    // background-color:$myColor!important;
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif; // San-serif has No leg
+    font-family: 'Roboto', sans-serif;  // Serif has leg
+    box-sizing: border-box;
+}    
+
+.no-pad-left-right {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+
+.no-padding {
+    padding: 0px !important;
+}
+
+.no-mar-left-right {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+.no-margin {
+    margin: 0 !important;
+}
+// For Datepicker in Sign Up Component
+bs-datepicker-container {
+    z-index: 1300 !important; 
+    top: 200px !important;
+    left: 30% !important;
+
+}
+
+.btn-calendar {
+    background-color: #5CB85C !important;
+    width:40px !important;
+    height: 46px !important;
+}
+
+.form-signup-by-email {
+    .fa-calendar {
+        top: 7px !important;
+        right: 7px !important;  
+        color: white !important;
+        text-shadow: 1px 1px 1px lightcyan !important;
+    }
+}
+.form-edit-profile {
+    .fa-calendar {
+        top: 7px !important;
+        right: 4px !important;  
+        color: white !important;
+        text-shadow: 1px 1px 1px lightcyan !important;
+    }
+}
+.text-overflow{
+    width: calc(100% - 100px);
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
+// For Modal 
+.my-modal-open {
+    overflow: hidden;
+}
