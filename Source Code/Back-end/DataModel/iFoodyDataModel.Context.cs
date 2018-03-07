@@ -29,6 +29,7 @@ namespace DataModel
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<FavoriteList> FavoriteLists { get; set; }
         public virtual DbSet<Image> Images { get; set; }
+        public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<ProductImage> ProductImages { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Review> Reviews { get; set; }

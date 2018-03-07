@@ -27,9 +27,9 @@ namespace WebApi.ApiController
         private readonly ICommentService _commentService;
         private readonly IFavoritesListService _favoritesListService;
         private readonly IUploadService _uploadService;
+        private readonly ILocationService _locationService;
 
-
-        public UserController(IUserService userService, ITokenService tokenService, IImageService imageService, IProductService productService, IStoreService storeService, IReviewService reviewService, ICommentService commentService, IFavoritesListService favoritesListService, IUploadService uploadService)
+        public UserController(IUserService userService, ITokenService tokenService, IImageService imageService, IProductService productService, IStoreService storeService, IReviewService reviewService, ICommentService commentService, IFavoritesListService favoritesListService, IUploadService uploadService, ILocationService locationService)
         {
             _userService = userService;
             _tokenService = tokenService;
@@ -40,6 +40,7 @@ namespace WebApi.ApiController
             _commentService = commentService;
             _favoritesListService = favoritesListService;
             _uploadService = uploadService;
+            _locationService = locationService;
         }
 
         // Get api/user

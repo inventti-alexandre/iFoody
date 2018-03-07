@@ -21,6 +21,9 @@ namespace BusinessLayer.IServices
         // Get Store's Address
         dynamic GetStoreAddress(List<Guid> ids);
 
+        // Convert Address to Location
+        dynamic GetLocationFromAddress(string input);
+
         // User Open Store
         Guid? OpenStore(StoreDto storeEntity);
 

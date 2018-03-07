@@ -72,6 +72,7 @@
     <Compile Include="DTOs\ProductDto.cs" />
     <Compile Include="DTOs\ProductImageDto.cs" />
     <Compile Include="DTOs\ReviewDto.cs" />
+    <Compile Include="DTOs\LocationDto.cs" />
     <Compile Include="DTOs\StoreDto.cs" />
     <Compile Include="DTOs\StoreImageDto.cs" />
     <Compile Include="DTOs\UserDto.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="IServices\IStoreService.cs" />
     <Compile Include="IServices\ITokenService.cs" />
     <Compile Include="IServices\IUploadService.cs" />
+    <Compile Include="IServices\ILocationService.cs" />
     <Compile Include="IServices\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CommentService.cs" />
@@ -98,6 +100,7 @@
     <Compile Include="Services\StoreService.cs" />
     <Compile Include="Services\TokenService.cs" />
     <Compile Include="Services\UploadService.cs" />
+    <Compile Include="Services\LocationService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
