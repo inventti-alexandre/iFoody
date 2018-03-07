@@ -206,5 +206,24 @@ namespace WebApi.ApiController
             }
 
         }
+        //Search by name
+        // GET api/product/?name=
+        [HttpGet]
+        public IHttpActionResult GetProductsByName(string name)
+        {
+            try
+            {
+                var products = _productService.GetProductByName(name);
+                if (products == null)
+                {
+                    return NotFound(); // Returns a NotFoundResult
+                }
+                return Ok(products);  // Returns an OkNegotiatedContentResult
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+        }
     }
 }

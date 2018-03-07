@@ -17,5 +17,7 @@ namespace BusinessLayer.IServices
         IEnumerable<ImageBusinessEntity> GetAllImageByProductId(Guid productId);
         PagingReturnDto<ProductDto> PagingAllProducts(int page, int? count);
         PagingReturnDto<ProductDto> PagingAllProductsByCategory(Guid categoryId, int page, int? count);
+        //search
+        IEnumerable<ProductDto> GetProductByName(string name);
     }
 }
