@@ -283,32 +283,10 @@ namespace BusinessLayer.Services
                 return null;
             }
         }
-
-        //search by name
-        public IEnumerable<ProductDto> GetProductByName(string name)
-        {
-            try
-            {
-                // Get All Products Entity List
-                var products = _unitOfWork.Products.GetProductsByName(name).ToList();
-                if (products.Any())
-                {
-                    return ChangeProductsToProductDto(products);
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception e)
-            {
-                return null;
-            }
-        }
         #endregion
 
-        #region private implement
-        private ProductDto ConvertProductToProductDto(Product product)
+        #region Convert to DTO implement
+        public ProductDto ConvertProductToProductDto(Product product)
         {
             Mapper.CreateMap<Product, ProductBusinessEntity>();
             var productEntity = Mapper.Map<Product, ProductBusinessEntity>(product);
@@ -350,7 +328,7 @@ namespace BusinessLayer.Services
 
 
         }
-        private IEnumerable<ProductDto> ChangeProductsToProductDto(List<Product> products)
+        public IEnumerable<ProductDto> ChangeProductsToProductDto(List<Product> products)
         {
             Mapper.CreateMap<Product, ProductBusinessEntity>();
             var productEntities = Mapper.Map<List<Product>, List<ProductBusinessEntity>>(products);
@@ -398,7 +376,7 @@ namespace BusinessLayer.Services
             return productDtos.AsEnumerable();
 
         }
-        private PagingReturnDto<ProductDto> ChangeProductsToPagingReturnDto(int page, int? count, List<Product> allProducts)
+        public PagingReturnDto<ProductDto> ChangeProductsToPagingReturnDto(int page, int? count, List<Product> allProducts)
         {
             var takePage = page;
             var takeCount = count ?? _defaultPageRecordCount;

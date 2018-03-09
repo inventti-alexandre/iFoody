@@ -5,5 +5,6 @@ namespace DataModel.IRepository
     public interface IProductRepository : IGenericRepository<Product>
     {
         IEnumerable<Product> GetProductsByName(string name);
+        IEnumerable<Product> SearchByStoreInfo(string searchString);
     }
 }

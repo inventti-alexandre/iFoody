@@ -7,5 +7,7 @@ namespace BusinessLayer.IServices
 {
     public interface ISearchService
     {
+        IEnumerable<ProductDto> SearchByProductName(string productName);
+        IEnumerable<ProductDto> SearchByStoreInfo(string searchString);
     }
 }
