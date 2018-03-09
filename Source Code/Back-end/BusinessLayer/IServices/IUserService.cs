@@ -8,7 +8,7 @@ namespace BusinessLayer.IServices
     {
         IEnumerable<UserBusinessEntity> GetAllUsers();
         UserBusinessEntity GetUserById(Guid id);
-        bool UpdateHasToreProperty(Guid userId);
+        bool UpdateHasStoreProperty(Guid userId);
         bool UpdateUser(Guid userId, UserBusinessEntity userEntity);
         bool UpdateUserPassword(string userCredential);
         bool DeleteUser(Guid userId);

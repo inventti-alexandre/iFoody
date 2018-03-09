@@ -45,7 +45,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Latitude" Type="decimal" Precision="9" Scale="6" Nullable="false" />
           <Property Name="Longitude" Type="decimal" Precision="9" Scale="6" Nullable="false" />
           <Property Name="StoreId" Type="uniqueidentifier" />
@@ -531,7 +531,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Latitude" Type="Decimal" Precision="9" Scale="6" Nullable="false" />
           <Property Name="Longitude" Type="Decimal" Precision="9" Scale="6" Nullable="false" />
           <Property Name="StoreId" Type="Guid" />

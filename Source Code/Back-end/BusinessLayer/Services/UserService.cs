@@ -74,7 +74,7 @@ namespace BusinessLayer.Services
         }
 
         // Update HasStore Variable after Openning Store
-        public bool UpdateHasToreProperty(Guid userId)
+        public bool UpdateHasStoreProperty(Guid userId)
         {
             try
             {
@@ -146,7 +146,7 @@ namespace BusinessLayer.Services
                         String[] decodedStringArray = this._tokenService.DecodedStringBase64(userCredential);
                         var email = decodedStringArray[0];
                         var password = decodedStringArray[1];
-                     
+
                         var currentUser = _unitOfWork.Users.Get(e => e.Email == email);
                         currentUser.Password = password;
 
@@ -163,7 +163,7 @@ namespace BusinessLayer.Services
             }
             return false;
         }
-        
+
         // Delete User
         public bool DeleteUser(Guid userId)
         {

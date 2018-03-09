@@ -7,9 +7,7 @@ using DataModel.IUnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Transactions;
-using System.Xml.Linq;
 
 namespace BusinessLayer.Services
 {
@@ -17,11 +15,13 @@ namespace BusinessLayer.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUploadService _uploadService;
+        private readonly ILocationService _locationService;
 
-        public StoreService(IUnitOfWork unitOfWork, IUploadService uploadService)
+        public StoreService(IUnitOfWork unitOfWork, IUploadService uploadService, ILocationService locationService)
         {
             _unitOfWork = unitOfWork;
             _uploadService = uploadService;
+            _locationService = locationService;
         }
 
         // Get All Store
@@ -159,7 +159,7 @@ namespace BusinessLayer.Services
             return null;
         }
 
-        // Get Store's Address
+        // No USE!!!!! Get Store's Address from IDs list
         public dynamic GetStoreAddress(List<Guid> ids)
         {
             try
@@ -182,44 +182,6 @@ namespace BusinessLayer.Services
             }
         }
 
-        // Convert Geographic and Address with GeoCoder Google Maps API
-        // To DO 04.03
-        public dynamic GetLocationFromAddress(string input)
-        {
-            try
-            {
-                var address = input;
-                string requestUri = string.Format("http://maps.googleapis.com/maps/api/geocode/xml?address={0}&sensor=false", Uri.EscapeDataString(address));
-
-                WebRequest request = WebRequest.Create(requestUri);
-                WebResponse response = request.GetResponse();
-                XDocument xdoc = XDocument.Load(response.GetResponseStream());
-
-                var xElement = xdoc.Element("GeocodeResponse");
-                if (xElement != null)
-                {
-                    XElement result = xElement.Element("result");
-                    XElement locationElement = result.Element("geometry").Element("location");
-                    XElement lat = locationElement.Element("lat");
-                    XElement lng = locationElement.Element("lng");
-                    var location = new
-                    {
-                        Latitude = lat,
-                        Longitude = lng
-                    };
-                    return location;
-                }
-                return null;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-        }
-
-
-
         // User Open Store
         public Guid? OpenStore(StoreDto storeDto)
         {
@@ -237,7 +199,7 @@ namespace BusinessLayer.Services
                         Mapper.CreateMap<StoreBusinessEntity, Store>()
                             .ForMember(x => x.Id, opt => opt.Ignore());
                         var store = Mapper.Map<StoreBusinessEntity, Store>(storeEntity);
-                        var location = this.GetLocationFromAddress(store.Address);
+                        var location = _locationService.GetLocationFromAddress(store.Address);
                         _unitOfWork.Stores.Insert(store);
 
                         _unitOfWork.Complete();
