@@ -4,11 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9400afb29d7d4b8e8254db84b67616a9" Name="Diagram1">
+      <Diagram DiagramId="1b50f269315942d59c74c2591c15c0d6" Name="Diagram1" ZoomLevel="69">
         <EntityTypeShape EntityType="iFoodyModel.Category" Width="1.5" PointX="3" PointY="22.125" IsExpanded="true" />
         <EntityTypeShape EntityType="iFoodyModel.Comment" Width="1.5" PointX="3" PointY="11.625" IsExpanded="true" />
         <EntityTypeShape EntityType="iFoodyModel.FavoriteList" Width="1.5" PointX="6" PointY="11.875" IsExpanded="true" />
         <EntityTypeShape EntityType="iFoodyModel.Image" Width="1.5" PointX="3.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="iFoodyModel.Location" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="iFoodyModel.ProductImage" Width="1.5" PointX="7.5" PointY="20" IsExpanded="true" />
         <EntityTypeShape EntityType="iFoodyModel.Product" Width="1.5" PointX="5.25" PointY="16.375" IsExpanded="true" />
         <EntityTypeShape EntityType="iFoodyModel.Review" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />

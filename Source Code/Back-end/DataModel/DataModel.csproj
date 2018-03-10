@@ -81,7 +81,11 @@
       <DependentUpon>iFoodyDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="IRepository\ITokenRepository.cs" />
+    <Compile Include="IRepository\ILocationRepository.cs" />
     <Compile Include="IUnitOfWork\IUnitOfWork.cs" />
+    <Compile Include="Location.cs">
+      <DependentUpon>iFoodyDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Product.cs">
       <DependentUpon>iFoodyDataModel.tt</DependentUpon>
     </Compile>
@@ -113,6 +117,7 @@
     <Compile Include="Repository\StoreRepository.cs" />
     <Compile Include="Repository\TokenRepository.cs" />
     <Compile Include="Repository\UserImageRepository.cs" />
+    <Compile Include="Repository\LocationRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Review.cs">
       <DependentUpon>iFoodyDataModel.tt</DependentUpon>

@@ -25,19 +25,19 @@ export class SearchFilterComponent implements OnInit {
   public isTypeCollapsed = true;
   
    public areaCollapsed(event:any):void {
-     console.log(event);
+     // console.log(event);
    }
   
    public areaExpanded(event:any):void {
-     console.log(event);
+     // console.log(event);
    }
 
    public typeCollapsed(event:any):void {
-    console.log(event);
+    // console.log(event);
   }
  
   public typeExpanded(event:any):void {
-    console.log(event);
+    // console.log(event);
   }
   constructor() { }
 

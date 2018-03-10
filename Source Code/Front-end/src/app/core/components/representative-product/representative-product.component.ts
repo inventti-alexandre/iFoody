@@ -34,14 +34,13 @@ export class RepresentativeProductComponent implements OnInit {
             if(data!==null){
               this.products.push(data);
             }else{
-              console.log("emptty");
+              console.log("empty");
             }
           },
             // error => console.log(error),
             () => {}
           );
         });
-        console.log("category", this.products);
       }
       );
   }
@@ -67,7 +66,6 @@ export class RepresentativeProductComponent implements OnInit {
   }
   seeMore(id, currentPage, totalPage){
     if(currentPage<totalPage){
-      console.log("aabbbbb");
       this.getNextPage(id,currentPage+1);
     }
   }

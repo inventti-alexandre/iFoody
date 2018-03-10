@@ -18,6 +18,9 @@ namespace BusinessLayer.IServices
         // Get Store By User Id
         StoreBusinessEntity GetStoreByUserId(Guid userId);
 
+        // Get Store's Address
+        dynamic GetStoreAddress(List<Guid> ids);
+
         // User Open Store
         Guid? OpenStore(StoreDto storeEntity);
 

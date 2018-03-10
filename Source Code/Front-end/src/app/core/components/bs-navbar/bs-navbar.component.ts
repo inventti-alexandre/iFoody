@@ -49,7 +49,6 @@ export class BsNavbarComponent implements OnInit {
     }
 
   ngOnInit() {
-    console.log(this.urls);
     this.isAuthenticated = this._userService.getAuthenticated();
     this._userService.getUserById(this.userId)
       .subscribe((data)=> {
@@ -58,7 +57,6 @@ export class BsNavbarComponent implements OnInit {
           this.user = data;
           this.userName = this.user.lastName + ' ' + this.user.firstName;
           this.email = this.user.email;
-          console.log(data);
           setTimeout( () => {
             this.hasStore = data.hasStore;
             if(this.hasStore === true) {
@@ -77,27 +75,23 @@ export class BsNavbarComponent implements OnInit {
   }
   
   redirect(pageName) {
-    console.log("redirect works");
     return this.router.navigate([pageName]);
   }
   
   onResize(event) {
     let innerWidth = event.target.innerWidth;
     this.isMobile = this.checkIsMobile(innerWidth);
-    console.log("onrezize", this.isMobile);
     return;
   }
   
   onLoad(){
     let innerWidth = window.innerWidth;
     this.isMobile = this.checkIsMobile(innerWidth);
-    console.log("onLoad", this.isMobile);
     return;
   }
 
   // Sign Out
   signOut() {
-    console.log("signOut works");
     this._authService.deleteToken();
     window.location.href = "/";
     return true;

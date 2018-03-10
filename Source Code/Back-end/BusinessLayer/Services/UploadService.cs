@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
+using System.Web.Hosting;
 
 namespace BusinessLayer.Services
 {
@@ -27,7 +27,9 @@ namespace BusinessLayer.Services
                 {
                     var supportedTypes = new[] { "jpg", "jpeg", "png" };
                     var sizeLimit = 9999999;
-                    var path = HttpContext.Current.Server.MapPath("~") + @"Content\Uploads\";
+                    // Directory.CreateDirectory("~/Content/Uploads/");
+                    var path = HostingEnvironment.MapPath("~/Content/Uploads/");
+                    // + @"Content/Uploads/";
 
                     foreach (var file in files)
                     {

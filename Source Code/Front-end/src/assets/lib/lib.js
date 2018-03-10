@@ -4,3 +4,4 @@ function modalOpen() {
 $(document).on("hidden.bs.modal",".sub-modal.modal", function () {
     $("body").addClass("modal-open");
 });
+

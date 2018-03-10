@@ -46,11 +46,10 @@ export class AuthService {
   }
 
   // Check Credentials
-  checkCredentials(email: string, password: string) {
+  checkCredential(email: string, password: string) {
     console.log("checkCredential in AuthService works");
     
     if(email != null && password != null) {
-
       let headers: Headers = new Headers();
       headers.append("Authorization", "Basic " + btoa(email + ":" + password)); 
       headers.append("Content-Type", "application/json");

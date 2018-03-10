@@ -1,15 +1,13 @@
-﻿using System;
+﻿using BusinessLayer.IServices;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using BusinessLayer.IServices;
 
 namespace WebApi.ApiController
 {
     [EnableCors(origins: "*", headers: "*", methods: "*")]
+    [RoutePrefix("api/Store")]
     public class StoreController : System.Web.Http.ApiController
     {
         private readonly IStoreService _storeService;
@@ -20,6 +18,7 @@ namespace WebApi.ApiController
 
         // GET api/product
         [HttpGet]
+        [Route("")]
         public IHttpActionResult GetStoreByUserId(Guid userId)
         {
             try
@@ -34,6 +33,24 @@ namespace WebApi.ApiController
             catch (Exception e)
             {
                 return NotFound();
+            }
+        }
+
+        // GET api/store/addresses
+        [HttpGet]
+        [Route("addresses")]
+        public IHttpActionResult GetStoreAddresses(List<Guid> ids)
+        {
+            try
+            {
+                // var storeAddresses = _storeService.GetStoreAddress(ids);
+                //return Ok(storeAddresses);
+                return NotFound();
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+                throw;
             }
         }
     }

@@ -36,7 +36,7 @@ export class SignupComponent implements OnInit, OnDestroy {
     private _userService: UserService ) { 
     // this.renderer.addClass(document.body, 'modal-open');
     // let body = document.getElementsByTagName('body')[0];
-    console.log(this.maxDate);
+    // console.log(this.maxDate);
   }
 
   ngOnInit() {
@@ -61,7 +61,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   public show() {
-    console.log("show works");
+    // console.log("show works");
     this.signupModal.show();
     // document.getElementsByClassName("modal")[0].setAttribute('style','display:block');
     
@@ -83,7 +83,7 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   ngOnDestroy () {
     this.body.classList.remove("my-modal-open");
-    console.log("remove");
+    // console.log("remove");
     // this.body.classList.remove("modal-open");
   }
 
@@ -115,7 +115,7 @@ export class SignupComponent implements OnInit, OnDestroy {
       return this.userForm.reset();
     }
     this.user = this.userForm.value;
-    console.log(this.user);
+    // console.log(this.user);
     // this.user.lastName = this.userForm.get('lastName').value;
     // this.user.firstName = this.userForm.get('firstName').value;
     // this.user.email = this.userForm.get('email').value;
@@ -136,7 +136,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   reload() {
-    console.log("reload work");
+    // console.log("reload work");
     location.reload();
   }
   

@@ -27,9 +27,9 @@ namespace WebApi.ApiController
         private readonly ICommentService _commentService;
         private readonly IFavoritesListService _favoritesListService;
         private readonly IUploadService _uploadService;
+        private readonly ILocationService _locationService;
 
-
-        public UserController(IUserService userService, ITokenService tokenService, IImageService imageService, IProductService productService, IStoreService storeService, IReviewService reviewService, ICommentService commentService, IFavoritesListService favoritesListService, IUploadService uploadService)
+        public UserController(IUserService userService, ITokenService tokenService, IImageService imageService, IProductService productService, IStoreService storeService, IReviewService reviewService, ICommentService commentService, IFavoritesListService favoritesListService, IUploadService uploadService, ILocationService locationService)
         {
             _userService = userService;
             _tokenService = tokenService;
@@ -40,6 +40,7 @@ namespace WebApi.ApiController
             _commentService = commentService;
             _favoritesListService = favoritesListService;
             _uploadService = uploadService;
+            _locationService = locationService;
         }
 
         // Get api/user
@@ -130,6 +131,32 @@ namespace WebApi.ApiController
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No Store found");
         }
 
+        // TEST
+        // GET api/user/store/location/
+        [HttpGet]
+        [Route("store/location")]
+        public HttpResponseMessage TestLocation()
+        {
+            try
+            {
+                var storeIdList = new List<Guid>();
+                storeIdList.Add(new Guid("7dfce7c0-e926-4661-a9e5-62d3b8157a25"));
+
+                storeIdList.Add(new Guid("f3ff0e22-228b-4284-b2ff-14605ada65ac"));
+
+                var locationEntityList = new List<LocationBusinessEntity>();
+
+                var test = _locationService.FindNearestLocations(10.7649418, 106.6637336, storeIdList);
+
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Got Exception");
+            }
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No Store found");
+        }
+
         // POST api/user
         [HttpPost]
         [Route("signup")]
@@ -203,36 +230,52 @@ namespace WebApi.ApiController
         {
             try
             {
-                if (openStoreDto != null)
+                if (openStoreDto == null)
                 {
-                    var authToken = Request.Headers.GetValues("Token").FirstOrDefault();
-                    var userToken = _tokenService.GetUserId(authToken);
-
-                    Mapper.CreateMap<OpenStoreDto, StoreDto>().ForMember(x => x.Images, opt => opt.Ignore()); ;
-                    var storeDto = Mapper.Map<OpenStoreDto, StoreDto>(openStoreDto);
-
-                    // Save Store
-                    storeDto.RegistrationDate = DateTime.Today;
-                    var storeId = _storeService.OpenStore(storeDto);
-
-                    // Save Store Image
-                    var imageUploadList = new List<FileUploadResult>();
-                    foreach (var image in openStoreDto.Images)
-                    {
-                        //var imageString = _uploadService.Base64Decode(image.);
-                        //byte[] bytes = Encoding.ASCII.GetBytes(imageString);
-                        imageUploadList.Add(image);
-                    }
-
-                    if (imageUploadList.Any())
-                    {
-                        _uploadService.UploadFile(imageUploadList);
-                    }
-
-                    _userService.UpdateHasToreProperty(storeDto.UserId.GetValueOrDefault());
-                    return Request.CreateResponse(HttpStatusCode.OK, storeId);
+                    return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Cannot Open Store");
                 }
-                return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Cannot Open Store");
+                var authToken = Request.Headers.GetValues("Token").FirstOrDefault();
+                var userToken = _tokenService.GetUserId(authToken);
+
+                Mapper.CreateMap<OpenStoreDto, StoreDto>().ForMember(x => x.Images, opt => opt.Ignore()); ;
+                var storeDto = Mapper.Map<OpenStoreDto, StoreDto>(openStoreDto);
+
+                // Save Store
+                storeDto.RegistrationDate = DateTime.Today;
+                var storeId = _storeService.OpenStore(storeDto);
+                /////////////////////////////
+                // Save Store Image
+                var imageUploadList = new List<FileUploadResult>();
+                foreach (var image in openStoreDto.Images)
+                {
+                    //var imageString = _uploadService.Base64Decode(image.);
+                    //byte[] bytes = Encoding.ASCII.GetBytes(imageString);
+                    imageUploadList.Add(image);
+                }
+
+                if (imageUploadList.Any())
+                {
+                    _uploadService.UploadFile(imageUploadList);
+                }
+
+                _userService.UpdateHasStoreProperty(storeDto.UserId.GetValueOrDefault());
+                ///////////////////////
+                // Insert Location to DB
+                var location = _locationService.GetLocationFromAddress(storeDto.Address);
+
+                var locationBusinessEntity = new LocationBusinessEntity()
+                {
+                    Latitude = System.Convert.ToDecimal(location.GetType().GetProperty("Latitude").GetValue(location, null)),
+                    Longitude = System.Convert.ToDecimal(location.GetType().GetProperty("Longitude").GetValue(location, null)),
+                    StoreId = storeId
+                };
+                if (!_locationService.InsertLocation(locationBusinessEntity))
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed,
+                        "Cannot Insert Location to Table");
+                };
+                /////////////////////////////////
+                return Request.CreateResponse(HttpStatusCode.OK, storeId);
             }
             catch (Exception e)
             {

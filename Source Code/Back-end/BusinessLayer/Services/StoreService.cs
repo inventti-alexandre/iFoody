@@ -15,11 +15,13 @@ namespace BusinessLayer.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUploadService _uploadService;
+        private readonly ILocationService _locationService;
 
-        public StoreService(IUnitOfWork unitOfWork, IUploadService uploadService)
+        public StoreService(IUnitOfWork unitOfWork, IUploadService uploadService, ILocationService locationService)
         {
             _unitOfWork = unitOfWork;
             _uploadService = uploadService;
+            _locationService = locationService;
         }
 
         // Get All Store
@@ -128,6 +130,7 @@ namespace BusinessLayer.Services
 
             return null;
         }
+
         // Get One Store By UserId
         public StoreBusinessEntity GetStoreByUserId(Guid userId)
         {
@@ -155,6 +158,30 @@ namespace BusinessLayer.Services
 
             return null;
         }
+
+        // No USE!!!!! Get Store's Address from IDs list
+        public dynamic GetStoreAddress(List<Guid> ids)
+        {
+            try
+            {
+                var storeAddresses =
+                     _unitOfWork.Stores.GetManyQueryable(x => ids.Any(y => y.Equals(x.Id)))
+                         .Select(i => new { Id = i.Id, Addresses = i.Address });
+                //.AsEnumerable();
+                // var storeAddress1 = _unitOfWork.Stores.GetAll().Select(i => new { Id = i.Id, Addresses = i.Address }).ToList();
+
+                // var storeAddressEntity= new List<StoreAddressBusinessEntity>();
+
+                // storeAddressEntity.AddRange(storeAddresses.ToList());
+
+                return storeAddresses;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
         // User Open Store
         public Guid? OpenStore(StoreDto storeDto)
         {
@@ -172,7 +199,7 @@ namespace BusinessLayer.Services
                         Mapper.CreateMap<StoreBusinessEntity, Store>()
                             .ForMember(x => x.Id, opt => opt.Ignore());
                         var store = Mapper.Map<StoreBusinessEntity, Store>(storeEntity);
-
+                        var location = _locationService.GetLocationFromAddress(store.Address);
                         _unitOfWork.Stores.Insert(store);
 
                         _unitOfWork.Complete();
