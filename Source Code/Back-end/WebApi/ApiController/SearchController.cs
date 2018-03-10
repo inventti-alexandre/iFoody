@@ -74,5 +74,25 @@ namespace WebApi.ApiController
                 return NotFound();
             }
         }
+        //Search paging
+        // GET api/search/?searchString=?&page=?&count={?}
+        // /api/search/?searchString=trà&page=1&count -->khong truyen count
+        [HttpGet]
+        public IHttpActionResult SearchPaging(string searchString, int page, int? count)
+        {
+            try
+            {
+                var products = _searchService.SearchPaging(searchString, page, count);
+                if (products == null)
+                {
+                    return NotFound(); // Returns a NotFoundResult
+                }
+                return Ok(products);  // Returns an OkNegotiatedContentResult
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+        }
     }
 }

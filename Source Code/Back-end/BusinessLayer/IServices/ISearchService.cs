@@ -10,7 +10,7 @@ namespace BusinessLayer.IServices
         IEnumerable<ProductDto> SearchByProductName(string productName);
         IEnumerable<ProductDto> SearchByStoreInfo(string searchString);
         IEnumerable<ProductDto> SearchByCategoryName(string categoryName);
-        IEnumerable<ProductDto> SearchPaging(string searchString, int page, int? count);
+        PagingReturnDto<ProductDto> SearchPaging(string searchString, int page, int? count);
 
     }
 }

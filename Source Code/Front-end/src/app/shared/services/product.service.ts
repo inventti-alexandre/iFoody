@@ -16,7 +16,7 @@ export class ProductService {
   private actionUrl: string;
   private reviewUrl: string;
   private getProductWithCategoryUrl: string;
-   
+
   constructor(private _http: Http) {
     this.actionUrl = apiUrl.GetAllProduct;
    this.reviewUrl = apiUrl.ProductReview;
@@ -74,7 +74,7 @@ export class ProductService {
     return this._http.get(url)
         .map((response: Response) => <any>response.json())
         .do(x => {
-          listProduct.push(x);   
+          listProduct.push(x);
         });
   }
    // POST - Product updload
@@ -129,5 +129,5 @@ export class ProductService {
     }
   }
 
- 
+
 }
