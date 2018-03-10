@@ -2,6 +2,7 @@
 using BusinessLayer.DTOs;
 using System;
 using System.Collections.Generic;
+using DataModel;
 
 namespace BusinessLayer.IServices
 {
@@ -17,5 +18,8 @@ namespace BusinessLayer.IServices
         IEnumerable<ImageBusinessEntity> GetAllImageByProductId(Guid productId);
         PagingReturnDto<ProductDto> PagingAllProducts(int page, int? count);
         PagingReturnDto<ProductDto> PagingAllProductsByCategory(Guid categoryId, int page, int? count);
+        ProductDto ConvertProductToProductDto(Product product);
+        IEnumerable<ProductDto> ChangeProductsToProductDto(List<Product> products);
+        PagingReturnDto<ProductDto> ChangeProductsToPagingReturnDto(int page, int? count, List<Product> allProducts);
     }
 }

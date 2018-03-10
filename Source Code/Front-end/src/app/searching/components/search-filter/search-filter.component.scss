@@ -17,7 +17,7 @@
         }
     }
 
-   
+
     &__item:nth-child(1) button {
         background-color: #C04324;
         border-color: #C04324;
@@ -43,16 +43,16 @@
             display: table-row;
             // @media screen and (min-width:769px){
             //     width:100% !important;
-            // }        
+            // }
             // @media screen and (max-width:768px){
             //     width:100% !important;
             // }
-    
+
         }
         .well {
             position: absolute;
             height:auto;
-            z-index: 1300;
+            z-index: 2;
         }
     }
 }

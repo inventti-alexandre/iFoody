@@ -22,6 +22,9 @@ import { SliderComponent } from './components/slider/slider.component';
 import { RepresentativeProductComponent } from './components/representative-product/representative-product.component';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { BottomSliderComponent } from './components/bottom-slider/bottom-slider.component';
+import { MatCheckboxModule } from '@angular/material';
+import { CollapseModule } from 'ngx-bootstrap';
+import { ClickOutsideModule } from 'ng-click-outside';
 
 @NgModule({
   imports: [
@@ -36,7 +39,10 @@ import { BottomSliderComponent } from './components/bottom-slider/bottom-slider.
     FormsModule,
     BrowserModule,
     HttpModule,
-    ButtonsModule
+    ButtonsModule,
+    MatCheckboxModule,
+    CollapseModule.forRoot(),
+    ClickOutsideModule,
   ],
   exports: [
     BsNavbarComponent,
