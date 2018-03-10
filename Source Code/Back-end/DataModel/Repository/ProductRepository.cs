@@ -15,12 +15,31 @@ namespace DataModel.Repository
         {
             this._iFoodyContext = iFoodyEntities;
         }
-        //Search method
+        //Search by product name
         public IEnumerable<Product> GetProductsByName(string name)
         {
             string sql = "select * from Products where FREETEXT(Name,'\"" + name + "\"')";            
-            return _iFoodyContext.Database.SqlQuery<Product>(sql).ToList();          
+            return _iFoodyContext.Database.SqlQuery<Product>(sql).AsQueryable();          
         }
+        //Search by category name
+        public IEnumerable<Product> SearchByCategoryName(string categoryName)
+        {
+            IEnumerable<Guid> listCategoriesId = _iFoodyContext.Categories.Where(x => x.Name.Contains(categoryName))
+                                                                          .Select(x=>x.Id);
+            if (listCategoriesId.Any())
+            {
+                var products =
+                    _iFoodyContext.Products.Where(x => listCategoriesId.Contains(x.Category.Id)).AsQueryable();
+                var productsFilter = products.GroupBy(x => x.Store.Id).Select(x => x.FirstOrDefault())
+                                             .OrderByDescending(x => x.Store.Rating).AsQueryable();
+                return productsFilter;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         //Search method: name, address, district, city
         public IEnumerable<Product> SearchByStoreInfo(string searchString)
         {
@@ -30,7 +49,7 @@ namespace DataModel.Repository
             {
                 var products = _iFoodyContext.Products.Where(x => listId.Contains(x.Store.Id)).AsQueryable();
                 var productsFilter = products.GroupBy(x => x.Store.Id).Select(x => x.FirstOrDefault())
-                                             .OrderByDescending(x=>x.Store.Rating);
+                                             .OrderByDescending(x=>x.Store.Rating).AsQueryable();
                 return productsFilter;
             }
             else

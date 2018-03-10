@@ -36,7 +36,7 @@ namespace WebApi.ApiController
                 return NotFound();
             }
         }
-        //Search by product name
+        //Search by store info
         // GET api/search/?searchString=
         [HttpGet]
         public IHttpActionResult SearchByStoreInfo(string searchString)
@@ -44,6 +44,25 @@ namespace WebApi.ApiController
             try
             {
                 var products = _searchService.SearchByStoreInfo(searchString);
+                if (products == null)
+                {
+                    return NotFound(); // Returns a NotFoundResult
+                }
+                return Ok(products);  // Returns an OkNegotiatedContentResult
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+        }
+        //Search by category name
+        // GET api/search/?categoryName=
+        [HttpGet]
+        public IHttpActionResult SearchByCategoryName(string categoryName)
+        {
+            try
+            {
+                var products = _searchService.SearchByCategoryName(categoryName);
                 if (products == null)
                 {
                     return NotFound(); // Returns a NotFoundResult
