@@ -12,6 +12,7 @@ export class SearchBarComponent implements OnInit {
 
   searchQuery: string;
   districts: any[];
+
   constructor(private activatedRoute: ActivatedRoute, private router: Router) {
     this.name = '';
     this.districts = [
@@ -27,29 +28,13 @@ export class SearchBarComponent implements OnInit {
       'Hóc Môn',
       'Củ Chi',
       'Cần Giờ',
-    ]
+    ];
   }
 
   ngOnInit() {
   }
-  public isAreaCollapsed = true;
 
   public setSearchQueryParam() {
     this.router.navigate(['/search'], { queryParams: { name: this.name, area: this.area } });
   }
-
-  public areaCollapsed(event: any): void {
-    console.log(event);
-  }
-
-  public areaExpanded(event: any): void {
-    console.log(event);
-  }
-  public onClickedOutside(event: any): void {
-    console.log('Clicked outside:');
-    // if(!this.isAreaCollapsed){
-    //   this.isAreaCollapsed = true;
-    // }
-  }
-
-}
+ }

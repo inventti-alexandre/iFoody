@@ -40,7 +40,7 @@
         }
         div {
             right: 0 !important;
-            display: table-row;
+            //display: table-row;
             // @media screen and (min-width:769px){
             //     width:100% !important;
             // }
@@ -53,6 +53,7 @@
             position: absolute;
             height:auto;
             z-index: 2;
+            display: none;
         }
     }
 }
