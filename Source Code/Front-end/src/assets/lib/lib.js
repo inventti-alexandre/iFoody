@@ -11,8 +11,7 @@ $(document).on("hidden.bs.modal",".sub-modal.modal", function () {
 
 // For Collapse Search with Checkbox 
 $(document).unbind().click(function(event) { 
-  let inCheckboxSearch = $(event.target).parents('.parents-well').length;
-  if(inCheckboxSearch > 0) {
+  if($(event.target).parents('.parents-well').length > 0) {
     event.stopPropagation();
     return;
   }
@@ -31,7 +30,7 @@ $(document).unbind().click(function(event) {
     $('.well-search-type').hide();
   }
   //For Search Bar
-  if($(event.target).closest('#searchBarParents').length != 0) {
+  if($(event.target).closest('#searchBarParents').length != 0 && !$(event.target).is(".glyphicon-search")) {
     if($('.well-search-area').css('display') == 'none' || $('.well-search-area').css('display') == '') {
       $('.well-search-area').show();
     }
@@ -44,6 +43,7 @@ $(document).unbind().click(function(event) {
   }
 });
 
+// Not used yet
 var searchObject = (function() {
     return {
       popoverType: function() {

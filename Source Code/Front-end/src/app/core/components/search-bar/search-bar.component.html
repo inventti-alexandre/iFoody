@@ -1,8 +1,7 @@
 <div class="searchBar input-group" id="searchBarParents">
   <input [(ngModel)]="name" type="search" class="form-control searchBar__byName" name="name" placeholder="Tìm món ăn..." />
 
-  <input [(ngModel)]="area" type="search" class="form-control searchBar__byLocation" name="area" placeholder="Chọn khu vực"
-    (click)="isAreaCollapsed = !isAreaCollapsed">
+  <input [(ngModel)]="area" type="search" class="form-control searchBar__byLocation" name="area" placeholder="Chọn khu vực">
 
   <a [routerLink]="['/search']" (click)="setSearchQueryParam()">
     <small><span class="glyphicon glyphicon-search"></span></small>
