@@ -8,6 +8,7 @@ div {
     position: relative  ;
     font-size: 1.5em;
     text-align: center;
+    
 }
 
 .star {
@@ -26,7 +27,6 @@ div {
 .filled {
     color: $filled;
     transform: scale(0.6,0.6);
-    
 }
 
 span[class^="fa-"] {

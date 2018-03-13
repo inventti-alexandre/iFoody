@@ -26,6 +26,8 @@ export class SearchFilterComponent implements OnInit {
   ];
   ngOnInit() {
     this.loadScript('src/assets/lib/lib.js');  
+    searchObject.hide();
+    console.log("ngOnInit works well");
   }
   
   typeCollapsed(){

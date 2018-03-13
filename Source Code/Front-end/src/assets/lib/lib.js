@@ -9,10 +9,20 @@ $(document).on("hidden.bs.modal",".sub-modal.modal", function () {
     $("body").addClass("modal-open");
 });
 
+// Initiallize Type and Area Search -> Hidden first
+var searchObject = (function() {
+  return {
+    hide: function() {
+      console.log("hide JS works works");
+      $('.well-search-type').hide();
+      $('.well-search-area').hide();
+    }
+  }
+})(searchObject || {})
 // For Collapse Search with Checkbox 
 $(document).unbind().click(function(event) { 
   if($(event.target).parents('.parents-well').length > 0) {
-    event.stopPropagation();
+    //event.stopPropagation();
     return;
   }
   // For Search Type
@@ -31,8 +41,10 @@ $(document).unbind().click(function(event) {
   }
   //For Search Bar
   if($(event.target).closest('#searchBarParents').length != 0 && !$(event.target).is(".glyphicon-search")) {
-    if($('.well-search-area').css('display') == 'none' || $('.well-search-area').css('display') == '') {
-      $('.well-search-area').show();
+    if($('.well-search-area').css('display') == 'none' || $('.well-search-area').css('display') == '' ) {
+      if(!$(event.target).is(".searchBar__byName")) {
+        $('.well-search-area').show();
+      }
     }
     else {
       $('.well-search-area').hide();
@@ -43,31 +55,43 @@ $(document).unbind().click(function(event) {
   }
 });
 
-// Not used yet
-var searchObject = (function() {
-    return {
-      popoverType: function() {
-        $('#popover').popover({ 
-            html : true,
-            title: function() {
-              return $("#popover-head").html();
-            },
-            content: function() {
-              return $("#popover-content").html();
-            }
-        });
-      },
-      hideSearchType: function() {
-        var divToHide = document.getElementsByClassName('well-lg');
-        document.onclick = function(e){
-            if(e.target.class !== 'well-lg'){
-              //element clicked wasn't the div; hide the div
-              divToHide.style.display = 'none';
-            }
-          };
-      }
+// For Rating Component
+var ratingObject = (function() {
+  return {
+    removeBorderLine: function() {
+      console.log("removeBorderLine works");
+      $('.sr-only').remove();
+      console.log($('.ratingElement'));
+      $('.ratingElement').find("span").attr("style","outline: none !important");
     }
+  }
+})(ratingObject || {})
+
+// Not used yet
+// var searchObject = (function() {
+//     return {
+//       popoverType: function() {
+//         $('#popover').popover({ 
+//             html : true,
+//             title: function() {
+//               return $("#popover-head").html();
+//             },
+//             content: function() {
+//               return $("#popover-content").html();
+//             }
+//         });
+//       },
+//       hideSearchType: function() {
+//         var divToHide = document.getElementsByClassName('well-lg');
+//         document.onclick = function(e){
+//             if(e.target.class !== 'well-lg'){
+//               //element clicked wasn't the div; hide the div
+//               divToHide.style.display = 'none';
+//             }
+//           };
+//       }
+//     }
   
-  })(searchObject||{})
+//   })(searchObject||{})
 
   

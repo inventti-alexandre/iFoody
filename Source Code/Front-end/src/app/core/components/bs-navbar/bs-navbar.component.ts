@@ -46,6 +46,7 @@ export class BsNavbarComponent implements OnInit {
       {name: 'Thông tin cá nhân', url: 'profile', param: this.userId.replace(/['"]+/g, '')},
       {name: 'Cài đặt tài khoản', url: 'settings', param: this.userId.replace(/['"]+/g, '')},
     ];
+    console.log(this.urls);
     }
 
   ngOnInit() {

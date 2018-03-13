@@ -2,16 +2,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IReview, IUser, IProduct } from './../../../shared/models/allModel';
 import { UserService } from './../../../shared/services/user.service';
 import { ProductService } from '../../../shared/services/product.service';
-import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import * as apiUrl from '../../../constant/apiUrl';
 import { DatePipe } from '@angular/common';
+import '../../../../assets/lib/lib.js';
+declare var ratingObject: any;
 
 @Component({
   selector: 'review',
   templateUrl: './review.component.html',
   styleUrls: ['./review.component.scss']
 })
-export class ReviewComponent implements OnInit{
+export class ReviewComponent implements OnInit, AfterViewInit{
   rerender = false; // Refresh component when submit Review
   @Input() productId: string;
   reviewsModel: any[];
@@ -47,6 +49,10 @@ export class ReviewComponent implements OnInit{
         this.currentUser = data;
       });
     
+  }
+
+  ngAfterViewInit() {
+    ratingObject.removeBorderLine();
   }
 
   public hoveringOver(value:number):void {
