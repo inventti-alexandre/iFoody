@@ -15,6 +15,24 @@ namespace DataModel.Repository
         {
             this._iFoodyContext = iFoodyEntities;
         }
+
+        public IEnumerable<Product> GetProductsByListId(List<Guid?> listProductsId)
+        {
+            if (listProductsId.Any())
+            {
+                var products =
+                    _iFoodyContext.Products.Where(x => listProductsId.Contains(x.Id)).AsQueryable();
+                //                var productsFilter = products.GroupBy(x => x.Store.Id).Select(x => x.FirstOrDefault())
+                //                                             .OrderByDescending(x => x.Store.Rating).AsQueryable();
+                return products;
+
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         //Search by product name
         public IEnumerable<Product> GetProductsByName(string name)
         {

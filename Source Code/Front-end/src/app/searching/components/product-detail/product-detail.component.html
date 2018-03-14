@@ -3,12 +3,12 @@
     <div class="row">
       <div class="productDetail__photo col-xs-6 col-sm-6">
         <div class="productDetail__photo__main row">
-          <img [src]="productModel.images[0].path" alt="" >
+          <img [src]="productModel.images[0]?.path" alt="" >
         </div>
 
         <div class="productDetail__photo__minor row">
           <div class="col-xs-3 col-sm-3" *ngFor="let image of productModel?.images">
-            <img [src]="image.path" alt="Product" *ngIf="(image.id != null)">
+            <img [src]="image?.path" alt="Product" *ngIf="(image.id != null)">
           </div>
         </div>
       </div>
