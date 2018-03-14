@@ -45,11 +45,11 @@
 
 .searchFilter__item__area div, .searchFilter__item__type div {
   right: 0 !important;
-  display: table-row;
 }
 
 .searchFilter__item__area .well, .searchFilter__item__type .well {
   position: absolute;
   height: auto;
   z-index: 2;
+  display: none;
 }

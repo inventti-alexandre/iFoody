@@ -1,4 +1,4 @@
-<div class=" searchBar input-group">
+<div class=" searchBar input-group" id="searchBarParents">
   <div class="dropdown">
     <input [(ngModel)]="name" class="form-control searchBar__byName dropdown-toggle" name="name" placeholder="Món ăn, địa điểm, loại hình ..."
       type="search" data-toggle="dropdown" />
@@ -27,19 +27,14 @@
     (click)="isAreaCollapsed = !isAreaCollapsed">
 
   <a [routerLink]="['/search']" (click)="setSearchQueryParam()">
-    <span class="glyphicon glyphicon-search"></span>
-    <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
+    <small><span class="glyphicon glyphicon-search"></span></small>
   </a>
-
-  <div (collapsed)="areaCollapsed($event)" (expanded)="areaExpanded($event)" class="card card-block card-header" [collapse]="isAreaCollapsed">
-    <div class="well well-lg">
-      <div class="row">
-        <div *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12]" class="col-xs-12 col-sm-6 col-md-6">
-          <mat-checkbox>Quận {{i}}</mat-checkbox>
-        </div>
-        <div *ngFor="let district of districts" class="col-xs-12 col-sm-6 col-md-6">
-          <mat-checkbox>Quận {{district}}</mat-checkbox>
-        </div>
+  <!-- ///////////////////// -->
+  <div  class="parents-well">
+    <div class="well well-lg well-search-area">
+      <div class="row well-search-area">
+        <mat-checkbox *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12]" class="col-xs-12 col-sm-6 col-md-6">Quận {{i}}</mat-checkbox>
+        <mat-checkbox *ngFor="let district of districts" class="col-xs-12 col-sm-6 col-md-6">Quận {{district}}</mat-checkbox>
       </div>
     </div>
   </div>

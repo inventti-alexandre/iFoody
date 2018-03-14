@@ -1,11 +1,12 @@
 import { AfterViewInit, ElementRef, Component, OnInit } from '@angular/core';
+declare var ratingObject: any;
 
 @Component({
   selector: 'bs-rating',
   templateUrl: './bs-rating.component.html',
   styleUrls: ['./bs-rating.component.scss']
 })
-export class BsRatingComponent  {
+export class BsRatingComponent implements OnInit, AfterViewInit {
   public max = 5;
   public currentRate = 3.4;
   ratingNumber: number;
@@ -17,7 +18,24 @@ export class BsRatingComponent  {
  
   public overStar:number;
   // public percent:number;
- 
+  constructor (private elementRef: ElementRef) {
+    this.currentRate = 3.4;
+
+    this.isGood = false;
+    this.isFair = false;
+    this.isMedium = false;
+    this.isBad = false;
+    this.ratingNumber = 33;
+    this.getStatus();
+  }
+
+  ngOnInit() {
+  }
+  
+  ngAfterViewInit() {
+    // ratingObject.removeBorderLine();
+  }
+
   public hoveringOver(value:number):void {
     this.overStar = value;
     // this.percent = 100 * (value / this.max);
@@ -32,16 +50,7 @@ export class BsRatingComponent  {
   // max = 5;
  
   
-  constructor (private elementRef: ElementRef) {
-    this.currentRate = 3.4;
-
-    this.isGood = false;
-    this.isFair = false;
-    this.isMedium = false;
-    this.isBad = false;
-    this.ratingNumber = 33;
-    this.getStatus();
-  }
+  
 
   // // modify variable for setting color to rating
   private getStatus() {

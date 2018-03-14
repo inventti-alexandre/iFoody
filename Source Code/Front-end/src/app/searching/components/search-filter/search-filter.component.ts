@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+declare var searchObject: any;
 
 @Component({
   selector: 'search-filter',
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class SearchFilterComponent implements OnInit {
+  
   items = [
     {
       id: 1,
@@ -21,27 +23,23 @@ export class SearchFilterComponent implements OnInit {
       text: 'Third item'
     }
   ];
-  public isAreaCollapsed = true;
-  public isTypeCollapsed = true;
-  
-   public areaCollapsed(event:any):void {
-     // console.log(event);
-   }
-  
-   public areaExpanded(event:any):void {
-     // console.log(event);
-   }
-
-   public typeCollapsed(event:any):void {
-    // console.log(event);
-  }
- 
-  public typeExpanded(event:any):void {
-    // console.log(event);
-  }
-  constructor() { }
-
   ngOnInit() {
+    searchObject.hide();
+    console.log("ngOnInit works well");
   }
+  
+  typeCollapsed(){
 
+  }
+  typeExpanded() {
+
+  }
+  
+  loadScript(url) {
+    // console.log('preparing to load...');
+    // let node = document.createElement('script');
+    // node.src = url;
+    // node.type = 'text/javascript';
+    // document.getElementsByTagName('head')[0].appendChild(node);
+ }
 }

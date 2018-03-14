@@ -24,11 +24,14 @@ import { StoreDetailMenuComponent } from './components/store-detail/store-detail
 import { SimilarStoreComponent } from './components/store-detail/similar-store/similar-store.component';
 import { NgModel } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { PopoverModule } from 'ngx-bootstrap/popover';
+
 @NgModule({
   imports: [
     CommonModule,
     CollapseModule.forRoot(),
     MatCheckboxModule,
+    PopoverModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCiZd64MtnFqNtuhvpWcGjBBjfzi0feu0Q'
     }),

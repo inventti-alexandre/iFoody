@@ -3,7 +3,7 @@
     <div class="col-md-12" *ngFor="let group of products; let i=index">
       <h3>{{group.results[0].category.name}}</h3>
       <div class="row category" [ngClass]="[i < products.length-1 ? 'category--border' : '']">
-        <div class="col-md-12 category__row">
+        <div class="col-md-8 category__row">
           <div class="row">
             <div class="col-sm-4  col-md-4 col-xs-6" *ngFor="let p of group.results">
               <div class="row">

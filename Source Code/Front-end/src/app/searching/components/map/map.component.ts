@@ -1,7 +1,5 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import '../../../../assets/lib/myMap.js';
 
-// import '../../../../assets/lib/map';
 declare var mapObject: any;
 
 // declare var testObject: any;

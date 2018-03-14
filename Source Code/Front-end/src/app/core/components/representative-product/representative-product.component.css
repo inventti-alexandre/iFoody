@@ -14,6 +14,11 @@
   border-bottom: solid 1.2px rgba(233, 232, 230, 0.95);
 }
 
+.listCategory .category__row {
+  float: none;
+  margin: 0 auto;
+}
+
 @media screen and (max-width: 480px) {
   .listCategory .category__row div {
     width: 100%;
