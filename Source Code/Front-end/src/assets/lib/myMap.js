@@ -3,7 +3,7 @@ var directionsDisplay;
 var directionsService;
 var geocoder;
 var addressList;
-
+console.log("myMAP111");
 // Get Direction from Current Location to Marker
 function calculateAndDisplayRoute (directionsService, directionsDisplay, pointA, pointB) {
     var request = {

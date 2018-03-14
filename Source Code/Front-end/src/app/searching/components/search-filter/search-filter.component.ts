@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import '../../../../assets/lib/lib.js';
 declare var searchObject: any;
 
 @Component({
@@ -25,7 +24,6 @@ export class SearchFilterComponent implements OnInit {
     }
   ];
   ngOnInit() {
-    this.loadScript('src/assets/lib/lib.js');  
     searchObject.hide();
     console.log("ngOnInit works well");
   }
@@ -38,10 +36,10 @@ export class SearchFilterComponent implements OnInit {
   }
   
   loadScript(url) {
-    console.log('preparing to load...');
-    let node = document.createElement('script');
-    node.src = url;
-    node.type = 'text/javascript';
-    document.getElementsByTagName('head')[0].appendChild(node);
+    // console.log('preparing to load...');
+    // let node = document.createElement('script');
+    // node.src = url;
+    // node.type = 'text/javascript';
+    // document.getElementsByTagName('head')[0].appendChild(node);
  }
 }

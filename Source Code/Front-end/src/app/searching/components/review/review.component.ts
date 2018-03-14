@@ -5,8 +5,7 @@ import { ProductService } from '../../../shared/services/product.service';
 import { Component, OnInit, Input, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import * as apiUrl from '../../../constant/apiUrl';
 import { DatePipe } from '@angular/common';
-import '../../../../assets/lib/lib.js';
-declare var ratingObject: any;
+// declare var ratingObject: any;
 
 @Component({
   selector: 'review',
@@ -52,7 +51,7 @@ export class ReviewComponent implements OnInit, AfterViewInit{
   }
 
   ngAfterViewInit() {
-    ratingObject.removeBorderLine();
+    // ratingObject.removeBorderLine();
   }
 
   public hoveringOver(value:number):void {

@@ -1,5 +1,4 @@
 import { AfterViewInit, ElementRef, Component, OnInit } from '@angular/core';
-import '../../../../assets/lib/lib.js';
 declare var ratingObject: any;
 
 @Component({
@@ -34,7 +33,7 @@ export class BsRatingComponent implements OnInit, AfterViewInit {
   }
   
   ngAfterViewInit() {
-    ratingObject.removeBorderLine();
+    // ratingObject.removeBorderLine();
   }
 
   public hoveringOver(value:number):void {

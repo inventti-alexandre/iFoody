@@ -1,6 +1,8 @@
 import { ActivatedRoute, Params, Route, Router } from '@angular/router';
 import { Component, OnInit, Input } from '@angular/core';
 // import { ClickOutside } from '../../directive/click-outside.directive';
+declare var searchObject: any;
+
 @Component({
   selector: 'search-bar',
   templateUrl: './search-bar.component.html',
@@ -32,6 +34,8 @@ export class SearchBarComponent implements OnInit {
   }
 
   ngOnInit() {
+    searchObject.hide();
+    // console.log("ngOnInit works well");
   }
 
   public setSearchQueryParam() {

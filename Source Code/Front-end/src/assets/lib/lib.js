@@ -1,7 +1,7 @@
-$(document).ready(function() {
+console.log("load LIB");
   $('.well-search-type').hide();
   $('.well-search-area').hide();
-});
+
   function modalOpen() {
     $document.find('body').addClass('modal-open');
 }
@@ -20,7 +20,8 @@ var searchObject = (function() {
   }
 })(searchObject || {})
 // For Collapse Search with Checkbox 
-$(document).unbind().click(function(event) { 
+$(document).click(function(event) { 
+  console.log("click!!!!!");
   if($(event.target).parents('.parents-well').length > 0) {
     //event.stopPropagation();
     return;
@@ -59,9 +60,9 @@ $(document).unbind().click(function(event) {
 var ratingObject = (function() {
   return {
     removeBorderLine: function() {
-      console.log("removeBorderLine works");
+      // console.log("removeBorderLine works");
       $('.sr-only').remove();
-      console.log($('.ratingElement'));
+      // console.log($('.ratingElement'));
       $('.ratingElement').find("span").attr("style","outline: none !important");
     }
   }
