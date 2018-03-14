@@ -11,6 +11,7 @@ namespace BusinessEntities
         public string Description { get; set; }
         public Guid? CategoryId { get; set; }
         public Guid? StoreId { get; set; }
+        public double? Rating { get; set; }
 
     }
 }
