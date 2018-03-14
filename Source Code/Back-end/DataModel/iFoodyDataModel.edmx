@@ -45,10 +45,10 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Latitude" Type="decimal" Precision="9" Scale="6" Nullable="false" />
           <Property Name="Longitude" Type="decimal" Precision="9" Scale="6" Nullable="false" />
           <Property Name="StoreId" Type="uniqueidentifier" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductImages">
           <Key>
@@ -68,6 +68,7 @@
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="CategoryId" Type="uniqueidentifier" />
           <Property Name="StoreId" Type="uniqueidentifier" />
+          <Property Name="Rating" Type="float" />
         </EntityType>
         <EntityType Name="Reviews">
           <Key>
@@ -531,10 +532,10 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Latitude" Type="Decimal" Precision="9" Scale="6" Nullable="false" />
           <Property Name="Longitude" Type="Decimal" Precision="9" Scale="6" Nullable="false" />
           <Property Name="StoreId" Type="Guid" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="ProductImage">
           <Key>
@@ -556,6 +557,7 @@
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CategoryId" Type="Guid" />
           <Property Name="StoreId" Type="Guid" />
+          <Property Name="Rating" Type="Double" />
           <NavigationProperty Name="Category" Relationship="Self.FK_Products_Categories" FromRole="Products" ToRole="Categories" />
           <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_Products" FromRole="Products" ToRole="Comments" />
           <NavigationProperty Name="FavoriteLists" Relationship="Self.FK_FavoriteLists_Products" FromRole="Products" ToRole="FavoriteLists" />
@@ -1039,10 +1041,10 @@
           <EntitySetMapping Name="Locations">
             <EntityTypeMapping TypeName="iFoodyModel.Location">
               <MappingFragment StoreEntitySet="Locations">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Latitude" ColumnName="Latitude" />
                 <ScalarProperty Name="Longitude" ColumnName="Longitude" />
                 <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1064,6 +1066,7 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

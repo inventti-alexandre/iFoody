@@ -14,9 +14,9 @@ namespace DataModel
     
     public partial class Location
     {
-        public int Id { get; set; }
         public decimal Latitude { get; set; }
         public decimal Longitude { get; set; }
         public Nullable<System.Guid> StoreId { get; set; }
+        public int Id { get; set; }
     }
 }
