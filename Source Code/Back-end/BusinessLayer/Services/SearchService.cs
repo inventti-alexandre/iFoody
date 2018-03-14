@@ -113,7 +113,7 @@ namespace BusinessLayer.Services
                 var productsByProductName = _unitOfWork.Products.GetProductsByName(searchString).ToList();
                 if (productsByProductName.Any())
                 {
-                    return _productService.ChangeProductsToPagingReturnDto(page, count, productsByProductName);
+                    return _productService.ChangeProductsToPagingReturnDto(page, count, productsByProductName,true);
                 }
                 else
                 {
@@ -121,7 +121,7 @@ namespace BusinessLayer.Services
                     if (productsByStoreInfo.Any())
                     {
 
-                        return _productService.ChangeProductsToPagingReturnDto(page, count, productsByStoreInfo);
+                        return _productService.ChangeProductsToPagingReturnDto(page, count, productsByStoreInfo,true);
                     }
                     else
                     {
@@ -136,6 +136,25 @@ namespace BusinessLayer.Services
             }
         }
 
-        
+        public PagingReturnDto<ProductDto> TopRatingProducts(int? count)
+        {
+            try
+            {
+                var topProducts = _unitOfWork.Products.GetAll().OrderByDescending(x=>x.Rating).ToList();
+                if (topProducts.Any())
+                {
+                    return _productService.ChangeProductsToPagingReturnDto(1, count, topProducts,true);
+                }
+                else
+                {
+                  return null;
+                }
+
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
     }
 }

@@ -112,5 +112,23 @@ namespace WebApi.ApiController
                 return NotFound();
             }
         }
+        // GET api/search/?count={?}
+        [HttpGet]
+        public IHttpActionResult SuggestionListByRatingProduct(int ? count)
+        {
+            try
+            {
+                var products = _searchService.TopRatingProducts(count);
+                if (products == null)
+                {
+                    return NotFound(); // Returns a NotFoundResult
+                }
+                return Ok(products);  // Returns an OkNegotiatedContentResult
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+        }
     }
 }

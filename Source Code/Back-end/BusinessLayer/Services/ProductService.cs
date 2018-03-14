@@ -252,7 +252,7 @@ namespace BusinessLayer.Services
                 var allProducts = _unitOfWork.Products.GetAll().ToList();
                 if (allProducts.Any())
                 {
-                    return ChangeProductsToPagingReturnDto(page, count, allProducts);
+                    return ChangeProductsToPagingReturnDto(page, count, allProducts,false);
                 }
                 else
                 {
@@ -271,7 +271,7 @@ namespace BusinessLayer.Services
                 var allProducts = _unitOfWork.Products.GetManyQueryable(x => x.CategoryId == categoryId).ToList();
                 if (allProducts.Any())
                 {
-                    return ChangeProductsToPagingReturnDto(page, count, allProducts);
+                    return ChangeProductsToPagingReturnDto(page, count, allProducts,false);
                 }
                 else
                 {
@@ -376,16 +376,29 @@ namespace BusinessLayer.Services
             return productDtos.AsEnumerable();
 
         }
-        public PagingReturnDto<ProductDto> ChangeProductsToPagingReturnDto(int page, int? count, List<Product> allProducts)
+        public PagingReturnDto<ProductDto> ChangeProductsToPagingReturnDto(int page, int? count, List<Product> allProducts, bool sortByRating)
         {
             var takePage = page;
             var takeCount = count ?? _defaultPageRecordCount;
             var totalProducts = allProducts.Count();
-            var products = allProducts
-                           .OrderByDescending(x => x.CategoryId)
-                           .Skip((takePage - 1) * takeCount)
-                           .Take(takeCount)
-                           .ToList();
+            var products = new List<Product>();
+            if (sortByRating)
+            {
+                 products = allProducts
+                    .OrderByDescending(x => x.Rating)
+                    .Skip((takePage - 1) * takeCount)
+                    .Take(takeCount)
+                    .ToList();
+            }
+            else
+            {
+                products = allProducts
+                          .OrderByDescending(x => x.CategoryId)
+                          .Skip((takePage - 1) * takeCount)
+                          .Take(takeCount)
+                          .ToList();
+            }
+           
             // Map to DTO
             if (products.Any())
             {

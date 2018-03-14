@@ -20,6 +20,6 @@ namespace BusinessLayer.IServices
         PagingReturnDto<ProductDto> PagingAllProductsByCategory(Guid categoryId, int page, int? count);
         ProductDto ConvertProductToProductDto(Product product);
         IEnumerable<ProductDto> ChangeProductsToProductDto(List<Product> products);
-        PagingReturnDto<ProductDto> ChangeProductsToPagingReturnDto(int page, int? count, List<Product> allProducts);
+        PagingReturnDto<ProductDto> ChangeProductsToPagingReturnDto(int page, int? count, List<Product> allProducts, bool sortByRating);
     }
 }
