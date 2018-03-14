@@ -94,5 +94,23 @@ namespace WebApi.ApiController
                 return NotFound();
             }
         }
+        // GET api/search/?userId=?
+        [HttpGet]
+        public IHttpActionResult SuggestionListByUserId(Guid userId)
+        {
+            try
+            {
+                var products = _searchService.SuggestionListByUserId(userId);
+                if (products == null)
+                {
+                    return NotFound(); // Returns a NotFoundResult
+                }
+                return Ok(products);  // Returns an OkNegotiatedContentResult
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+        }
     }
 }

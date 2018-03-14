@@ -14,6 +14,7 @@ namespace BusinessLayer.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IProductService _productService;
+       
         public SearchService(IUnitOfWork unitOfWork,IProductService productService)
         {
             _unitOfWork = unitOfWork;
@@ -84,6 +85,26 @@ namespace BusinessLayer.Services
                 return null;
             }
         }
+        public IEnumerable<ProductDto> SuggestionListByUserId(Guid userId)
+        {
+            try
+            {
+                List<Guid?> favoriteList = _unitOfWork.FavoriteLists.GetManyQueryable(x => x.UserId == userId).Select(x=>x.ProductId).ToList();
+                if (favoriteList.Any())
+                {
+                    var products = _unitOfWork.Products.GetProductsByListId(favoriteList).ToList();
+                    return _productService.ChangeProductsToProductDto(products);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
         //Search Paging
         public PagingReturnDto<ProductDto> SearchPaging(string searchString, int page, int? count)
         {
@@ -114,5 +135,7 @@ namespace BusinessLayer.Services
                 return null;
             }
         }
+
+        
     }
 }
