@@ -163,7 +163,7 @@ export class UserService {
     headers.append("Authorization", "Basic " + btoa(email + ":" + password)); 
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions( {headers: headers});
-
+    console.log("SIGN IN");
     return this._http.post(this.signInUrl, null, options)
       .map((response: Response) => (response.json()))
       .do((x: IToken) => {

@@ -1,10 +1,9 @@
-console.log("load LIB");
-  $('.well-search-type').hide();
-  $('.well-search-area').hide();
-
-  function modalOpen() {
+// Modal Login, SignUp
+console.log("Lib.JS")
+function modalOpen() {
     $document.find('body').addClass('modal-open');
 }
+
 $(document).on("hidden.bs.modal",".sub-modal.modal", function () {
     $("body").addClass("modal-open");
 });
@@ -13,12 +12,12 @@ $(document).on("hidden.bs.modal",".sub-modal.modal", function () {
 var searchObject = (function() {
   return {
     hide: function() {
-      console.log("hide JS works works");
       $('.well-search-type').hide();
       $('.well-search-area').hide();
     }
   }
 })(searchObject || {})
+
 // For Collapse Search with Checkbox 
 $(document).click(function(event) { 
   console.log("click!!!!!");
@@ -60,14 +59,18 @@ $(document).click(function(event) {
 var ratingObject = (function() {
   return {
     removeBorderLine: function() {
-      // console.log("removeBorderLine works");
       $('.sr-only').remove();
-      // console.log($('.ratingElement'));
       $('.ratingElement').find("span").attr("style","outline: none !important");
     }
   }
 })(ratingObject || {})
-
+var ratingObject1 = (function() {
+  return {
+    removeBorderLineReview: function() {
+      $('.ratingReview').find("span").attr("style","outline: none !important");
+    }
+  }
+})(ratingObject1 || {})
 // Not used yet
 // var searchObject = (function() {
 //     return {
