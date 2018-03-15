@@ -12,10 +12,13 @@
             </div>
           </div>
         </div>
-        <div class="row no-margin seeMoreBtn">
+
+        <ng-template [ngIf]="group.currentPage<group.totalPage">
+          <div class="row no-margin seeMoreBtn">
             <i  (click)="seeMore(group.results[0].category.id,group.currentPage,group.totalPage)" class="fa fa-angle-double-down" style="font-size:36px"></i>
-            <!-- <button type="button" class="btn btn-primary">Xem thêm</button> -->
-        </div>
+          </div>
+        </ng-template>
+
       </div>
     </div>
   </div>

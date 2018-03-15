@@ -85,27 +85,7 @@ namespace BusinessLayer.Services
                 return null;
             }
         }
-        public IEnumerable<ProductDto> SuggestionListByUserId(Guid userId)
-        {
-            try
-            {
-                List<Guid?> favoriteList = _unitOfWork.FavoriteLists.GetManyQueryable(x => x.UserId == userId).Select(x=>x.ProductId).ToList();
-                if (favoriteList.Any())
-                {
-                    var products = _unitOfWork.Products.GetProductsByListId(favoriteList).ToList();
-                    return _productService.ChangeProductsToProductDto(products);
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception e)
-            {
-                return null;
-            }
-        }
-        //Search Paging
+ //Search Paging
         public PagingReturnDto<ProductDto> SearchPaging(string searchString, int page, int? count)
         {
             try
@@ -150,6 +130,26 @@ namespace BusinessLayer.Services
                   return null;
                 }
 
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+        public PagingReturnDto<ProductDto> SuggestionListByUserId(Guid userId, int? count)
+        {
+            try
+            {
+                List<Guid?> favoriteList = _unitOfWork.FavoriteLists.GetManyQueryable(x => x.UserId == userId).Select(x => x.ProductId).ToList();
+                if (favoriteList.Any())
+                {
+                    var products = _unitOfWork.Products.GetProductsByListId(favoriteList).ToList();
+                    return _productService.ChangeProductsToPagingReturnDto(1, count, products, true);
+                }
+                else
+                {
+                    return null;
+                }
             }
             catch (Exception e)
             {

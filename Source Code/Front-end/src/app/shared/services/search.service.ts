@@ -29,4 +29,34 @@ export class SearchService {
         });
   }
 
+  public SuggestListByUserId=(userId, count?): Observable<any> => {
+    let listProduct = [];
+    let url;
+    if(count){
+      url = this.actionUrl + "/?userId=" +userId +"&count="+ count;
+    }else{
+      url = this.actionUrl +   "/?userId=" +userId +"&count";
+    }
+    return this._http.get(url)
+        .map((response: Response) => <any>response.json())
+        .do(x => {
+          listProduct.push(x);
+        });
+  }
+  public SuggestListByRating=(count?): Observable<any> => {
+    let listProduct = [];
+    let url;
+    if(count){
+      url = this.actionUrl + "/?count="+ count;
+    }else{
+      url = this.actionUrl + "/?count";
+    }
+    return this._http.get(url)
+        .map((response: Response) => <any>response.json())
+        .do(x => {
+          listProduct.push(x);
+        });
+  }
+
+
 }
