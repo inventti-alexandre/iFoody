@@ -9,7 +9,7 @@
     </div>
 
     <div class="searchResult__items row">
-      <div class="col-xs-6 col-sm-4" *ngFor="let result of products[0].results">
+      <div class="col-xs-6 col-md-4 col-sm-3" *ngFor="let result of products[0].results">
         <div class="row">
           <product-item [productId]="result.product.id"></product-item>
         </div>
@@ -17,7 +17,7 @@
     </div>
 
     <div class="searchResult__pagination row">
-      <bs-pagination></bs-pagination>
+      <bs-pagination (targetPage)="getTargetPage($event)"></bs-pagination>
     </div>
   </div>
 </div>

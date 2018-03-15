@@ -1,5 +1,5 @@
 import { SearchService } from './../../../shared/services/search.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'search-result',
@@ -10,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class SearchResultComponent implements OnInit {
   results: any;
   addressList: string[]; // To get string Address List, like  ['268 Le Lai', '192 Ly Thai To']
+  targetPage: number; // Value get from Bs-Pagination
 
   public products: any[];
   public initPage;
@@ -27,7 +28,7 @@ export class SearchResultComponent implements OnInit {
         .subscribe((data: Response) => {
           if(data!==null){
             this.products.push(data);
-            console.log("search result",this.products)
+            console.log("search result",this.products);
           }else{
             console.log("search result empty");
           }
@@ -43,6 +44,10 @@ export class SearchResultComponent implements OnInit {
     if(currentPage<totalPage){
       this.getSearchPaging(searchString,currentPage+1);
     }
+  }
+  
+  getTargetPage(value: any) {
+    this.targetPage = value;
   }
 
 }

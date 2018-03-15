@@ -50,7 +50,9 @@
                 margin-left: 30px;
             }
         }
-
+        &__rating {
+            float:left;
+        }
         div {
             position: relative;
             padding-left: 45px;
@@ -69,5 +71,6 @@
         .fa-heart {
             color:red
         }
+
     }
 }

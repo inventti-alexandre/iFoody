@@ -17,6 +17,7 @@ import * as apiUrl from './../../../constant/apiUrl';
   styleUrls: ['./bs-navbar.component.css'],
 })
 export class BsNavbarComponent implements OnInit {
+  
   isMobile= false;
   nameApp = global.nameApp;
   isAuthenticated: boolean;

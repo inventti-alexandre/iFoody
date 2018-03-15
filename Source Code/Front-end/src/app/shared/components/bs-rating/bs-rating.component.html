@@ -4,15 +4,16 @@
 'medium': isMedium, 
 'bad': isBad}">
 <rating 
-  [(ngModel)]="currentRate" 
+  [(ngModel)]="rating" 
   [max]="max" 
   [readonly]="isReadonly" 
   (onHover)="hoveringOver($event)" 
   [titles]="['one','two','three']" class="filled ratingElement"></rating>
 
+  
   <span class="fa-stack">
     <i class="fa fa-circle fa-stack-2x" ></i>
-    <i class="fa number fa-stack-1x">{{ currentRate }}</i>
+    <i class="fa number fa-stack-1x">{{ rating }}</i>
   </span>
 
   <div *ngIf="ratingNumber > 0" class="ratingNumber">

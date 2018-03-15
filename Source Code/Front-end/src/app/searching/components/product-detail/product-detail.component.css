@@ -56,6 +56,10 @@
   margin-left: 30px;
 }
 
+.productDetail__info__rating {
+  float: left;
+}
+
 .productDetail__info div {
   position: relative;
   padding-left: 45px;

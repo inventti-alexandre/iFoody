@@ -1,4 +1,4 @@
-import { AfterViewInit, ElementRef, Component, OnInit } from '@angular/core';
+import { AfterViewInit, ElementRef, Component, OnInit, Input } from '@angular/core';
 declare var ratingObject: any;
 
 @Component({
@@ -7,8 +7,9 @@ declare var ratingObject: any;
   styleUrls: ['./bs-rating.component.scss']
 })
 export class BsRatingComponent implements OnInit, AfterViewInit {
+  @Input('rating') rating;  
   public max = 5;
-  public currentRate = 3.4;
+  // public currentRate = 3.4;
   ratingNumber: number;
   public isReadonly = true;
   isGood: boolean; // for rating which greater than 4.5
@@ -19,7 +20,7 @@ export class BsRatingComponent implements OnInit, AfterViewInit {
   public overStar:number;
   // public percent:number;
   constructor (private elementRef: ElementRef) {
-    this.currentRate = 3.4;
+    // this.rating = 3.4;
 
     this.isGood = false;
     this.isFair = false;
@@ -33,7 +34,7 @@ export class BsRatingComponent implements OnInit, AfterViewInit {
   }
   
   ngAfterViewInit() {
-    // ratingObject.removeBorderLine();
+    ratingObject.removeBorderLine();
   }
 
   public hoveringOver(value:number):void {
@@ -53,10 +54,16 @@ export class BsRatingComponent implements OnInit, AfterViewInit {
   
 
   // // modify variable for setting color to rating
+  // private getStatus() {
+  //   if (this.currentRate >= 4.5) {this.isGood = true;}
+  //   else if (this.currentRate >= 4.0) {this.isFair = true;}
+  //   else if (this.currentRate >= 3.5) {this.isMedium = true;}  
+  //   else  {this.isBad = true;}
+  // }
   private getStatus() {
-    if (this.currentRate >= 4.5) {this.isGood = true;}
-    else if (this.currentRate >= 4.0) {this.isFair = true;}
-    else if (this.currentRate >= 3.5) {this.isMedium = true;}  
+    if (this.rating >= 4.5) {this.isGood = true;}
+    else if (this.rating >= 4.0) {this.isFair = true;}
+    else if (this.rating >= 3.5) {this.isMedium = true;}  
     else  {this.isBad = true;}
   }
 }
