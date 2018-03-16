@@ -24,6 +24,7 @@ namespace BusinessLayer.DTOs
         public Guid? CategoryId { get; set; }
         public Guid? UserId { get; set; }
         public List<string> Images { get; set; }
+        public int? RatingCount { get; set; }
 
 
     }

@@ -91,7 +91,7 @@ namespace WebApi.ApiController
 
         }
 
-        // GET api/favorite-list/42fsvvsg0-gsevsevsev
+        // GET api/user/favorite-list/42fsvvsg0-gsevsevsev
         [HttpGet]
         [Route("favorite-list/{id}")]
         public HttpResponseMessage GetFavoriteList(Guid id)
@@ -111,7 +111,7 @@ namespace WebApi.ApiController
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No Favorite Item found for this user");
         }
 
-        // GET api/store/42fsvvsg0-gsevsevsev...
+        // GET api/user/store/42fsvvsg0-gsevsevsev...
         [HttpGet]
         [Route("store/{id}")]
         public HttpResponseMessage GetStore(Guid id)
@@ -130,6 +130,7 @@ namespace WebApi.ApiController
             }
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No Store found");
         }
+
 
         // TEST
         // GET api/user/store/location/
@@ -210,18 +211,21 @@ namespace WebApi.ApiController
                     var authToken = Request.Headers.GetValues("Token").FirstOrDefault();
                     var userToken = _tokenService.GetUserId(authToken);
 
-                    _reviewService.InsertReview(review);
-
-                    return Request.CreateResponse(HttpStatusCode.OK, review.Id);
+                    var reviewId = _reviewService.InsertReview(review);
+                    if (reviewId != Guid.Empty)
+                    {
+                        _productService.UpdateRatingProperty(review.ProductId.GetValueOrDefault(), Convert.ToInt32(Math.Round(review.Rating)));
+                        _storeService.UpdateRatingProperty(review.StoreId.GetValueOrDefault(), Convert.ToInt32(Math.Round(review.Rating)));
+                        return Request.CreateResponse(HttpStatusCode.OK, reviewId);
+                    }
                 }
-                return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Cannot upload Images");
+                return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Cannot Insert Review");
             }
             catch (Exception e)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Error unexpected");
             }
         }
-
 
         // POST api/user/openStore
         [HttpPost]
@@ -346,6 +350,7 @@ namespace WebApi.ApiController
             return null;
         }
 
+        // Sign Out...
         [AuthorizationRequired]
         [HttpPost]
         public HttpResponseMessage SignOut([FromBody] Guid userId)

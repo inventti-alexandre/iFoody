@@ -13,12 +13,17 @@
   
   <span class="fa-stack">
     <i class="fa fa-circle fa-stack-2x" ></i>
-    <i class="fa number fa-stack-1x">{{ rating }}</i>
+    <ng-template [ngIf]="rating !== null">
+      <i class="fa number fa-stack-1x">{{ rating | number: '1.1-1' }}</i>
+    </ng-template>
+    <ng-template [ngIf]="rating == null">
+      <i class="fa number fa-stack-1x">00</i>
+    </ng-template>
   </span>
 
-  <div *ngIf="ratingNumber > 0" class="ratingNumber">
+  <div class="ratingCount">
     <a href="/">
-     &nbsp;&nbsp; {{ ratingNumber }} đánh giá
+     &nbsp;&nbsp; {{ ratingCount }} đánh giá
     </a>
   </div>
 </div>

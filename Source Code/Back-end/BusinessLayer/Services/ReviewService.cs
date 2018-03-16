@@ -20,6 +20,26 @@ namespace BusinessLayer.Services
             _unitOfWork = unitOfWork;
         }
 
+        // Get All Reviews
+        public IEnumerable<ReviewBusinessEntity> GetAllReviews()
+        {
+            try
+            {
+                var reviews = _unitOfWork.Reviews.GetAll().ToList();
+                if (reviews.Any())
+                {
+                    Mapper.CreateMap<Review, ReviewBusinessEntity>();
+                    var reviewModel = Mapper.Map<List<Review>, List<ReviewBusinessEntity>>(reviews);
+                    return reviewModel;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
         // Get Review from Product Id
         public IEnumerable<ReviewDto> GetReviews(Guid id)
         {
@@ -92,7 +112,6 @@ namespace BusinessLayer.Services
                     var newReviewModel = Mapper.Map<ReviewBusinessEntity, Review>(review);
 
                     _unitOfWork.Reviews.Insert(newReviewModel);
-
                     _unitOfWork.Complete();
                     scope.Complete();
 

@@ -27,6 +27,9 @@ namespace BusinessLayer.IServices
         // Update Store 
         bool UpdateStore(StoreBusinessEntity storeEntity);
 
+        // Update RatingCount Property
+        bool UpdateRatingProperty(Guid storeId, int newRating);
+
         // Delete Store by Id
         bool DeleteStore(Guid? id);
 

@@ -46,6 +46,28 @@ namespace BusinessLayer.Services
                 return null;
             }
         }
+
+        // Tuan made
+        // Get All Products - without ProductDto
+        public IEnumerable<ProductBusinessEntity> GetAllProductsWithoutDto()
+        {
+            try
+            {
+                var products = _unitOfWork.Products.GetAll().ToList();
+                if (products.Any())
+                {
+                    Mapper.CreateMap<Product, ProductBusinessEntity>();
+                    var productModel = Mapper.Map<List<Product>, List<ProductBusinessEntity>>(products);
+                    return productModel;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
         // Get Product By Id
         public ProductDto GetProductById(Guid productId)
         {
@@ -217,6 +239,42 @@ namespace BusinessLayer.Services
                 }
             }
             return success;
+        }
+
+        // Tuan made
+        // Update RatingCount Property
+        public bool UpdateRatingProperty(Guid productId, int newRating)
+        {
+            try
+            {
+                using (var scope = new TransactionScope())
+                {
+                    if (_unitOfWork.Products.Exists(productId))
+                    {
+
+                        var product = _unitOfWork.Products.GetById(productId);
+
+                        if (product.RatingCount == null)
+                        {
+                            product.Rating = 0.0;
+                            product.RatingCount = 0;
+                        }
+
+                        product.Rating = (product.Rating * product.RatingCount + newRating) / (product.RatingCount + 1);
+                        product.RatingCount = product.RatingCount.Value + 1;
+
+                        _unitOfWork.Products.Update(product);
+                        _unitOfWork.Complete();
+                        scope.Complete();
+                        return true;
+                    };
+                }
+                return false;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
 
         public IEnumerable<ImageBusinessEntity> GetAllImageByProductId(Guid productId)

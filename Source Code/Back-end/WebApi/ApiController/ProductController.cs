@@ -4,7 +4,6 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
@@ -42,13 +41,35 @@ namespace WebApi.ApiController
                 return NotFound();
             }
         }
-        // GET api/product/?page=?&count={?}
+
+        // Tuan made
+        // GET api/getAllProductsWithoutDto
         [HttpGet]
-        public IHttpActionResult Get(int page, int ?count)
+        [Route("api/getAllProductsWithoutDto")]
+        public IHttpActionResult GetAllProductsWithoutDto()
         {
             try
             {
-                var products = _productService.PagingAllProducts(page,count);
+                var products = _productService.GetAllProductsWithoutDto();
+                if (products == null)
+                {
+                    return NotFound(); // Returns a NotFoundResult
+                }
+                return Ok(products);  // Returns an OkNegotiatedContentResult
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+        }
+
+        // GET api/product/?page=?&count={?}
+        [HttpGet]
+        public IHttpActionResult Get(int page, int? count)
+        {
+            try
+            {
+                var products = _productService.PagingAllProducts(page, count);
                 if (products == null)
                 {
                     return NotFound(); // Returns a NotFoundResult
@@ -62,11 +83,11 @@ namespace WebApi.ApiController
         }
         // GET api/product/?categoryId=?&page=?&count={?}
         [HttpGet]
-        public IHttpActionResult GetProductByCategoryPaging(Guid categoryId,int page, int? count)
+        public IHttpActionResult GetProductByCategoryPaging(Guid categoryId, int page, int? count)
         {
             try
             {
-                var products = _productService.PagingAllProductsByCategory(categoryId,page, count);
+                var products = _productService.PagingAllProductsByCategory(categoryId, page, count);
                 if (products == null)
                 {
                     return NotFound(); // Returns a NotFoundResult
@@ -79,7 +100,7 @@ namespace WebApi.ApiController
             }
         }
         // GET api/product/?categoryId=
-        [HttpGet]     
+        [HttpGet]
         public IHttpActionResult GetProductByCategory(Guid categoryId)
         {
             try
@@ -98,7 +119,7 @@ namespace WebApi.ApiController
         }
 
         // GET api/product/?id=
-        [HttpGet]   
+        [HttpGet]
         public IHttpActionResult Get(Guid id)
         {
             try
@@ -159,6 +180,32 @@ namespace WebApi.ApiController
                 return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Got Exception");
             }
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No Review found for this Product");
+        }
+
+        // Tuan made
+        // GET api/user/review
+        [HttpGet]
+        [Route("api/product/review")]
+        public HttpResponseMessage GetReviews()
+        {
+            try
+            {
+                var reviews = _reviewService.GetAllReviews();
+                if (reviews != null)
+                {
+                    var reviewsEntities = reviews.ToList();
+                    if (reviewsEntities.Any())
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, reviewsEntities);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Got Exception");
+            }
+
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Reviews not found");
         }
 
         //POST api/product

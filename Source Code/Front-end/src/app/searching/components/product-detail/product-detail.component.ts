@@ -9,10 +9,12 @@ import * as apiUrl from '../../../constant/apiUrl';
   styleUrls: ['./product-detail.component.scss']
 })
 export class ProductDetailComponent implements OnInit {
+  
   productId;
   productModel: any;
   categoryId: string;
   reviews: any[];
+  reviewsCount: number;
   userIdKey: string;
   isFavorited = false;
   favoriteId: string;
@@ -36,10 +38,10 @@ export class ProductDetailComponent implements OnInit {
 
     this._productService.GetProductById(this.productId)
     .subscribe((data: Response) => {
-      console.log(data);
       this.productModel = data; 
+      console.log('productModel ', this.productModel);
       this.categoryId = this.productModel.category.id;
-      console.log( this.categoryId);
+      console.log('categoryId', this.categoryId);
     });
 
     // get ReviewId array from Product
@@ -47,7 +49,7 @@ export class ProductDetailComponent implements OnInit {
         .subscribe(data => {
           console.log("GetReviewListbyProductId works");
           this.reviews = data;
-          console.log(this.reviews);
+          console.log('review: ',this.reviews);
         });
     
     // Product is Favorited or not
@@ -56,7 +58,7 @@ export class ProductDetailComponent implements OnInit {
             response.forEach(element => {
               if(element.productId === this.productId) {
                 this.favoriteId = element.id;
-                console.log(element);
+                console.log('favoriteList: ', element);
                 // let Component know Change of properties and update. Same with ChangeDetectorRef
                 setTimeout( () => this.isFavorited = true, 0); 
                 return;

@@ -23,13 +23,20 @@ namespace DataModel.Repository
         // Update HasStore Property
         public bool UpdateHasStoreProperty(Guid id)
         {
-            var currentUser = _iFoodyContext.Users.FirstOrDefault(u => u.Id == id);
-            if (currentUser != null)
+            try
             {
-                currentUser.HasStore = true;
-                return true;
+                var currentUser = _iFoodyContext.Users.FirstOrDefault(u => u.Id == id);
+                if (currentUser != null)
+                {
+                    currentUser.HasStore = true;
+                    return true;
+                }
+                return false;
             }
-            return false;
+            catch (Exception e)
+            {
+                return false;
+            }
         }
     }
 }

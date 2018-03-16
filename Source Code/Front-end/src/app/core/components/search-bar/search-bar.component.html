@@ -23,8 +23,7 @@
   </div>
 
 
-  <input [(ngModel)]="area" type="search" class="form-control searchBar__byLocation" name="area" placeholder="Chọn khu vực"
-    (click)="isAreaCollapsed = !isAreaCollapsed">
+  <input [(ngModel)]="area" type="search" class="form-control searchBar__byLocation" name="area" placeholder="Chọn khu vực">
 
   <a [routerLink]="['/search']" (click)="setSearchQueryParam()">
     <small><span class="glyphicon glyphicon-search"></span></small>

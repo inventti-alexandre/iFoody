@@ -16,9 +16,29 @@ namespace WebApi.ApiController
             _storeService = storeService;
         }
 
-        // GET api/product
+        // GET All api/store
         [HttpGet]
         [Route("")]
+        public IHttpActionResult Get()
+        {
+            try
+            {
+                var store = _storeService.GetAllStore();
+                if (store == null)
+                {
+                    return NotFound(); // Returns a NotFoundResult
+                }
+                return Ok(store);  // Returns an OkNegotiatedContentResult
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+        }
+
+        // GET api/store/{id}
+        [HttpGet]
+        [Route("{id}")]
         public IHttpActionResult GetStoreByUserId(Guid userId)
         {
             try

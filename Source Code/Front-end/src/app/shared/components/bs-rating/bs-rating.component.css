@@ -41,12 +41,12 @@ span[class^="fa-"] {
   color: #ff0005;
 }
 
-.ratingNumber {
+.ratingCount {
   font-size: 0.8em;
   margin-top: -11px;
   transform: scale(0.8, 0.8);
 }
 
-.ratingNumber a:hover {
+.ratingCount a:hover {
   text-decoration: none;
 }

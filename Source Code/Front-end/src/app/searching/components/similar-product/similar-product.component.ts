@@ -15,14 +15,14 @@ export class SimilarProductComponent implements OnInit {
 
   constructor(private _productService: ProductService) { 
     console.log("similarProduct component works");
-    console.log(this.categoryId);
+    console.log('categoryId', this.categoryId);
   }
 
   ngOnInit() {
     this._productService.GetProductByCategoryId(this.categoryId)
                       .subscribe(data => {
                         console.log("similar");
-                        console.log(data);
+                        // console.log(data);
                         this.similarProducts = data;
                         if(this.similarProducts.length > 0) {
                           let filterProductId = this.productId;
@@ -32,7 +32,7 @@ export class SimilarProductComponent implements OnInit {
                             }
                             return true;
                           }); 
-                          console.log(this.similarProducts);
+                          console.log('similarProducts', this.similarProducts);
                           
                           if (this.similarProducts.length < 20) {
                             this.similarProducts.slice(0,this.similarProducts.length);

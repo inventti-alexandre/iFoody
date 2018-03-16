@@ -69,6 +69,7 @@
           <Property Name="CategoryId" Type="uniqueidentifier" />
           <Property Name="StoreId" Type="uniqueidentifier" />
           <Property Name="Rating" Type="float" />
+          <Property Name="RatingCount" Type="int" />
         </EntityType>
         <EntityType Name="Reviews">
           <Key>
@@ -108,6 +109,7 @@
           <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CategoryId" Type="uniqueidentifier" />
           <Property Name="UserId" Type="uniqueidentifier" />
+          <Property Name="RatingCount" Type="int" />
         </EntityType>
         <EntityType Name="Tokens">
           <Key>
@@ -558,6 +560,7 @@
           <Property Name="CategoryId" Type="Guid" />
           <Property Name="StoreId" Type="Guid" />
           <Property Name="Rating" Type="Double" />
+          <Property Name="RatingCount" Type="Int32" />
           <NavigationProperty Name="Category" Relationship="Self.FK_Products_Categories" FromRole="Products" ToRole="Categories" />
           <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_Products" FromRole="Products" ToRole="Comments" />
           <NavigationProperty Name="FavoriteLists" Relationship="Self.FK_FavoriteLists_Products" FromRole="Products" ToRole="FavoriteLists" />
@@ -608,6 +611,7 @@
           <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="CategoryId" Type="Guid" />
           <Property Name="UserId" Type="Guid" />
+          <Property Name="RatingCount" Type="Int32" />
           <NavigationProperty Name="Category" Relationship="Self.FK_Stores_Categories" FromRole="Stores" ToRole="Categories" />
           <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_Stores" FromRole="Stores" ToRole="Comments" />
           <NavigationProperty Name="FavoriteLists" Relationship="Self.FK_FavoriteLists_Stores" FromRole="Stores" ToRole="FavoriteLists" />
@@ -1067,6 +1071,7 @@
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="StoreId" ColumnName="StoreId" />
                 <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="RatingCount" ColumnName="RatingCount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1109,6 +1114,7 @@
                 <ScalarProperty Name="City" ColumnName="City" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="RatingCount" ColumnName="RatingCount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
