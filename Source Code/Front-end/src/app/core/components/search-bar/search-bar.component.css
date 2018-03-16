@@ -9,13 +9,13 @@
 }
 
 .searchBar__byName {
+  border-radius: 8px 0px 0px 8px !important;
   width: 60% !important;
 }
 
 .searchBar__byLocation {
-  border-top-right-radius: 4px !important;
-  border-bottom-right-radius: 4px !important;
   width: 40% !important;
+  border-radius: 0px 8px 8px 0px !important;
 }
 
 .searchBar span {
@@ -51,28 +51,18 @@
   color: grey;
 }
 
-.searchBar .form-control:first-child {
-  border-radius: 8px 0px 0px 8px !important;
+.searchBar #searchNameBarParents li {
+  list-style-type: none;
+  border-bottom: 1px dashed #e5e5e5;
+  margin-top: 5px;
 }
 
-.searchBar .form-control:nth-child(2) {
-  border-radius: 0px 8px 8px 0px !important;
-}
-
-.searchBar .dropdown-menu {
-  top: 30px !important;
-  width: 100%;
-  background-color: #fcfcfc;
-  color: #aaa;
-  font-size: 11px;
-}
-
-.searchBar .dropdown-menu li.advertising a {
+.searchBar .advertising a {
   background: white;
   border-bottom: #f0f0f0 1px solid;
 }
 
-.searchBar .dropdown-menu li.advertising a:hover {
+.searchBar .advertising a:hover {
   background: #faffad;
 }
 

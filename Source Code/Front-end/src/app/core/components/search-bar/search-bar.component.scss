@@ -6,12 +6,14 @@
     margin-top: 15px;
   }
   &__byName {
+    border-radius: 8px 0px 0px 8px !important;
     width: 60% !important;
   }
   &__byLocation {
-    border-top-right-radius: 4px !important;
-    border-bottom-right-radius: 4px !important;
+   // border-top-right-radius: 4px !important;
+    //border-bottom-right-radius: 4px !important;
     width: 40% !important;
+    border-radius: 0px 8px 8px 0px !important;
   }
   span {
     font-size: 1.8em;
@@ -45,29 +47,34 @@
     //font-weight: bold;
   }
 
-  .form-control:first-child {
+  // .form-control:first-child {
     // transform: scaleY(1.3) !important;
     // transform: scaleX(1.15) !important;
-    border-radius: 8px 0px 0px 8px !important;
-  }
+    // border-radius: 8px 0px 0px 8px !important;
+  // }
 
-  .form-control:nth-child(2) {
+  // .form-control:nth-child(2) {
     // transform: scaleY(1.3) !important;
     // transform: scaleX(1.15) !important;
-    border-radius: 0px 8px 8px 0px !important;
+    // border-radius: 0px 8px 8px 0px !important;
+  // }
+  // .dropdown-menu {
+  //   top: 30px !important;
+  //   width: 100%;
+  //   background-color: #fcfcfc;
+  //   color: #aaa;
+  //   font-size: 11px;
+  // }
+  #searchNameBarParents li {
+    list-style-type: none;
+    border-bottom: 1px dashed #e5e5e5;
+    margin-top: 5px;
   }
-  .dropdown-menu {
-    top: 30px !important;
-    width: 100%;
-    background-color: #fcfcfc;
-    color: #aaa;
-    font-size: 11px;
-  }
-  .dropdown-menu li.advertising a {
+  .advertising a {
     background: white;
     border-bottom: #f0f0f0 1px solid;
   }
-  .dropdown-menu li.advertising a:hover {
+  .advertising a:hover {
     background: #faffad;
   }
   .suggestion-box-item-left {

@@ -1,10 +1,35 @@
-<div class=" searchBar input-group" id="searchBarParents">
-  <div class="dropdown">
-    <input [(ngModel)]="name" class="form-control searchBar__byName dropdown-toggle" name="name" placeholder="Món ăn, địa điểm, loại hình ..."
-      type="search" data-toggle="dropdown" />
+<div class="searchBar input-group" id="searchBarParents">
+  <div class="" id="searchNameBarParents">
+    <input [(ngModel)]="name" class="form-control searchBar__byName " name="name" placeholder="Món ăn, địa điểm, loại hình ..."
+    autocomplete="false" />
       <!-- GỢI Ý SẢN PHẨM -->
-    <ul class="dropdown-menu ">
-      <div>Gợi ý tìm kiếm</div>
+    <div class="parents-well">
+      <div class="well well-lg well-search-name">
+        <div class="row well-search-name">
+          <ul>
+              <li>Gợi ý tìm kiếm</li>
+              <li class="advertising col-xs-12 col-sm-12 col-md-12" *ngFor="let result of [1,2,3,4]">
+                  <a href="https://www.foody.vn/ho-chi-minh/yume-sushi-restaurant" target="blank" class="suggestion-box-item" title="tên store">
+                    <div class="suggestion-box-item-left">
+                      <img src="https://images.foody.vn/res/g68/674961/prof/s128x80/foody-mobile-1-jpg.jpg" alt="Yume Sushi Restaurant" title="Yume Sushi Restaurant">
+                    </div>
+                    <div class="suggestion-box-item-right">
+                      <div class="suggestion-box-item-right-res-name">Yume Sushi Restaurant</div>
+                      <div class="suggestion-box-item-right-res-descr" style="white-space: normal;">Giảm&nbsp;10% đặt bàn qua TableNow&nbsp;
+                      </div>
+                    </div>
+                    <div class="suggest-opentime"><span class="suggest-online"></span><span class="suggest-opentime-text">Đang mở cửa</span></div>
+                    <div class="clear"></div>
+                  </a>
+                </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+      <!-- //////////////// -->
+      
+
+        <!-- <div>Gợi ý tìm kiếm</div>
       <li class="advertising" *ngFor="let result of [1,2,3,4]">
         <a href="https://www.foody.vn/ho-chi-minh/yume-sushi-restaurant" target="blank" class="suggestion-box-item" title="tên store">
           <div class="suggestion-box-item-left">
@@ -18,26 +43,25 @@
           <div class="suggest-opentime"><span class="suggest-online"></span><span class="suggest-opentime-text">Đang mở cửa</span></div>
           <div class="clear"></div>
         </a>
-      </li>
-    </ul>
+      </li> -->
   </div>
 
+  <div id="searchLocationBarParents">
+    <input [(ngModel)]="area" type="search" class="form-control searchBar__byLocation" autocomplete="false"  name="area" placeholder="Chọn khu vực">
 
-  <input [(ngModel)]="area" type="search" class="form-control searchBar__byLocation" name="area" placeholder="Chọn khu vực">
-
-  <a [routerLink]="['/search']" (click)="setSearchQueryParam()">
-    <small><span class="glyphicon glyphicon-search"></span></small>
-  </a>
-  <!-- ///////////////////// -->
-  <div  class="parents-well">
-    <div class="well well-lg well-search-area">
-      <div class="row well-search-area">
-        <mat-checkbox *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12]" class="col-xs-12 col-sm-6 col-md-6">Quận {{i}}</mat-checkbox>
-        <mat-checkbox *ngFor="let district of districts" class="col-xs-12 col-sm-6 col-md-6">Quận {{district}}</mat-checkbox>
+    <a [routerLink]="['/search']" (click)="setSearchQueryParam()">
+      <small><span class="glyphicon glyphicon-search"></span></small>
+    </a>
+    <!-- ///////////////////// -->
+    <div  class="parents-well">
+      <div class="well well-lg well-search-area">
+        <div class="row well-search-area">
+          <mat-checkbox *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12]" class="col-xs-12 col-sm-6 col-md-6">Quận {{i}}</mat-checkbox>
+          <mat-checkbox *ngFor="let district of districts" class="col-xs-12 col-sm-6 col-md-6">Quận {{district}}</mat-checkbox>
+        </div>
       </div>
     </div>
   </div>
-
 
 
 </div>

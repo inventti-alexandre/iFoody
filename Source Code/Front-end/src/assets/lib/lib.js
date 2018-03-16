@@ -1,5 +1,4 @@
 // Modal Login, SignUp
-console.log("Lib.JS")
 function modalOpen() {
     $document.find('body').addClass('modal-open');
 }
@@ -14,44 +13,70 @@ var searchObject = (function() {
     hide: function() {
       $('.well-search-type').hide();
       $('.well-search-area').hide();
+      $('.well-search-name').hide();
     }
   }
 })(searchObject || {})
-
+console.log("lib.js");
 // For Collapse Search with Checkbox 
 $(document).click(function(event) { 
-  console.log("click!!!!!");
+  console.log("111");
   if($(event.target).parents('.parents-well').length > 0) {
+  console.log("222");
     //event.stopPropagation();
+    
     return;
   }
   // For Search Type
   if($(event.target).closest('#searchTypeParents').length != 0) {
-    console.log('well-search-type display: ', $('.well-search-type').css('display'));
+  console.log("333");
     if($('.well-search-type').css('display') == 'none' || $('.well-search-type').css('display') == '') {
-      console.log('well-search-type: ', $('.well-search-type'));
       $('.well-search-type').show();
+  console.log("444");
+      
     }
     else {
+      console.log("555");
       $('.well-search-type').hide();
     }
   } 
   if($(event.target).closest('#searchTypeParents').length  == 0 ) {
+    console.log("666");
     $('.well-search-type').hide();
   }
-  //For Search Bar
-  if($(event.target).closest('#searchBarParents').length != 0 && !$(event.target).is(".glyphicon-search")) {
+
+  //For Search Bar Area (Location)
+  if($(event.target).closest('#searchLocationBarParents').length != 0 && !$(event.target).is(".glyphicon-search")) {
     if($('.well-search-area').css('display') == 'none' || $('.well-search-area').css('display') == '' ) {
-      if(!$(event.target).is(".searchBar__byName")) {
+      // if(!$(event.target).is(".searchBar__byName")) {
+        console.log("test");
         $('.well-search-area').show();
-      }
+      // }
     }
     else {
       $('.well-search-area').hide();
     }
   } 
-  if($(event.target).closest('#searchBarParents').length == 0) {
+  if($(event.target).closest('#searchLocationBarParents').length == 0) {
+    console.log("hide!!!");
     $('.well-search-area').hide();
+  }
+
+  // For Search Bar Name
+  if($(event.target).closest('#searchNameBarParents').length != 0 && !$(event.target).is(".glyphicon-search")) {
+    if($('.well-search-name').css('display') == 'none' || $('.well-search-name').css('display') == '' ) {
+      // if(!$(event.target).is(".searchBar__byName")) {
+        console.log("test Name");
+        $('.well-search-name').show();
+      // }
+    }
+    else {
+      $('.well-search-name').hide();
+    }
+  } 
+  if($(event.target).closest('#searchNameBarParents').length == 0) {
+    console.log("hide Name!!!");
+    $('.well-search-name').hide();
   }
 });
 
