@@ -15,7 +15,6 @@ declare var ratingObject1: any;
 export class ReviewComponent implements OnInit, AfterViewChecked{
   rerender = false; // Refresh component when submit Review
   @Input() productId: string;
-  @Input() rating: number;
   reviewsModel: any[];
   reviewQuantity: number;
   currentUserId: string;
@@ -51,7 +50,6 @@ export class ReviewComponent implements OnInit, AfterViewChecked{
     
   }
   ngAfterViewChecked() {
-    console.log("afterViewInit");
     ratingObject1.removeBorderLineReview();
   }
 

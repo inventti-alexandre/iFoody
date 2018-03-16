@@ -1,8 +1,7 @@
-﻿using System;
+﻿using DataModel.IRepository;
+using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
-using DataModel.IRepository;
 
 namespace DataModel.Repository
 {
@@ -36,14 +35,15 @@ namespace DataModel.Repository
         //Search by product name
         public IEnumerable<Product> GetProductsByName(string name)
         {
-            string sql = "select * from Products where FREETEXT(Name,'\"" + name + "\"')";            
-            return _iFoodyContext.Database.SqlQuery<Product>(sql).AsQueryable();          
+            string sql = "select * from Products where FREETEXT(Name,'\"" + name + "\"')";
+            return _iFoodyContext.Database.SqlQuery<Product>(sql).AsQueryable();
         }
+
         //Search by category name
         public IEnumerable<Product> SearchByCategoryName(string categoryName)
         {
             IEnumerable<Guid> listCategoriesId = _iFoodyContext.Categories.Where(x => x.Name.Contains(categoryName))
-                                                                          .Select(x=>x.Id);
+                                                                          .Select(x => x.Id);
             if (listCategoriesId.Any())
             {
                 var products =
@@ -75,5 +75,7 @@ namespace DataModel.Repository
                 return null;
             }
         }
+
+
     }
 }

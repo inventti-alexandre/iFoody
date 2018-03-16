@@ -18,5 +18,6 @@ namespace BusinessEntities
         public string City { get; set; }
         public Guid? CategoryId { get; set; }
         public Guid? UserId { get; set; }
+        public int? RatingCount { get; set; }
     }
 }

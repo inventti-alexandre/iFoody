@@ -30,6 +30,7 @@ namespace DataModel
         public Nullable<System.Guid> CategoryId { get; set; }
         public Nullable<System.Guid> StoreId { get; set; }
         public Nullable<double> Rating { get; set; }
+        public Nullable<int> RatingCount { get; set; }
     
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

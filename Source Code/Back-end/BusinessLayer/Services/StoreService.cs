@@ -246,6 +246,42 @@ namespace BusinessLayer.Services
             return false;
         }
 
+        // Tuan made
+        // Update RatingCount Property
+        public bool UpdateRatingProperty(Guid storeId, int newRating)
+        {
+            try
+            {
+                using (var scope = new TransactionScope())
+                {
+                    if (_unitOfWork.Stores.Exists(storeId))
+                    {
+
+                        var store = _unitOfWork.Stores.GetById(storeId);
+
+                        if (store.RatingCount == null)
+                        {
+                            store.Rating = 0.0;
+                            store.RatingCount = 0;
+                        }
+
+                        store.Rating = (store.Rating * store.RatingCount + newRating) / (store.RatingCount + 1);
+                        store.RatingCount = store.RatingCount.Value + 1;
+
+                        _unitOfWork.Stores.Update(store);
+                        _unitOfWork.Complete();
+                        scope.Complete();
+                        return true;
+                    };
+                }
+                return false;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
         // Delete Store by Id
         public bool DeleteStore(Guid? id)
         {

@@ -7,10 +7,12 @@ declare var ratingObject: any;
   styleUrls: ['./bs-rating.component.scss']
 })
 export class BsRatingComponent implements OnInit, AfterViewInit {
+ 
+  
   @Input('rating') rating;  
+  
+  @Input('ratingCount') ratingCount: number;  
   public max = 5;
-  // public currentRate = 3.4;
-  ratingNumber: number;
   public isReadonly = true;
   isGood: boolean; // for rating which greater than 4.5
   isFair: boolean; // "fair" for rating which greater than 4.0
@@ -20,17 +22,21 @@ export class BsRatingComponent implements OnInit, AfterViewInit {
   public overStar:number;
   // public percent:number;
   constructor (private elementRef: ElementRef) {
-    // this.rating = 3.4;
-
+    // this.ratingCount = 0;
     this.isGood = false;
     this.isFair = false;
     this.isMedium = false;
     this.isBad = false;
-    this.ratingNumber = 33;
     this.getStatus();
   }
 
   ngOnInit() {
+    this.ratingCount = (this.ratingCount > 0) ? this.ratingCount : 0;
+    console.log('ngOnInit ratingCount', this.ratingCount);
+    console.log("ngOnInit ratingNumber", this.rating);
+    if(this.rating == null) {
+      this.rating = "--";
+    }
   }
   
   ngAfterViewInit() {

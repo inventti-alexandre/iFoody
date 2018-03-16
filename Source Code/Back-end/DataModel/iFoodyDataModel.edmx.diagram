@@ -4,19 +4,19 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="cfc037e566e5479989f5c945f18b0cc7" Name="Diagram1" ZoomLevel="101">
-        <EntityTypeShape EntityType="iFoodyModel.Category" Width="1.5" PointX="3" PointY="22.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="iFoodyModel.Comment" Width="1.5" PointX="3" PointY="11.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="iFoodyModel.FavoriteList" Width="1.5" PointX="6" PointY="12" IsExpanded="true" />
-        <EntityTypeShape EntityType="iFoodyModel.Image" Width="1.5" PointX="3.75" PointY="4" IsExpanded="true" />
+      <Diagram DiagramId="09b2a4ae5a1a4a97a26cbf1be10b6bf2" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="iFoodyModel.Category" Width="1.5" PointX="3" PointY="26.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="iFoodyModel.Comment" Width="1.5" PointX="3" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="iFoodyModel.FavoriteList" Width="1.5" PointX="6" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="iFoodyModel.Image" Width="1.5" PointX="3.75" PointY="4.125" IsExpanded="true" />
         <EntityTypeShape EntityType="iFoodyModel.Location" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="iFoodyModel.ProductImage" Width="1.5" PointX="7.5" PointY="20.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="iFoodyModel.ProductImage" Width="1.5" PointX="7.5" PointY="20.25" IsExpanded="true" />
         <EntityTypeShape EntityType="iFoodyModel.Product" Width="1.5" PointX="5.25" PointY="16.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="iFoodyModel.Review" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="iFoodyModel.StoreImage" Width="1.5" PointX="8.25" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="iFoodyModel.Review" Width="1.5" PointX="3" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="iFoodyModel.StoreImage" Width="1.5" PointX="8.25" PointY="17.25" IsExpanded="true" />
         <EntityTypeShape EntityType="iFoodyModel.Store" Width="1.5" PointX="3" PointY="15.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="iFoodyModel.Token" Width="1.5" PointX="3" PointY="28.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="iFoodyModel.UserImage" Width="1.5" PointX="6" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="iFoodyModel.Token" Width="1.5" PointX="3" PointY="22.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="iFoodyModel.UserImage" Width="1.5" PointX="6" PointY="9.25" IsExpanded="true" />
         <EntityTypeShape EntityType="iFoodyModel.User" Width="1.5" PointX="0.75" PointY="11.25" IsExpanded="true" />
         <AssociationConnector Association="iFoodyModel.FK_Products_Categories" ManuallyRouted="false" />
         <AssociationConnector Association="iFoodyModel.FK_Stores_Categories" ManuallyRouted="false" />

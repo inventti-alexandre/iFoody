@@ -1,18 +1,20 @@
 ﻿using BusinessEntities;
 using BusinessLayer.DTOs;
+using DataModel;
 using System;
 using System.Collections.Generic;
-using DataModel;
 
 namespace BusinessLayer.IServices
 {
     public interface IProductService
     {
         IEnumerable<ProductDto> GetAllProducts();
+        IEnumerable<ProductBusinessEntity> GetAllProductsWithoutDto();
         ProductDto GetProductById(Guid productId);
         IEnumerable<ProductDto> GetProductsByCategory(Guid categoryId);
         Guid? CreateProduct(ProductBusinessEntity productEntity);
         bool UpdateProduct(ProductBusinessEntity productEntity);
+        bool UpdateRatingProperty(Guid productId, int newRating);
         bool DeleteProduct(Guid productId);
         IEnumerable<ProductDto> GetProductByCategoryId(Guid categoryId);
         IEnumerable<ImageBusinessEntity> GetAllImageByProductId(Guid productId);

@@ -1,9 +1,8 @@
 import { StoreItemComponent } from './components/store-item/store-item.component';
-import { PaginationModule } from 'ngx-bootstrap/ng2-bootstrap';
+import { PaginationModule } from 'ngx-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RatingModule } from 'ngx-bootstrap/rating';
-// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AuthService } from './services/auth.service';

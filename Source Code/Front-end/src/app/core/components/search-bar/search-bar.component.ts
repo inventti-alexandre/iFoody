@@ -1,3 +1,4 @@
+import { imageDefault } from './../../../constant/global';
 import { ActivatedRoute, Params, Route, Router } from "@angular/router";
 import { Component, OnInit, Input } from "@angular/core";
 import { SearchService } from "./../../../shared/services/search.service";
@@ -18,6 +19,7 @@ export class SearchBarComponent implements OnInit {
   suggestionList: any[];
   userId: string;
   defaultSuggestionCount;
+  imageDefault:string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -43,6 +45,7 @@ export class SearchBarComponent implements OnInit {
     this.suggestionList = [];
     this.userId = _userService.userId || "";
     this.defaultSuggestionCount = 5;
+    this.imageDefault = imageDefault;
   }
   getSuggestionList=()=>{
     if(this.userId!==""){

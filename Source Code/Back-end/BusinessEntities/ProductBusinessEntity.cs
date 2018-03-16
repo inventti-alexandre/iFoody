@@ -12,6 +12,7 @@ namespace BusinessEntities
         public Guid? CategoryId { get; set; }
         public Guid? StoreId { get; set; }
         public double? Rating { get; set; }
+        public int? RatingCount { get; set; }
 
     }
 }

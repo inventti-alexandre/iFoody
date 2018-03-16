@@ -9,7 +9,7 @@
         <li class="advertising" *ngFor="let result of suggestionList[0].results">
           <a [routerLink]="['/product/'+ result.product.id]" target="blank" class="suggestion-box-item" title="result.product.name">
             <div class="suggestion-box-item-left">
-              <img src={{result.images[0].path}} alt="result.product.name" title="result.product.name">
+              <img [src]="result.images.length>0?result.images[0].path:imageDefault" alt="result.product.name" title="result.product.name">
             </div>
             <div class="suggestion-box-item-right">
               <div class="suggestion-box-item-right-res-name">{{result.product.name}}</div>
