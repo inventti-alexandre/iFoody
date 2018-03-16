@@ -20,7 +20,7 @@ export class RepresentativeProductComponent implements OnInit {
   constructor(private _productService: ProductService, private _categoryService: CategoryService) {
     this.products = [];
     this.initPage = 1;
-    this.initCount = 6;
+    this.initCount = 8;
   }
   ngOnInit() {
     // get all cetegory:
@@ -69,5 +69,5 @@ export class RepresentativeProductComponent implements OnInit {
       this.getNextPage(id,currentPage+1);
     }
   }
-  
+
 }

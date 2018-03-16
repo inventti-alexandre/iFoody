@@ -1,7 +1,7 @@
 <div class="product-item col-xs-12 col-sm-12" *ngIf="productModel !== undefined && productModel != null">
   <div class="image row">
     <a [routerLink]="['/product', productId]" (click)="getProductDetail()">
-      <img [src]="productModel.images[0]?.path" alt="Image Product">
+      <img [src]="productModel.images.length>0?productModel.images[0].path:imageDefault" alt="Image Product">
     </a>
   </div>
 

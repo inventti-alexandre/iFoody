@@ -1,3 +1,4 @@
+import { imageDefault } from './../../../constant/global';
 import { UserService } from './../../../shared/services/user.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { ProductService } from './../../../shared/services/product.service';
@@ -9,7 +10,7 @@ import * as apiUrl from '../../../constant/apiUrl';
   styleUrls: ['./product-detail.component.scss']
 })
 export class ProductDetailComponent implements OnInit {
-  
+
   productId;
   productModel: any;
   categoryId: string;
@@ -18,9 +19,10 @@ export class ProductDetailComponent implements OnInit {
   userIdKey: string;
   isFavorited = false;
   favoriteId: string;
+  imageDefault: string;
 
-  constructor(private _productService: ProductService, 
-      private router: Router, 
+  constructor(private _productService: ProductService,
+      private router: Router,
       private route: ActivatedRoute,
       private _userService: UserService,
       private elRef:ElementRef,
@@ -28,6 +30,7 @@ export class ProductDetailComponent implements OnInit {
       private ref:ChangeDetectorRef
     ) {
         this.userIdKey = apiUrl.UserId;
+        this.imageDefault = imageDefault;
    }
 
   ngOnInit() {
@@ -38,7 +41,7 @@ export class ProductDetailComponent implements OnInit {
 
     this._productService.GetProductById(this.productId)
     .subscribe((data: Response) => {
-      this.productModel = data; 
+      this.productModel = data;
       console.log('productModel ', this.productModel);
       this.categoryId = this.productModel.category.id;
       console.log('categoryId', this.categoryId);
@@ -51,7 +54,7 @@ export class ProductDetailComponent implements OnInit {
           this.reviews = data;
           console.log('review: ',this.reviews);
         });
-    
+
     // Product is Favorited or not
     this._userService.getFavoriteList(localStorage.getItem(apiUrl.UserId))
         .subscribe(response => {
@@ -60,7 +63,7 @@ export class ProductDetailComponent implements OnInit {
                 this.favoriteId = element.id;
                 console.log('favoriteList: ', element);
                 // let Component know Change of properties and update. Same with ChangeDetectorRef
-                setTimeout( () => this.isFavorited = true, 0); 
+                setTimeout( () => this.isFavorited = true, 0);
                 return;
               }
             });
@@ -87,7 +90,7 @@ export class ProductDetailComponent implements OnInit {
           setTimeout(() => this.isFavorited = false);
         });
     }
-    
+
   }
 
 }
