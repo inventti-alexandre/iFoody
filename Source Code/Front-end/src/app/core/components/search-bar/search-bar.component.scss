@@ -92,25 +92,35 @@
     white-space: normal;
 }
 .suggest-opentime {
-  color: green;
   text-transform: none;
   position: absolute;
   right: 10px;
 }
-.suggest-online {
+.suggest{
   width: 8px;
   height: 8px;
   display: inline-block;
-  background-color: #46cd0e;
   position: relative;
   border-radius: 50%;
   float: right;
   margin-top: 32%;
+  &--online {
+    background-color: #46cd0e;
+  }
+  &--offline{
+    background-color: #ccc;
+  }
 }
-.suggest-opentime-text {
+.suggest-text {
   float: right;
   margin-right: 10px;
   font-size: 11px;
+  &--opentime{
+    color: green;
+  }
+  &--closetime{
+    color: darkgoldenrod;
+  }
 }
 .clear {
   clear: both;

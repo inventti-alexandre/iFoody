@@ -103,27 +103,41 @@
 }
 
 .searchBar .suggest-opentime {
-  color: green;
   text-transform: none;
   position: absolute;
   right: 10px;
 }
 
-.searchBar .suggest-online {
+.searchBar .suggest {
   width: 8px;
   height: 8px;
   display: inline-block;
-  background-color: #46cd0e;
   position: relative;
   border-radius: 50%;
   float: right;
   margin-top: 32%;
 }
 
-.searchBar .suggest-opentime-text {
+.searchBar .suggest--online {
+  background-color: #46cd0e;
+}
+
+.searchBar .suggest--offline {
+  background-color: #ccc;
+}
+
+.searchBar .suggest-text {
   float: right;
   margin-right: 10px;
   font-size: 11px;
+}
+
+.searchBar .suggest-text--opentime {
+  color: green;
+}
+
+.searchBar .suggest-text--closetime {
+  color: darkgoldenrod;
 }
 
 .searchBar .clear {
