@@ -17,12 +17,11 @@
       <i class="fa number fa-stack-1x">{{ rating | number: '1.1-1' }}</i>
     </ng-template>
     <ng-template [ngIf]="rating == null">
-      <i class="fa number fa-stack-1x">00</i>
+      <i class="fa number fa-stack-1x">--</i>
     </ng-template>
   </span>
-
   <div class="ratingCount">
-    <a href="/">
+    <a [routerLink]="['/product', id]" (click)="getDetail()">
      &nbsp;&nbsp; {{ ratingCount }} đánh giá
     </a>
   </div>

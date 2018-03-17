@@ -12,10 +12,9 @@
           </div>
         </div>
       </div>
-
       <div class="productDetail__info col-xs-6 col-sm-6">
         <h2> {{ productModel.product.name }} <span><i class="fa fa-1x" [ngClass]="isFavorited ? 'fa-heart' : 'fa-heart-o'" (click)="addRemoveFavoriteItem($event)"></i></span></h2>
-        <bs-rating [rating]="productModel.product.rating" [ratingCount]="ratingCount"></bs-rating>
+        <bs-rating [id]="productModel.product?.id" [rating]="productModel.product.rating" [ratingCount]="productModel.product.ratingCount"></bs-rating>
         <div><span><i class="fa fa-map-marker fa-1x"></i></span> {{ productModel.store.name }} </div>
         <div><span><i class="fa fa-location-arrow fa-1x"></i></span> {{ productModel.store.address }}</div>
         <div><span><i class="fa fa-clock-o fa-1x"></i></span> {{ productModel.store.openHour }} -  {{ productModel.store.closeHour }}  </div>

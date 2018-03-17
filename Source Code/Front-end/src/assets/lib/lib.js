@@ -17,31 +17,22 @@ var searchObject = (function() {
     }
   }
 })(searchObject || {})
-console.log("lib.js");
 // For Collapse Search with Checkbox 
 $(document).click(function(event) { 
-  console.log("111");
   if($(event.target).parents('.parents-well').length > 0) {
-  console.log("222");
     //event.stopPropagation();
-    
     return;
   }
   // For Search Type
   if($(event.target).closest('#searchTypeParents').length != 0) {
-  console.log("333");
     if($('.well-search-type').css('display') == 'none' || $('.well-search-type').css('display') == '') {
       $('.well-search-type').show();
-  console.log("444");
-      
     }
     else {
-      console.log("555");
       $('.well-search-type').hide();
     }
   } 
   if($(event.target).closest('#searchTypeParents').length  == 0 ) {
-    console.log("666");
     $('.well-search-type').hide();
   }
 
@@ -49,7 +40,6 @@ $(document).click(function(event) {
   if($(event.target).closest('#searchLocationBarParents').length != 0 && !$(event.target).is(".glyphicon-search")) {
     if($('.well-search-area').css('display') == 'none' || $('.well-search-area').css('display') == '' ) {
       // if(!$(event.target).is(".searchBar__byName")) {
-        console.log("test");
         $('.well-search-area').show();
       // }
     }
@@ -58,7 +48,6 @@ $(document).click(function(event) {
     }
   } 
   if($(event.target).closest('#searchLocationBarParents').length == 0) {
-    console.log("hide!!!");
     $('.well-search-area').hide();
   }
 
@@ -66,7 +55,6 @@ $(document).click(function(event) {
   if($(event.target).closest('#searchNameBarParents').length != 0 && !$(event.target).is(".glyphicon-search")) {
     if($('.well-search-name').css('display') == 'none' || $('.well-search-name').css('display') == '' ) {
       // if(!$(event.target).is(".searchBar__byName")) {
-        console.log("test Name");
         $('.well-search-name').show();
       // }
     }
@@ -75,7 +63,6 @@ $(document).click(function(event) {
     }
   } 
   if($(event.target).closest('#searchNameBarParents').length == 0) {
-    console.log("hide Name!!!");
     $('.well-search-name').hide();
   }
 });

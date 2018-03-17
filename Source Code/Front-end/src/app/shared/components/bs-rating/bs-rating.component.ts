@@ -1,4 +1,7 @@
 import { AfterViewInit, ElementRef, Component, OnInit, Input } from '@angular/core';
+import { ProductService } from '../../services/product.service';
+import { Http } from '@angular/http';
+import { ActivatedRoute, Router } from '@angular/router';
 declare var ratingObject: any;
 
 @Component({
@@ -8,10 +11,10 @@ declare var ratingObject: any;
 })
 export class BsRatingComponent implements OnInit, AfterViewInit {
  
-  
   @Input('rating') rating;  
-  
   @Input('ratingCount') ratingCount: number;  
+  @Input('id') id: any;
+
   public max = 5;
   public isReadonly = true;
   isGood: boolean; // for rating which greater than 4.5
@@ -21,7 +24,12 @@ export class BsRatingComponent implements OnInit, AfterViewInit {
  
   public overStar:number;
   // public percent:number;
-  constructor (private elementRef: ElementRef) {
+  constructor (
+      private elementRef: ElementRef,
+      private _productService: ProductService, 
+      private _http: Http, 
+      private route: ActivatedRoute,
+      private router: Router) {
     // this.ratingCount = 0;
     this.isGood = false;
     this.isFair = false;
@@ -32,11 +40,7 @@ export class BsRatingComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.ratingCount = (this.ratingCount > 0) ? this.ratingCount : 0;
-    console.log('ngOnInit ratingCount', this.ratingCount);
-    console.log("ngOnInit ratingNumber", this.rating);
-    if(this.rating == null) {
-      this.rating = "--";
-    }
+    console.log("id: ", this.id);
   }
   
   ngAfterViewInit() {
@@ -47,7 +51,17 @@ export class BsRatingComponent implements OnInit, AfterViewInit {
     this.overStar = value;
     // this.percent = 100 * (value / this.max);
   }
- 
+
+  getDetail() {
+    console.log("getDetail works");
+    if(this.id != null) {
+      return this._productService.GetProductById(this.id.replace(/['"]+/g, ''))
+        .subscribe((data: Response) => {
+          this.router.navigate(['/product', this.id]);
+        });
+    }
+    return null;
+  }
   // public resetStar():void {
   //   this.overStar = void 0;
   // }
