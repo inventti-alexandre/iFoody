@@ -21,8 +21,8 @@ namespace DataModel.Repository
             {
                 var products =
                     _iFoodyContext.Products.Where(x => listProductsId.Contains(x.Id)).AsQueryable();
-                //                var productsFilter = products.GroupBy(x => x.Store.Id).Select(x => x.FirstOrDefault())
-                //                                             .OrderByDescending(x => x.Store.Rating).AsQueryable();
+                                          
+           
                 return products;
 
             }
@@ -49,7 +49,7 @@ namespace DataModel.Repository
                 var products =
                     _iFoodyContext.Products.Where(x => listCategoriesId.Contains(x.Category.Id)).AsQueryable();
                 var productsFilter = products.GroupBy(x => x.Store.Id).Select(x => x.FirstOrDefault())
-                                             .OrderByDescending(x => x.Store.Rating).AsQueryable();
+                                            .AsQueryable();
                 return productsFilter;
             }
             else
@@ -67,14 +67,13 @@ namespace DataModel.Repository
             {
                 var products = _iFoodyContext.Products.Where(x => listId.Contains(x.Store.Id)).AsQueryable();
                 var productsFilter = products.GroupBy(x => x.Store.Id).Select(x => x.FirstOrDefault())
-                                             .OrderByDescending(x => x.Store.Rating).AsQueryable();
+                                            .AsQueryable();
                 return productsFilter;
             }
             else
             {
                 return null;
             }
-            //            return _iFoodyContext.Database.SqlQuery<Product>(sql).ToList();
         }
 
 

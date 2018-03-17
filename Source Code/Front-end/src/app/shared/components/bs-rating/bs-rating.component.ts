@@ -40,7 +40,6 @@ export class BsRatingComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.ratingCount = (this.ratingCount > 0) ? this.ratingCount : 0;
-    console.log("id: ", this.id);
   }
   
   ngAfterViewInit() {

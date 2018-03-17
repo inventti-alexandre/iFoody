@@ -14,10 +14,11 @@ export class ProductDetailComponent implements OnInit {
   productModel: any;
   categoryId: string;
   reviews: any[];
-  reviewsCount: number;
+  ratingCount: number;
   userIdKey: string;
   isFavorited = false;
   favoriteId: string;
+  imageDefault: string;
 
   constructor(private _productService: ProductService, 
       private router: Router, 
@@ -33,7 +34,7 @@ export class ProductDetailComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.productId = params['id'];
-      console.log(this.productId);
+      console.log('productId ', this.productId);
     });
 
     this._productService.GetProductById(this.productId)
@@ -50,6 +51,8 @@ export class ProductDetailComponent implements OnInit {
           console.log("GetReviewListbyProductId works");
           this.reviews = data;
           console.log('review: ',this.reviews);
+          this.ratingCount = this.reviews.length;
+          console.log('this.reviews.length and ratingCount',  this.reviews.length, this.ratingCount);
         });
     
     // Product is Favorited or not
