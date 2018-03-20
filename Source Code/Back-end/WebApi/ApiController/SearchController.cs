@@ -85,7 +85,7 @@ namespace WebApi.ApiController
                 var products = _searchService.SearchPaging(searchString, page, count);
                 if (products == null)
                 {
-                    return null; // Returns a NotFoundResult
+                    return NotFound(); // Returns a NotFoundResult
                 }
                 return Ok(products);  // Returns an OkNegotiatedContentResult
             }

@@ -41,13 +41,14 @@ export class SearchService {
     return this._http
       .get(url)
       .map((response: Response) => <any>response.json())
-      .do(x => {
+      .do(x =>{
         listProduct.push(x);
       })
       .catch((error: any) => {
         if (error.status === 404) {
-          alert(error.status);
-          return Observable.throw(new Error(error.status));
+          listProduct.push(404);
+          return listProduct;
+          // return Observable.empty<Response>();
         }
       });
   };

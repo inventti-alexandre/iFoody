@@ -108,15 +108,18 @@ export class SearchBarComponent implements OnInit {
         initPage,
         this.defaultSuggestionCount
       )
-      .subscribe((data: Response) => {
-        if (data !== null) {
-          this.suggestionList.splice(0,1,data);
-          console.log("search paging result", this.suggestionList, data);
-        } else {
-          this.suggestionList = null;
-          console.log("search paging result empty", this.suggestionList);
-        }
-      });
+      .subscribe(
+        (data: Response) => {
+          console.log("search paging result empty", data);
+          if (!data) {
+            console.log("search paging result empty", this.suggestionList);
+          } else {
+            this.suggestionList.splice(0, 1, data);
+            console.log("search paging result", this.suggestionList, data);
+          }
+        },
+        (err) => {}
+      );
   }
 
   ngOnInit() {
