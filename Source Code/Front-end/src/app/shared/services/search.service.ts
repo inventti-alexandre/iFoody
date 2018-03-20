@@ -43,6 +43,12 @@ export class SearchService {
       .map((response: Response) => <any>response.json())
       .do(x => {
         listProduct.push(x);
+      })
+      .catch((error: any) => {
+        if (error.status === 404) {
+          alert(error.status);
+          return Observable.throw(new Error(error.status));
+        }
       });
   };
 

@@ -19,7 +19,7 @@ export class SearchResultComponent implements OnInit {
   constructor(private _searchService: SearchService) {
     this.products = [];
     this.initPage = 1;
-    this.initCount = 18;
+    this.initCount = 20;
     this.searchString = "trà";
   }
   getSearchPaging(searchString,initPage) {
@@ -45,7 +45,7 @@ export class SearchResultComponent implements OnInit {
       this.getSearchPaging(searchString,currentPage+1);
     }
   }
-  
+
   getTargetPage(value: any) {
     this.targetPage = value;
   }
