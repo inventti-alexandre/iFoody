@@ -1,33 +1,34 @@
-import { imageDefault } from './../../../constant/global';
+import { imageDefault } from "./../../../constant/global";
 import { ActivatedRoute, Params, Route, Router } from "@angular/router";
 import { Component, OnInit, Input } from "@angular/core";
 import { SearchService } from "./../../../shared/services/search.service";
-import { UserService } from '../../../shared/services/user.service';
+import { UserService } from "../../../shared/services/user.service";
 declare var searchObject: any;
 
 @Component({
   selector: "search-bar",
   templateUrl: "./search-bar.component.html",
   styleUrls: ["./search-bar.component.css"],
-  providers: [SearchService]
+  providers: [SearchService, UserService]
 })
 export class SearchBarComponent implements OnInit {
-  @Input("name") name;
+  @Input("searchString") searchString;
   @Input("area") area;
 
   districts: any[];
   suggestionList: any[];
   userId: string;
   defaultSuggestionCount;
-  imageDefault:string;
+  defaultPageResult;
+  imageDefault: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private _searchService: SearchService,
-    private _userService: UserService,
+    private _userService: UserService
   ) {
-    this.name = "";
+    this.searchString = "";
     this.districts = [
       "Bình Thạnh",
       "Tân Bình",
@@ -45,16 +46,16 @@ export class SearchBarComponent implements OnInit {
     this.suggestionList = [];
     this.userId = _userService.userId || "";
     this.defaultSuggestionCount = 5;
+    this.defaultPageResult = 1;
     this.imageDefault = imageDefault;
   }
-  getSuggestionList=()=>{
-    console.log("getSuggestionList works");
-    if(this.userId!==""){
-      this.getSuggestionListByUserId(this.userId,this.defaultSuggestionCount);
-    }else{
+  getSuggestionList = () => {
+    if (this.userId !== "") {
+      this.getSuggestionListByUserId(this.userId, this.defaultSuggestionCount);
+    } else {
       this.getSuggestionListByRating(this.defaultSuggestionCount);
     }
-  }
+  };
   getSuggestionListByRating = (count?) => {
     return this._searchService
       .SuggestListByRating(count)
@@ -66,8 +67,7 @@ export class SearchBarComponent implements OnInit {
           console.log("suggest result empty");
         }
       });
-  }
-
+  };
   getSuggestionListByUserId = (userId, count?) => {
     return this._searchService
       .SuggestListByUserId(userId, count)
@@ -79,7 +79,7 @@ export class SearchBarComponent implements OnInit {
           console.log("suggest result empty");
         }
       });
-  }
+  };
   checkOpenStore = (openHour, closeHour) => {
     let openHourConvert = openHour.split(":");
     let openTimeSeconds =
@@ -100,6 +100,23 @@ export class SearchBarComponent implements OnInit {
     // console.log(currentSeconds - openTimeSeconds);
 
     return isOpen;
+  };
+  getSearchPaging(searchString, initPage) {
+    return this._searchService
+      .SearchPaging(
+        searchString.replace(/['"]+/g, ""),
+        initPage,
+        this.defaultSuggestionCount
+      )
+      .subscribe(
+        (data: Response) => {
+          this.suggestionList.splice(0, 1, data);
+          console.log("search paging result", this.suggestionList);
+        },
+        err => {
+          console.log("erro");
+        }
+      );
   }
 
   ngOnInit() {
@@ -110,7 +127,7 @@ export class SearchBarComponent implements OnInit {
 
   public setSearchQueryParam() {
     this.router.navigate(["/search"], {
-      queryParams: { name: this.name, area: this.area }
+      queryParams: { name: this.searchString, area: this.area }
     });
   }
 }
