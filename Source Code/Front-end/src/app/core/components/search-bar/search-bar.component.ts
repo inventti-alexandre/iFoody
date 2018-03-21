@@ -110,15 +110,12 @@ export class SearchBarComponent implements OnInit {
       )
       .subscribe(
         (data: Response) => {
-          console.log("search paging result empty", data);
-          if (!data) {
-            console.log("search paging result empty", this.suggestionList);
-          } else {
-            this.suggestionList.splice(0, 1, data);
-            console.log("search paging result", this.suggestionList, data);
-          }
+          this.suggestionList.splice(0, 1, data);
+          console.log("search paging result", this.suggestionList);
         },
-        (err) => {}
+        err => {
+          console.log("erro");
+        }
       );
   }
 
