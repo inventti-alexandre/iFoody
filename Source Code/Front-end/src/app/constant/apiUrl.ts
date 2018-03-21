@@ -1,5 +1,5 @@
-export const Domain = 'https://api.chicken2018.club/api/';
-// export const Domain = 'http://localhost:62025/api/';
+// export const Domain = 'https://api.chicken2018.club/api/';
+export const Domain = 'http://localhost:62025/api/';
 // Product URL
 export const GetAllProduct = Domain + 'product';
 export const GetAllCategories = Domain + 'categories';
@@ -26,6 +26,7 @@ export const ChangePassword = Domain + 'user/change-password';
 
 // Store URL
 export const GetStore = Domain + 'store';
+export const GetStoreAddresses = Domain + 'store/addresses';
 
 // Key of LocalStorage
 export const AuthToken = "auth_token";

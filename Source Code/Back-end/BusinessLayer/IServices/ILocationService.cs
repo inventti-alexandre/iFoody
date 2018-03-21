@@ -6,6 +6,9 @@ namespace BusinessLayer.IServices
 {
     public interface ILocationService
     {
+        // Get Location Business Entity from StoreId List
+        IEnumerable<LocationBusinessEntity> GetLocationFromStoreIds(List<Guid> ids);
+
         // Insert Store's Location to DB
         bool InsertLocation(LocationBusinessEntity locationEnity);
 

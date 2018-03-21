@@ -1,3 +1,4 @@
+import { imageDefault } from './../../../constant/global';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Http } from '@angular/http';
 import { GetAllProduct } from './../../../constant/apiUrl';
@@ -18,6 +19,7 @@ export class ProductItemComponent implements OnInit {
   @Input() productId: string;
   productModel: any;
   productUrl: string;
+  imageDefault:string;
   // name: string;
   // price: number;
   constructor(private _productService: ProductService, 
@@ -26,6 +28,7 @@ export class ProductItemComponent implements OnInit {
             private router: Router
           ) { 
    this.productUrl = apiUrl.GetAllProduct;
+   this.imageDefault = imageDefault;
     // this.product.id = "abcde";
     // this.product.name = "Cơm Tấm Hà Tiên";
     // this.product.price = 25000;

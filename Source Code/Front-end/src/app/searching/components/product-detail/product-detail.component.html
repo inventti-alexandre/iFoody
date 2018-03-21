@@ -1,9 +1,9 @@
 <div class="container">
   <div class="productDetail col-xs-12 col-sm-12"  *ngIf="productModel != null">
     <div class="row">
-      <div class="productDetail__photo col-xs-6 col-sm-6">
+      <div class="productDetail__photo col-xs-12 col-sm-6 col-md-4">
         <div class="productDetail__photo__main row">
-          <img [src]="productModel.images.lenght>0?productModel.images[0].path:imageDefault" alt="" >
+          <img [src]="productModel.images.length>0?productModel.images[0].path:imageDefault" alt="" >
         </div>
 
         <div class="productDetail__photo__minor row">
@@ -12,19 +12,28 @@
           </div>
         </div>
       </div>
-      <div class="productDetail__info col-xs-6 col-sm-6">
-        <h2> {{ productModel.product.name }} <span><i class="fa fa-1x" [ngClass]="isFavorited ? 'fa-heart' : 'fa-heart-o'" (click)="addRemoveFavoriteItem($event)"></i></span></h2>
-        <bs-rating [id]="productModel.product?.id" [rating]="productModel.product.rating" [ratingCount]="productModel.product.ratingCount"></bs-rating>
-        <div><span><i class="fa fa-map-marker fa-1x"></i></span> {{ productModel.store.name }} </div>
-        <div><span><i class="fa fa-location-arrow fa-1x"></i></span> {{ productModel.store.address }}</div>
-        <div><span><i class="fa fa-clock-o fa-1x"></i></span> {{ productModel.store.openHour }} -  {{ productModel.store.closeHour }}  </div>
-        <div><span><i class="fa fa-money fa-1x"></i></span> {{ productModel.product.price }} </div>
+
+      <div class="productDetail__info col-xs-12 col-sm-6 col-md-5">
+        <div class="row">
+          <h2 class="col-xs-12 col-sm-8 col-md-8"> {{ productModel.product.name }} <span><i class="fa fa-1x" [ngClass]="isFavorited ? 'fa-heart' : 'fa-heart-o'" (click)="addRemoveFavoriteItem($event)"></i></span></h2>
+          <div class="productDetail__info__rating col-xs-12 col-sm-8 col-md-8"><bs-rating [id]="productModel.product?.id" [rating]="productModel.product.rating" [ratingCount]="productModel.product.ratingCount"></bs-rating></div>
+          <div  class="col-xs-12 col-sm-12 col-md-12"><span><i class="fa fa-map-marker fa-1x"></i></span> {{ productModel.store.name }} </div>
+          <div class="col-xs-12 col-sm-12 col-md-12"><span><i class="fa fa-location-arrow fa-1x"></i></span> {{ productModel.store.address }}</div>
+          <div  class="col-xs-12 col-sm-12 col-md-12"><span><i class="fa fa-clock-o fa-1x"></i></span> {{ productModel.store.openHour }} -  {{ productModel.store.closeHour }}  </div>
+          <div  class="col-xs-12 col-sm-12 col-md-12"><span><i class="fa fa-money fa-1x"></i></span> {{ productModel.product.price }} </div>
+        </div>
       </div>
+
+      <div class="productDetail__map col-xs-12 col-sm-12 col-md-3">
+          <h2 class="col-xs-12 col-sm-12 col-md-12"><span><i class="fa fa-flag-checkered fa-1x pull-right"></i></span></h2>
+          <map [storeIds]="[productModel.store?.id]"></map>
+          <div class="productDetail__map__note col-xs-12 col-sm-12 col-md-12">Nhấp vào địa điểm để xem đường đi ngắn nhất</div>
+      </div>  
     </div>
     <hr/>
 
     <div class="row">
-      <h4>Đánh Giá</h4>
+      <h3>Đánh Giá</h3>
       <div class="productDetail__review col-xs-12 col-sm-12">
         <review [productId]="productId"></review>
       </div>

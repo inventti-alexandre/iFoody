@@ -13,6 +13,7 @@ export class ProductDetailComponent implements OnInit {
   productId;
   productModel: any;
   categoryId: string;
+  storeId: any;
   reviews: any[];
   ratingCount: number;
   userIdKey: string;
@@ -29,6 +30,7 @@ export class ProductDetailComponent implements OnInit {
       private ref:ChangeDetectorRef
     ) {
         this.userIdKey = apiUrl.UserId;
+        this.storeId = [];
    }
 
   ngOnInit() {
@@ -43,6 +45,8 @@ export class ProductDetailComponent implements OnInit {
       console.log('productModel ', this.productModel);
       this.categoryId = this.productModel.category.id;
       console.log('categoryId', this.categoryId);
+      this.storeId.push(this.productModel.store.id);
+      console.log(this.storeId);
     });
 
     // get ReviewId array from Product

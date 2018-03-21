@@ -3,7 +3,7 @@ var directionsDisplay;
 var directionsService;
 var geocoder;
 var addressList;
-console.log("myMAP111");
+
 // Get Direction from Current Location to Marker
 function calculateAndDisplayRoute (directionsService, directionsDisplay, pointA, pointB) {
     var request = {
@@ -67,15 +67,12 @@ var mapObject = (function() {
                 [belmont.info, belmont.lat, belmont.long, 1],
                 [sheridan.info, sheridan.lat, sheridan.long, 2],
             ];
-            // addressList.forEach(element => {
-            //     locations.push(element);
-            // });
-            // console.log(locations);
             
             var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 11,
-                center: new google.maps.LatLng(10.7718488, 106.6554608),
-                mapTypeId: google.maps.MapTypeId.ROADMAP
+                zoom: 10,
+                center: new google.maps.LatLng(10.7610076, 106.6788873),
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                gestureHandling: 'greedy'
             });
             
             var infoWindow = new google.maps.InfoWindow({});
@@ -111,7 +108,9 @@ var mapObject = (function() {
                 //     }
                 // })(marker, i));
 
-                map.setCenter(pos);
+                // map.setCenter(pos); 
+                map.setCenter(new google.maps.LatLng(10.7610076, 106.6788873));
+                
                 }, function() {
                      handleLocationError(true, infoWindow, map.getCenter());
                 });
@@ -153,14 +152,16 @@ var mapObject = (function() {
             //     }
             // })(marker, i));
             for(y = 0; y < addressList.length; y++) {
-                geocoder.geocode( { 'address': addressList[y]}, function(results, status) {
-                    if (status == 'OK') {
+                // geocoder.geocode( { 'address': addressList[y]}, function(results, status) {
+                  //   if (status == 'OK') {
+                    var myLatlng = new google.maps.LatLng(addressList[y].latitude,addressList[y].longitude);
                         marker = new google.maps.Marker({
                                 map: map,
-                                position: results[0].geometry.location,
+                                // position: results[0].geometry.location,
+                                position: myLatlng,
                                 animation: google.maps.Animation.DROP,
                         });
-                        
+                        console.log(marker);
                         google.maps.event.addListener(marker, 'click', (function (marker, y) {
                             return function () {
                                  // get route from A to B
@@ -170,10 +171,10 @@ var mapObject = (function() {
                             }
                         })(marker, y));
 
-                    } else {
-                      alert('Geocode was not successful for the following reason: ' + status);
-                    }
-            });
+                    // } else {
+                    //   alert('Geocode was not successful for the following reason: ' + status);
+                    // }
+            };
             //for (i = 0; i < locations.length; i++) {
                 // GeoCoding
                 // geocoder.geocode( { 'address': locations[i]}, function(results, status) {
@@ -210,16 +211,15 @@ var mapObject = (function() {
                 //         infoWindow.open(map, marker);
                 //     }
                 // })(marker, i));
-            }
+            // }
         },
         // Get Address Array from Service 
         getAddressList: function(addressListFromHttpRequest) {
-            //To Do
             console.log("addressListFromHttpRequest: ", addressListFromHttpRequest);
             addressList = [];
             if(addressListFromHttpRequest != null) {
                 addressListFromHttpRequest.forEach(element => {
-                   addressList.push(element.address);
+                   addressList.push({latitude: parseFloat(element.latitude), longitude: parseFloat(element.longitude)});
                 });
             }
         }
