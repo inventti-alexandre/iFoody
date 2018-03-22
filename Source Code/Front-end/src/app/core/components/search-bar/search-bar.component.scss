@@ -46,25 +46,6 @@
     color: grey;
     //font-weight: bold;
   }
-
-  // .form-control:first-child {
-    // transform: scaleY(1.3) !important;
-    // transform: scaleX(1.15) !important;
-    // border-radius: 8px 0px 0px 8px !important;
-  // }
-
-  // .form-control:nth-child(2) {
-    // transform: scaleY(1.3) !important;
-    // transform: scaleX(1.15) !important;
-    // border-radius: 0px 8px 8px 0px !important;
-  // }
-  // .dropdown-menu {
-  //   top: 30px !important;
-  //   width: 100%;
-  //   background-color: #fcfcfc;
-  //   color: #aaa;
-  //   font-size: 11px;
-  // }
   #searchNameBarParents li {
     list-style-type: none;
     border-bottom: 1px dashed #e5e5e5;
@@ -74,8 +55,8 @@
     background: white;
     border-bottom: #f0f0f0 1px solid;
   }
-  .advertising a:hover {
-    background: #faffad;
+  #searchNameBarParents li:hover{
+    background-color: #faffad!important;
   }
   .suggestion-box-item-left {
     float: left;
@@ -85,6 +66,8 @@
   .suggestion-box-item-left img {
     width: 50px;
     height: 30px;
+    margin-top: 5px;
+    margin-bottom: 5px;
   }
   .suggestion-box-item-right {
     float: left;

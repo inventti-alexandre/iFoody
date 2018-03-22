@@ -35,11 +35,12 @@ namespace DataModel.Repository
         //Search by product name
         public IEnumerable<Product> GetProductsByName(string name)
         {
-            string sql = "select * from Products where FREETEXT(Name,'\"" + name + "\"')";
+            string searchString = SplitWords(name);
+            string sql = "select * from Products where CONTAINS(Name,'" + searchString + "')";
             return _iFoodyContext.Database.SqlQuery<Product>(sql).AsQueryable();
         }
 
-        //Search by category name
+      //Search by category name
         public IEnumerable<Product> SearchByCategoryName(string categoryName)
         {
             IEnumerable<Guid> listCategoriesId = _iFoodyContext.Categories.Where(x => x.Name.Contains(categoryName))
@@ -61,7 +62,8 @@ namespace DataModel.Repository
         //Search method: name, address, district, city
         public IEnumerable<Product> SearchByStoreInfo(string searchString)
         {
-            string sql = "select Id from StoreSearch where FREETEXT(SearchString,'\"" + searchString + "\"')";
+            string searchStringSplit = SplitWords(searchString);
+            string sql = "select Id from StoreSearch where CONTAINS(SearchString,'" + searchStringSplit + "')";
             IEnumerable<Guid> listId = _iFoodyContext.Database.SqlQuery<Guid>(sql);
             if (listId.Any())
             {
@@ -75,6 +77,26 @@ namespace DataModel.Repository
                 return null;
             }
         }
+
+        #region private implement
+        private string SplitWords(string name)
+        {
+            string[] words = name.Split(' ');
+            string searchString = "";
+            for (int i = 0; i < words.Length; i++)
+            {
+                if (i == words.Length - 1)
+                {
+                    searchString = searchString + "\"*" + words[i] + "*\" ";
+                }
+                else
+                {
+                    searchString = searchString + "\"*" + words[i] + "*\" " + "AND ";
+                }
+            }
+            return searchString;
+        }
+        #endregion
 
 
     }

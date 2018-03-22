@@ -1,17 +1,18 @@
 <div class=" searchBar input-group" id="searchBarParents">
   <div class="" id="searchNameBarParents">
-    <input [(ngModel)]="name" class="form-control searchBar__byName" name="name" placeholder="Món ăn, địa điểm, loại hình ..."
-      (click)="suggestionList.length==0?getSuggestionList():false" />
+    <input [(ngModel)]="searchString" class="form-control searchBar__byName" name="name" placeholder="Món ăn, địa điểm, loại hình ..."
+      (ngModelChange)="getSearchPaging(searchString,defaultPageResult)" (click)="suggestionList.length==0?getSuggestionList():false"
+    />
     <!-- GỢI Ý SẢN PHẨM -->
     <!-- <ng-template [ngIf]="suggestionList.length>0"> -->
     <div class="parents-well">
       <div class="well well-lg well-search-name">
         <div class="row well-search-name">
           <ul class="col-xs-12 col-sm-12 col-md-12">
-            <li class="advertising col-xs-12 col-sm-12 col-md-12">Gợi ý tìm kiếm</li>
+            <div class="col-xs-12 col-sm-12 col-md-12">Gợi ý tìm kiếm</div>
             <ng-template [ngIf]="suggestionList.length>0">
               <li class="advertising col-xs-12 col-sm-12 col-md-12" *ngFor="let result of suggestionList[0].results">
-                <a [routerLink]="['/product/'+ result.product.id]" target="blank" class="suggestion-box-item" title="result.product.name">
+                <a [routerLink]="['/product', result.product.id]" class="suggestion-box-item" title="result.product.name">
                   <div class="suggestion-box-item-left">
                     <img [src]="result.images.length>0?result.images[0].path:imageDefault" alt="result.product.name" title="result.product.name">
                   </div>

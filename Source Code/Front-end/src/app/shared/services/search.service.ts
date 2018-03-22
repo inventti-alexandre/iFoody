@@ -18,7 +18,7 @@ export class SearchService {
   };
 
   public SearchPaging = (searchString, page, count?): Observable<any> => {
-    let listProduct = [];
+    let listProduct=[];
     let url;
     if (count) {
       url =
@@ -44,6 +44,18 @@ export class SearchService {
       .do(x => {
         listProduct.push(x);
       });
+      //get status
+      // .map((response) => {
+      //   let status = response.status;
+      //   let data = response.json();
+      //   return [{ status: status, data: data }];
+      // })
+      // .catch((error: any) => {
+      //   if (error.status === 404) {
+      //     let data = error.json();
+      //     return  [{ status: error.status, data: error }];
+      //   }
+      // });
   };
 
   public SuggestListByUserId = (userId, count?): Observable<any> => {
