@@ -11,6 +11,7 @@ export class SearchResultComponent implements OnInit {
   results: any;
   addressList: string[]; // To get string Address List, like  ['268 Le Lai', '192 Ly Thai To']
   targetPage: number; // Value get from Bs-Pagination
+  storeIds: any;
 
   public products: any[];
   public initPage;
@@ -29,6 +30,7 @@ export class SearchResultComponent implements OnInit {
           if(data!==null){
             this.products.push(data);
             console.log("search result",this.products);
+            // this.storeIds.push(this.products.store.id);
           }else{
             console.log("search result empty");
           }

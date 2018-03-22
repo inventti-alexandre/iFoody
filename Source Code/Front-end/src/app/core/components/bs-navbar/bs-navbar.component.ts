@@ -43,9 +43,15 @@ export class BsNavbarComponent implements OnInit {
     this.onLoad();
     let token = _authService.retriveToken();
     this.userId = _userService.userId || '';
+    // this.urls = [
+    //   {name: 'Thông tin cá nhân', url: 'profile', param: {'userId': this.userId.replace(/['"]+/g, '')},
+    //   {name: 'Sản Phẩm Yêu thích', url: 'profile', param: this.userId.replace(/['"]+/g, '') + '&isFavorite:false'},
+    //   {name: 'Cài đặt tài khoản', url: 'settings', param: this.userId.replace(/['"]+/g, '')},
+    // ];
     this.urls = [
-      {name: 'Thông tin cá nhân', url: 'profile', param: this.userId.replace(/['"]+/g, '')},
-      {name: 'Cài đặt tài khoản', url: 'settings', param: this.userId.replace(/['"]+/g, '')},
+      {name: 'Thông tin cá nhân', url: 'profile', param: [this.userId.replace(/['"]+/g, ''), 'general']},
+      {name: 'Sản Phẩm Yêu thích', url: 'profile', param: [this.userId.replace(/['"]+/g, ''),'favorite']},
+      {name: 'Cài đặt tài khoản', url: 'settings', param: [this.userId.replace(/['"]+/g, ''),'settings']},
     ];
     // console.log(this.urls);
     }

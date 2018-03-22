@@ -17,8 +17,9 @@ export const Comment = Domain + 'user/comment';
 export const Store = Domain + 'user/store';
 export const OpenStore = Domain + 'user/open-store';
 export const Image = Domain + 'user/image';
-export const FavoriteListWithUser = Domain + 'user/favorite-list';
-export const FavoriteList = Domain + 'favorite-list';
+export const FavoriteList = Domain + 'user/favorite-list';
+// export const FavoriteListWithUser = Domain + 'user/favorite-list';
+// export const FavoriteList = Domain + 'favorite-list';
 
 export const Profile = Domain + 'user/profile';
 export const Settings = Domain + 'user/settings';

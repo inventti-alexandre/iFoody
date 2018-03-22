@@ -6,6 +6,7 @@
 
   <div class="row favoriteList__content">
     <div class="col-xs-6 col-sm-6" *ngFor="let productId of productIds">
+      <div class="deleteIcon"><span><i class="fa fa-trash-o" style="font-size:24px"></i></span></div>
       <product-item [productId]="productId"></product-item>
     </div>
     <!-- <div class="col-xs-6 col-sm-6">

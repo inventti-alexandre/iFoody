@@ -75,26 +75,34 @@ export class ProductDetailComponent implements OnInit {
   }
 
 
-  addRemoveFavoriteItem() {
+  addFavoriteItem() {
     console.log("addFavoriteItem works");
     console.log(this.isFavorited);
 
     // Insert Product to Favorite List
     if (this.isFavorited === false) {
-      this._userService.InsertFavoriteProduct(localStorage.getItem(this.userIdKey), this.productId, null)
+      // this._userService.InsertFavoriteProduct(localStorage.getItem(this.userIdKey), this.productId, null)
+      let userId = localStorage.getItem(this.userIdKey);
+      let storeIdLocal = (this.productId != null) ? null: this.storeId; // Just Get either Product or Store Id
+      let model = {'userId':userId.replace(/['"]+/g,''), 'productId': this.productId, 'storeId': storeIdLocal};
+      console.log(model);
+      this._userService.InsertFavoriteProduct(model)
       .subscribe(response => {
+          console.log("response", response);
           this.isFavorited = true;
+          alert("Thêm mục yêu thích thành công!");
+          console.log(this.isFavorited);
       });
     }
     else {
       console.log("else works");
-      console.log("in else: ",this.favoriteId);
-      this._userService.deleteFavoriteItem(this.favoriteId)
-        .subscribe(response => {
-          setTimeout(() => this.isFavorited = false);
-        });
+      alert("Đã tồn tại trong mục yêu thích"); 
+      // console.log("in else: ",this.favoriteId);
+      // this._userService.deleteFavoriteItem(this.favoriteId)
+      //   .subscribe(response => {
+      //     setTimeout(() => this.isFavorited = false);
+      //   });
     }
-    
   }
 
 }

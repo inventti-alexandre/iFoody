@@ -17,7 +17,7 @@ import { BsPaginationComponent } from './shared/components/bs-pagination/bs-pagi
 import { BsBreadcrumbComponent } from './shared/components/bs-breadcrumb/bs-breadcrumb.component';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import {ProductUploadComponent} from './uploading/product-upload/product-upload.component'
+import {ProductUploadComponent} from './uploading/product-upload/product-upload.component';
 
 //  routing configuration const
 const routes: Routes = [
@@ -42,10 +42,10 @@ const routes: Routes = [
         component: SearchResultComponent
     },
     {
-        path: 'profile/:id',
+        path: 'profile/:id/:option',
         component: ProfileComponent,
 
-    }, 
+    },
     {
         path: 'product/:id',
         component: ProductDetailComponent

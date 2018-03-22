@@ -9,6 +9,6 @@ namespace BusinessLayer.IServices
         FavoriteListBusinessEntity GetFavoriteById(Guid id);
         IEnumerable<FavoriteListBusinessEntity> GetFavoriteByUserId(Guid userId);
         Guid InsertFavoriteItem(FavoriteListBusinessEntity favoriteEntity);
-        bool DeleteFavoriteItem(Guid id);
+        bool DeleteFavoriteItem(FavoriteListBusinessEntity favoriteEntity);
     }
 }

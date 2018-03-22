@@ -1,6 +1,7 @@
 import { IFavoriteList } from './../../../../shared/models/allModel';
 import { UserService } from '../../../../shared/services/user.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewChecked, AfterViewInit, ViewChild, ViewChildren, 
+  ElementRef, AfterContentInit } from '@angular/core';
 import { ProfileChildren } from '../../../models/profileChildren';
 import * as apiUrl from '../../../../constant/apiUrl';
 
@@ -9,14 +10,15 @@ import * as apiUrl from '../../../../constant/apiUrl';
   templateUrl: './favorite-list.component.html',
   styleUrls: ['./favorite-list.component.scss']
 })
-export class FavoriteListComponent implements OnInit, ProfileChildren {
+export class FavoriteListComponent implements OnInit, ProfileChildren, AfterViewChecked, AfterContentInit {
   favoriteList: IFavoriteList[];
   productIds: any[];
   storeIds: any[];
+  @ViewChildren('deleteIcon') deleteIcon; 
 
   notification: string;
   @Input() data: any;
-  constructor(private _userService: UserService) {
+  constructor(private _userService: UserService,private elRef:ElementRef) {
   }
 
   ngOnInit() {
@@ -39,5 +41,14 @@ export class FavoriteListComponent implements OnInit, ProfileChildren {
       })
       .map(y => y.storeId);
      });
+  }
+
+  ngAfterViewChecked() {
+  }
+
+  ngAfterContentInit() {
+    console.log("ngafterContentInit");
+    console.log(this.elRef.nativeElement.querySelector("div"));
+    console.log("OK");
   }
 }

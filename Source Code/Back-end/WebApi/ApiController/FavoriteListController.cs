@@ -11,7 +11,6 @@ namespace WebApi.ApiController
     [RoutePrefix("api/favorite-list")]
     public class FavoriteListController : System.Web.Http.ApiController
     {
-        //private readonly IProductService _productServices;
         private readonly IFavoritesListService _favoritesListService;
 
         public FavoriteListController(IFavoritesListService favoritesListService)
@@ -19,6 +18,7 @@ namespace WebApi.ApiController
             _favoritesListService = favoritesListService;
 
         }
+        
         // GET api/favoritelist/?userId=
         [HttpGet]
         [Route("{userId}")]
@@ -40,6 +40,7 @@ namespace WebApi.ApiController
             }
 
         }
+        
         // GET api/favoritelist/?id=
         [HttpGet]
         public IHttpActionResult GetById(Guid id)
@@ -60,57 +61,5 @@ namespace WebApi.ApiController
             }
 
         }
-
-        ////POST api/favorite-list
-        //[HttpPost]
-        //[Route("favorite-list")]
-        //public IHttpActionResult Post([FromBody] FavoriteListBusinessEntity favoriteListEntity)
-
-        //POST api/favorite-list
-        [HttpPost]
-        [Route("")]
-        public IHttpActionResult Post([FromBody] FavoriteListBusinessEntity favoriteListEntity)
-        {
-            try
-            {
-                return Ok(_favoritesListService.InsertFavoriteItem(favoriteListEntity));
-            }
-            catch (Exception e)
-            {
-                return NotFound();
-            }
-
-        }
-        //{
-        //    try
-        //    {
-        //        return Ok(_favoritesListService.InsertFavoriteItem(favoriteListEntity));
-
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //}
-
-        // DELETE api/favoritelist/?id=
-        [HttpDelete]
-        [Route("{id}")]
-        public IHttpActionResult Delete(Guid id)
-        {
-            try
-            {
-                return Ok(_favoritesListService.DeleteFavoriteItem(id));
-
-            }
-            catch (Exception e)
-            {
-                return NotFound();
-            }
-
-
-        }
-
     }
 }

@@ -23,6 +23,7 @@ import { ProfileDirective } from '../../../directives/profile.directive';
 import { UserService } from '../../../../shared/services/user.service';
 import * as apiUrl from '../../../../constant/apiUrl';
 import { setTimeout } from 'timers';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'profile',
@@ -34,12 +35,13 @@ export class ProfileComponent implements OnInit{
   // profileItems: ProfileItem[];
   // @ViewChild(ProfileItemContainerComponent) child: ProfileItemContainerComponent;
   userName: any;
-
+  favoriteList = "favorite-list";
   // @ViewChild('profile-item-container') profileItem;
   @Input() childComponent;
   constructor(
     private _profileService: ProfileService,
-    private _userService: UserService  
+    private _userService: UserService ,
+    private activatedRoute: ActivatedRoute
   ) {
     this._userService.getUserById(localStorage.getItem(apiUrl.UserId))
       .subscribe(response => {
@@ -47,16 +49,26 @@ export class ProfileComponent implements OnInit{
           this.userName = response.lastName + ' ' + response.firstName;
         }, 0);
       });
+    
   }
 
   ngOnInit() {
     // this.profileItems = this.profileService.getProfileItem();
     this.childComponent = 'user-profile';
+    this.activatedRoute.params.subscribe((params: Params) => {
+      console.log(params);
+      if(params['option'] === 'favorite') {
+        console.log("in if");
+          this.childComponent = this.favoriteList;
+      }
+        console.log("out if");
+      
+    });
   }
 
   loadChildrenComponent(event?) {
     // this.profileItem.setChildComponent(event.target.id);
-    console.log(event.target.id);
     this.childComponent = event.target.id;
+    console.log(event.target);
   }
 }

@@ -6,6 +6,17 @@ function modalOpen() {
 $(document).on("hidden.bs.modal",".sub-modal.modal", function () {
     $("body").addClass("modal-open");
 });
+console.log("LIB");
+
+// Active Class in All navbar
+$(document).ready(function() {
+  console.log("readt");
+  $(".nav a").on("click", function(){
+    console.log("okkkk");
+    $(".nav").find(".active").removeClass("active");
+    $(this).parent().addClass("active");
+  });
+})
 
 // Initiallize Type and Area Search -> Hidden first
 var searchObject = (function() {

@@ -18,36 +18,51 @@ namespace BusinessLayer.Services
         {
             _unitOfWork = unitOfWork;
         }
+
         public Guid InsertFavoriteItem(FavoriteListBusinessEntity favoriteEntity)
         {
-            using (var scope = new TransactionScope())
+            try
             {
-                Mapper.CreateMap<FavoriteListBusinessEntity, FavoriteList>().ForMember(x => x.Id, opt => opt.Ignore());
-                var favoriteItem = Mapper.Map<FavoriteListBusinessEntity, FavoriteList>(favoriteEntity);
-                _unitOfWork.FavoriteLists.Insert(favoriteItem);
-                _unitOfWork.Complete();
-                scope.Complete();
-                return favoriteItem.Id;
-            }
-        }
-
-        public bool DeleteFavoriteItem(Guid id)
-        {
-            var success = false;
-
-            using (var scope = new TransactionScope())
-            {
-                var favoriteItem = _unitOfWork.FavoriteLists.GetById(id);
-                if (favoriteItem != null)
+                using (var scope = new TransactionScope())
                 {
-                    _unitOfWork.FavoriteLists.Delete(favoriteItem);
+                    Mapper.CreateMap<FavoriteListBusinessEntity, FavoriteList>().ForMember(x => x.Id, opt => opt.Ignore());
+                    var favoriteItem = Mapper.Map<FavoriteListBusinessEntity, FavoriteList>(favoriteEntity);
+                    _unitOfWork.FavoriteLists.Insert(favoriteItem);
                     _unitOfWork.Complete();
                     scope.Complete();
-                    success = true;
+                    return favoriteItem.Id;
                 }
+                return new Guid();
+            }
+            catch (Exception e)
+            {
+                return new Guid();
             }
 
-            return success;
+        }
+
+        // Tuan modified
+        public bool DeleteFavoriteItem(FavoriteListBusinessEntity favoriteEntity)
+        {
+            try
+            {
+                using (var scope = new TransactionScope())
+                {
+                    if (favoriteEntity != null)
+                    {
+                        _unitOfWork.FavoriteLists.Delete(favoriteEntity);
+                        _unitOfWork.Complete();
+                        scope.Complete();
+
+                        return true;
+                    }
+                }
+                return false;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
 
         public IEnumerable<FavoriteListBusinessEntity> GetFavoriteByUserId(Guid userId)
