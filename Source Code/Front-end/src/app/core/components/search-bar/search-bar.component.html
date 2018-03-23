@@ -58,7 +58,7 @@
   <div id="searchLocationBarParents">
     <input [(ngModel)]="area" type="search" class="form-control searchBar__byLocation" autocomplete="false" name="area" placeholder="Chọn khu vực">
 
-    <a [routerLink]="['/search']" (click)="setSearchQueryParam()">
+    <a [routerLink]="['/search']" (click)="setSearchQueryParam()" [ngClass]="[suggestionList.length==0 || searchString.trim()==''? 'not-active' : '']">
       <small>
         <span class="glyphicon glyphicon-search"></span>
       </small>

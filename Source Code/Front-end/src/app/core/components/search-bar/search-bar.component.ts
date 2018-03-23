@@ -26,7 +26,6 @@ export class SearchBarComponent implements OnInit {
   isNotFound: boolean;
 
   constructor(
-    private activatedRoute: ActivatedRoute,
     private router: Router,
     private _searchService: SearchService,
     private _userService: UserService
@@ -53,6 +52,11 @@ export class SearchBarComponent implements OnInit {
     this.defaultPageResult = 1;
     this.imageDefault = imageDefault;
     this.isNotFound = false;
+  }
+  ngOnInit() {
+    searchObject.hide();
+    // this.getSuggestionListByRating(5);
+    // this.getSuggestionListByUserId("cc736f75-4b3f-457b-9110-2272455e282d");
   }
   getSuggestionList = () => {
     if (this.defaultSuggestionList.length == 0) {
@@ -134,13 +138,7 @@ export class SearchBarComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-    searchObject.hide();
-    // this.getSuggestionListByRating(5);
-    // this.getSuggestionListByUserId("cc736f75-4b3f-457b-9110-2272455e282d");
-  }
-
-  public setSearchQueryParam() {
+  setSearchQueryParam=()=> {
     this.router.navigate(["/search"], {
       queryParams: { name: this.searchString, area: this.area }
     });
