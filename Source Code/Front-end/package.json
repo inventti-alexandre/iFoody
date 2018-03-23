@@ -25,6 +25,7 @@
     "@angular/platform-browser-dynamic": "^4.2.4",
     "@angular/router": "^4.2.4",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-beta.5",
+    "@types/lodash": "^4.14.105",
     "angular-in-memory-web-api": "^0.2.0",
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",

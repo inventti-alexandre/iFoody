@@ -3,6 +3,7 @@ import { ActivatedRoute, Params, Route, Router } from "@angular/router";
 import { Component, OnInit, Input } from "@angular/core";
 import { SearchService } from "./../../../shared/services/search.service";
 import { UserService } from "../../../shared/services/user.service";
+import * as _ from "lodash";
 declare var searchObject: any;
 
 @Component({
@@ -18,9 +19,11 @@ export class SearchBarComponent implements OnInit {
   districts: any[];
   suggestionList: any[];
   userId: string;
+  defaultSuggestionList: any[];
   defaultSuggestionCount;
   defaultPageResult;
   imageDefault: string;
+  isNotFound: boolean;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -45,15 +48,21 @@ export class SearchBarComponent implements OnInit {
     ];
     this.suggestionList = [];
     this.userId = _userService.userId || "";
+    this.defaultSuggestionList = [];
     this.defaultSuggestionCount = 5;
     this.defaultPageResult = 1;
     this.imageDefault = imageDefault;
+    this.isNotFound = false;
   }
   getSuggestionList = () => {
-    if (this.userId !== "") {
-      this.getSuggestionListByUserId(this.userId, this.defaultSuggestionCount);
+    if (this.defaultSuggestionList.length == 0) {
+      if (this.userId !== "") {
+        this.getSuggestionListByUserId(this.userId,this.defaultSuggestionCount);
+      } else {
+        this.getSuggestionListByRating(this.defaultSuggestionCount);
+      }
     } else {
-      this.getSuggestionListByRating(this.defaultSuggestionCount);
+      this.suggestionList = _.cloneDeep(this.defaultSuggestionList);
     }
   };
   getSuggestionListByRating = (count?) => {
@@ -61,8 +70,9 @@ export class SearchBarComponent implements OnInit {
       .SuggestListByRating(count)
       .subscribe((data: Response) => {
         if (data !== null) {
-          this.suggestionList.push(data);
-          console.log("suggest result", this.suggestionList[0].results);
+          this.defaultSuggestionList.push(data);
+          this.suggestionList = _.cloneDeep(this.defaultSuggestionList);
+          console.log("suggest default", this.defaultSuggestionList[0].results);
         } else {
           console.log("suggest result empty");
         }
@@ -73,8 +83,9 @@ export class SearchBarComponent implements OnInit {
       .SuggestListByUserId(userId, count)
       .subscribe((data: Response) => {
         if (data !== null) {
-          this.suggestionList.push(data);
-          console.log("suggest result", this.suggestionList[0].results);
+          this.defaultSuggestionList.push(data);
+          this.suggestionList = _.cloneDeep(this.defaultSuggestionList);
+          console.log("suggest result", this.defaultSuggestionList[0].results);
         } else {
           console.log("suggest result empty");
         }
@@ -102,21 +113,25 @@ export class SearchBarComponent implements OnInit {
     return isOpen;
   };
   getSearchPaging(searchString, initPage) {
-    return this._searchService
+    if(this.searchString.trim()!==""){
+      return this._searchService
       .SearchPaging(
-        searchString.replace(/['"]+/g, ""),
+        searchString.trim(),
         initPage,
         this.defaultSuggestionCount
       )
       .subscribe(
         (data: Response) => {
           this.suggestionList.splice(0, 1, data);
+          this.isNotFound = false;
           console.log("search paging result", this.suggestionList);
         },
         err => {
-          console.log("erro");
+          this.suggestionList = [];
+          this.isNotFound = true;
         }
       );
+    }
   }
 
   ngOnInit() {
