@@ -117,10 +117,11 @@ export class SearchBarComponent implements OnInit {
     return isOpen;
   };
   getSearchPaging(searchString, initPage) {
-    if(this.searchString.trim()!==""){
+    let trimSearchString = this.searchString.trim();
+    if(trimSearchString!==""){
       return this._searchService
       .SearchPaging(
-        searchString.trim(),
+        trimSearchString.replace(/ +(?= )/g,''),
         initPage,
         this.defaultSuggestionCount
       )
