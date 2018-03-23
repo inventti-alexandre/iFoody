@@ -6,8 +6,10 @@
     }
 
     &__leftBar {
-        ul li:hover {
+        ul li a:hover {
             cursor: pointer;
+            background-color: paleturquoise !important;
+            border-radius: 5px !important
         }
     }
     .profile__content {
@@ -18,4 +20,11 @@
            }
         }
     }
+    .active {
+        font-weight: bold;
+        background-color: powderblue;
+        border-radius: 5px;
+    }
 }
+
+

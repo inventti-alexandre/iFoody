@@ -1,5 +1,5 @@
 import { forEach } from '@angular/router/src/utils/collection';
-import { FavoriteListWithUser } from './../../constant/apiUrl';
+import { FavoriteList } from './../../constant/apiUrl';
 import { tryCatch } from 'rxjs/util/tryCatch';
 import { AuthService } from './auth.service';
 import { IUser, IToken } from '../models/allModel';
@@ -23,7 +23,6 @@ export class UserService {
   commentUrl: string;
   storeUrl: string;
   imageUrl: string;
-  favoriteListUrlWithUser: string;
   favoriteListUrl: string;
   // _authService: AuthService;
   authToken: any;
@@ -43,7 +42,6 @@ export class UserService {
     this.commentUrl = apiUrl.Comment;
     this.storeUrl = apiUrl.Store;
     this.imageUrl = apiUrl.Image;
-    this.favoriteListUrlWithUser = apiUrl.FavoriteListWithUser;
     this.favoriteListUrl = apiUrl.FavoriteList;
     this.authToken = this._authService.retriveToken();
     this.userId = localStorage.getItem("user_id");
@@ -226,16 +224,20 @@ export class UserService {
   }
 
   // POST - Insert Favorite Product
-  InsertFavoriteProduct(userId: string, productId: string, storeId: string) {
-    console.log("InsertFavoriteProduct works");
+  // InsertFavoriteProduct(userId: string, productId: string, storeId: string) {
+  InsertFavoriteProduct(model: any) {
     
-    let body = JSON.stringify({'userId': userId.replace(/['"]+/g,''), 'productId': productId, 'storeId': storeId});
+    console.log("InsertFavoriteProduct Service works");
+    
+    // let body = JSON.stringify({'userId': userId.replace(/['"]+/g,''), 'productId': productId, 'storeId': storeId});
+    let body = JSON.stringify(model);
+    console.log("body http", body);
     let headers = new Headers({'Content-Type' : 'application/json'});
+    headers.append("Token", this.authToken); 
     let options = new RequestOptions( {headers: headers});
 
     return this._http.post(this.favoriteListUrl, body, options)
       .map((response: Response) => <any>response.json())
-      .do(x => alert("Thêm mục yêu thích thành công!"))
       .catch(this.handleError);
   }
    
@@ -342,14 +344,17 @@ export class UserService {
   }
   
   // DELETE - Favorite Item
-  deleteFavoriteItem(id: string): Observable<any> {
+  deleteFavoriteItem(model: any): Observable<any> {
     console.log("delete Favorite Item works.");
+
+    let body = encodeURIComponent(JSON.stringify(model));
+    console.log("body encoded", body);
     let headers = new Headers();
     headers.append("Token", this.authToken); 
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({headers: headers});
-
-    return this._http.delete(this.favoriteListUrl + '/' + id, options)
+    
+    return this._http.delete(this.favoriteListUrl + '/?item=' + body, options)
       .map((response: Response) => <any>response.json())
       .do(x => alert("Đã xóa mục yêu thích!"))
       .catch(this.handleError);

@@ -9,12 +9,14 @@ import * as apiUrl from './../../constant/apiUrl';
 export class StoreService {
   private storeUrl: string;
   private openStoreUrl: string;
+  private getStoreAddresses: string;
   authToken: any;
   private storeControllerUrl: string;
   
   constructor(private _http: Http, private _authService: AuthService) { 
     this.storeUrl = apiUrl.Store;
     this.openStoreUrl = apiUrl.OpenStore;
+    this.getStoreAddresses = apiUrl.GetStoreAddresses;
     this.storeControllerUrl = apiUrl.GetStore;
     this.authToken = this._authService.retriveToken();
   }
@@ -35,6 +37,25 @@ export class StoreService {
             .map((response: Response) => <any>response.json());
     }
   } 
+
+  // Get Locations By StoreIds
+  GetLocationsByStoreIds(storeIds: any[]) {
+    console.log("GetLocationsByStoreIds works");
+  
+    if(storeIds.length > 0) {
+      console.log("GetLocationsByStoreIds works 2");
+      console.log('storeIds',storeIds);
+      let encodedStoreIds = encodeURIComponent(JSON.stringify(storeIds));
+      console.log("encodedStoreIds", encodedStoreIds);
+      return this._http.get(this.getStoreAddresses + '/?storeIds=' + encodedStoreIds)
+            .map((response: Response) => <any>response.json())
+            .do(data => {
+              console.log('locationData return: ',data);
+            })
+          .catch(this.handleError); 
+    }
+    return null;
+  }
 
   // POST - User Open Store
   openStore(model: any):Observable<any> {

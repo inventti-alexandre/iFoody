@@ -19,6 +19,7 @@ export class ProductDetailComponent implements OnInit {
   productId;
   productModel: any;
   categoryId: string;
+  storeId: any;
   reviews: any[];
   ratingCount: number;
   userIdKey: string;
@@ -26,17 +27,17 @@ export class ProductDetailComponent implements OnInit {
   favoriteId: string;
   imageDefault: string;
 
-  constructor(
-    private _productService: ProductService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private _userService: UserService,
-    private elRef: ElementRef,
-    private zone: NgZone,
-    private ref: ChangeDetectorRef
-  ) {
-    this.userIdKey = apiUrl.UserId;
-  }
+  constructor(private _productService: ProductService, 
+      private router: Router, 
+      private route: ActivatedRoute,
+      private _userService: UserService,
+      private elRef:ElementRef,
+      private zone:NgZone,
+      private ref:ChangeDetectorRef
+    ) {
+        this.userIdKey = apiUrl.UserId;
+        this.storeId = [];
+   }
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
@@ -54,20 +55,15 @@ export class ProductDetailComponent implements OnInit {
         console.log("categoryId", this.categoryId);
       });
 
-    // get ReviewId array from Product
-    this._productService
-      .GetReviewListByProductId(this.productId)
-      .subscribe(data => {
-        console.log("GetReviewListbyProductId works");
-        this.reviews = data;
-        console.log("review: ", this.reviews);
-        this.ratingCount = this.reviews.length;
-        console.log(
-          "this.reviews.length and ratingCount",
-          this.reviews.length,
-          this.ratingCount
-        );
-      });
+    this._productService.GetProductById(this.productId)
+    .subscribe((data: Response) => {
+      this.productModel = data; 
+      console.log('productModel ', this.productModel);
+      this.categoryId = this.productModel.category.id;
+      console.log('categoryId', this.categoryId);
+      this.storeId.push(this.productModel.store.id);
+      console.log(this.storeId);
+    });
 
     // Product is Favorited or not
     this._userService
@@ -85,29 +81,34 @@ export class ProductDetailComponent implements OnInit {
       });
   };
 
-  addRemoveFavoriteItem() {
+
+  addFavoriteItem() {
     console.log("addFavoriteItem works");
     console.log(this.isFavorited);
 
     // Insert Product to Favorite List
     if (this.isFavorited === false) {
-      this._userService
-        .InsertFavoriteProduct(
-          localStorage.getItem(this.userIdKey),
-          this.productId,
-          null
-        )
-        .subscribe(response => {
+      // this._userService.InsertFavoriteProduct(localStorage.getItem(this.userIdKey), this.productId, null)
+      let userId = localStorage.getItem(this.userIdKey);
+      let storeIdLocal = (this.productId != null) ? null: this.storeId; // Just Get either Product or Store Id
+      let model = {'userId':userId.replace(/['"]+/g,''), 'productId': this.productId, 'storeId': storeIdLocal};
+      console.log(model);
+      this._userService.InsertFavoriteProduct(model)
+      .subscribe(response => {
+          console.log("response", response);
           this.isFavorited = true;
-        });
-    } else {
+          alert("Thêm mục yêu thích thành công!");
+          console.log(this.isFavorited);
+      });
+    }
+    else {
       console.log("else works");
-      console.log("in else: ", this.favoriteId);
-      this._userService
-        .deleteFavoriteItem(this.favoriteId)
-        .subscribe(response => {
-          setTimeout(() => (this.isFavorited = false));
-        });
+      alert("Đã tồn tại trong mục yêu thích"); 
+      // console.log("in else: ",this.favoriteId);
+      // this._userService.deleteFavoriteItem(this.favoriteId)
+      //   .subscribe(response => {
+      //     setTimeout(() => this.isFavorited = false);
+      //   });
     }
   }
 }

@@ -1,8 +1,12 @@
 ﻿using BusinessLayer.IServices;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Script.Serialization;
 
 namespace WebApi.ApiController
 {
@@ -11,9 +15,12 @@ namespace WebApi.ApiController
     public class StoreController : System.Web.Http.ApiController
     {
         private readonly IStoreService _storeService;
-        public StoreController(IStoreService storeService)
+        private readonly ILocationService _locationService;
+
+        public StoreController(IStoreService storeService, ILocationService locationService)
         {
             _storeService = storeService;
+            _locationService = locationService;
         }
 
         // GET All api/store
@@ -59,18 +66,29 @@ namespace WebApi.ApiController
         // GET api/store/addresses
         [HttpGet]
         [Route("addresses")]
-        public IHttpActionResult GetStoreAddresses(List<Guid> ids)
+        public HttpResponseMessage GetStoreAddresses([FromUri]string storeIds)
         {
             try
             {
-                // var storeAddresses = _storeService.GetStoreAddress(ids);
-                //return Ok(storeAddresses);
-                return NotFound();
+                var deserializeStoreIds = new JavaScriptSerializer().Deserialize<List<string>>(storeIds);
+                var ids = new List<Guid>();
+
+                foreach (var storeId in deserializeStoreIds)
+                {
+                    ids.Add(new Guid(storeId));
+                }
+
+                var result = _locationService.GetLocationFromStoreIds(ids);
+                if (result != null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, result.ToList());
+
+                }
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No result found");
             }
             catch (Exception e)
             {
-                return NotFound();
-                throw;
+                return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Got Exception");
             }
         }
     }

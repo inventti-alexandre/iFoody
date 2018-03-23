@@ -19,7 +19,7 @@ export class ProductItemComponent implements OnInit {
   @Input() productId: string;
   productModel: any;
   productUrl: string;
-  imageDefault: string;
+  imageDefault:string;
   // name: string;
   // price: number;
   constructor(private _productService: ProductService,

@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Routing;
+using System.Web.Script.Serialization;
 using WebApi.ActionFilters;
 
 namespace WebApi.ApiController
@@ -311,6 +312,26 @@ namespace WebApi.ApiController
             }
         }
 
+        //POST api/user/favorite-list
+        [HttpPost]
+        [Route("favorite-list")]
+        public HttpResponseMessage Post([FromBody] FavoriteListBusinessEntity favoriteListEntity)
+        {
+            try
+            {
+                var favoriteItemId = _favoritesListService.InsertFavoriteItem(favoriteListEntity);
+                if (favoriteItemId != Guid.Empty)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, favoriteItemId);
+                }
+                return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Cannot insert Favorite Item.");
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Exception unexpected.");
+            }
+        }
+
         // Sign In
         //[Route("api/user/signin")]
         [AllowAnonymous]
@@ -574,18 +595,18 @@ namespace WebApi.ApiController
             return Request.CreateResponse(HttpStatusCode.NotImplemented, "Not Implemented!");
         }
 
-        // Delete Product In Favorite List
-        [HttpDelete]
-        [Route("favorite-list/{id}")]
-        public HttpResponseMessage DeleteProductInFavoriteList(Guid id)
-        {
-            if (!id.Equals(null))
-            {
-                _favoritesListService.DeleteFavoriteItem(id);
-                return Request.CreateResponse(HttpStatusCode.OK);
-            }
-            return Request.CreateResponse(HttpStatusCode.NotImplemented, "Not Implemented!");
-        }
+        //// Delete Product In Favorite List
+        //[HttpDelete]
+        //[Route("favorite-list/{id}")]
+        //public HttpResponseMessage DeleteProductInFavoriteList(Guid id)
+        //{
+        //    if (!id.Equals(null))
+        //    {
+        //        _favoritesListService.DeleteFavoriteItem(id);
+        //        return Request.CreateResponse(HttpStatusCode.OK);
+        //    }
+        //    return Request.CreateResponse(HttpStatusCode.NotImplemented, "Not Implemented!");
+        //}
 
 
         // Delete Image
@@ -640,7 +661,7 @@ namespace WebApi.ApiController
             }
         }
 
-        // Delete Comment
+        // DELETE Comment
         [HttpDelete]
         [Route("comment/{id}")]
         public HttpResponseMessage DeleteComment(Guid id)
@@ -653,6 +674,34 @@ namespace WebApi.ApiController
             catch (Exception e)
             {
                 return Request.CreateResponse(HttpStatusCode.ExpectationFailed, "Exception Fail!");
+            }
+        }
+
+
+        // DELETE api/favoritelist/
+        [HttpDelete]
+        [Route("favorite-list")]
+        public HttpResponseMessage Delete([FromUri]string favoriteItemJson)
+        {
+            try
+            {
+                var favoriteItem = new JavaScriptSerializer().Deserialize<List<string>>(favoriteItemJson);
+                var favoriteItemDto = new FavoriteListDto()
+                {
+                   // UserId = favoriteItem.GetType().GetProperty("UserId").GetValue(),
+
+                };
+
+                // var success = _favoritesListService.DeleteFavoriteItem(favoriteListEntity);
+                if (true)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK);
+                }
+                return Request.CreateErrorResponse(HttpStatusCode.NotModified, "Not delete Item yet");
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Exception unexpected");
             }
         }
     }
