@@ -22,11 +22,11 @@ export class ProductItemComponent implements OnInit {
   imageDefault:string;
   // name: string;
   // price: number;
-  constructor(private _productService: ProductService, 
-            private _http: Http, 
+  constructor(private _productService: ProductService,
+            private _http: Http,
             private route: ActivatedRoute,
             private router: Router
-          ) { 
+          ) {
    this.productUrl = apiUrl.GetAllProduct;
    this.imageDefault = imageDefault;
     // this.product.id = "abcde";

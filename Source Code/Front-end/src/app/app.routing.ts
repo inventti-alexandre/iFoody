@@ -23,11 +23,11 @@ import {ProductUploadComponent} from './uploading/product-upload/product-upload.
 const routes: Routes = [
     {
         path: 'home',
-        component: HomeComponent   
+        component: HomeComponent
     },
     {
         path: 'login',
-        component: LoginComponent   
+        component: LoginComponent
     },
     {
         path: 'signup',
@@ -49,11 +49,11 @@ const routes: Routes = [
     {
         path: 'product/:id',
         component: ProductDetailComponent
-    }, 
+    },
     {
         path: 'admin',
         component: AdminComponent
-    }, 
+    },
     {
         path: 'auth-guard',
         component: ProfileComponent,
@@ -62,11 +62,11 @@ const routes: Routes = [
     {
         path:'user/upload',
         component: ProductUploadComponent,
-    },  
+    },
     {
         path: '',
         redirectTo: '/home',
-        pathMatch: 'full'   
+        pathMatch: 'full'
         // 'full' property to match exactly the same with URL (another is 'prefix'  - not recommend)
     },
     {

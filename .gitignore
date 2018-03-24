@@ -14,3 +14,4 @@ Source Code/Back-end/\.vs/config/applicationhost\.config
 >>>>>>> origin/Phuong_Dev
 Source Code/Front-end/src/environments/environment.ts
 Source Code/Back-end/WebApi/Properties/PublishProfiles/iFoody-Interserver-Publish.pubxml
+Source Code/Back-end/WebApi/Properties/PublishProfiles/iFoody-Publish-API.pubxml

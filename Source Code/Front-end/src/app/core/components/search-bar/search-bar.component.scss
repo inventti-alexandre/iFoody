@@ -3,6 +3,7 @@
   .well {
     position: absolute;
     height: auto;
+    width: 100%;
     margin-top: 15px;
   }
   &__byName {
@@ -114,5 +115,11 @@
 }
 .clear {
   clear: both;
+}
+.not-active {
+  pointer-events: none;
+  cursor: default;
+  text-decoration:none;
+  color:black;
 }
 }
