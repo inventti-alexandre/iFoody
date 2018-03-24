@@ -1,5 +1,6 @@
 import { SearchService } from './../../../shared/services/search.service';
 import { Component, OnInit, Input } from '@angular/core';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 
 @Component({
   selector: 'search-result',
@@ -17,39 +18,43 @@ export class SearchResultComponent implements OnInit {
   public initPage;
   public initCount;
   public searchString;
-  constructor(private _searchService: SearchService) {
+  constructor(private _searchService: SearchService, private router: ActivatedRoute,) {
     this.products = [];
     this.initPage = 1;
     this.initCount = 20;
-    this.searchString = "trà";
+    // this.searchString = "trà";
   }
   getSearchPaging(searchString,initPage) {
     if(this.searchString != null) {
-      return this._searchService.SearchPaging(searchString.replace(/['"]+/g, ''),initPage,this.initCount)
+      return this._searchService.SearchPaging(searchString,initPage,this.initCount)
         .subscribe((data: Response) => {
-          if(data!==null){
-            this.products.push(data);
-            console.log("search result",this.products);
-            // this.storeIds.push(this.products.store.id);
+          if(this.products.length!==0){
+            this.products.splice(0, 1, data);
           }else{
-            console.log("search result empty");
+            this.products.push(data);
           }
+          console.log("result blaaaaaaa",this.products,this.products[0].currentPage,this.products[0].totalPage);
         });
     }
     return null;
   }
 
   ngOnInit() {
-    this.getSearchPaging(this.searchString,this.initPage);
+    this.router.queryParams.subscribe((params: Params) => {
+      this.searchString = params['name'];
+      console.log('searchString ', this.searchString);
+      this.getSearchPaging(this.searchString,this.initPage);
+    });
   }
-  seeMore(searchString, currentPage, totalPage){
-    if(currentPage<totalPage){
-      this.getSearchPaging(searchString,currentPage+1);
+  seeMore(searchString, targetPage, totalPage){
+    if(targetPage<=totalPage){
+      this.getSearchPaging(searchString,targetPage);
     }
   }
 
   getTargetPage(value: any) {
-    this.targetPage = value;
+    // this.targetPage = parseInt(value);
+    this.seeMore(this.searchString,value,this.products[0].totalPage);
   }
 
 }

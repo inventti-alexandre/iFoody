@@ -5,6 +5,7 @@
 .searchBar .well {
   position: absolute;
   height: auto;
+  width: 100%;
   margin-top: 15px;
 }
 
@@ -134,4 +135,11 @@
 
 .searchBar .clear {
   clear: both;
+}
+
+.searchBar .not-active {
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+  color: black;
 }
