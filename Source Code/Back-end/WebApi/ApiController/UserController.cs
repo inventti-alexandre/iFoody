@@ -2,6 +2,7 @@
 using BusinessEntities;
 using BusinessLayer.DTOs;
 using BusinessLayer.IServices;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Routing;
-using System.Web.Script.Serialization;
+using AttributeRouting.Helpers;
 using WebApi.ActionFilters;
 
 namespace WebApi.ApiController
@@ -680,23 +681,51 @@ namespace WebApi.ApiController
 
         // DELETE api/favoritelist/
         [HttpDelete]
-        [Route("favorite-list")]
-        public HttpResponseMessage Delete([FromUri]string favoriteItemJson)
+        [Route("favorite-list/{item?}")]
+        public HttpResponseMessage Delete([FromUri]string item)
         {
             try
             {
-                var favoriteItem = new JavaScriptSerializer().Deserialize<List<string>>(favoriteItemJson);
+                // var favoriteItem = new JavaScriptSerializer().Deserialize<string>(item);
+                var jsonObject = JObject.Parse(item);
+
+                var userId = (jsonObject.SelectToken("userId").ToString() != "")
+                                    ? new Guid(jsonObject.SelectToken("userId").ToString())
+                                    : new Guid();
+
+                var productId = (jsonObject.SelectToken("productId").ToString() != "")
+                                    ? new Guid(jsonObject.SelectToken("productId").ToString())
+                                    : new Guid();
+
+                var storeId= (jsonObject.SelectToken("storeId").ToString() != "")
+                                    ? new Guid(jsonObject.SelectToken("storeId").ToString())
+                                    : new Guid();
+
+
+                if (userId == Guid.Empty || (productId == Guid.Empty && storeId == Guid.Empty))
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotAcceptable, "Not Acceptable Parameter");
+                }
+
+
+                // var favoriteBusinessEntity = _favoritesListService.GetFavoriteId(productId, storeId);
                 var favoriteItemDto = new FavoriteListDto()
                 {
-                   // UserId = favoriteItem.GetType().GetProperty("UserId").GetValue(),
-
+                    UserId = userId,
+                    ProductId = productId,
+                    StoreId = storeId
                 };
 
-                // var success = _favoritesListService.DeleteFavoriteItem(favoriteListEntity);
-                if (true)
+                //Mapper.CreateMap<FavoriteListDto, FavoriteListBusinessEntity>().ForMember(x => x.Id, opt => opt.Ignore()); ;
+                //var favoriteItemBusinessEntity = Mapper.Map<FavoriteListDto, FavoriteListBusinessEntity>(favoriteItemDto);
+
+
+                var success = _favoritesListService.DeleteFavoriteItem(favoriteItemDto);
+                if (success)
                 {
                     return Request.CreateResponse(HttpStatusCode.OK);
                 }
+
                 return Request.CreateErrorResponse(HttpStatusCode.NotModified, "Not delete Item yet");
             }
             catch (Exception e)

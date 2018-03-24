@@ -5,16 +5,33 @@
   </div>
 
   <div class="row favoriteList__content">
-    <div class="col-xs-6 col-sm-6" *ngFor="let productId of productIds">
-      <div class="deleteIcon"><span><i class="fa fa-trash-o" style="font-size:24px"></i></span></div>
-      <product-item [productId]="productId"></product-item>
+    <!-- <div class="col-xs-6 col-sm-6" *ngFor="let productId of productIds"> -->
+    <div class="col-xs-12 col-sm-12 favoriteList__item" [id]="productModel?.product.id" *ngFor="let productModel of productsModel">
+      <!-- <product-item [productId]="productId"></product-item> -->
+      <div class="deleteIcon row"><span (click)="removeFavoriteItem(productModel?.product.id)"><i class="fa fa-times fa-1x"></i></span></div>
+      <div class="row">
+        <div class="favoriteList__content__photo col-xs-12 col-sm-4 col-md-4">
+          <img [src]="productModel?.images.length>0?productModel.images[0].path:imageDefault" alt="" >
+        </div>
+
+        <div class="favoriteList__content__info col-xs-12 col-sm-8 col-md-8">
+          <!-- <div class="row"> -->
+                <div class="favoriteList__content__info__name col-xs-12 col-sm-7 col-md-7"> {{ productModel?.product.name }} </div>
+                <div class="favoriteList__content__info__rating col-xs-12 col-sm-5 col-md-5"><bs-rating [id]="productModel?.product?.id" [rating]="productModel.product.rating" [ratingCount]="productModel.product.ratingCount"></bs-rating></div>
+          <!-- </div> -->
+          <div  class="col-xs-12 col-sm-12 col-md-12"><span><i class="fa fa-map-marker fa-1x"></i></span> {{ productModel?.store.name }} </div>
+          <div class="col-xs-12 col-sm-12 col-md-12"><span><i class="fa fa-location-arrow fa-1x"></i></span> {{ productModel?.store.address }}</div>
+          <div  class="col-xs-12 col-sm-12 col-md-12"><span><i class="fa fa-clock-o fa-1x"></i></span> {{ productModel?.store.openHour }} -  {{ productModel.store.closeHour }}  </div>
+          <div  class="col-xs-12 col-sm-12 col-md-12"><span><i class="fa fa-money fa-1x"></i></span> {{ productModel?.product.price }} </div>
+        </div>
+      </div>
     </div>
     <!-- <div class="col-xs-6 col-sm-6">
       <product-item></product-item>
     </div> -->
   </div>
 
-  <div class="row favoriteList__loadMore"><a href="#" class="pull-right">Xem thêm</a></div>
+  <div class="row favoriteList__loadMore"><a class="pull-right">Xem thêm</a></div>
 
   <div class="row favoriteList__header">
       <h2>Cửa Hàng yêu thích</h2>

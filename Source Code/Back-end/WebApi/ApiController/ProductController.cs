@@ -120,6 +120,7 @@ namespace WebApi.ApiController
 
         // GET api/product/?id=
         [HttpGet]
+        [Route("api/product/{id?}")]
         public IHttpActionResult Get(Guid id)
         {
             try

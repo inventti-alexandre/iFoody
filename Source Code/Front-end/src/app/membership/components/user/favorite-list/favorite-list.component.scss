@@ -4,11 +4,68 @@
         font-weight: bold;
         color:purple
     }
+    &__item {
+        border: 1px solid blueviolet;
+        border-radius: 4px;
+        margin:3px 0;
+    }
 
     &__content {
         .deleteIcon {
-            padding-right:20% !important
-            // display: inline-block !important;
+            text-align: right;
+            margin-right: 0.3%;
+            margin-top: 0.5%;
+        }
+
+        &__photo {
+            @media screen and (max-width:585px) {
+                width: 100% !important;
+            }
+            
+            overflow: hidden;
+            text-align: center; 
+            img {
+                display: block;
+                box-shadow: 2px 2px 2px #A095A3;
+                max-width: 100%;
+                margin: 0 auto;
+                border-radius: 5px;
+            }
+        }
+    
+        &__info {
+            @media screen and (max-width:585px) {
+                width: 100% !important;
+            }   
+            &__name {
+                color:#484848 !important;
+                font-weight: 700 !important;
+                letter-spacing: 1.2px !important;
+                line-height: 26px !important;
+                font-size: 1.7em;
+                text-align: center;
+                line-height: 135% !important;
+                padding-left: 0 !important;
+            }
+            &__rating {
+                padding-left: 0px !important; 
+                @media screen and (min-width:1221px) {
+                    top: 45px;
+                }
+            }
+            div {
+                position: relative;
+                padding-left: 45px;
+                line-height: 190%;
+                span {
+                    position: absolute;
+                    left: 18px;
+                }
+            }    
+        }
+        i:hover {
+            cursor: pointer;
+            font-weight: bold;
         }
     }
 }

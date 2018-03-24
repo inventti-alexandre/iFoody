@@ -87,6 +87,8 @@ var ratingObject = (function() {
     }
   }
 })(ratingObject || {})
+
+// Use both ratingObject and ratingObject1
 var ratingObject1 = (function() {
   return {
     removeBorderLineReview: function() {
@@ -94,31 +96,11 @@ var ratingObject1 = (function() {
     }
   }
 })(ratingObject1 || {})
-// Not used yet
-// var searchObject = (function() {
-//     return {
-//       popoverType: function() {
-//         $('#popover').popover({ 
-//             html : true,
-//             title: function() {
-//               return $("#popover-head").html();
-//             },
-//             content: function() {
-//               return $("#popover-content").html();
-//             }
-//         });
-//       },
-//       hideSearchType: function() {
-//         var divToHide = document.getElementsByClassName('well-lg');
-//         document.onclick = function(e){
-//             if(e.target.class !== 'well-lg'){
-//               //element clicked wasn't the div; hide the div
-//               divToHide.style.display = 'none';
-//             }
-//           };
-//       }
-//     }
-  
-//   })(searchObject||{})
 
-  
+var favoriteObject = (function() {
+  return {
+    removeHTML: function(parent, id) {
+      $(".favoriteList").find('#'+ id).remove();
+    }
+  }
+})(favoriteObject || {})

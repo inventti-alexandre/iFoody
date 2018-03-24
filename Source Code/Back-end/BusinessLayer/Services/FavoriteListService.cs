@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
+using BusinessLayer.DTOs;
 
 namespace BusinessLayer.Services
 {
@@ -42,15 +43,20 @@ namespace BusinessLayer.Services
         }
 
         // Tuan modified
-        public bool DeleteFavoriteItem(FavoriteListBusinessEntity favoriteEntity)
+        public bool DeleteFavoriteItem(FavoriteListDto favoriteItemDto)
         {
             try
             {
                 using (var scope = new TransactionScope())
                 {
-                    if (favoriteEntity != null)
+                    if (favoriteItemDto != null)
                     {
-                        _unitOfWork.FavoriteLists.Delete(favoriteEntity);
+                        //Mapper.CreateMap<FavoriteListBusinessEntity, FavoriteList>();
+                        //var favoriteItem = Mapper.Map<FavoriteListBusinessEntity, FavoriteList>(favoriteEntity);
+
+                        var favoriteEntity = this.GetFavoriteId(favoriteItemDto.ProductId, favoriteItemDto.StoreId);
+
+                        _unitOfWork.FavoriteLists.Delete(favoriteEntity.Id);
                         _unitOfWork.Complete();
                         scope.Complete();
 
@@ -75,6 +81,32 @@ namespace BusinessLayer.Services
                 return favoriteListModel;
             }
             return null;
+        }
+
+        public FavoriteListBusinessEntity GetFavoriteId(Guid? productId, Guid? storeId)
+        {
+            try
+            {
+                if (productId == Guid.Empty)
+                {
+                    productId = null;
+                }
+                if (storeId == Guid.Empty)
+                {
+                    storeId = null;
+                }
+
+                var favoriteItem = _unitOfWork.FavoriteLists.GetManyQueryable(x => x.ProductId == productId && x.StoreId == storeId)
+                    .FirstOrDefault();
+                Mapper.CreateMap<FavoriteList, FavoriteListBusinessEntity>();
+                var favoriteModel = Mapper.Map<FavoriteList, FavoriteListBusinessEntity>(favoriteItem);
+
+                return favoriteModel;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public FavoriteListBusinessEntity GetFavoriteById(Guid id)

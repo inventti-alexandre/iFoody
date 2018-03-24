@@ -7,7 +7,7 @@
       <div class="row">
         <div class="type col-xs-4 col-sm-4"> {{ storeModel.category.name }}</div>
         <div class="rating col-xs-8 col-sm-8">
-          <bs-rating></bs-rating>
+          <bs-rating [rating]="storeModel.rating" [ratingCount]="storeModel.ratingCount"></bs-rating>
         </div>
 
       </div>

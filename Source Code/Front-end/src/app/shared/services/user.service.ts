@@ -346,7 +346,6 @@ export class UserService {
   // DELETE - Favorite Item
   deleteFavoriteItem(model: any): Observable<any> {
     console.log("delete Favorite Item works.");
-
     let body = encodeURIComponent(JSON.stringify(model));
     console.log("body encoded", body);
     let headers = new Headers();
@@ -354,8 +353,8 @@ export class UserService {
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({headers: headers});
     
-    return this._http.delete(this.favoriteListUrl + '/?item=' + body, options)
-      .map((response: Response) => <any>response.json())
+    return this._http.delete(this.favoriteListUrl + '?item=' + body, options)
+      .map((response: Response) => console.log("respóne", response))
       .do(x => alert("Đã xóa mục yêu thích!"))
       .catch(this.handleError);
   }

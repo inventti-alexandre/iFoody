@@ -1,7 +1,6 @@
 import { IUser } from './../../../../shared/models/allModel';
 import { UserService } from './../../../../shared/services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
-// import {  } from 'ngx-bootstrap/ng2-bootstrap';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Component, ElementRef, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';

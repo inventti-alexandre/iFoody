@@ -15,7 +15,7 @@ export class SearchService {
   }
   public fomatParamater = p => {
     return (p = p.replace(/['"]+/g, ""));
-  };
+  }
 
   public SearchPaging = (searchString, page, count?): Observable<any> => {
     let listProduct=[];
@@ -44,7 +44,7 @@ export class SearchService {
       .do(x => {
         listProduct.push(x);
       });
-      //get status
+      // get status
       // .map((response) => {
       //   let status = response.status;
       //   let data = response.json();
@@ -56,7 +56,7 @@ export class SearchService {
       //     return  [{ status: error.status, data: error }];
       //   }
       // });
-  };
+  }
 
   public SuggestListByUserId = (userId, count?): Observable<any> => {
     let listProduct = [];
@@ -73,7 +73,8 @@ export class SearchService {
       .do(x => {
         listProduct.push(x);
       });
-  };
+  }
+  
   public SuggestListByRating = (count?): Observable<any> => {
     let listProduct = [];
     let url;
@@ -88,5 +89,5 @@ export class SearchService {
       .do(x => {
         listProduct.push(x);
       });
-  };
+  }
 }

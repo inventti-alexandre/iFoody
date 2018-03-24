@@ -4,6 +4,76 @@
   color: purple;
 }
 
+.favoriteList__item {
+  border: 1px solid blueviolet;
+  border-radius: 4px;
+  margin: 3px 0;
+}
+
 .favoriteList__content .deleteIcon {
-  padding-right: 20% !important;
+  text-align: right;
+  margin-right: 0.3%;
+  margin-top: 0.5%;
+}
+
+.favoriteList__content__photo {
+  overflow: hidden;
+  text-align: center;
+}
+
+@media screen and (max-width: 585px) {
+  .favoriteList__content__photo {
+    width: 100% !important;
+  }
+}
+
+.favoriteList__content__photo img {
+  display: block;
+  box-shadow: 2px 2px 2px #A095A3;
+  max-width: 100%;
+  margin: 0 auto;
+  border-radius: 5px;
+}
+
+@media screen and (max-width: 585px) {
+  .favoriteList__content__info {
+    width: 100% !important;
+  }
+}
+
+.favoriteList__content__info__name {
+  color: #484848 !important;
+  font-weight: 700 !important;
+  letter-spacing: 1.2px !important;
+  line-height: 26px !important;
+  font-size: 1.7em;
+  text-align: center;
+  line-height: 135% !important;
+  padding-left: 0 !important;
+}
+
+.favoriteList__content__info__rating {
+  padding-left: 0px !important;
+}
+
+@media screen and (min-width: 1221px) {
+  .favoriteList__content__info__rating {
+    top: 45px;
+  }
+}
+
+.favoriteList__content__info div {
+  position: relative;
+  padding-left: 45px;
+  line-height: 190%;
+}
+
+.favoriteList__content__info div span {
+  position: absolute;
+  left: 18px;
+}
+
+.favoriteList__content i:hover {
+  cursor: pointer;
+  font-weight: bold;
 }

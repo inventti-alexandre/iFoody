@@ -25,6 +25,7 @@
     </div>
   </div>
 
+  
   <div class="col-xs-12 col-sm-12  review__content no-pad-left-right">
     <div class="jumbotron">
       {{ reviewModel.review.reviewContent }}
@@ -49,7 +50,7 @@
             <rating [(ngModel)]="newRate"
                   [max]="max" [readonly]="isReadonly" 
                   (onHover)="hoveringOver($event)"
-                  class="filled pull-right ratingReview">
+                  class="filled pull-right ratingReview ">
             </rating>
           </div>
           <div class="col-xs-12 col-sm-8 pull-left">
