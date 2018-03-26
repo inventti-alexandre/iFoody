@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Transactions;
 using System.Xml.Linq;
+using BusinessLayer.DTOs;
 
 namespace BusinessLayer.Services
 {
@@ -117,6 +118,43 @@ namespace BusinessLayer.Services
                 return null;
             }
         }
+        //PHUONG test
+        public List<LocationWithDistanceDto> FilterNearestLocations(double currentLatitude, double currentLongitude, List<Guid> storeIds)
+        {
+            try
+            {
+                if (storeIds.Any())
+                {
+                    var locationsList = this.GetLocationFromStoreIds(storeIds).ToList();
+                    var nearestLocations = new List<LocationWithDistanceDto>();
+
+                    // Using 'for' is better in performance than 'foreach' to List
+                    for (var i = 0; i < locationsList.Count(); i++)
+                    {
+                        var latitude = (double)locationsList[i].Latitude;
+                        var longitude = (double)locationsList[i].Longitude;
+
+                        double distance = LocationService.HaversineDistance(currentLatitude, currentLongitude, latitude, longitude);
+
+                        var locationObject = new LocationWithDistanceDto()
+                        {
+                            location = locationsList[i],
+                            Distance = distance
+                        };
+
+                        nearestLocations.Add(locationObject);
+                    }
+                    var resultList = nearestLocations.OrderBy(x => x.Distance).ToList();
+                    return resultList;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
 
         // Haversine Formula to calculate distance between two points. Use double type for better calculation
         public static double HaversineDistance(double lat1, double lng1, double lat2, double lng2, char unit = 'K')

@@ -14,11 +14,13 @@ namespace BusinessLayer.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IProductService _productService;
+        private readonly ILocationService _locationService;
        
-        public SearchService(IUnitOfWork unitOfWork,IProductService productService)
+        public SearchService(IUnitOfWork unitOfWork,IProductService productService, ILocationService locationService)
         {
             _unitOfWork = unitOfWork;
             _productService = productService;
+            _locationService = locationService;
         }
 
         public IEnumerable<ProductDto> SearchByProductName(string productName)
@@ -42,7 +44,7 @@ namespace BusinessLayer.Services
                 return null;
             }
         
-    }
+        }
 
         public IEnumerable<ProductDto> SearchByStoreInfo(string searchString)
         {
@@ -85,7 +87,7 @@ namespace BusinessLayer.Services
                 return null;
             }
         }
- //Search Paging
+        //Search Paging
         public PagingReturnDto<ProductDto> SearchPaging(string searchString, int page, int? count)
         {
             try
@@ -136,6 +138,7 @@ namespace BusinessLayer.Services
                 return null;
             }
         }
+
         public PagingReturnDto<ProductDto> SuggestionListByUserId(Guid userId, int? count)
         {
             try
@@ -156,5 +159,37 @@ namespace BusinessLayer.Services
                 return null;
             }
         }
+
+        //Filter 
+        //public PagingReturnDto<ProductDto> FilterByLocation(string searchString, int page, int? count, 
+        //                                                    double currentLatitude, double currentLongitude)
+         public dynamic FilterByLocation(string searchString, int page, int? count,
+                                                            double currentLatitude, double currentLongitude)
+        {
+            try
+            {
+                var productsByProductName = _unitOfWork.Products.GetProductsByName(searchString).ToList();
+                if (!productsByProductName.Any())
+                {
+                    productsByProductName = _unitOfWork.Products.SearchByStoreInfo(searchString).ToList();
+                }
+                List<Guid> listStoreId = new List<Guid>();
+                foreach (var p in productsByProductName)
+                {
+                    listStoreId.Add(p.StoreId.GetValueOrDefault());
+                }
+                var listStoreSortByDistance = _locationService.FilterNearestLocations(currentLatitude, currentLongitude, listStoreId);
+                foreach (var s in listStoreSortByDistance)
+                {
+                    var test = s.location;
+                }
+                return listStoreSortByDistance;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
     }
 }

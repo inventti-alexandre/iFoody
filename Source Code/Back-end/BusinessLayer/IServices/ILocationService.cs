@@ -1,6 +1,7 @@
 ﻿using BusinessEntities;
 using System;
 using System.Collections.Generic;
+using BusinessLayer.DTOs;
 
 namespace BusinessLayer.IServices
 {
@@ -17,5 +18,7 @@ namespace BusinessLayer.IServices
 
         // Convert Address to Location
         dynamic GetLocationFromAddress(string input);
+        List<LocationWithDistanceDto>FilterNearestLocations(double currentLatitude, double currentLongitude, List<Guid> storeIds);
+
     }
 }

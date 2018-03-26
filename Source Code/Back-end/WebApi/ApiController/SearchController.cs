@@ -130,5 +130,25 @@ namespace WebApi.ApiController
                 return NotFound();
             }
         }
+        // GET api/search/?count={?}
+        [HttpGet]
+        public IHttpActionResult FilterByLocation(string searchString, int page, int? count,
+                                                  double currentLatitude, double currentLongitude)
+        {
+            try
+            {
+                var products = _searchService.FilterByLocation(searchString, page, count, currentLatitude,
+                    currentLongitude);
+                if (products == null)
+                {
+                    return NotFound(); // Returns a NotFoundResult
+                }
+                return Ok(products);  // Returns an OkNegotiatedContentResult
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+        }
     }
 }
