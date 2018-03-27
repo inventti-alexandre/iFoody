@@ -13,7 +13,7 @@ namespace BusinessLayer.IServices
         PagingReturnDto<ProductDto> SuggestionListByUserId(Guid userId, int? count);
         PagingReturnDto<ProductDto> SearchPaging(string searchString, int page, int? count);
         PagingReturnDto<ProductDto> TopRatingProducts(int? count);
-       dynamic FilterByLocation(string searchString, int page, int? count, 
+        PagingReturnDto<ProductDto> FilterByLocation(string searchString, int page, int? count, 
                                                      double currentLatitude, double currentLongitude);
     }
 }

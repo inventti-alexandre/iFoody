@@ -163,12 +163,16 @@ namespace BusinessLayer.Services
         //Filter 
         //public PagingReturnDto<ProductDto> FilterByLocation(string searchString, int page, int? count, 
         //                                                    double currentLatitude, double currentLongitude)
-         public dynamic FilterByLocation(string searchString, int page, int? count,
+        public PagingReturnDto<ProductDto> FilterByLocation(string searchString, int page, int? count,
                                                             double currentLatitude, double currentLongitude)
         {
             try
             {
-                var productsByProductName = _unitOfWork.Products.GetProductsByName(searchString).ToList();
+                var productsByProductName =
+                    _unitOfWork.Products.GetProductsByName(searchString)
+                        .GroupBy(x => x.StoreId)
+                        .Select(x => x.FirstOrDefault());
+                                           
                 if (!productsByProductName.Any())
                 {
                     productsByProductName = _unitOfWork.Products.SearchByStoreInfo(searchString).ToList();
@@ -178,12 +182,18 @@ namespace BusinessLayer.Services
                 {
                     listStoreId.Add(p.StoreId.GetValueOrDefault());
                 }
-                var listStoreSortByDistance = _locationService.FilterNearestLocations(currentLatitude, currentLongitude, listStoreId);
-                foreach (var s in listStoreSortByDistance)
+
+                var storesSortByDistance = _locationService.FilterNearestLocations(currentLatitude, currentLongitude, listStoreId);
+                Guid[] listStoreIdSort = new Guid[storesSortByDistance.Count];
+                for(int i=0;i<storesSortByDistance.Count;i++)
                 {
-                    var test = s.location;
+                    listStoreIdSort[i] = storesSortByDistance[i].location.StoreId.GetValueOrDefault();
                 }
-                return listStoreSortByDistance;
+                var productsSortByDistance = productsByProductName.OrderBy(x =>
+                {
+                    return Array.IndexOf(listStoreIdSort, x.StoreId);
+                }).ToList();
+                return _productService.ChangeProductsToPagingReturnDto(1, count, productsSortByDistance, false);
             }
             catch (Exception e)
             {
