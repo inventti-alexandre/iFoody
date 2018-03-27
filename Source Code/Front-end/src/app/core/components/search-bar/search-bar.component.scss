@@ -4,7 +4,7 @@
     position: absolute;
     height: auto;
     width: 100%;
-    margin-top: 15px;
+    margin-top: 35px;
   }
   &__byName {
     border-radius: 8px 0px 0px 8px !important;
@@ -52,6 +52,13 @@
     border-bottom: 1px dashed #e5e5e5;
     margin-top: 5px;
   }
+
+  #searchNameBarParents {
+    .well-search-name {
+      z-index: 999;
+    }
+  }
+
   .advertising a {
     background: white;
     border-bottom: #f0f0f0 1px solid;

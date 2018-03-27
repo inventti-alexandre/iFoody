@@ -1,11 +1,13 @@
-﻿using BusinessLayer.DTOs;
+﻿using AutoMapper;
+using BusinessEntities;
+using BusinessLayer.DTOs;
 using BusinessLayer.IServices;
+using DataModel;
 using DataModel.IUnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web.Hosting;
 
 namespace BusinessLayer.Services
 {
@@ -19,7 +21,7 @@ namespace BusinessLayer.Services
         }
 
         // Upload Files
-        public bool UploadFile(List<FileUploadResult> files)
+        public List<Guid> UploadFile(List<FileUploadResult> files)
         {
             try
             {
@@ -28,8 +30,8 @@ namespace BusinessLayer.Services
                     var supportedTypes = new[] { "jpg", "jpeg", "png" };
                     var sizeLimit = 9999999;
                     // Directory.CreateDirectory("~/Content/Uploads/");
-                    var path = HostingEnvironment.MapPath("~/Content/Uploads/");
-                    // + @"Content/Uploads/";
+                    var path = System.Web.HttpContext.Current.Server.MapPath("~/Content/Uploads/");
+                    var imageIds = new List<Guid>();
 
                     foreach (var file in files)
                     {
@@ -48,17 +50,34 @@ namespace BusinessLayer.Services
                         MemoryStream stream = new MemoryStream(byteArray);
                         HttpPostedFileBaseCustom httpPostedFileBaseCustom = new HttpPostedFileBaseCustom(stream,
                             file.FileType, file.FileName);
+                        var filePath = Path.Combine(path, file.FileName);
+                        httpPostedFileBaseCustom.SaveAs(filePath);
 
-                        httpPostedFileBaseCustom.SaveAs(Path.Combine(path, file.FileName));
+                        // Add link to SQL table
+                        var imageEntity = new ImageBusinessEntity()
+                        {
+                            Name = file.FileName,
+                            Path = filePath
+                        };
+
+                        Mapper.CreateMap<ImageBusinessEntity, Image>();
+                        var image = Mapper.Map<ImageBusinessEntity, Image>(imageEntity);
+                        _unitOfWork.Images.Insert(image);
+                        _unitOfWork.Complete();
+
+                        var firstOrDefault =
+                               _unitOfWork.Images.GetManyQueryable(i => i.Id == image.Id).FirstOrDefault();
+
+                        if (firstOrDefault != null) imageIds.Add(firstOrDefault.Id);
                     }
-                    return true;
+                    return imageIds;
                 }
-                return false;
+                return null;
 
             }
             catch (Exception e)
             {
-                return false;
+                return null;
             }
         }
 

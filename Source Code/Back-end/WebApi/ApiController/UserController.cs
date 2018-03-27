@@ -11,13 +11,12 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Routing;
-using AttributeRouting.Helpers;
 using WebApi.ActionFilters;
 
 namespace WebApi.ApiController
 {
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    [RoutePrefix("api/User")]
+    [RoutePrefix("api/users")]
     public class UserController : System.Web.Http.ApiController
     {
         private readonly IUserService _userService;
@@ -47,7 +46,7 @@ namespace WebApi.ApiController
 
         // Get api/user
         [HttpGet]
-        [Route("")]
+        [Route("getAll")]
         // [AuthorizationRequired]
         //[ApiAuthenticationFilter]
         public HttpResponseMessage Get()
@@ -74,7 +73,7 @@ namespace WebApi.ApiController
 
         // GET api/user/5
         [HttpGet]
-        [Route("{id}")]
+        [Route("{id?}")]
         public HttpResponseMessage Get(Guid id)
         {
             try
@@ -95,7 +94,7 @@ namespace WebApi.ApiController
 
         // GET api/user/favorite-list/42fsvvsg0-gsevsevsev
         [HttpGet]
-        [Route("favorite-list/{id}")]
+        [Route("favorite-list/{id?}")]
         public HttpResponseMessage GetFavoriteList(Guid id)
         {
             try
@@ -697,7 +696,7 @@ namespace WebApi.ApiController
                                     ? new Guid(jsonObject.SelectToken("productId").ToString())
                                     : new Guid();
 
-                var storeId= (jsonObject.SelectToken("storeId").ToString() != "")
+                var storeId = (jsonObject.SelectToken("storeId").ToString() != "")
                                     ? new Guid(jsonObject.SelectToken("storeId").ToString())
                                     : new Guid();
 

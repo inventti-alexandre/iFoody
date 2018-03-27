@@ -11,7 +11,7 @@ using System.Web.Script.Serialization;
 namespace WebApi.ApiController
 {
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    [RoutePrefix("api/Store")]
+    [RoutePrefix("api/Stores")]
     public class StoreController : System.Web.Http.ApiController
     {
         private readonly IStoreService _storeService;
@@ -25,27 +25,27 @@ namespace WebApi.ApiController
 
         // GET All api/store
         [HttpGet]
-        [Route("")]
-        public IHttpActionResult Get()
+        [Route("getAll")]
+        public HttpResponseMessage Get()
         {
             try
             {
                 var store = _storeService.GetAllStore();
                 if (store == null)
                 {
-                    return NotFound(); // Returns a NotFoundResult
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not Found Store");
                 }
-                return Ok(store);  // Returns an OkNegotiatedContentResult
+                return Request.CreateResponse(HttpStatusCode.OK, store);
             }
             catch (Exception e)
             {
-                return NotFound();
+                return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Expectation Failed");
             }
         }
 
-        // GET api/store/{id}
+        // GET api/store/{userId}
         [HttpGet]
-        [Route("{id}")]
+        [Route("{userId?}")]
         public IHttpActionResult GetStoreByUserId(Guid userId)
         {
             try

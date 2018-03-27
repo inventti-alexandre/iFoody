@@ -10,6 +10,18 @@ export interface IProduct {
     storeId: string;
 }
 
+export interface IUploadProduct {
+    id: string;
+    name: string;
+    price: number;
+    description: string;
+    categoryId: string;
+    storeId: string;
+    rating: number;
+    ratingCount: number;
+    images: any[];
+}
+
 export interface IStore{
     id: string;
     name:string;

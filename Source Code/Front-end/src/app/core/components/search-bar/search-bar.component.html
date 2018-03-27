@@ -1,7 +1,7 @@
 <div class=" searchBar input-group" id="searchBarParents">
   <div class="" id="searchNameBarParents">
-    <input [(ngModel)]="searchString" class="form-control searchBar__byName" name="name" placeholder="Món ăn, địa điểm, loại hình ..." autocomplete="off"
-      (ngModelChange)="getSearchPaging(searchString,defaultPageResult)" (click)="searchString==''?getSuggestionList():false"
+    <input [(ngModel)]="searchString" class="form-control searchBar__byName" name="name" placeholder="Món ăn, địa điểm, loại hình ..."
+      autocomplete="off" (ngModelChange)="getSearchPaging(searchString,defaultPageResult)" (click)="searchString==''?getSuggestionList():false"
     />
     <!-- GỢI Ý SẢN PHẨM -->
     <div class="parents-well">
@@ -39,13 +39,15 @@
 
             <ng-template [ngIf]="suggestionList.length==0&&!isNotFound">
               <div class="col-xs-12 col-sm-12 col-md-12" style="text-align:center">
-                <div><i class="fa fa-spinner fa-spin" style="font-size:36px"></i></div>
+                <div>
+                  <i class="fa fa-spinner fa-spin" style="font-size:36px"></i>
+                </div>
               </div>
             </ng-template>
 
             <ng-template [ngIf]="suggestionList.length==0&&isNotFound">
               <div class="col-xs-12 col-sm-12 col-md-12" style="text-align:center">
-                <img src="./assets/images/search/icon_noresult.png"/>
+                <img src="./assets/images/search/icon_noresult.png" />
               </div>
             </ng-template>
 

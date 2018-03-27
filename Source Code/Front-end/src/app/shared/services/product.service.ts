@@ -1,4 +1,4 @@
-import { IProduct } from './../models/allModel';
+import { IUploadProduct } from './../models/allModel';
 import { element } from 'protractor';
 import * as apiUrl from './../../constant/apiUrl';
 import { Injectable } from '@angular/core';
@@ -10,17 +10,20 @@ import 'rxjs/add/operator/catch';
 import { tryCatch } from 'rxjs/util/tryCatch';
 import {Observable} from 'rxjs/Rx';
 import {CategoryService} from './category.service';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class ProductService {
   private actionUrl: string;
   private reviewUrl: string;
   private getProductWithCategoryUrl: string;
-
-  constructor(private _http: Http) {
+  authToken: any;
+  
+  constructor(private _http: Http, private _authService: AuthService) {
     this.actionUrl = apiUrl.GetAllProduct;
-   this.reviewUrl = apiUrl.ProductReview;
+    this.reviewUrl = apiUrl.ProductReview;
     this.getProductWithCategoryUrl = apiUrl.ProductCategory;
+    this.authToken = this._authService.retriveToken();
   }
   private handleError(error: Response) {
     console.log("handleError works.");
@@ -78,13 +81,16 @@ export class ProductService {
         });
   }
    // POST - Product updload
-  public AddNewProduct=(product:IProduct):Observable<any>=> {
+   // Tuan modified
+  addNewProduct=(product:IUploadProduct):Observable<any>=> {
     let body = JSON.stringify(product);
     let headers = new Headers({'Content-Type' : 'application/json'});
+    headers.append("Token", this.authToken); 
     let options = new RequestOptions( {headers: headers});
 
+    console.log('product in service', product);
     return this._http.post(this.actionUrl, body, options)
-      .map((response: Response) => <IProduct>response.json())
+      .map((response: Response) => <IUploadProduct>response.json())
       .catch(this.handleError);
   }
   // public GetProductByCategory=(categoryName, products, result): Observable<any> => {

@@ -1,5 +1,13 @@
 <div class="col-xs-12 col-sm-12">
     <!-- <ngb-pagination [collectionSize]="120" [(page)]="page" [maxSize]="5" [boundaryLinks]="true"></ngb-pagination> -->
-    <pagination [totalItems]="bigTotalItems" [(ngModel)]="bigCurrentPage" [maxSize]="maxSize" class="pagination-sm"
-    [boundaryLinks]="true" [rotate]="false" (numPages)="numPages = $event" (click)="changePage($event)"></pagination>
+    <pagination [totalItems]="bigTotalItems" [(ngModel)]="bigCurrentPage" [maxSize]="maxSize"
+    class="pagination-sm"
+    [boundaryLinks]="true"
+    [rotate]="false"
+    (numPages)="numPages = $event" 
+    [firstText]="Dau"
+    [lastText]="Cuoi"
+    [nextText]="Sau"
+    [previousText]="Truoc" 
+    (click)="changePage($event)"></pagination>
 </div>

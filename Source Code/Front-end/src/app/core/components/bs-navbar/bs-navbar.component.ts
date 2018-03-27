@@ -65,12 +65,13 @@ export class BsNavbarComponent implements OnInit {
           this.user = data;
           this.userName = this.user.lastName + ' ' + this.user.firstName;
           this.email = this.user.email;
-          setTimeout( () => {
+          // setTimeout( () => {
             this.hasStore = data.hasStore;
             if(this.hasStore === true) {
-              this.urls.push({name: 'Upload sản phẩm', url: 'user', param: 'upload'});
+              this.urls.push({name: 'Upload sản phẩm', url: 'user', param: [this.email.split('@')[0], 'upload']});
+              console.log("111");
             }
-          }, 0);
+          // }, 0);
       });
   }
 
