@@ -88,14 +88,14 @@ namespace BusinessLayer.Services
             }
         }
         //Search Paging
-        public PagingReturnDto<ProductDto> SearchPaging(string searchString, int page, int? count)
+        public PagingReturnDto<ProductDto> SearchPaging(string searchString, int page, int? count, bool sortByRating)
         {
             try
             {
                 var productsByProductName = _unitOfWork.Products.GetProductsByName(searchString).ToList();
                 if (productsByProductName.Any())
                 {
-                    return _productService.ChangeProductsToPagingReturnDto(page, count, productsByProductName,true);
+                    return _productService.ChangeProductsToPagingReturnDto(page, count, productsByProductName);
                 }
                 else
                 {
@@ -103,7 +103,7 @@ namespace BusinessLayer.Services
                     if (productsByStoreInfo.Any())
                     {
 
-                        return _productService.ChangeProductsToPagingReturnDto(page, count, productsByStoreInfo,true);
+                        return _productService.ChangeProductsToPagingReturnDto(page, count, productsByStoreInfo);
                     }
                     else
                     {
@@ -125,7 +125,7 @@ namespace BusinessLayer.Services
                 var topProducts = _unitOfWork.Products.GetAll().OrderByDescending(x=>x.Rating).ToList();
                 if (topProducts.Any())
                 {
-                    return _productService.ChangeProductsToPagingReturnDto(1, count, topProducts,true);
+                    return _productService.ChangeProductsToPagingReturnDto(1, count, topProducts);
                 }
                 else
                 {
@@ -146,8 +146,9 @@ namespace BusinessLayer.Services
                 List<Guid?> favoriteList = _unitOfWork.FavoriteLists.GetManyQueryable(x => x.UserId == userId).Select(x => x.ProductId).ToList();
                 if (favoriteList.Any())
                 {
-                    var products = _unitOfWork.Products.GetProductsByListId(favoriteList).ToList();
-                    return _productService.ChangeProductsToPagingReturnDto(1, count, products, true);
+                    var products = _unitOfWork.Products.GetProductsByListId(favoriteList)
+                        .OrderByDescending(x=>x.Rating).ToList();
+                    return _productService.ChangeProductsToPagingReturnDto(1, count, products);
                 }
                 else
                 {
@@ -161,45 +162,90 @@ namespace BusinessLayer.Services
         }
 
         //Filter 
-        //public PagingReturnDto<ProductDto> FilterByLocation(string searchString, int page, int? count, 
-        //                                                    double currentLatitude, double currentLongitude)
-        public PagingReturnDto<ProductDto> FilterByLocation(string searchString, int page, int? count,
-                                                            double currentLatitude, double currentLongitude)
+        public PagingReturnDto<ProductDto> Searching(SearchParam searchParam)
         {
             try
             {
-                var productsByProductName =
-                    _unitOfWork.Products.GetProductsByName(searchString)
-                        .GroupBy(x => x.StoreId)
-                        .Select(x => x.FirstOrDefault());
-                                           
-                if (!productsByProductName.Any())
-                {
-                    productsByProductName = _unitOfWork.Products.SearchByStoreInfo(searchString).ToList();
-                }
-                List<Guid> listStoreId = new List<Guid>();
-                foreach (var p in productsByProductName)
-                {
-                    listStoreId.Add(p.StoreId.GetValueOrDefault());
-                }
+                //search without filter
+                bool searchByStore = false;
+                var products =
+                    _unitOfWork.Products.GetProductsByName(searchParam.searchString);
 
-                var storesSortByDistance = _locationService.FilterNearestLocations(currentLatitude, currentLongitude, listStoreId);
-                Guid[] listStoreIdSort = new Guid[storesSortByDistance.Count];
-                for(int i=0;i<storesSortByDistance.Count;i++)
+                if (!products.Any())
                 {
-                    listStoreIdSort[i] = storesSortByDistance[i].location.StoreId.GetValueOrDefault();
+                    products = _unitOfWork.Products.SearchByStoreInfo(searchParam.searchString);
+                    searchByStore = true;
                 }
-                var productsSortByDistance = productsByProductName.OrderBy(x =>
+                //filter
+               
+                if (searchParam.filterOption.categories)
                 {
-                    return Array.IndexOf(listStoreIdSort, x.StoreId);
-                }).ToList();
-                return _productService.ChangeProductsToPagingReturnDto(1, count, productsSortByDistance, false);
+                    products =
+                        products.Where(x => searchParam.categoriesListId.Contains(x.CategoryId.GetValueOrDefault()));
+                }
+                if (searchParam.filterOption.districts)
+                {
+                    products = FiterByDistricts(products, searchParam.districtList);
+                }
+                if (searchParam.filterOption.rating)
+                {
+                    products = products.OrderByDescending(x => x.Rating);
+                }
+                if (searchParam.filterOption.location)
+                {
+                    if (!searchByStore)
+                    {
+                        products = products.GroupBy(x => x.StoreId).Select(x => x.FirstOrDefault());
+                    }
+                    products = FiterByLocation(products, searchParam.currentLatitude, searchParam.currentLongitude);
+                }
+                //conver to DTO
+                var results = _productService.ChangeProductsToPagingReturnDto(searchParam.page, searchParam.count, products.ToList());
+                return results;
             }
             catch (Exception e)
             {
                 return null;
             }
         }
+
+        #region Fiter method
+        public IEnumerable<Product> FiterByLocation(IEnumerable<Product> products, 
+                                                    double currentLatitude, double currentLongitude)
+        {
+            List<Guid> listStoreId = new List<Guid>();
+            foreach (var p in products)
+            {
+                listStoreId.Add(p.StoreId.GetValueOrDefault());
+            }
+            var storesSortByDistance = _locationService.FilterNearestLocations
+                                        (currentLatitude, currentLongitude, listStoreId);
+            Guid[] listStoreIdSort = new Guid[storesSortByDistance.Count];
+
+            for (int i = 0; i < storesSortByDistance.Count; i++)
+            {
+                listStoreIdSort[i] = storesSortByDistance[i].location.StoreId.GetValueOrDefault();
+            }
+            var productsSortByDistance = products.OrderBy(x =>
+            {
+                return Array.IndexOf(listStoreIdSort, x.StoreId);
+            });
+            return productsSortByDistance;
+        }
+
+        public IEnumerable<Product> FiterByDistricts(IEnumerable<Product> products, List<string> districts)
+        {
+            List<Guid> listStoreId = new List<Guid>();
+            foreach (var p in products)
+            {
+                listStoreId.Add(p.StoreId.GetValueOrDefault());
+            }
+            List<Guid> storesFilterId = _unitOfWork.Stores.GetManyQueryable(x => listStoreId.Contains(x.Id))
+                .Where(x=> districts.Contains(x.District)).Select(x=>x.Id).ToList();
+            products = products.Where(x => storesFilterId.Contains(x.StoreId.GetValueOrDefault()));
+            return products;
+        }
+        #endregion
 
     }
 }

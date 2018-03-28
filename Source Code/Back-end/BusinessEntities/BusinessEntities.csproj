@@ -49,6 +49,7 @@
     <Compile Include="ProductImageBusinessEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReviewBusinessEntity.cs" />
+    <Compile Include="SearchParam.cs" />
     <Compile Include="StoreAddressBusinessEntity.cs" />
     <Compile Include="LocationBusinessEntity.cs" />
     <Compile Include="StoreBusinessEntity.cs" />

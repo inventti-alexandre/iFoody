@@ -11,9 +11,8 @@ namespace BusinessLayer.IServices
         IEnumerable<ProductDto> SearchByStoreInfo(string searchString);
         IEnumerable<ProductDto> SearchByCategoryName(string categoryName);
         PagingReturnDto<ProductDto> SuggestionListByUserId(Guid userId, int? count);
-        PagingReturnDto<ProductDto> SearchPaging(string searchString, int page, int? count);
+        PagingReturnDto<ProductDto> SearchPaging(string searchString, int page, int? count, bool sortByRating);
         PagingReturnDto<ProductDto> TopRatingProducts(int? count);
-        PagingReturnDto<ProductDto> FilterByLocation(string searchString, int page, int? count, 
-                                                     double currentLatitude, double currentLongitude);
+        PagingReturnDto<ProductDto> Searching(SearchParam searchParam);
     }
 }

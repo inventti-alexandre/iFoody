@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using BusinessEntities;
 using BusinessLayer.IServices;
 
 namespace WebApi.ApiController
@@ -75,14 +76,13 @@ namespace WebApi.ApiController
             }
         }
         //Search paging
-        // GET api/search/?searchString=?&page=?&count={?}
-        // /api/search/?searchString=trà&page=1&count -->khong truyen count
+        // GET /api/search/?searchString=trà&page=1&count=5&sortByRating=true|false
         [HttpGet]
-        public IHttpActionResult SearchPaging(string searchString, int page, int? count)
+        public IHttpActionResult SearchPaging(string searchString, int page, bool sortByRating, int? count)
         {
             try
             {
-                var products = _searchService.SearchPaging(searchString, page, count);
+                var products = _searchService.SearchPaging(searchString, page, count, sortByRating);
                 if (products == null)
                 {
                     return NotFound(); // Returns a NotFoundResult
@@ -129,26 +129,20 @@ namespace WebApi.ApiController
             {
                 return NotFound();
             }
-        }
-        // GET api/search/?count={?}
-        [HttpGet]
-        public IHttpActionResult FilterByLocation(string searchString, int page, int? count,
-                                                  double currentLatitude, double currentLongitude)
+        }       
+        [HttpPost]
+        public IHttpActionResult Searching([FromBody]  SearchParam searchParam)
         {
             try
             {
-                var products = _searchService.FilterByLocation(searchString, page, count, currentLatitude,
-                    currentLongitude);
-                if (products == null)
-                {
-                    return NotFound(); // Returns a NotFoundResult
-                }
-                return Ok(products);  // Returns an OkNegotiatedContentResult
+                return Ok(_searchService.Searching(searchParam));                
             }
             catch (Exception e)
             {
                 return NotFound();
             }
+
         }
+       
     }
 }
