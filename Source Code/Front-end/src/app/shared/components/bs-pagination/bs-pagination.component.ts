@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'bs-pagination',
@@ -7,11 +7,24 @@ import { Component, Output, EventEmitter } from '@angular/core';
 })
 export class BsPaginationComponent  {
   @Output() targetPage = new EventEmitter();
-  public maxSize = 5;
-  public bigTotalItems = 175;
+  @Input('maxSize') maxSize;
+  @Input('bigTotalItems') bigTotalItems;
   public bigCurrentPage = 1;
   public numPages = 0;
+  Dau: string;
+  Cuoi: string;
+  Sau: string;
+  Truoc: string;
   
+  constructor() {
+    this.maxSize = 5;
+    this.bigTotalItems = 35;  // Above Round
+    this.Dau = "Đầu";
+    this.Cuoi = "Cuối";
+    this.Sau = "Sau";
+    this.Truoc = "Trước";
+  }
+
   changePage(page: any) {
     this.targetPage.emit(page.target.innerText);
   }

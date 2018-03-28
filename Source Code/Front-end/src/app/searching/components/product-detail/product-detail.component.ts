@@ -45,7 +45,7 @@ export class ProductDetailComponent implements OnInit {
       this.getProductDetail();
     });
   }
-  getProductDetail = () => {
+  getProductDetail = () => {  
     this._productService
       .GetProductById(this.productId)
       .subscribe((data: Response) => {
@@ -79,7 +79,7 @@ export class ProductDetailComponent implements OnInit {
           }
         });
       });
-  };
+  }
 
 
   addFavoriteItem() {

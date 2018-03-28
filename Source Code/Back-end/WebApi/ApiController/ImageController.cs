@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.IServices;
 using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -19,6 +20,7 @@ namespace WebApi.ApiController
 
         // GET api/image
         [HttpGet]
+        [Route("api/image/getAll")]
         public HttpResponseMessage Get()
         {
             try
@@ -36,8 +38,9 @@ namespace WebApi.ApiController
             }
         }
 
-        // Get api/image/?id=
+        // GET api/image/{id}
         [HttpGet]
+        [Route("api/image/{id?}")]
         public HttpResponseMessage Get(Guid id)
         {
             try
@@ -53,6 +56,46 @@ namespace WebApi.ApiController
             {
                 return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Unexception Error!");
 
+            }
+        }
+
+        // GET api/image/product
+        [HttpGet]
+        [Route("api/image/products")]
+        public HttpResponseMessage GetAllProductImages()
+        {
+            try
+            {
+                var images = _imageService.GetAllProductImages().ToList();
+                if (images.Any())
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, images);  // Returns an OkNegotiatedContentResult
+                }
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Products not found");
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Unexception Error!");
+            }
+        }
+
+        // GET api/image/stores
+        [HttpGet]
+        [Route("api/image/stores")]
+        public HttpResponseMessage GetAllStoreImages()
+        {
+            try
+            {
+                var images = _imageService.GetAllStoreImages().ToList();
+                if (images.Any())
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, images);  // Returns an OkNegotiatedContentResult
+                }
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Stores not found");
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Unexception Error!");
             }
         }
 

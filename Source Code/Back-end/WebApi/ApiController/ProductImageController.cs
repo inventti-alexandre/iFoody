@@ -15,9 +15,9 @@ namespace WebApi.ApiController
     public class ProductImageController : System.Web.Http.ApiController
     {
         //private readonly IProductService _productServices;
-        private readonly IProductImagesService _productImageService;
+        private readonly IProductImageService _productImageService;
     
-        public ProductImageController(IProductImagesService productImageService)
+        public ProductImageController(IProductImageService productImageService)
         {
             _productImageService = productImageService;
 

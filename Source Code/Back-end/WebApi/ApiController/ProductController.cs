@@ -1,6 +1,9 @@
-﻿using BusinessEntities;
+﻿using AutoMapper;
+using BusinessEntities;
+using BusinessLayer.DTOs;
 using BusinessLayer.IServices;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -15,12 +18,14 @@ namespace WebApi.ApiController
         //private readonly IProductService _productServices;
         private readonly IProductService _productService;
         private readonly IReviewService _reviewService;
+        private readonly IUploadService _uploadService;
 
 
-        public ProductController(IProductService productServices, IReviewService reviewService)
+        public ProductController(IProductService productServices, IReviewService reviewService, IUploadService uploadService)
         {
             _productService = productServices;
             _reviewService = reviewService;
+            _uploadService = uploadService;
         }
 
         // GET api/product
@@ -83,6 +88,7 @@ namespace WebApi.ApiController
         }
         // GET api/product/?categoryId=?&page=?&count={?}
         [HttpGet]
+        [Route("api/product/{categoryId?}/{page?}/{count?}")]
         public IHttpActionResult GetProductByCategoryPaging(Guid categoryId, int page, int? count)
         {
             try
@@ -211,17 +217,31 @@ namespace WebApi.ApiController
 
         //POST api/product
         [HttpPost]
-        public IHttpActionResult Post([FromBody] ProductBusinessEntity productEntity)
+        [Route("api/product")]
+        public HttpResponseMessage Post([FromBody] UploadProductDto uploadProductDto)
         {
             try
             {
-                return Ok(_productService.CreateProduct(productEntity));
+                if (uploadProductDto == null)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Cannot Upload Product");
+                }
+
+                var authToken = Request.Headers.GetValues("Token").FirstOrDefault();
+                // var userToken = _tokenService.GetUserId(authToken);
+
+               // Mapper.CreateMap<UploadProductDto, ProductBusinessEntity>();
+                // var productEntity = Mapper.Map<UploadProductDto, ProductBusinessEntity>(uploadProductDto);
+
+                var productId = _productService.CreateProduct(uploadProductDto);
+
+                /////////////////////////////////
+                return Request.CreateResponse(HttpStatusCode.OK, productId);
             }
             catch (Exception e)
             {
-                return NotFound();
+                return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Error unexpected");
             }
-
         }
 
         // DELETE api/product/?id=

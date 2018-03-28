@@ -20,5 +20,8 @@ namespace BusinessLayer.IServices
         dynamic GetLocationFromAddress(string input);
         List<LocationWithDistanceDto>FilterNearestLocations(double currentLatitude, double currentLongitude, List<Guid> storeIds);
 
+
+        // Get All Locations
+        IEnumerable<LocationBusinessEntity> GetAllLocations();
     }
 }

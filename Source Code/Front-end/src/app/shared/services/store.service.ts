@@ -32,9 +32,12 @@ export class StoreService {
   }
 
   public GetStoreByUserId(userId:string): Observable<any> {
+    console.log('userId',userId);
     if(userId != null) {
+      console.log(this.storeControllerUrl + "/?userId=" + userId.replace(/['"]+/g, ''));
       return this._http.get(this.storeControllerUrl + "/?userId=" + userId.replace(/['"]+/g, ''))
-            .map((response: Response) => <any>response.json());
+            .map((response: Response) =>
+              <any>response.json());
     }
   } 
 
