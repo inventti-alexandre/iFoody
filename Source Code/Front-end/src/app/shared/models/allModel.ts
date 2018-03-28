@@ -37,6 +37,7 @@ export interface IStore{
     city: string;
     categoryId: string;
     userId: string;
+}
 export interface IStore {
   id: string;
   name: string;
