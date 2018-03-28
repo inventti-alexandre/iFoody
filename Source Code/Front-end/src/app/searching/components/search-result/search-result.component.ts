@@ -18,15 +18,22 @@ export class SearchResultComponent implements OnInit {
   public initPage;
   public initCount;
   public searchString;
+  public filterOption:{};
+
   constructor(private _searchService: SearchService, private router: ActivatedRoute,) {
     this.products = [];
     this.initPage = 1;
     this.initCount = 20;
-    // this.searchString = "trà";
+    this.filterOption={
+      1:'location',
+      2:'categories',
+      3:'districts',
+      4:'rating'
+    }
   }
   getSearchPaging(searchString,initPage) {
     if(this.searchString != null) {
-      return this._searchService.SearchPaging(searchString,initPage,this.initCount)
+      return this._searchService.SearchPaging(searchString,initPage,false,this.initCount)
         .subscribe((data: Response) => {
           if(this.products.length!==0){
             this.products.splice(0, 1, data);
@@ -45,6 +52,8 @@ export class SearchResultComponent implements OnInit {
       console.log('searchString ', this.searchString);
       this.getSearchPaging(this.searchString,this.initPage);
     });
+    // let test = this.filterOption[1];
+    // console.log("filterOption", test);
   }
   seeMore(searchString, targetPage, totalPage){
     if(targetPage<=totalPage){

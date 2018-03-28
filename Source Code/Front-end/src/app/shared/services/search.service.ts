@@ -17,7 +17,7 @@ export class SearchService {
     return (p = p.replace(/['"]+/g, ""));
   }
 
-  public SearchPaging = (searchString, page, count?): Observable<any> => {
+  public SearchPaging = (searchString, page, sortByRating, count?): Observable<any> => {
     let listProduct=[];
     let url;
     if (count) {
@@ -27,6 +27,8 @@ export class SearchService {
         searchString +
         "&page=" +
         page +
+        "&sortByRating=" +
+        sortByRating +
         "&count=" +
         count;
     } else {
@@ -36,6 +38,8 @@ export class SearchService {
         searchString +
         "&page=" +
         page +
+        "&sortByRating=" +
+        sortByRating +
         "&count";
     }
     return this._http
@@ -74,7 +78,7 @@ export class SearchService {
         listProduct.push(x);
       });
   }
-  
+
   public SuggestListByRating = (count?): Observable<any> => {
     let listProduct = [];
     let url;

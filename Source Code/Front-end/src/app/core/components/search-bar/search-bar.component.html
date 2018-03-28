@@ -1,7 +1,7 @@
 <div class=" searchBar input-group" id="searchBarParents">
   <div class="" id="searchNameBarParents">
-    <input [(ngModel)]="searchString" class="form-control searchBar__byName" name="name" placeholder="Món ăn, địa điểm, loại hình ..."
-      autocomplete="off" (ngModelChange)="getSearchPaging(searchString,defaultPageResult)" (click)="searchString==''?getSuggestionList():false"
+    <input [(ngModel)]="searchString" class="form-control searchBar__byName" name="name" placeholder="Món ăn, địa điểm..." autocomplete="off"
+      (ngModelChange)="getSearchPaging(searchString,defaultPageResult)" (click)="searchString==''?getSuggestionList():false"
     />
     <!-- GỢI Ý SẢN PHẨM -->
     <div class="parents-well">

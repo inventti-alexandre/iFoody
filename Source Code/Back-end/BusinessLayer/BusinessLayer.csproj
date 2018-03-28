@@ -67,6 +67,7 @@
     <Compile Include="DTOs\FileUploadResult.cs" />
     <Compile Include="DTOs\HttpPostedFileBaseCustom.cs" />
     <Compile Include="DTOs\ImageDto.cs" />
+    <Compile Include="DTOs\LocationWithDistanceDto.cs" />
     <Compile Include="DTOs\OpenStoreDto.cs" />
     <Compile Include="DTOs\PagingReturnDto.cs" />
     <Compile Include="DTOs\ProductDto.cs" />

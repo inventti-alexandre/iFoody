@@ -127,6 +127,7 @@ export class SearchBarComponent implements OnInit {
       .SearchPaging(
         trimSearchString.replace(/ +(?= )/g,''),
         initPage,
+        false,
         this.defaultSuggestionCount
       )
       .subscribe(

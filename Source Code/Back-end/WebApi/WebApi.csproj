@@ -362,6 +362,22 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Uploads\13646_TheCoffeeHouse.jpg" />
+    <Content Include="Content\Uploads\cafe-sua-da.jpg" />
+    <Content Include="Content\Uploads\hoc-dan-guitar-vong-tron-bac-5.jpg" />
+    <Content Include="Content\Uploads\photo-1-1508905312475.jpg" />
+    <Content Include="Content\Uploads\post_ca74ba3a2a31438b8ff1da59f32a0624_large - Copy - Copy.jpg" />
+    <Content Include="Content\Uploads\Stores\87e336c9-3af8-499f-a8f7-7592f6b2b11b\f8b76345-ede0-40ff-a387-ba3a599ea1d9\cafe-đa-1.jpg" />
+    <Content Include="Content\Uploads\Stores\87e336c9-3af8-499f-a8f7-7592f6b2b11b\f8b76345-ede0-40ff-a387-ba3a599ea1d9\cafe-đa-2.jpg" />
+    <Content Include="Content\Uploads\Stores\87e336c9-3af8-499f-a8f7-7592f6b2b11b\the-coffee-house-30-1.jpg" />
+    <Content Include="Content\Uploads\Stores\87e336c9-3af8-499f-a8f7-7592f6b2b11b\the-coffee-house-30-2.jpg" />
+    <Content Include="Content\Uploads\Stores\cf5c4694-821a-4ba3-bd12-5389efb7ca08\5e37dfb9-2b38-46fd-a3c1-eb7890ef0156\cafe-sữa-đá-11-1.jpg" />
+    <Content Include="Content\Uploads\Stores\cf5c4694-821a-4ba3-bd12-5389efb7ca08\5e37dfb9-2b38-46fd-a3c1-eb7890ef0156\cafe-sữa-đá-11-2.jpg" />
+    <Content Include="Content\Uploads\Stores\cf5c4694-821a-4ba3-bd12-5389efb7ca08\808971af-9267-460e-b952-d86e42b384f1\cong-thuc-matcha-da-xay-3 - Copy.jpg" />
+    <Content Include="Content\Uploads\Stores\cf5c4694-821a-4ba3-bd12-5389efb7ca08\808971af-9267-460e-b952-d86e42b384f1\cong-thuc-matcha-da-xay-3.jpg" />
+    <Content Include="Content\Uploads\Stores\cf5c4694-821a-4ba3-bd12-5389efb7ca08\eae2a4dd-3b61-466b-81ac-fa0aeab85c6d\cafe-sua-đa-12-1.jpg" />
+    <Content Include="Content\Uploads\Stores\cf5c4694-821a-4ba3-bd12-5389efb7ca08\eae2a4dd-3b61-466b-81ac-fa0aeab85c6d\cafe-sua-đa-12-2.jpg" />
+    <Content Include="Content\Uploads\thuong-hieu-ca-phe-the-coffee-house-o-ha-noi - Copy - Copy.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -390,6 +406,9 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Uploads\Stores\cf5c4694-821a-4ba3-bd12-5389efb7ca08\80a3c80f-3a56-4eaf-a262-873f52fd14ea\Cafe-Sữa-Đá-1jpg" />
+    <Content Include="Content\Uploads\Stores\cf5c4694-821a-4ba3-bd12-5389efb7ca08\be8930c2-035c-45c7-807c-66b0618fe9b5\Cafe-Sữa-Đá-2-1jpg" />
+    <Content Include="Content\Uploads\Stores\cf5c4694-821a-4ba3-bd12-5389efb7ca08\be8930c2-035c-45c7-807c-66b0618fe9b5\Cafe-Sữa-Đá-2-2jpg" />
     <None Include="Properties\PublishProfiles\iFoody-Interserver-Publish.pubxml" />
     <None Include="Properties\PublishProfiles\iFoody-Publish-API.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

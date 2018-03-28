@@ -40,7 +40,7 @@ namespace DataModel.Repository
             return _iFoodyContext.Database.SqlQuery<Product>(sql).AsQueryable();
         }
 
-      //Search by category name
+        //Search by category name
         public IEnumerable<Product> SearchByCategoryName(string categoryName)
         {
             IEnumerable<Guid> listCategoriesId = _iFoodyContext.Categories.Where(x => x.Name.Contains(categoryName))
