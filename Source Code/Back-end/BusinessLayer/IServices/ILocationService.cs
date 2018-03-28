@@ -17,5 +17,8 @@ namespace BusinessLayer.IServices
 
         // Convert Address to Location
         dynamic GetLocationFromAddress(string input);
+
+        // Get All Locations
+        IEnumerable<LocationBusinessEntity> GetAllLocations();
     }
 }

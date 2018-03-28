@@ -224,49 +224,17 @@ namespace WebApi.ApiController
             {
                 if (uploadProductDto == null)
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Cannot Open Store");
+                    return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Cannot Upload Product");
                 }
 
                 var authToken = Request.Headers.GetValues("Token").FirstOrDefault();
                 // var userToken = _tokenService.GetUserId(authToken);
 
-                Mapper.CreateMap<UploadProductDto, ProductBusinessEntity>();
-                var productEntity = Mapper.Map<UploadProductDto, ProductBusinessEntity>(uploadProductDto);
+               // Mapper.CreateMap<UploadProductDto, ProductBusinessEntity>();
+                // var productEntity = Mapper.Map<UploadProductDto, ProductBusinessEntity>(uploadProductDto);
 
-                // Save Store
-                // storeDto.RegistrationDate = DateTime.Today;
-                var productId = _productService.CreateProduct(productEntity);
-                /////////////////////////////
-                // Save Store Image
-                var imageUploadList = new List<FileUploadResult>();
-                foreach (var image in uploadProductDto.Images)
-                {
-                    //var imageString = _uploadService.Base64Decode(image.);
-                    //byte[] bytes = Encoding.ASCII.GetBytes(imageString);
-                    imageUploadList.Add(image);
-                }
+                var productId = _productService.CreateProduct(uploadProductDto);
 
-                if (imageUploadList.Any())
-                {
-                    _uploadService.UploadFile(imageUploadList);
-                }
-
-                //_userService.UpdateHasStoreProperty(storeDto.UserId.GetValueOrDefault());
-                ///////////////////////
-                // Insert Location to DB
-                //var location = _locationService.GetLocationFromAddress(storeDto.Address);
-
-                //var locationBusinessEntity = new LocationBusinessEntity()
-                //{
-                //    Latitude = System.Convert.ToDecimal(location.GetType().GetProperty("Latitude").GetValue(location, null)),
-                //    Longitude = System.Convert.ToDecimal(location.GetType().GetProperty("Longitude").GetValue(location, null)),
-                //    StoreId = storeId
-                //};
-                //if (!_locationService.InsertLocation(locationBusinessEntity))
-                //{
-                //    return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed,
-                //        "Cannot Insert Location to Table");
-                //};
                 /////////////////////////////////
                 return Request.CreateResponse(HttpStatusCode.OK, productId);
             }
@@ -274,15 +242,6 @@ namespace WebApi.ApiController
             {
                 return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Error unexpected");
             }
-            //try
-            //{
-            //    return Ok(_productService.CreateProduct(productEntity));
-            //}
-            //catch (Exception e)
-            //{
-            //    return NotFound();
-            //}
-
         }
 
         // DELETE api/product/?id=

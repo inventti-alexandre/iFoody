@@ -1,7 +1,16 @@
 import { IUploadProduct } from './../../shared/models/allModel';
 import { ProductService } from './../../shared/services/product.service';
 import { StoreService } from '../../shared/services/store.service';
-import { Component, OnInit, ViewChild, ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
+import {
+   Component, 
+   OnInit, 
+   ViewChild, 
+   ComponentFactoryResolver, 
+   ViewContainerRef,
+   ViewChildren, 
+   ElementRef, 
+   QueryList, 
+   OnChanges} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import * as apiUrl from '../../constant/apiUrl';
 import * as model from '../../shared/models/allModel';
@@ -20,9 +29,11 @@ export class ProductUploadComponent implements OnInit {
   newProduct: model.IUploadProduct;
   categories: any[];
   storeId: string;
-  @ViewChild(FileUploadComponent) fileUpload;
+  storeName: string;
+  // @ViewChild(FileUploadComponent) fileUpload;
+  @ViewChildren(FileUploadComponent) fileUploadComponent: QueryList<any>;
   fileUploads: any[];
-  @ViewChild('newUpload',{ read: ViewContainerRef }) newUpload: ViewContainerRef;
+  // @ViewChild('newUpload',{ read: ViewContainerRef }) newUpload: ViewContainerRef;
   
   // store: string;
 
@@ -31,7 +42,8 @@ export class ProductUploadComponent implements OnInit {
     private _categoryService:CategoryService,
     private _productService: ProductService,
     private componentFactoryResolver: ComponentFactoryResolver,
-    private router: Router
+    private router: Router,
+    private elRef: ElementRef
   ) { 
     this.userId = localStorage.getItem(apiUrl.UserId);
     this.categories = [];
@@ -39,42 +51,43 @@ export class ProductUploadComponent implements OnInit {
     this._storeService.GetStoreByUserId(this.userId).subscribe(data=> {
       console.log(data);
       this.storeId = data.id;
+      this.storeName = data.name;
     });
   }
   
-  createProduct=(info)=>{
-    // let product={
-    //   id:null,
-    //   name:info.name,
-    //   price:info.price,
-    //   description:info.decription,
-    //   categoryId:info.type,
-    //   storeId: this.store,
-    //   rating: null,
-    //   ratingCount: null,
-    //   images: null
-    // };
-    console.log('info', info);
-    // this.newProduct.id = null;
-    this.newProduct = info;
-    this.newProduct.storeId = this.storeId;
-    this.newProduct.rating = null;
-    this.newProduct.ratingCount = null;
-    this.newProduct.images = this.fileUploads;
-    // this.newProduct.images = null;
-    console.log('newproduct', this.newProduct);
+  // createProduct=(info)=>{
+  //   // let product={
+  //   //   id:null,
+  //   //   name:info.name,
+  //   //   price:info.price,
+  //   //   description:info.decription,
+  //   //   categoryId:info.type,
+  //   //   storeId: this.store,
+  //   //   rating: null,
+  //   //   ratingCount: null,
+  //   //   images: null
+  //   // };
+  //   console.log('info', info);
+  //   // this.newProduct.id = null;
+  //   this.newProduct = info;
+  //   this.newProduct.storeId = this.storeId;
+  //   this.newProduct.rating = null;
+  //   this.newProduct.ratingCount = null;
+  //   this.newProduct.images = this.fileUploads;
+  //   // this.newProduct.images = null;
+  //   console.log('newproduct', this.newProduct);
     
-    // this.newProduct.name = info.name;
-    // this.newProduct.price = info.price;
-    // this.newProduct.description = info.description;
-    // this.newProduct.categoryId = info.categoryId;
-    // this.newProduct.storeId = info.storeId;
-    // this.newProduct.rating = null;
-    // this.newProduct.ratingCount = null;
-    // this.newProduct.images = null;
-    // console.log('newproduct', this.newProduct);
-    // this.newProduct = product;
-  }
+  //   // this.newProduct.name = info.name;
+  //   // this.newProduct.price = info.price;
+  //   // this.newProduct.description = info.description;
+  //   // this.newProduct.categoryId = info.categoryId;
+  //   // this.newProduct.storeId = info.storeId;
+  //   // this.newProduct.rating = null;
+  //   // this.newProduct.ratingCount = null;
+  //   // this.newProduct.images = null;
+  //   // console.log('newproduct', this.newProduct);
+  //   // this.newProduct = product;
+  // }
 
   // onSubmit(event) {
   //   if(event.detail===1){ // check double click 
@@ -105,29 +118,48 @@ export class ProductUploadComponent implements OnInit {
     this._categoryService.GetAll().subscribe(data=>{
       this.categories = data;
     });
+    console.log("this.storeId", this.storeId);
+    this.uploadProductForm.patchValue({'storeId': this.storeId});
+    
+  }
+
+  checkFormValid() { 
+    console.log("checkFormValid works");
+    if(this.uploadProductForm.get('name').value &&
+    this.uploadProductForm.get('price').value &&
+    this.uploadProductForm.get('categoryId').value &&
+    this.uploadProductForm.get('storeId').value &&
+    this.uploadProductForm.get('images').value)
+    {
+      this.elRef.nativeElement.querySelector(".btn-upload").disabled = false;
+    }
+    else { 
+      this.elRef.nativeElement.querySelector(".btn-upload").disabled = true;
+    }
   }
 
   // Tuan made - Handle Images Upload
   handleFile(imageContent) {
-    console.log("handleFile works");
-    console.log(this.fileUpload);
-    this.fileUploads.push(
-      {'localFilePath': '',
-      'fileName': this.fileUpload.file.name,
-      'fileType': this.fileUpload.file.type,
-      'fileLength': this.fileUpload.file.size,
-      'fileContent': this.fileUpload.imageSrc
-    });
-    console.log("handleFile22 works");
-    this.uploadProductForm.patchValue({'images': this.fileUploads});
+    // console.log("handleFile works");
+    // console.log(this.fileUpload);
+    // this.fileUploads.push(
+    //   {'localFilePath': '',
+    //   'fileName': this.fileUpload.file.name,
+    //   'fileType': this.fileUpload.file.type,
+    //   'fileLength': this.fileUpload.file.size,
+    //   'fileContent': this.fileUpload.imageSrc
+    // });
+    // console.log("handleFile22 works");
+    // this.uploadProductForm.patchValue({'images': this.fileUploads});
   }
 
   // Tuan made - Add more Upload Image
   addNewComponentEvent() {
-    console.log("addnew works");
-    let componentFactory = this.componentFactoryResolver.resolveComponentFactory(FileUploadComponent);
-    this.newUpload.createComponent(componentFactory);
+    // console.log("addnew works");
+    // let componentFactory = this.componentFactoryResolver.resolveComponentFactory(FileUploadComponent);
+    // this.newUpload.createComponent(componentFactory);
   }
+
 
   onSubmit(value: any) {
     if(value.detail===1){ // check double click 
@@ -138,33 +170,36 @@ export class ProductUploadComponent implements OnInit {
       if(!this.uploadProductForm.valid) {
         return this.uploadProductForm.reset();
       }
-     
-      // let openHour1 = this.convertTime(this.uploadProductForm.get('openHour').value).getHours().toString();
-      // let openHour2 = this.convertTime(this.uploadProductForm.get('openHour').value).getMinutes().toString();
-      // let openHour3 = this.convertTime(this.uploadProductForm.get('openHour').value).getSeconds().toString();
-      // let closeHour1 = this.convertTime(this.uploadProductForm.get('closeHour').value).getHours().toString();
-      // let closeHour2 = this.convertTime(this.uploadProductForm.get('closeHour').value).getMinutes().toString();
-      // let closeHour3 = this.convertTime(this.uploadProductForm.get('closeHour').value).getSeconds().toString();
-      // this.uploadProductForm.patchValue(
-      //   {'openHour': openHour1 + ':' + openHour2 + ':' + openHour3 ,
-      //   'closeHour': closeHour1 + ':' + closeHour2 + ':' + closeHour3 },
-      // );
-
-      // this._storeService.openStore(this.uploadProductForm.value)
-      //   .subscribe(response => {
-      //         alert("Đăng ký thành công!!!");
-      //         this.router.navigate(['/']);
-      //         console.log(response);
-      //         // location.reload();
-      //       });
-      //     }
-      this.createProduct(this.uploadProductForm.value);
-      this._productService.addNewProduct(this.newProduct).subscribe(
+      this.fileUploadComponent.forEach(component => {
+        if(component.imageSrc !== "") {
+          this.fileUploads.push(
+            {'localFilePath': '',
+            'fileName': component.file.name,
+            'fileType': component.file.type,
+            'fileLength': component.file.size,
+            'fileContent': component.imageSrc
+          });
+        }
+      });
+    
+      console.log("this.storeId", this.storeId);
+      this.uploadProductForm.patchValue({'storeId': this.storeId});
+   
+      this.uploadProductForm.patchValue({'images': this.fileUploads});
+      
+      // this.createProduct(this.uploadProductForm.value);
+      this._productService.addNewProduct(this.uploadProductForm.value).subscribe(
         (data) => {
           console.log("new product add success",data);
           alert("Thêm sản phẩm thành công");
           this.router.navigate(['/']);
-        });
+        },
+        error => {
+          console.log("error: ", error);
+          alert("Thông tin sản phẩm không chính xác. Xin nhập lại!");
+          this.uploadProductForm.reset();
+        }
+      );
     }
   }
 }

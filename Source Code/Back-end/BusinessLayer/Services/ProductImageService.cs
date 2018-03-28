@@ -10,7 +10,7 @@ using System.Transactions;
 
 namespace BusinessLayer.Services
 {
-    public class ProductImageService : IProductImagesService
+    public class ProductImageService : IProductImageService
     {
         private readonly IUnitOfWork _unitOfWork;
         //Constructor
@@ -47,15 +47,15 @@ namespace BusinessLayer.Services
 
         public Guid CreateProductImage(ProductImageBusinessEntity productImageEntity)
         {
-            using (var scope = new TransactionScope())
-            {
+            //using (var scope = new TransactionScope())
+            //{
                 Mapper.CreateMap<ProductImageBusinessEntity, ProductImage>().ForMember(x => x.Id, opt => opt.Ignore());
                 var productImage = Mapper.Map<ProductImageBusinessEntity, ProductImage>(productImageEntity);
                 _unitOfWork.ProductImages.Insert(productImage);
                 _unitOfWork.Complete();
-                scope.Complete();
+                //scope.Complete();
                 return productImage.Id;
-            }
+            //}
         }
 
         public bool DeleteProductImage(Guid ImageId)

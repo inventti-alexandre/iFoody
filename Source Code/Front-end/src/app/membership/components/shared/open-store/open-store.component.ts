@@ -4,7 +4,16 @@ import { Router } from '@angular/router';
 import { StoreService } from './../../../../shared/services/store.service';
 import { CategoryService } from '../../../../shared/services/category.service';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Component, ComponentFactoryResolver, OnInit, ViewContainerRef, ViewChild, ElementRef } from '@angular/core';
+import { 
+  Component, 
+  ComponentFactoryResolver, 
+  OnInit, 
+  ViewContainerRef, 
+  ViewChild, 
+  ElementRef, 
+  ViewChildren, 
+  QueryList 
+} from '@angular/core';
 import { ProductService } from '../../../../shared/services/product.service';
 import * as apiUrl from '../../../../constant/apiUrl';
 import { window } from 'rxjs/operators/window';
@@ -30,8 +39,10 @@ export class OpenStoreComponent implements OnInit {
   imageUpload: any;
   imageContentList: any[];
   @ViewChild(FileUploadComponent) fileUpload;
+  @ViewChildren(FileUploadComponent) fileUploadComponent: QueryList<any>;
   fileUploads: any[];
-  @ViewChild('newUpload',{ read: ViewContainerRef }) newUpload: ViewContainerRef;
+  // @ViewChild('newUpload',{ read: ViewContainerRef }) newUpload: ViewContainerRef;
+  // @ViewChild('newFileUpload',{ read: ViewContainerRef }) newFileUpload: ViewContainerRef;
   isEnoughFill = false;
 
   constructor(private _categoryService: CategoryService,
@@ -41,7 +52,7 @@ export class OpenStoreComponent implements OnInit {
               private componentFactoryResolver: ComponentFactoryResolver,
               private elRef: ElementRef
             ) {
-    
+
     this.userIdKey = apiUrl.UserId;
     this.userId = localStorage.getItem(this.userIdKey).replace(/['"]+/g,'');
     console.log(this.userId);
@@ -225,7 +236,6 @@ export class OpenStoreComponent implements OnInit {
   }
 
   ngOnInit() {
-    
     this.storeForm = new FormGroup({
       name: new FormControl(),
       categoryId: new FormControl(),
@@ -265,10 +275,10 @@ export class OpenStoreComponent implements OnInit {
   }
 
   onChangeCity(value) {
-    if(value === 1) {
+    if(value === "TpHCM") {
       this.districts = this.districtsTpHCM;
     }
-    if(value === 2) {
+    if(value === "Hà Nội") {
       this.districts = this.districtsHaNoi;
     }
     console.log(value);
@@ -301,8 +311,6 @@ export class OpenStoreComponent implements OnInit {
   }
 
   onSubmit(value: any) {
-    // console.log("onSubmit works");
-    // console.log('imagecontentlist: ', this.imageContentList);
     this.storeForm.patchValue({'userId': this.userId});
     if(!this.storeForm.valid) {
       return this.storeForm.reset();
@@ -320,34 +328,39 @@ export class OpenStoreComponent implements OnInit {
       {'openHour': openHour1 + ':' + openHour2 + ':' + openHour3 ,
       'closeHour': closeHour1 + ':' + closeHour2 + ':' + closeHour3 },
     );
-
+    this.fileUploadComponent.forEach(component => {
+      if(component.imageSrc !== "") {
+        this.fileUploads.push(
+          {'localFilePath': '',
+          'fileName': component.file.name,
+          'fileType': component.file.type,
+          'fileLength': component.file.size,
+          'fileContent': component.imageSrc
+        });
+      }
+    });
+    this.storeForm.patchValue({'images': this.fileUploads});
     this._storeService.openStore(this.storeForm.value)
-      .subscribe(response => {
+      .subscribe(
+        response => {
             alert("Đăng ký thành công!!!");
             this.router.navigate(['/']);
-            console.log(response);
             location.reload();
-          });
+          },
+        error => {
+            console.log('Response error ?!');
+            alert("Thông tin nhập vào không chính xác. Xin nhập lại!");
+            this.storeForm.reset();
+          }
+        );
   }
 
   handleFile(imageContent) {
-    console.log("handleFile works");
-    console.log(this.fileUpload);
-    this.fileUploads.push(
-      {'localFilePath': '',
-      'fileName': this.fileUpload.file.name,
-      'fileType': this.fileUpload.file.type,
-      'fileLength': this.fileUpload.file.size,
-      'fileContent': this.fileUpload.imageSrc
-    });
-    console.log("handleFile22 works");
-    this.storeForm.patchValue({'images': this.fileUploads});
   }
 
   addNewComponentEvent() {
-    console.log("addnew works");
     let componentFactory = this.componentFactoryResolver.resolveComponentFactory(FileUploadComponent);
-    this.newUpload.createComponent(componentFactory);
+    // this.newUpload.createComponent(componentFactory);
   }
 
   reload() {

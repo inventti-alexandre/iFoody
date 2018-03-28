@@ -15,11 +15,15 @@ namespace BusinessLayer.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly int _defaultPageRecordCount;
+        private readonly IUploadService _uploadService;
+        private readonly IProductImageService _productImageService;
 
         //Constructor
-        public ProductService(IUnitOfWork unitOfWork)
+        public ProductService(IUnitOfWork unitOfWork, IUploadService uploadService, IProductImageService productImageService)
         {
             _unitOfWork = unitOfWork;
+            _uploadService = uploadService;
+            _productImageService = productImageService;
             _defaultPageRecordCount = 10;
         }
 
@@ -175,20 +179,57 @@ namespace BusinessLayer.Services
             }
         }
 
-        // Store upload Product
-        public Guid? CreateProduct(ProductBusinessEntity productEntity)
+        // User upload Product into Store
+        public Guid? CreateProduct(UploadProductDto uploadProductDto)
         {
             try
             {
                 using (var scope = new TransactionScope())
                 {
+                    Mapper.CreateMap<UploadProductDto, Product>()
+                        .ForSourceMember(x => x.Images, opt => opt.Ignore());
+                    var product = Mapper.Map<UploadProductDto, Product>(uploadProductDto);
 
-                    //productEntity.Id = Guid.NewGuid();
-                    Mapper.CreateMap<ProductBusinessEntity, Product>().ForMember(x => x.Id, opt => opt.Ignore());
-                    var product = Mapper.Map<ProductBusinessEntity, Product>(productEntity);
                     _unitOfWork.Products.Insert(product);
                     _unitOfWork.Complete();
+
+                    ///////////////////Add to Image Table//////////////////////
+                    var imagesUploadList = new List<FileUploadResult>();
+                    var imageIds = new List<Guid>();
+
+                    foreach (var image in uploadProductDto.Images)
+                    {
+                        imagesUploadList.Add(image);
+                    }
+
+                    if (imagesUploadList.Any())
+                    {
+                        imageIds = _uploadService.UploadFile(imagesUploadList, false, product.StoreId.GetValueOrDefault(), product.Id, product.Name);
+                    }
+                    ///////////////////Add to StoreImage Table//////////////////////
+                    var imagesList =
+                          _unitOfWork.Images.GetManyQueryable(i => imageIds.Any(item => item == i.Id)).ToList();
+
+                    if (imagesList.Any())
+                    {
+                        var newProductImagesList = new List<StoreImageBusinessEntity>();
+
+                        foreach (var image in imagesList)
+                        {
+                            var newProductImageEntity = new ProductImageBusinessEntity()
+                            {
+                                ProductId = product.Id,
+                                ImageId = image.Id
+                            };
+                            _productImageService.CreateProductImage(newProductImageEntity);
+                        }
+                    }
+                    /////////////////////////////////////////////////////////////////
+                    _unitOfWork.Complete();
+
+
                     scope.Complete();
+
                     return product.Id;
                 }
             }
@@ -310,7 +351,7 @@ namespace BusinessLayer.Services
                 var allProducts = _unitOfWork.Products.GetAll().ToList();
                 if (allProducts.Any())
                 {
-                    return ChangeProductsToPagingReturnDto(page, count, allProducts,false);
+                    return ChangeProductsToPagingReturnDto(page, count, allProducts, false);
                 }
                 else
                 {
@@ -329,7 +370,7 @@ namespace BusinessLayer.Services
                 var allProducts = _unitOfWork.Products.GetManyQueryable(x => x.CategoryId == categoryId).ToList();
                 if (allProducts.Any())
                 {
-                    return ChangeProductsToPagingReturnDto(page, count, allProducts,false);
+                    return ChangeProductsToPagingReturnDto(page, count, allProducts, false);
                 }
                 else
                 {
@@ -442,11 +483,11 @@ namespace BusinessLayer.Services
             var products = new List<Product>();
             if (sortByRating)
             {
-                 products = allProducts
-                    .OrderByDescending(x => x.Rating)
-                    .Skip((takePage - 1) * takeCount)
-                    .Take(takeCount)
-                    .ToList();
+                products = allProducts
+                   .OrderByDescending(x => x.Rating)
+                   .Skip((takePage - 1) * takeCount)
+                   .Take(takeCount)
+                   .ToList();
             }
             else
             {
@@ -456,7 +497,7 @@ namespace BusinessLayer.Services
                           .Take(takeCount)
                           .ToList();
             }
-           
+
             // Map to DTO
             if (products.Any())
             {

@@ -16,12 +16,21 @@ namespace BusinessLayer.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUploadService _uploadService;
         private readonly ILocationService _locationService;
+        private readonly IStoreImageService _storeImageService;
+        private readonly IUserService _userService;
 
-        public StoreService(IUnitOfWork unitOfWork, IUploadService uploadService, ILocationService locationService)
+        public StoreService(
+            IUnitOfWork unitOfWork,
+            IUploadService uploadService,
+            ILocationService locationService,
+            IStoreImageService storeImageService,
+            IUserService userService)
         {
             _unitOfWork = unitOfWork;
             _uploadService = uploadService;
             _locationService = locationService;
+            _storeImageService = storeImageService;
+            _userService = userService;
         }
 
         // Get All Store
@@ -183,32 +192,80 @@ namespace BusinessLayer.Services
         }
 
         // User Open Store
-        public Guid? OpenStore(StoreDto storeDto)
+        public Guid? OpenStore(OpenStoreDto openStoreDto)
         {
             try
             {
-                if (storeDto != null)
+                if (openStoreDto != null)
                 {
-                    Mapper.CreateMap<StoreDto, StoreBusinessEntity>().ForSourceMember(x => x.Images, opt => opt.Ignore()); ;
-                    var storeEntity = Mapper.Map<StoreDto, StoreBusinessEntity>(storeDto);
+
+                    Mapper.CreateMap<OpenStoreDto, StoreBusinessEntity>().ForSourceMember(x => x.Images, opt => opt.Ignore());
+                    var storeEntity = Mapper.Map<OpenStoreDto, StoreBusinessEntity>(openStoreDto);
 
 
                     using (var scope = new TransactionScope())
                     {
 
+                        ///////////////////Add to Store Table//////////////////////
                         Mapper.CreateMap<StoreBusinessEntity, Store>()
                             .ForMember(x => x.Id, opt => opt.Ignore());
                         var store = Mapper.Map<StoreBusinessEntity, Store>(storeEntity);
-                        var location = _locationService.GetLocationFromAddress(store.Address);
-                        _unitOfWork.Stores.Insert(store);
 
+                        _unitOfWork.Stores.Insert(store);
                         _unitOfWork.Complete();
+
+                        ///////////////////Add to Location Table//////////////////////
+                        var fullAddress = store.Address + ' ' + store.District + ' ' + store.City;
+                        var location = _locationService.GetLocationFromAddress(fullAddress.Replace("\"", ""));
+                        var locationBusinessEntity = new LocationBusinessEntity()
+                        {
+                            Latitude = System.Convert.ToDecimal(location.GetType().GetProperty("Latitude").GetValue(location, null)),
+                            Longitude = System.Convert.ToDecimal(location.GetType().GetProperty("Longitude").GetValue(location, null)),
+                            StoreId = store.Id
+                        };
+                        _locationService.InsertLocation(locationBusinessEntity);
+                        _unitOfWork.Complete();
+
+                        ///////////////////Add to Image Table//////////////////////
+                        var imagesUploadList = new List<FileUploadResult>();
+                        var imageIds = new List<Guid>();
+
+                        foreach (var image in openStoreDto.Images)
+                        {
+                            imagesUploadList.Add(image);
+                        }
+
+                        if (imagesUploadList.Any())
+                        {
+                            imageIds = _uploadService.UploadFile(imagesUploadList, true, store.Id, Guid.Empty, store.Name);
+                        }
+                        ///////////////////Add to StoreImage Table//////////////////////
+                        var imagesList =
+                              _unitOfWork.Images.GetManyQueryable(i => imageIds.Any(item => item == i.Id)).ToList();
+
+                        if (imagesList.Any())
+                        {
+                            var newProductImagesList = new List<StoreImageBusinessEntity>();
+
+                            foreach (var image in imagesList)
+                            {
+                                var newStoreImageEntity = new StoreImageBusinessEntity()
+                                {
+                                    StoreId = store.Id,
+                                    ImageId = image.Id
+                                };
+                                _storeImageService.CreateStoreImage(newStoreImageEntity);
+                            }
+                        }
+                        /////////////////////////////////////////////////////////////////
+                        _userService.UpdateHasStoreProperty(openStoreDto.UserId.GetValueOrDefault());
+                        _unitOfWork.Complete();
+
                         scope.Complete();
 
                         return store.Id;
                     }
                 }
-
                 return null;
             }
             catch (Exception e)

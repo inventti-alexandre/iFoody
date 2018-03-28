@@ -91,5 +91,25 @@ namespace WebApi.ApiController
                 return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Got Exception");
             }
         }
+
+        // GET All api/store
+        [HttpGet]
+        [Route("getAllLocations")]
+        public HttpResponseMessage GetAllLocations()
+        {
+            try
+            {
+                var locations = _locationService.GetAllLocations().ToList();
+                if (!locations.Any())
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not Found Locations");
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, locations);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Expectation Failed");
+            }
+        }
     }
 }

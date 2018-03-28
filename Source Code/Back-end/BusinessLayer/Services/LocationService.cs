@@ -30,7 +30,7 @@ namespace BusinessLayer.Services
                 using (var scope = new TransactionScope())
                 {
                     var locations = _unitOfWork.Locations.GetManyQueryable(i => ids.Any(x => x.Equals(i.StoreId))).ToList();
-                        if (!locations.Any())
+                    if (!locations.Any())
                     {
                         return null;
                     }
@@ -180,6 +180,27 @@ namespace BusinessLayer.Services
                         };
                         return location;
                     }
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        // Get All Locations
+        public IEnumerable<LocationBusinessEntity> GetAllLocations()
+        {
+            try
+            {
+                var locations = _unitOfWork.Locations.GetAll().ToList();
+
+                if (locations.Count() != 0)
+                {
+                    Mapper.CreateMap<Location, LocationBusinessEntity>();
+                    var locationEntity = Mapper.Map<List<Location>, List<LocationBusinessEntity>>(locations);
+                    return locationEntity;
                 }
                 return null;
             }

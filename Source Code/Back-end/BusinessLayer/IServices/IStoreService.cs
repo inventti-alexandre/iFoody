@@ -22,7 +22,7 @@ namespace BusinessLayer.IServices
         dynamic GetStoreAddress(List<Guid> ids);
 
         // User Open Store
-        Guid? OpenStore(StoreDto storeEntity);
+        Guid? OpenStore(OpenStoreDto openStoreDto);
 
         // Update Store 
         bool UpdateStore(StoreBusinessEntity storeEntity);

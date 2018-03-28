@@ -82,10 +82,11 @@
     <Compile Include="IServices\IImageService.cs" />
     <Compile Include="IServices\ICategoriesService.cs" />
     <Compile Include="IServices\IFavoritesListService.cs" />
-    <Compile Include="IServices\IProductImagesService.cs" />
+    <Compile Include="IServices\IProductImageService.cs" />
     <Compile Include="IServices\IProductService.cs" />
     <Compile Include="IServices\IReviewService.cs" />
     <Compile Include="IServices\ISearchService.cs" />
+    <Compile Include="IServices\IStoreImageService.cs" />
     <Compile Include="IServices\IStoreService.cs" />
     <Compile Include="IServices\ITokenService.cs" />
     <Compile Include="IServices\IUploadService.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Services\ProductService.cs" />
     <Compile Include="Services\ReviewService.cs" />
     <Compile Include="Services\SearchService.cs" />
+    <Compile Include="Services\StoreImageService.cs" />
     <Compile Include="Services\StoreService.cs" />
     <Compile Include="Services\TokenService.cs" />
     <Compile Include="Services\UploadService.cs" />

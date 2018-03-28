@@ -1,21 +1,18 @@
-﻿using AutoMapper;
-using BusinessEntities;
-using BusinessLayer.DTOs;
+﻿using BusinessLayer.DTOs;
 using BusinessLayer.IServices;
-using DataModel;
 using DataModel.IUnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Transactions;
+
 namespace BusinessLayer.Services
 {
-    public class SearchService:ISearchService
+    public class SearchService : ISearchService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IProductService _productService;
-       
-        public SearchService(IUnitOfWork unitOfWork,IProductService productService)
+
+        public SearchService(IUnitOfWork unitOfWork, IProductService productService)
         {
             _unitOfWork = unitOfWork;
             _productService = productService;
@@ -23,7 +20,7 @@ namespace BusinessLayer.Services
 
         public IEnumerable<ProductDto> SearchByProductName(string productName)
         {
-            
+
             try
             {
                 // Get All Products Entity List
@@ -41,8 +38,8 @@ namespace BusinessLayer.Services
             {
                 return null;
             }
-        
-    }
+
+        }
 
         public IEnumerable<ProductDto> SearchByStoreInfo(string searchString)
         {
@@ -85,7 +82,7 @@ namespace BusinessLayer.Services
                 return null;
             }
         }
- //Search Paging
+        //Search Paging
         public PagingReturnDto<ProductDto> SearchPaging(string searchString, int page, int? count)
         {
             try
@@ -93,7 +90,7 @@ namespace BusinessLayer.Services
                 var productsByProductName = _unitOfWork.Products.GetProductsByName(searchString).ToList();
                 if (productsByProductName.Any())
                 {
-                    return _productService.ChangeProductsToPagingReturnDto(page, count, productsByProductName,true);
+                    return _productService.ChangeProductsToPagingReturnDto(page, count, productsByProductName, true);
                 }
                 else
                 {
@@ -101,14 +98,14 @@ namespace BusinessLayer.Services
                     if (productsByStoreInfo.Any())
                     {
 
-                        return _productService.ChangeProductsToPagingReturnDto(page, count, productsByStoreInfo,true);
+                        return _productService.ChangeProductsToPagingReturnDto(page, count, productsByStoreInfo, true);
                     }
                     else
                     {
                         return null;
                     }
-                }              
-               
+                }
+
             }
             catch (Exception e)
             {
@@ -120,14 +117,14 @@ namespace BusinessLayer.Services
         {
             try
             {
-                var topProducts = _unitOfWork.Products.GetAll().OrderByDescending(x=>x.Rating).ToList();
+                var topProducts = _unitOfWork.Products.GetAll().OrderByDescending(x => x.Rating).ToList();
                 if (topProducts.Any())
                 {
-                    return _productService.ChangeProductsToPagingReturnDto(1, count, topProducts,true);
+                    return _productService.ChangeProductsToPagingReturnDto(1, count, topProducts, true);
                 }
                 else
                 {
-                  return null;
+                    return null;
                 }
 
             }
