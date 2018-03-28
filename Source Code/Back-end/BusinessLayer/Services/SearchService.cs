@@ -4,6 +4,8 @@ using DataModel.IUnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using BusinessEntities;
+using DataModel;
 
 namespace BusinessLayer.Services
 {
@@ -12,8 +14,8 @@ namespace BusinessLayer.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IProductService _productService;
         private readonly ILocationService _locationService;
-       
-        public SearchService(IUnitOfWork unitOfWork,IProductService productService, ILocationService locationService)
+
+        public SearchService(IUnitOfWork unitOfWork, IProductService productService, ILocationService locationService)
         {
             _unitOfWork = unitOfWork;
             _productService = productService;
@@ -40,11 +42,8 @@ namespace BusinessLayer.Services
             {
                 return null;
             }
-        
-        }
 
         }
-
         public IEnumerable<ProductDto> SearchByStoreInfo(string searchString)
         {
             try
@@ -146,7 +145,7 @@ namespace BusinessLayer.Services
                 if (favoriteList.Any())
                 {
                     var products = _unitOfWork.Products.GetProductsByListId(favoriteList)
-                        .OrderByDescending(x=>x.Rating).ToList();
+                        .OrderByDescending(x => x.Rating).ToList();
                     return _productService.ChangeProductsToPagingReturnDto(1, count, products);
                 }
                 else
@@ -176,7 +175,7 @@ namespace BusinessLayer.Services
                     searchByStore = true;
                 }
                 //filter
-               
+
                 if (searchParam.filterOption.categories)
                 {
                     products =
@@ -209,7 +208,7 @@ namespace BusinessLayer.Services
         }
 
         #region Fiter method
-        public IEnumerable<Product> FiterByLocation(IEnumerable<Product> products, 
+        public IEnumerable<Product> FiterByLocation(IEnumerable<Product> products,
                                                     double currentLatitude, double currentLongitude)
         {
             List<Guid> listStoreId = new List<Guid>();
@@ -240,7 +239,7 @@ namespace BusinessLayer.Services
                 listStoreId.Add(p.StoreId.GetValueOrDefault());
             }
             List<Guid> storesFilterId = _unitOfWork.Stores.GetManyQueryable(x => listStoreId.Contains(x.Id))
-                .Where(x=> districts.Contains(x.District)).Select(x=>x.Id).ToList();
+                .Where(x => districts.Contains(x.District)).Select(x => x.Id).ToList();
             products = products.Where(x => storesFilterId.Contains(x.StoreId.GetValueOrDefault()));
             return products;
         }
