@@ -28,10 +28,12 @@ var searchObject = (function() {
     }
   }
 })(searchObject || {})
+
 // For Collapse Search with Checkbox 
 $(document).click(function(event) { 
-  if($(event.target).parents('.parents-well').length > 0) {
+  if($(event.target).parents('.parents-well').length > 0 && $(event.target).closest('#searchNameBarParents').length == 0) {
     //event.stopPropagation();
+    console.log("aaaaaaaaa");
     return;
   }
   // For Search Type
@@ -70,7 +72,7 @@ $(document).click(function(event) {
       // }
     }
     else {
-      $('.well-search-name').hide();
+       $('.well-search-name').hide();
     }
   } 
   if($(event.target).closest('#searchNameBarParents').length == 0) {

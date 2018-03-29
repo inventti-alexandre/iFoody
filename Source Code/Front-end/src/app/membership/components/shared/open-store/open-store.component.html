@@ -55,7 +55,7 @@
         <!-- <select class="form-control"  formControlName="city" [ngModel]="city" #city (ngModelChange)="onChangeCity(city.value)"> -->
         <!-- <select class="form-control"  formControlName="city" [(ngModel)]="city" #city (ngModelChange)="onChangeCity(city.value)"> -->
           <option value="null">------Thành phố------</option>
-          <option  *ngFor="let city of cities" [ngValue]="city.id">{{ city.value }}</option>
+          <option  *ngFor="let city of cities" [ngValue]="city.value">{{ city.value }}</option>
         </select>
         <i class="fa fa-globe fa-2x"></i>
         
@@ -64,7 +64,7 @@
       <div>
         <select class="form-control input-lg"  formControlName="district">
           <option [ngValue]="null">---------Quận---------</option>
-          <option  *ngFor="let district of districts" [ngValue]="district.id">{{ district.value }}</option>
+          <option  *ngFor="let district of districts" [ngValue]="district.value">{{ district.value }}</option>
         </select>
         <i class="fa fa-subway fa-2x"></i>
       </div>
@@ -74,11 +74,15 @@
         <i class="fa fa-edit fa-2x"></i>
       </div>
 
-      <div>
-        <label for="">Ảnh đại diện</label>
-        <file-upload formControlName="image" (imageContent)="handleFile($event)" [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-upload>
-        <ng-template #newUpload></ng-template>
-        <span><a class="addNewComponent" (click)="addNewComponentEvent()">Thêm ảnh</a></span>
+      <div class="row">
+        <label for="" class="col-md-12">Ảnh đại diện</label>
+        <file-upload class="col-md-4" formControlName="image" (imageContent)="handleFile($event)" [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-upload>
+        <file-upload class="col-md-4" formControlName="image" (imageContent)="handleFile($event)" [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-upload>
+        <file-upload class="col-md-4" formControlName="image" (imageContent)="handleFile($event)" [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-upload>
+        <file-upload class="col-md-4" formControlName="image" (imageContent)="handleFile($event)" [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-upload>
+        <file-upload class="col-md-4" formControlName="image" (imageContent)="handleFile($event)" [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-upload>
+        <!-- <ng-template #newUpload></ng-template> -->
+        <!-- <span><a class="addNewComponent" (click)="addNewComponentEvent()">Thêm ảnh</a></span> -->
       </div>
 
       <div>

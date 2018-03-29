@@ -7,27 +7,27 @@ export const ProductReview = Domain + 'product/review';
 export const ProductCategory = Domain + 'product/category';
 
 // User URL
-export const GetUser = Domain + 'user';
-export const SignUp = Domain + 'user/signup';
-export const SignIn = Domain + 'user/signin';
-export const Upload = Domain + 'user/upload';
-export const Review = Domain + 'user/review';
+export const GetUser = Domain + 'users';
+export const SignUp = Domain + 'users/signup';
+export const SignIn = Domain + 'users/signin';
+export const Upload = Domain + 'users/upload';
+export const Review = Domain + 'users/review';
 
-export const Comment = Domain + 'user/comment';
-export const Store = Domain + 'user/store';
-export const OpenStore = Domain + 'user/open-store';
-export const Image = Domain + 'user/image';
-export const FavoriteList = Domain + 'user/favorite-list';
-// export const FavoriteListWithUser = Domain + 'user/favorite-list';
+export const Comment = Domain + 'users/comment';
+export const Store = Domain + 'users/store';
+export const OpenStore = Domain + 'users/open-store';
+export const Image = Domain + 'users/image';
+export const FavoriteList = Domain + 'users/favorite-list';
+// export const FavoriteListWithUser = Domain + 'users/favorite-list';
 // export const FavoriteList = Domain + 'favorite-list';
 
-export const Profile = Domain + 'user/profile';
-export const Settings = Domain + 'user/settings';
-export const ChangePassword = Domain + 'user/change-password';
+export const Profile = Domain + 'users/profile';
+export const Settings = Domain + 'users/settings';
+export const ChangePassword = Domain + 'users/change-password';
 
 // Store URL
-export const GetStore = Domain + 'store';
-export const GetStoreAddresses = Domain + 'store/addresses';
+export const GetStore = Domain + 'stores';
+export const GetStoreAddresses = Domain + 'stores/addresses';
 
 // Key of LocalStorage
 export const AuthToken = "auth_token";

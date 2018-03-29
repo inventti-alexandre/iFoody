@@ -44,6 +44,7 @@ namespace BusinessLayer.Services
             return null;
         }
 
+        // Get Image By id
         public IEnumerable<ImageBusinessEntity> GetImage(Guid id)
         {
             try
@@ -59,7 +60,51 @@ namespace BusinessLayer.Services
             }
         }
 
-        // Upload Image (Simplied User or User has Store)
+        // Get all Image in ProductImage Table - for testing
+        public IEnumerable<ProductImageBusinessEntity> GetAllProductImages()
+        {
+            try
+            {
+
+                var productImages = _unitOfWork.ProductImages.GetAll().ToList();
+
+                if (productImages.Count() != 0)
+                {
+                    Mapper.CreateMap<ProductImage, ProductImageBusinessEntity>();
+                    var productImagesEntity = Mapper.Map<List<ProductImage>, List<ProductImageBusinessEntity>>(productImages);
+                    return productImagesEntity;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        // Get all Image in StoreImage Table - for testing
+        public IEnumerable<StoreImageBusinessEntity> GetAllStoreImages()
+        {
+            try
+            {
+
+                var storeImages = _unitOfWork.StoreImages.GetAll().ToList();
+
+                if (storeImages.Count() != 0)
+                {
+                    Mapper.CreateMap<StoreImage, StoreImageBusinessEntity>();
+                    var storeImagesEntity = Mapper.Map<List<StoreImage>, List<StoreImageBusinessEntity>>(storeImages);
+                    return storeImagesEntity;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        // No Use - Upload Image (Simplied User or User has Store)  
         public Task<List<FileUploadResult>> UploadImage(List<string> imageStrings, string fileName, Guid? userId, Guid? storeId, Guid? productId)
         {
             try

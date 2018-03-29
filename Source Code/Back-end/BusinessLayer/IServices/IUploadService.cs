@@ -1,4 +1,5 @@
-﻿using BusinessLayer.DTOs;
+﻿using System;
+using BusinessLayer.DTOs;
 using System.Collections.Generic;
 
 namespace BusinessLayer.IServices
@@ -6,7 +7,7 @@ namespace BusinessLayer.IServices
     public interface IUploadService
     {
         // Upload File
-        bool UploadFile(List<FileUploadResult> files);
+        List<Guid> UploadFile(List<FileUploadResult> files, bool isOpenStore, Guid storeId, Guid productId, string name);
 
         // Encode Base 64 String
         string Base64Encode(string plainText);

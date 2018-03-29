@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using BusinessEntities;
+﻿using BusinessEntities;
 using BusinessLayer.DTOs;
 using BusinessLayer.IServices;
 using Newtonsoft.Json.Linq;
@@ -11,13 +10,12 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Routing;
-using AttributeRouting.Helpers;
 using WebApi.ActionFilters;
 
 namespace WebApi.ApiController
 {
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    [RoutePrefix("api/User")]
+    [RoutePrefix("api/users")]
     public class UserController : System.Web.Http.ApiController
     {
         private readonly IUserService _userService;
@@ -31,7 +29,17 @@ namespace WebApi.ApiController
         private readonly IUploadService _uploadService;
         private readonly ILocationService _locationService;
 
-        public UserController(IUserService userService, ITokenService tokenService, IImageService imageService, IProductService productService, IStoreService storeService, IReviewService reviewService, ICommentService commentService, IFavoritesListService favoritesListService, IUploadService uploadService, ILocationService locationService)
+        public UserController(
+            IUserService userService,
+            ITokenService tokenService,
+            IImageService imageService,
+            IProductService productService,
+            IStoreService storeService,
+            IReviewService reviewService,
+            ICommentService commentService,
+            IFavoritesListService favoritesListService,
+            IUploadService uploadService,
+            ILocationService locationService)
         {
             _userService = userService;
             _tokenService = tokenService;
@@ -47,7 +55,7 @@ namespace WebApi.ApiController
 
         // Get api/user
         [HttpGet]
-        [Route("")]
+        [Route("getAll")]
         // [AuthorizationRequired]
         //[ApiAuthenticationFilter]
         public HttpResponseMessage Get()
@@ -74,7 +82,7 @@ namespace WebApi.ApiController
 
         // GET api/user/5
         [HttpGet]
-        [Route("{id}")]
+        [Route("{id?}")]
         public HttpResponseMessage Get(Guid id)
         {
             try
@@ -95,7 +103,7 @@ namespace WebApi.ApiController
 
         // GET api/user/favorite-list/42fsvvsg0-gsevsevsev
         [HttpGet]
-        [Route("favorite-list/{id}")]
+        [Route("favorite-list/{id?}")]
         public HttpResponseMessage GetFavoriteList(Guid id)
         {
             try
@@ -243,43 +251,14 @@ namespace WebApi.ApiController
                 var authToken = Request.Headers.GetValues("Token").FirstOrDefault();
                 var userToken = _tokenService.GetUserId(authToken);
 
-                Mapper.CreateMap<OpenStoreDto, StoreDto>().ForMember(x => x.Images, opt => opt.Ignore()); ;
-                var storeDto = Mapper.Map<OpenStoreDto, StoreDto>(openStoreDto);
+                //Mapper.CreateMap<OpenStoreDto, StoreDto>().ForMember(x => x.Images, opt => opt.Ignore()); ;
+                //var storeDto = Mapper.Map<OpenStoreDto, StoreDto>(openStoreDto);
 
                 // Save Store
-                storeDto.RegistrationDate = DateTime.Today;
-                var storeId = _storeService.OpenStore(storeDto);
+                openStoreDto.RegistrationDate = DateTime.Today;
+                var storeId = _storeService.OpenStore(openStoreDto);
                 /////////////////////////////
-                // Save Store Image
-                var imageUploadList = new List<FileUploadResult>();
-                foreach (var image in openStoreDto.Images)
-                {
-                    //var imageString = _uploadService.Base64Decode(image.);
-                    //byte[] bytes = Encoding.ASCII.GetBytes(imageString);
-                    imageUploadList.Add(image);
-                }
 
-                if (imageUploadList.Any())
-                {
-                    _uploadService.UploadFile(imageUploadList);
-                }
-
-                _userService.UpdateHasStoreProperty(storeDto.UserId.GetValueOrDefault());
-                ///////////////////////
-                // Insert Location to DB
-                var location = _locationService.GetLocationFromAddress(storeDto.Address);
-
-                var locationBusinessEntity = new LocationBusinessEntity()
-                {
-                    Latitude = System.Convert.ToDecimal(location.GetType().GetProperty("Latitude").GetValue(location, null)),
-                    Longitude = System.Convert.ToDecimal(location.GetType().GetProperty("Longitude").GetValue(location, null)),
-                    StoreId = storeId
-                };
-                if (!_locationService.InsertLocation(locationBusinessEntity))
-                {
-                    return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed,
-                        "Cannot Insert Location to Table");
-                };
                 /////////////////////////////////
                 return Request.CreateResponse(HttpStatusCode.OK, storeId);
             }
@@ -697,7 +676,7 @@ namespace WebApi.ApiController
                                     ? new Guid(jsonObject.SelectToken("productId").ToString())
                                     : new Guid();
 
-                var storeId= (jsonObject.SelectToken("storeId").ToString() != "")
+                var storeId = (jsonObject.SelectToken("storeId").ToString() != "")
                                     ? new Guid(jsonObject.SelectToken("storeId").ToString())
                                     : new Guid();
 

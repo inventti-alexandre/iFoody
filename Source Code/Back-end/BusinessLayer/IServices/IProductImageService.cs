@@ -7,7 +7,7 @@ using BusinessEntities;
 
 namespace BusinessLayer.IServices
 {
-    public interface IProductImagesService
+    public interface IProductImageService
     {
         ProductImageBusinessEntity GetProductImageById(Guid id);
         IEnumerable<ProductImageBusinessEntity> GetAllProductImagesByProductId(Guid productId);

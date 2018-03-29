@@ -59,7 +59,7 @@ export class SearchBarComponent implements OnInit {
     // this.getSuggestionListByUserId("cc736f75-4b3f-457b-9110-2272455e282d");
   }
   getSuggestionList = () => {
-    if (this.defaultSuggestionList.length == 0) {
+    if (this.defaultSuggestionList.length === 0) {
       if (this.userId !== "") {
         this.getSuggestionListByUserId(this.userId,this.defaultSuggestionCount);
       } else {
@@ -68,7 +68,8 @@ export class SearchBarComponent implements OnInit {
     } else {
       this.suggestionList = _.cloneDeep(this.defaultSuggestionList);
     }
-  };
+  }
+
   getSuggestionListByRating = (count?) => {
     return this._searchService
       .SuggestListByRating(count)
@@ -81,7 +82,8 @@ export class SearchBarComponent implements OnInit {
           console.log("suggest result empty");
         }
       });
-  };
+  }
+
   getSuggestionListByUserId = (userId, count?) => {
     return this._searchService
       .SuggestListByUserId(userId, count)
@@ -94,7 +96,8 @@ export class SearchBarComponent implements OnInit {
           console.log("suggest result empty");
         }
       });
-  };
+  }
+
   checkOpenStore = (openHour, closeHour) => {
     let openHourConvert = openHour.split(":");
     let openTimeSeconds =
@@ -115,7 +118,8 @@ export class SearchBarComponent implements OnInit {
     // console.log(currentSeconds - openTimeSeconds);
 
     return isOpen;
-  };
+  }
+
   getSearchPaging(searchString, initPage) {
     let trimSearchString = this.searchString.trim();
     if(trimSearchString!==""){
