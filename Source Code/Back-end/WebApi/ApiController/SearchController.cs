@@ -82,7 +82,7 @@ namespace WebApi.ApiController
         {
             try
             {
-                var products = _searchService.SearchPaging(searchString, page, count, sortByRating);
+                var products = _searchService.SearchPaging(searchString, page, count);
                 if (products == null)
                 {
                     return NotFound(); // Returns a NotFoundResult

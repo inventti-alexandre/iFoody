@@ -14,8 +14,8 @@ namespace BusinessLayer.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IProductService _productService;
         private readonly ILocationService _locationService;
-
-        public SearchService(IUnitOfWork unitOfWork, IProductService productService, ILocationService locationService)
+       
+        public SearchService(IUnitOfWork unitOfWork,IProductService productService, ILocationService locationService)
         {
             _unitOfWork = unitOfWork;
             _productService = productService;
@@ -86,7 +86,7 @@ namespace BusinessLayer.Services
             }
         }
         //Search Paging
-        public PagingReturnDto<ProductDto> SearchPaging(string searchString, int page, int? count, bool sortByRating)
+        public PagingReturnDto<ProductDto> SearchPaging(string searchString, int page, int? count)
         {
             try
             {
