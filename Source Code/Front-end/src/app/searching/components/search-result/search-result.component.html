@@ -3,7 +3,7 @@
     <div class="row searchResult__filter">
       <search-filter></search-filter>
     </div>
-    
+
     <!-- <div style="text-align: center; font-weight:bold; margin-bottom:20px !important;margin-top:20px !important;  ">
         <p style="font-size: 1.8em">Loading...</p>
         <i class="fa fa-spinner fa-spin" style="font-size:36px"></i>
@@ -22,7 +22,7 @@
     </div>
 
     <div class="searchResult__pagination row">
-      <bs-pagination (targetPage)="getTargetPage($event)"></bs-pagination>
+      <bs-pagination [bigTotalItems]="totalPage*10" (targetPage)="getTargetPage($event)"></bs-pagination>
     </div>
   </div>
 </div>
