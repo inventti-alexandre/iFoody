@@ -69,6 +69,17 @@ export class StoreService {
             .catch(this.handleError); 
     }
   }
+
+   // Tuan made
+  GetReviewListByStoreId(id: string): Observable<any> {
+    console.log("getReviewListByStoreId works");
+    console.log('storeId', id);
+    if(id != null) {
+      return this._http.get(apiUrl.StoreReview + '/' + id.replace(/['"]+/g,''))
+            .map((response: Response) => <any>response.json());
+    }
+  }
+
   // POST - User Open Store
   openStore(model: any):Observable<any> {
     console.log("openStoreService works.");

@@ -123,7 +123,7 @@ namespace WebApi.ApiController
 
         // GET api/user/store/42fsvvsg0-gsevsevsev...
         [HttpGet]
-        [Route("store/{id}")]
+        [Route("store/{id?}")]
         public HttpResponseMessage GetStore(Guid id)
         {
             try
@@ -143,7 +143,7 @@ namespace WebApi.ApiController
 
         // GET api/users/store/{storeId?}/allProducts
         [HttpGet]
-        [Route("store/{storeId?}/allProducts")]
+        [Route("store/allProducts/{storeId?}")]
         public HttpResponseMessage GetProductInStore(Guid storeId)
         {
             try

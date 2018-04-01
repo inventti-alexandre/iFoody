@@ -4,14 +4,15 @@
   </div> -->
 
   <div class="row">
-    <div class="storeDetailInfo__main col-xs-12 col-sm-6">
+    <div class="col-xs-12 col-sm-6">
+    <!-- <div class="storeDetailInfo__main col-xs-12 col-sm-6"> -->
       
-      <h2>{{ storeModel?.store.name }}</h2>
+      <h2>{{ storeInfoModel?.name }}</h2>
 
       <div class="row">
-        <div class="type col-xs-4 col-sm-4"> {{ storeModel?.category.name }}</div>
+        <div class="type col-xs-4 col-sm-4"> {{ storeInfoModel?.categoryId }}</div>
         <div class="rating col-xs-8 col-sm-8">
-          <bs-rating [rating]="storeModel?.rating" [ratingCount]="storeModel?.ratingCount"></bs-rating>
+          <bs-rating [rating]="storeInfoModel?.rating" [ratingCount]="storeInfoModel?.ratingCount"></bs-rating>
         </div>
 
       </div>
@@ -19,49 +20,51 @@
 
 
       <div class="others row">
-        <div><span><i class="fa fa-location-arrow fa-1x"></i></span>{{ storeModel?.store.address }}</div>
-        <div><span><i class="fa fa-clock-o fa-1x"></i></span>{{ storeModel?.store.openHour }} - {{ storeModel?.store.closeHour }}</div>
-        <div><span><i class="fa fa-money fa-1x"></i></span>{{ storeModel?.store.price }}</div>
+        <div><span><i class="fa fa-location-arrow fa-1x"></i></span>{{ storeInfoModel?.address }}</div>
+        <div><span><i class="fa fa-clock-o fa-1x"></i></span>{{ storeInfoModel?.openHour }} - {{ storeModel?.closeHour }}</div>
+        <div><span><i class="fa fa-money fa-1x"></i></span>{{ storeInfoModel?.price }}</div>
       </div>
 
       <div class="photo row">
         <div class="photo__main col-xs-12 col-sm-12">
-          <img [src]="storeModel?.images[0].path" alt="">
+          <img [src]="storeInfoModel?.images[0].path" alt="">
         </div>
 
         <div class="photo__minor col-xs-12 col-sm-12">
           <div class="row">
-            <div class="col-xs-3 col-sm-3" *ngFor="let image of storeModel?.images">
-              <img [src]="image.path" alt="">
+            <div class="col-xs-3 col-sm-3" *ngFor="let image of storeInfoModel?.images">
+              <img [src]="image.path" alt="image.name">
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- <div class="storeDetailInfo__map col-xs-12 col-sm-5">
-      <map [storeIds]="[storeModel?.store.id]"></map>
-    </div> -->
-  </div>
-  <hr/>
-
-  <!-- <div class="row storeDetail__menu">
-    <div class="col-xs-6 col-sm-6" *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]">
-      <div class="row" >
-        <store-detail-menu></store-detail-menu>
-      </div>
+    <div class="storeDetailInfo__map col-xs-12 col-sm-5">
+      <map [storeIds]="storeIds"></map>
     </div>
   </div>
   <hr/>
 
-  <div class="row storeDetail__review">
+  <!-- <div class="row storeDetail__menu"> -->
+  <div class="row">
+    <div class="col-xs-6 col-sm-6" *ngFor="let item of storeModel">
+      <!-- <div class="row"> -->
+        <product-item [productId]="item?.product.id"></product-item>
+        <!-- <store-detail-menu></store-detail-menu> -->
+      <!-- </div> -->
+    </div>
+  </div>
+  <hr/>
+
+  <!-- <div class="row storeDetail__review"> -->
+  <div class="row">
     <div class="col-xs-12 col-sm-12" *ngFor="let i of [1,2,3,4,5,6]">
-      <review></review>
+      <!-- <review [storeId]="storeId"></review> -->
     </div>
   </div>
-  <hr/>
 
-  <div class="row storeDetail__similarStore">
+  <!-- <div class="row storeDetail__similarStore">
     <div class="col-xs-6 col-sm-4" *ngFor="let i of [1,2,3,4,5,6,7,8,9]">
       <div class="row no-pad-left-right">
         <similar-store></similar-store>

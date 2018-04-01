@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BusinessEntities;
 
 namespace BusinessLayer.DTOs
 {
@@ -23,7 +24,8 @@ namespace BusinessLayer.DTOs
         public string City { get; set; }
         public Guid? CategoryId { get; set; }
         public Guid? UserId { get; set; }
-        public List<string> Images { get; set; }
+        //public List<string> Images { get; set; }
+        public List<ImageBusinessEntity> Images { get; set; }
         public int? RatingCount { get; set; }
 
 

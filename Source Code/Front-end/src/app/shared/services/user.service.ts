@@ -123,7 +123,9 @@ export class UserService {
     console.log("getAllProductInStore in UserService works");
     console.log('storeId', storeId);
     if(storeId != null) {
-      return this._http.get(this.storeUrl + '/' + storeId.replace(/['"]+/g,'') + '/allProducts')
+      console.log("inside");
+      console.log(this.storeUrl + '/allProducts' + '/' + storeId.replace(/['"]+/g,''));
+      return this._http.get(this.storeUrl + '/allProducts' + '/' + storeId.replace(/['"]+/g,''))
             .map((response: Response) => <any>response.json());
     }
   }

@@ -15,13 +15,11 @@ import { AuthService } from './auth.service';
 @Injectable()
 export class ProductService {
   private actionUrl: string;
-  private reviewUrl: string;
   private getProductWithCategoryUrl: string;
   authToken: any;
   
   constructor(private _http: Http, private _authService: AuthService) {
     this.actionUrl = apiUrl.GetAllProduct;
-    this.reviewUrl = apiUrl.ProductReview;
     this.getProductWithCategoryUrl = apiUrl.ProductCategory;
     this.authToken = this._authService.retriveToken();
   }
@@ -128,12 +126,10 @@ export class ProductService {
   // Tuan made
   public GetReviewListByProductId(id: string): Observable<any> {
     console.log("getReviewListByProductId works");
-    // console.log(id);
+    console.log('productId', id);
     if(id != null) {
-      return this._http.get(this.reviewUrl + '/' + id.replace(/['"]+/g,''))
+      return this._http.get(apiUrl.ProductReview + '/' + id.replace(/['"]+/g,''))
             .map((response: Response) => <any>response.json());
     }
   }
-
-
 }

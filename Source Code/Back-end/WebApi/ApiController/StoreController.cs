@@ -16,11 +16,13 @@ namespace WebApi.ApiController
     {
         private readonly IStoreService _storeService;
         private readonly ILocationService _locationService;
+        private readonly IReviewService _reviewService;
 
-        public StoreController(IStoreService storeService, ILocationService locationService)
+        public StoreController(IStoreService storeService, ILocationService locationService, IReviewService reviewService)
         {
             _storeService = storeService;
             _locationService = locationService;
+            _reviewService = reviewService;
         }
 
         // GET All api/store
@@ -110,6 +112,27 @@ namespace WebApi.ApiController
             {
                 return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Expectation Failed");
             }
+        }
+
+        // GET Store Review By Store Id
+        [HttpGet]
+        [Route("review/{id?}")]
+        public HttpResponseMessage GetStoreReviews(Guid id)
+        {
+
+            try
+            {
+                var reviews = _reviewService.GetStoreReviews(id).ToList();
+                if (reviews.Count > 0)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, reviews);
+                }
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Got Exception");
+            }
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No Review found for this Store");
         }
     }
 }

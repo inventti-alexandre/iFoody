@@ -102,14 +102,14 @@ namespace BusinessLayer.Services
                             _unitOfWork.Images.GetManyQueryable(i => filteredIdImageEntities.Any(x => x == i.Id)).ToList();
 
                         Mapper.CreateMap<Image, ImageBusinessEntity>();
-                        var imageEntities = Mapper.Map<List<Image>, List<ImageBusinessEntity>>(filteredImageEntities).AsEnumerable();
+                        var imageEntities = Mapper.Map<List<Image>, List<ImageBusinessEntity>>(filteredImageEntities);
 
-                        var imageBase64Array = new List<string>();
-                        foreach (var imageEntity in imageEntities)
-                        {
-                            var getbase64String = _uploadService.GetBase64StringForImage(imageEntity.Path);
-                            imageBase64Array.Add(getbase64String);
-                        }
+                        // var imageBase64Array = new List<string>();
+                        //foreach (var imageEntity in imageEntities)
+                        //{
+                        //    var getbase64String = _uploadService.GetBase64StringForImage(imageEntity.Path);
+                        //    imageBase64Array.Add(getbase64String);
+                        //}
 
                         var storeDto = new StoreDto()
                         {
@@ -125,10 +125,9 @@ namespace BusinessLayer.Services
                             City = storeEntity.City,
                             //User = userEntity,
                             //Category = categoryEntity,
-                            Images = imageBase64Array,
+                            Images = imageEntities,
                         };
                         return storeDto;
-
                     }
                 }
             }

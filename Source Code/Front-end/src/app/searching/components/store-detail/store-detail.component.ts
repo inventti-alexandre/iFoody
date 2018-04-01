@@ -10,7 +10,9 @@ import { Component, OnInit, Output } from '@angular/core';
 })
 export class StoreDetailComponent implements OnInit {
   storeId;
+  storeIds: any[];
   @Output() storeModel: any;
+  storeInfoModel: any;
   productModel: any;
   constructor(
     private _storeService: StoreService, 
@@ -19,20 +21,33 @@ export class StoreDetailComponent implements OnInit {
     private _userService: UserService
     ) {
     this.route.params.subscribe((params: Params) => {
+      console.log('params id ', params['id']);
+      this.storeIds = [params['id']]; // For Google Map Api
       this.storeId = params['id'];
       // this._storeService.GetStoreById(params['id'])
       //   .subscribe((data: Response) => {
       //     console.log('storeModel in parent: ', data);
       //     this.storeModel = data; 
       //   });
-      this._userService.getAllProductInStore(this.storeId)
-      .subscribe(data => {
-        console.log("data return from GetALlProductInStore: ", data);
-        this.storeModel = data;
-      },
-      error => {
-        console.log(error);
-      });
+      
+      this._storeService.GetStoreById(params['id'])
+        .subscribe(data => {
+          console.log("storeInfoModel", data);
+          this.storeInfoModel = data;
+          this._userService.getAllProductInStore(params['id'])
+            .subscribe(result => {
+              console.log("data return from GetALlProductInStore: ", result);
+              this.storeModel = result;
+            },
+            error => {
+              console.log(error);
+            });
+        });
+
+      
+
+      
+
     });
 
    }

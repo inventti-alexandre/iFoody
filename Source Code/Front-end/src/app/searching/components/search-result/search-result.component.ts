@@ -29,7 +29,7 @@ export class SearchResultComponent implements OnInit {
       2:'categories',
       3:'districts',
       4:'rating'
-    }
+    };
   }
   getSearchPaging(searchString,initPage) {
     if(this.searchString != null) {

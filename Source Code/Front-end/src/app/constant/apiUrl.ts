@@ -28,6 +28,7 @@ export const ChangePassword = Domain + 'users/change-password';
 // Store URL
 export const GetStore = Domain + 'stores';
 export const GetStoreAddresses = Domain + 'stores/addresses';
+export const StoreReview = Domain + 'stores/review';
 
 // Key of LocalStorage
 export const AuthToken = "auth_token";
