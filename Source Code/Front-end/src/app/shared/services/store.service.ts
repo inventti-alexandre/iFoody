@@ -43,6 +43,7 @@ export class StoreService {
   // Get Locations By StoreIds
   GetLocationsByStoreIds(storeIds: any[]) {
     console.log("GetLocationsByStoreIds works");
+    console.log("storeIds", storeIds);
   
     if(storeIds.length > 0) {
       console.log("GetLocationsByStoreIds works 2");
