@@ -19,8 +19,10 @@
           <li class="active"><a (click)="loadChildrenComponent($event)" id="overview">Thông Tin Chung<span class="sr-only">(current)</span></a></li>
           <li><a (click)="loadChildrenComponent($event)" id="security">Bảo Mật</a></li>
           <li><a (click)="loadChildrenComponent($event)" id="favorite-list">Danh sách yêu thích</a></li>
-          <li><a (click)="loadChildrenComponent($event)" id="comment">Bình Luận</a></li>
-          <li><a (click)="loadChildrenComponent($event)" id="review">Đánh Giá</a></li>
+          <li *ngIf="storeId != null"><a (click)="loadChildrenComponent($event)" id="store-profile">Cửa Hàng</a></li>
+          <li *ngIf="storeId != null"><a (click)="loadChildrenComponent($event)" id="store-menu">Quản Lý Menu</a></li>
+          <!-- <li><a (click)="loadChildrenComponent($event)" id="review">Đánh Giá</a></li> -->
+          <!-- <li><a (click)="loadChildrenComponent($event)" id="review">Đánh Giá</a></li> -->
         </ul>
       </div>
       <!-- /.navbar-collapse -->
@@ -39,9 +41,9 @@
     </div>
 
     <div class="profile__content col-xs-12 col-sm-9">
-      <div class="page-header">
+      <!-- <div class="page-header">
         <h1>{{ userName }}</h1>
-      </div>
+      </div> -->
       <div class="row">
         <!-- Render Dynamically Child Component -->
         <!-- <profile-item-container  [profileItems]="profileItems"></profile-item-container> -->
@@ -50,7 +52,8 @@
           <div  *ngSwitchCase="'favorite-list'"><favorite-list></favorite-list></div>
           <div  *ngSwitchCase="'change-password'"><change-password></change-password></div>
           <div *ngSwitchCase="'user-profile'"><user-profile></user-profile></div>
-          <div *ngSwitchDefaul><user-profile></user-profile></div>
+          <div *ngSwitchCase="'store-profile'"><store-profile [store]='store'></store-profile></div>
+          <div *ngSwitchDefault><user-profile></user-profile></div>
         </div>
         <!-- <wish-list></wish-list> -->
         <!-- <open-store></open-store> -->

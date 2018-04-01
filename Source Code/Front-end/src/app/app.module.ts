@@ -27,10 +27,12 @@ import { UserService } from './shared/services/user.service';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { RatingModule } from 'ngx-bootstrap/rating';
 import { FormsModule } from '@angular/forms';
+import { StoreMenuComponent } from './store-menu/store-menu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    StoreMenuComponent,
   ],
   imports: [
     BrowserModule,

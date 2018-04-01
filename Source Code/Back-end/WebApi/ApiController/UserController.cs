@@ -441,14 +441,14 @@ namespace WebApi.ApiController
         // Put api/user/store/5
         [HttpPut]
         [Route("store")]
-        public HttpResponseMessage Put([FromBody] StoreBusinessEntity store)
+        public HttpResponseMessage Put([FromBody] OpenStoreDto openStoreDto)
         {
             try
             {
-                if (store != null)
+                if (openStoreDto != null)
                 {
-                    _storeService.UpdateStore(store);
-                    return Request.CreateResponse(HttpStatusCode.OK, store.Id);
+                    _storeService.UpdateStore(openStoreDto);
+                    return Request.CreateResponse(HttpStatusCode.OK, openStoreDto.Id);
                 }
 
                 return Request.CreateResponse(HttpStatusCode.NotImplemented);

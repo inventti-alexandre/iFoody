@@ -1,3 +1,4 @@
+import { imageDefault } from './../../constant/global';
 import { AuthService } from './auth.service';
 import { IStore } from './../models/allModel';
 import { Observable } from 'rxjs/Rx';
@@ -11,13 +12,11 @@ export class StoreService {
   private openStoreUrl: string;
   private getStoreAddresses: string;
   authToken: any;
-  private storeControllerUrl: string;
   
   constructor(private _http: Http, private _authService: AuthService) { 
     this.storeUrl = apiUrl.Store;
     this.openStoreUrl = apiUrl.OpenStore;
     this.getStoreAddresses = apiUrl.GetStoreAddresses;
-    this.storeControllerUrl = apiUrl.GetStore;
     this.authToken = this._authService.retriveToken();
   }
 
@@ -34,8 +33,8 @@ export class StoreService {
   public GetStoreByUserId(userId:string): Observable<any> {
     console.log('userId',userId);
     if(userId != null) {
-      console.log(this.storeControllerUrl + "/?userId=" + userId.replace(/['"]+/g, ''));
-      return this._http.get(this.storeControllerUrl + "/?userId=" + userId.replace(/['"]+/g, ''))
+      console.log(apiUrl.GetStore + "/?userId=" + userId.replace(/['"]+/g, ''));
+      return this._http.get(apiUrl.GetStore + "/?userId=" + userId.replace(/['"]+/g, ''))
             .map((response: Response) =>
               <any>response.json());
     }
@@ -60,6 +59,15 @@ export class StoreService {
     return null;
   }
 
+  // GET Image by Store Id
+  getImageByStoreId(storeId: any) {
+    console.log("getImageByStoreId works");
+    if(storeId != null) {
+      return this._http.get(apiUrl.GetImageByStoreId + '/?storeId=' + storeId)
+            .map((response: Response) => <any>response.json())
+            .catch(this.handleError); 
+    }
+  }
   // POST - User Open Store
   openStore(model: any):Observable<any> {
     console.log("openStoreService works.");
@@ -72,6 +80,22 @@ export class StoreService {
     let options = new RequestOptions( {headers: headers});
 
     return this._http.post(this.openStoreUrl, body, options)
+      .map((response: Response) => <any>response.json())
+      .catch(this.handleError); 
+  }
+
+  // UPDATE Store
+  updateStore(model: any) {
+    console.log("updateStore SErvice");
+    console.log('model', model);
+    let body = JSON.stringify(model);
+    let headers = new Headers();
+    headers.append("Token", this.authToken); 
+    headers.append("Content-Type", "application/json");
+    
+    let options = new RequestOptions( {headers: headers});
+
+    return this._http.put(apiUrl.Store, body, options)
       .map((response: Response) => <any>response.json())
       .catch(this.handleError); 
   }

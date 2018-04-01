@@ -44,19 +44,20 @@ export class ChangePasswordComponent implements OnInit, ProfileChildren {
           console.log(this.userId);
           this._userService.getUserById(this.userId)
                         .subscribe( data => {
-                          setTimeout(() => {
+                          // setTimeout(() => {
                             // Check valid Password
                             // if (this._authService.checkCredential(data.email, this.inputForm.get("oldPassword").value)) {
-                            this._userService.updatePassword(data.email, this.inputForm.get("oldPassword").value, this.inputForm.get("confirmPassword").value)
-                              .subscribe(data => {
-                                  alert("Congratulations. Update Password successfully!!!");
-                                },
-                                error => {
-                                  alert("Your current Password is not correct. Please provide password again!!!");
-                                  this.inputForm.reset();
-                                }
-                              );
-                          });
+                            this._userService.updatePassword(data.email, this.inputForm.get("oldPassword").value, 
+                              this.inputForm.get("confirmPassword").value)
+                                .subscribe(response => {
+                                    alert("Congratulations. Update Password successfully!!!");
+                                  },
+                                  error => {
+                                    alert("Your current Password is not correct. Please provide password again!!!");
+                                    this.inputForm.reset();
+                                  }
+                                );
+                          // });
                         });
           
         }

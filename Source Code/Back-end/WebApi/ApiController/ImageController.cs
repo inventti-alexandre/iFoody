@@ -59,6 +59,27 @@ namespace WebApi.ApiController
             }
         }
 
+        // GET api/image/{storeId?}
+        [HttpGet]
+        [Route("api/image/store/{storeId?}")]
+        public HttpResponseMessage GetImageByStoreId(Guid storeId)
+        {
+            try
+            {
+                var image = _imageService.GetImageByStoreId(storeId);
+                if (image != null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, image);
+                }
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Image not found");
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Unexception Error!");
+
+            }
+        }
+
         // GET api/image/product
         [HttpGet]
         [Route("api/image/products")]

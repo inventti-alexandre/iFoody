@@ -6,13 +6,11 @@ function modalOpen() {
 $(document).on("hidden.bs.modal",".sub-modal.modal", function () {
     $("body").addClass("modal-open");
 });
-console.log("LIB");
 
 // Active Class in All navbar
 $(document).ready(function() {
-  console.log("readt");
   $(".nav a").on("click", function(){
-    console.log("okkkk");
+    console.log("a tag click");
     $(".nav").find(".active").removeClass("active");
     $(this).parent().addClass("active");
   });

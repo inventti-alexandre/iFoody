@@ -25,7 +25,7 @@ namespace BusinessLayer.IServices
         Guid? OpenStore(OpenStoreDto openStoreDto);
 
         // Update Store 
-        bool UpdateStore(StoreBusinessEntity storeEntity);
+        bool UpdateStore(OpenStoreDto openStoreDto);
 
         // Update RatingCount Property
         bool UpdateRatingProperty(Guid storeId, int newRating);

@@ -275,16 +275,16 @@ namespace BusinessLayer.Services
         }
 
         // Update Store 
-        public bool UpdateStore(StoreBusinessEntity storeEntity)
+        public bool UpdateStore(OpenStoreDto openStoreDto)
         {
             try
             {
-                if (storeEntity != null)
+                if (openStoreDto != null)
                 {
                     using (var scope = new TransactionScope())
                     {
-                        Mapper.CreateMap<StoreBusinessEntity, Store>();
-                        var store = Mapper.Map<StoreBusinessEntity, Store>(storeEntity);
+                        Mapper.CreateMap<OpenStoreDto, Store>().ForSourceMember(x => x.Images, opt => opt.Ignore());
+                        var store = Mapper.Map<OpenStoreDto, Store>(openStoreDto);
 
                         _unitOfWork.Stores.Update(store);
 
