@@ -60,6 +60,24 @@ namespace BusinessLayer.Services
             }
         }
 
+        // Get Image By StoreId
+        public IEnumerable<ImageBusinessEntity> GetImageByStoreId(Guid storeId)
+        {
+            try
+            {
+                var imageIds =
+                    _unitOfWork.StoreImages.GetManyQueryable(x => x.StoreId == storeId).Select(y => y.ImageId).ToList();
+                var images = _unitOfWork.Images.GetManyQueryable(x => imageIds.Any(y => y == x.Id)).ToList();
+                Mapper.CreateMap<Image, ImageBusinessEntity>();
+                var model = Mapper.Map<List<Image>, List<ImageBusinessEntity>>(images);
+                return model;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
         // Get all Image in ProductImage Table - for testing
         public IEnumerable<ProductImageBusinessEntity> GetAllProductImages()
         {

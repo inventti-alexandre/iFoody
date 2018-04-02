@@ -49,8 +49,8 @@ export class BsNavbarComponent implements OnInit {
     //   {name: 'Cài đặt tài khoản', url: 'settings', param: this.userId.replace(/['"]+/g, '')},
     // ];
     this.urls = [
-      {name: 'Thông tin cá nhân', url: 'profile', param: [this.userId.replace(/['"]+/g, ''), 'general']},
-      {name: 'Sản Phẩm Yêu thích', url: 'profile', param: [this.userId.replace(/['"]+/g, ''),'favorite']},
+      {name: 'Thông tin cá nhân', url: 'profile', param: [this.userId.replace(/['"]+/g, ''), 'overview']},
+      {name: 'Sản Phẩm Yêu thích', url: 'profile', param: [this.userId.replace(/['"]+/g, ''),'favorite-list']},
       {name: 'Cài đặt tài khoản', url: 'settings', param: [this.userId.replace(/['"]+/g, ''),'settings']},
     ];
     // console.log(this.urls);
@@ -69,7 +69,6 @@ export class BsNavbarComponent implements OnInit {
             this.hasStore = data.hasStore;
             if(this.hasStore === true) {
               this.urls.push({name: 'Upload sản phẩm', url: 'user', param: [this.email.split('@')[0], 'upload']});
-              console.log("111");
             }
           // }, 0);
       });

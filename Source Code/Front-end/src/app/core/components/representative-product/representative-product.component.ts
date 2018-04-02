@@ -1,4 +1,5 @@
-import { Component, OnInit, group } from '@angular/core';
+import { Component, OnInit, group, AfterContentInit, 
+  AfterContentChecked, OnChanges, OnDestroy, DoCheck, AfterViewChecked, AfterViewInit } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { Http } from '@angular/http';
 import { ProductService } from './../../../shared/services/product.service';
@@ -11,7 +12,7 @@ import { forEach } from '@angular/router/src/utils/collection';
   styleUrls: ['./representative-product.component.scss'],
   providers: [ProductService, CategoryService]
 })
-export class RepresentativeProductComponent implements OnInit {
+export class RepresentativeProductComponent implements OnInit{
   public products: any[];
   public categories: any[];
   public initPage;
@@ -21,8 +22,11 @@ export class RepresentativeProductComponent implements OnInit {
     this.products = [];
     this.initPage = 1;
     this.initCount = 8;
+    console.log("Constructor");
   }
+  
   ngOnInit() {
+    console.log("ngOnInit");
     // get all cetegory:
     this._categoryService.GetAll()
       .subscribe(data => this.categories = data,

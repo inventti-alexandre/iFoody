@@ -118,7 +118,7 @@ namespace BusinessLayer.Services
             }
         }
 
-        // Get Product By Category Id  --TUA
+        // Get Product By Category Id  --TUAN
         public IEnumerable<ProductDto> GetProductByCategoryId(Guid categoryId)
         {
             try
@@ -170,6 +170,66 @@ namespace BusinessLayer.Services
 
                     //var productsModel = new List<ProductBusinessEntity>();
                     return productDtos.AsEnumerable();
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        // GET All Products By StoreId -- Tuan Made
+        public IEnumerable<ProductInStoreDto> GetProductByStoreId(Guid storeId)
+        {
+            try
+            {
+                // Get All Products Entity List
+                var products = _unitOfWork.Products.GetManyQueryable(p => p.StoreId == storeId).ToList();
+                Mapper.CreateMap<Product, ProductBusinessEntity>();
+                var productEntities = Mapper.Map<List<Product>, List<ProductBusinessEntity>>(products);
+
+                // Map to DTO
+                if (products.Any())
+                {
+                    var productInStoreDtos = new List<ProductInStoreDto>();
+
+
+                    foreach (var productEntity in productEntities)
+                    {
+                        // Get Store 
+                        var store = _unitOfWork.Stores.GetById(storeId);
+                        Mapper.CreateMap<Store, StoreBusinessEntity>();
+                        var storeEntity = Mapper.Map<Store, StoreBusinessEntity>(store);
+
+                        // Get category
+                        var category = _unitOfWork.Categories.GetById(productEntity.CategoryId.GetValueOrDefault());
+                        Mapper.CreateMap<Category, CategoryBusinessEntity>();
+                        var categoryEntity = Mapper.Map<Category, CategoryBusinessEntity>(category);
+
+                        // Filter Images
+                        var filteredIdImageEntities = _unitOfWork.ProductImages.GetManyQueryable(i => i.ProductId == productEntity.Id).Select(i => i.ImageId);
+                        var filteredImageEntities =
+                            _unitOfWork.Images.GetManyQueryable(i => filteredIdImageEntities.Any(x => x == i.Id)).ToList();
+
+                        // Map to Image Business Entity
+                        Mapper.CreateMap<Image, ImageBusinessEntity>();
+                        var imageEntities = Mapper.Map<List<Image>, List<ImageBusinessEntity>>(filteredImageEntities).AsEnumerable();
+
+                        var productInStoreDto = new ProductInStoreDto()
+                        {
+                            Store = storeEntity,
+                            Product = productEntity,
+                            Category = categoryEntity,
+                            Images = imageEntities,
+                        };
+
+                        // Add to Product DTO List
+                        productInStoreDtos.Add(productInStoreDto);
+                    }
+
+                    //var productsModel = new List<ProductBusinessEntity>();
+                    return productInStoreDtos.AsEnumerable();
                 }
                 return null;
             }
@@ -348,7 +408,7 @@ namespace BusinessLayer.Services
         {
             try
             {
-                var allProducts = _unitOfWork.Products.GetAll().OrderByDescending(x=>x.CategoryId).ToList();
+                var allProducts = _unitOfWork.Products.GetAll().OrderByDescending(x => x.CategoryId).ToList();
                 if (allProducts.Any())
                 {
                     return ChangeProductsToPagingReturnDto(page, count, allProducts);
@@ -484,7 +544,7 @@ namespace BusinessLayer.Services
             products = allProducts
                     .Skip((takePage - 1) * takeCount)
                     .Take(takeCount)
-                    .ToList();         
+                    .ToList();
             // Map to DTO
             if (products.Any())
             {

@@ -106,7 +106,7 @@ export class UserService {
     return null;
   }
 
-  // GET Wish Product and Wish Store (Wish == Favorite in WebAPi) from User Id
+  // GET Store By User Id
   getStoreById(id: string): Observable<any> {
     if(id != null) {
       return this._http.get(this.storeUrl + '/' + id.replace(/['"]+/g, ''))
@@ -116,6 +116,16 @@ export class UserService {
         .catch(this.handleError);
     }
     return null;
+  }
+
+  // GET Products in Store By StoreId
+  getAllProductInStore(storeId: string): Observable<any> {
+    console.log("getAllProductInStore in UserService works");
+    console.log('storeId', storeId);
+    if(storeId != null) {
+      return this._http.get(this.storeUrl + '/' + storeId.replace(/['"]+/g,'') + '/allProducts')
+            .map((response: Response) => <any>response.json());
+    }
   }
 
   // GET Review List of User by UserId
@@ -139,21 +149,6 @@ export class UserService {
       .map((response: Response) => <IUser>response.json())
       .catch(this.handleError);
   }
-
-  //  updateUser(id: string, model: any): Observable<any> {
-  //   console.log("Update User works");
-  //   console.log(id);  
-  //   console.log(model);
-  //   let body = JSON.stringify(model);
-  //   let headers = new Headers();
-  //   headers.append("Token", this.authToken); 
-  //   headers.append("Content-Type", "application/json");
-  //   let options = new RequestOptions({headers: headers});
-    
-  //   return this._http.put(this.getUrl + '/' + id.replace(/['"]+/g,''), body, options)
-  //     .map((response: Response) => <any>response.json())
-  //     .catch(this.handleError);
-  // }
 
   // POST - User Sign In
   signIn(email: string, password: string) {

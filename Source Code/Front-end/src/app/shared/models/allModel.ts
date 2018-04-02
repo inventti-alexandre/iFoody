@@ -22,21 +22,21 @@ export interface IUploadProduct {
     images: any[];
 }
 
-export interface IStore{
-    id: string;
-    name:string;
-    rating:number;
-    openHour: DatePipe;
-    closeHour: DatePipe;
-    lowestPrice: number;
-    highestPrice: number;
-    description: string;
-    registrationDate: DatePipe;
-    address: string;
-    district: string;
-    city: string;
-    categoryId: string;
-    userId: string;
+export interface IStore {
+  id: string;
+  name: string;
+  rating: number;
+  openHour: DatePipe;
+  closeHour: DatePipe;
+  lowestPrice: number;
+  highestPrice: number;
+  description: string;
+  registrationDate: DatePipe;
+  address: string;
+  district: string;
+  city: string;
+  categoryId: string;
+  userId: string;
 }
 
 export interface ICategory {

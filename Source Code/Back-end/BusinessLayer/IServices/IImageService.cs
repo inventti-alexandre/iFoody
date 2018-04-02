@@ -15,6 +15,9 @@ namespace BusinessLayer.IServices
         // Get Image by Id
         IEnumerable<ImageBusinessEntity> GetImage(Guid id);
 
+        // Get Image By StoreId
+        IEnumerable<ImageBusinessEntity> GetImageByStoreId(Guid storeId);
+
         // Get all Image in ProductImage Table - for testing
         IEnumerable<ProductImageBusinessEntity> GetAllProductImages();
 

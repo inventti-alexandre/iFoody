@@ -1,118 +1,103 @@
-<p>Store Profile works!</p>
 <div>
     <div class="modal-body form-open-store">
-      <form [formGroup]="store">
+      <form [formGroup]="storeForm" (ngSubmit)="onSubmit()">
         <div>
+            <div><label for="">Ảnh đại diện</label></div>
+            <div class="container">
+              <div class="row">
+                <div *ngFor="let image of images" class="col-md-2 col-sm-4 col-xs-6">
+                  <img [src]="image?.path" alt="image?.name">
+                </div>
+              </div>
+              <div class="row">
+                  <p style="font-style: italic">Nhấp vào hình để thay đổi</p>
+              </div>
+            </div>
+          </div>
+        
+        <div>
+          <label for="">Tên Cửa Hàng</label>
           <input type="text" formControlName="name" class="form-control input-lg" placeholder="Tên cửa hàng...">
           <i class="fa fa-envelope fa-2x"></i>
         </div>
   
         <div>
-          <input formControlName="rating" class="form-control input-lg" placeholder="Đánh giá">
+            <label for="">Loại</label>
+            <!-- <input type="hidden" formControlName="categoryId" class="form-control input-lg" placeholder="Chưa xác định"> -->
+            <select class="form-control input-lg"  formControlName="categoryId">
+                <option  *ngFor="let category of categories" [ngValue]="category.id">{{ category.name }}</option>
+              </select>
+            <i class="fa fa-user-circle fa-2x"></i>
+        </div>
+  
+        <div>
+          <label for="">Đánh giá</label>
+          <input formControlName="rating" class="form-control input-lg" placeholder="0">
           <i class="fa fa-lock fa-2x"></i>
         </div>
   
         <div>
+            <label for="">Số lượt Đánh giá</label>
+            <input formControlName="ratingCount" class="form-control input-lg" placeholder="0">
+            <i class="fa fa-lock fa-2x"></i>
+        </div>
+
+        <div>
+          <label for="">Giờ mở cửa</label>
           <input type="text" formControlName="openHour" class="form-control input-lg" placeholder="Giờ mở cửa...">
           <i class="fa fa-lock fa-2x"></i>
         </div>
   
         <div>
+          <label for="">Giờ đóng cửa</label>
           <input type="text" formControlName="closeHour" class="form-control input-lg" placeholder="Giờ đóng cửa...">
           <i class="fa fa-user fa-2x"></i>
         </div>
   
         <div>
+          <label for="">Giá thấp nhất</label>
           <input type="text" formControlName="lowestPrice" class="form-control input-lg" placeholder="Giá thấp nhất...">
           <i class="fa fa-user-circle fa-2x"></i>
         </div>
 
         <div>
+            <label for="">Giá cao nhất</label>
+            <input type="text" formControlName="highestPrice" class="form-control input-lg" placeholder="Giá cao nhất...">
+            <i class="fa fa-user-circle fa-2x"></i>
+        </div>
+
+        <div>
+            <label for="">Ngày tạo cửa hàng</label>
+            <input type="text" formControlName="registrationDate" class="form-control input-lg" placeholder="Chưa xác định">
+            <i class="fa fa-user-circle fa-2x"></i>
+        </div>
+  
+        <div>
+          <label for="">Mô tả cửa hàng</label>
           <input type="text" formControlName="description" class="form-control input-lg" placeholder="Mô tả...">
           <i class="fa fa-user-circle fa-2x"></i>
         </div>
         
         <div>
+          <label for="">Địa chỉ</label>
           <input type="text" formControlName="address" class="form-control input-lg" placeholder="Địa chỉ...">
           <i class="fa fa-user-circle fa-2x"></i>
         </div>
 
         <div>
+          <label for="">Quận</label>
           <input type="text" formControlName="district" class="form-control input-lg" placeholder="Quận...">
           <i class="fa fa-user-circle fa-2x"></i>
         </div>
   
         <div>
-          <input type="select" formControlName="address" class="form-control input-lg" placeholder="Địa chỉ Cửa hàng...">
-          <i class="fa fa-user-circle fa-2x"></i>
-        </div>
-
-        <div class="address">
-          <a href="#"><span class="fa fa-plus pull-left"></span>Thêm Địa chỉ</a>
+            <label for="">Thành phố</label>
+            <input type="text" formControlName="city" class="form-control input-lg" placeholder="Thành phố...">
+            <i class="fa fa-user-circle fa-2x"></i>
         </div>
   
-          
-        <div>
-          <input type="select" formControlName="categoryId" class="form-control input-lg" placeholder="Loại cửa hàng...">
-          <i class="fa fa-user-circle fa-2x"></i>
-        </div>
-
-        <div>
-          <div><label for="">Ảnh đại diện</label></div>
-          <div>
-            <span class="fa fa-picture-o fa-5x"></span>
-            <a href="#">Thay đổi ảnh đại diện</a>
-          </div>
-        </div>
-  
-        <button type="submit" class="btn btn-primary btn-signup btn-lg col-xs-12 col-sm-4 col-sm-offset-2">UPDATE</button>
-        <button type="submit" class="btn btn-default btn-signup btn-lg col-xs-12 col-sm-4 ">HỦY</button>
+        <button type="submit" class="btn btn-primary btn-update btn-lg col-xs-12 col-sm-4 col-sm-offset-2">CẬP NHẬT</button>
+        <button type="button" (click)="backToGeneral()" class="btn btn-default btn-lg col-xs-12 col-sm-4 ">HỦY</button>
       </form>
-      <!-- <form [formGroup]="store" (ngSubmit)="onSubmit(user)">
-        <div>
-          <input type="text" formControlName="email" class="form-control input-lg" placeholder="Email...">
-          <i class="fa fa-envelope fa-2x"></i>
-        </div>
-  
-        <div>
-          <input type="password" formControlName="password" class="form-control input-lg" placeholder="Mật Khẩu...">
-          <i class="fa fa-lock fa-2x"></i>
-        </div>
-  
-        <div>
-          <input type="password" formControlName="confirmPassword" class="form-control input-lg" placeholder="Xác Nhận Mật Khẩu...">
-          <i class="fa fa-lock fa-2x"></i>
-        </div>
-  
-        <div>
-          <input type="text" formControlName="name" class="form-control input-lg" placeholder="Tên Cửa Hàng...">
-          <i class="fa fa-user fa-2x"></i>
-        </div>
-  
-        <div>
-          <input type="text" formControlName="address" class="form-control input-lg" placeholder="Địa chỉ Cửa hàng...">
-          <i class="fa fa-user-circle fa-2x"></i>
-        </div>
-  
-        <div class="address">
-          <a href="#"><span class="fa fa-plus pull-left"></span>Thêm Địa chỉ</a>
-        </div>
-  
-        <div>
-          <input type="select" formControlName="address" class="form-control input-lg" placeholder="Địa chỉ Cửa hàng...">
-          <i class="fa fa-user-circle fa-2x"></i>
-        </div>
-  
-        <div>
-          <div><label for="">Ảnh đại diện</label></div>
-          <div>
-            <span class="fa fa-picture-o fa-5x"></span>
-            <a href="#">Thay đổi ảnh đại diện</a>
-          </div>
-        </div>
-  
-        <button type="submit" class="btn btn-primary btn-signup btn-lg col-xs-12 col-sm-4 col-sm-offset-2">UPDATE</button>
-        <button type="submit" class="btn btn-default btn-signup btn-lg col-xs-12 col-sm-4 ">HỦY</button>
-      </form> -->
     </div>
   </div>

@@ -64,6 +64,10 @@ const routes: Routes = [
         component: ProductUploadComponent,
     },
     {
+        path:'store/:id',
+        component: StoreDetailComponent,
+    },
+    {
         path: '',
         redirectTo: '/home',
         pathMatch: 'full'

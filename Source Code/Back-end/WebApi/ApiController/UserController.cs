@@ -141,6 +141,25 @@ namespace WebApi.ApiController
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No Store found");
         }
 
+        // GET api/users/store/{storeId?}/allProducts
+        [HttpGet]
+        [Route("store/{storeId?}/allProducts")]
+        public HttpResponseMessage GetProductInStore(Guid storeId)
+        {
+            try
+            {
+                var products = _productService.GetProductByStoreId(storeId);
+                if (products != null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, products);
+                }
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Got Exception");
+            }
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No Products found");
+        }
 
         // TEST
         // GET api/user/store/location/
@@ -441,14 +460,14 @@ namespace WebApi.ApiController
         // Put api/user/store/5
         [HttpPut]
         [Route("store")]
-        public HttpResponseMessage Put([FromBody] StoreBusinessEntity store)
+        public HttpResponseMessage Put([FromBody] OpenStoreDto openStoreDto)
         {
             try
             {
-                if (store != null)
+                if (openStoreDto != null)
                 {
-                    _storeService.UpdateStore(store);
-                    return Request.CreateResponse(HttpStatusCode.OK, store.Id);
+                    _storeService.UpdateStore(openStoreDto);
+                    return Request.CreateResponse(HttpStatusCode.OK, openStoreDto.Id);
                 }
 
                 return Request.CreateResponse(HttpStatusCode.NotImplemented);

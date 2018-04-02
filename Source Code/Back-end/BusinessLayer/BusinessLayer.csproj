@@ -72,6 +72,7 @@
     <Compile Include="DTOs\PagingReturnDto.cs" />
     <Compile Include="DTOs\ProductDto.cs" />
     <Compile Include="DTOs\ProductImageDto.cs" />
+    <Compile Include="DTOs\ProductInStoreDto.cs" />
     <Compile Include="DTOs\ReviewDto.cs" />
     <Compile Include="DTOs\LocationDto.cs" />
     <Compile Include="DTOs\StoreDto.cs" />
