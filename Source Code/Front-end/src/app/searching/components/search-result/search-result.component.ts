@@ -1,7 +1,6 @@
 import { SearchService } from './../../../shared/services/search.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-
 @Component({
   selector: 'search-result',
   templateUrl: './search-result.component.html',
@@ -16,6 +15,7 @@ export class SearchResultComponent implements OnInit {
 
   public products: any[];
   public initPage;
+  public totalPage;
   public initCount;
   public searchString;
   public filterOption:{};
@@ -23,7 +23,8 @@ export class SearchResultComponent implements OnInit {
   constructor(private _searchService: SearchService, private router: ActivatedRoute,) {
     this.products = [];
     this.initPage = 1;
-    this.initCount = 20;
+    this.totalPage = 0;
+    this.initCount = 18;
     this.filterOption={
       1:'location',
       2:'categories',
@@ -40,7 +41,10 @@ export class SearchResultComponent implements OnInit {
           }else{
             this.products.push(data);
           }
-          console.log("result blaaaaaaa",this.products,this.products[0].currentPage,this.products[0].totalPage);
+          if(this.totalPage==0){
+            this.totalPage =this.products[0].totalPage;
+          }
+          console.log("page",this.products[0].currentPage);
         });
     }
     return null;
@@ -52,8 +56,6 @@ export class SearchResultComponent implements OnInit {
       console.log('searchString ', this.searchString);
       this.getSearchPaging(this.searchString,this.initPage);
     });
-    // let test = this.filterOption[1];
-    // console.log("filterOption", test);
   }
   seeMore(searchString, targetPage, totalPage){
     if(targetPage<=totalPage){

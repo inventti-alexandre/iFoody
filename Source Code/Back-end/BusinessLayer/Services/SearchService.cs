@@ -86,36 +86,6 @@ namespace BusinessLayer.Services
             }
         }
         //Search Paging
-        public PagingReturnDto<ProductDto> SearchPaging(string searchString, int page, int? count)
-        {
-            try
-            {
-                var productsByProductName = _unitOfWork.Products.GetProductsByName(searchString).ToList();
-                if (productsByProductName.Any())
-                {
-                    return _productService.ChangeProductsToPagingReturnDto(page, count, productsByProductName);
-                }
-                else
-                {
-                    var productsByStoreInfo = _unitOfWork.Products.SearchByStoreInfo(searchString).ToList();
-                    if (productsByStoreInfo.Any())
-                    {
-
-                        return _productService.ChangeProductsToPagingReturnDto(page, count, productsByStoreInfo);
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                }
-
-            }
-            catch (Exception e)
-            {
-                return null;
-            }
-        }
-
         public PagingReturnDto<ProductDto> TopRatingProducts(int? count)
         {
             try
@@ -164,15 +134,13 @@ namespace BusinessLayer.Services
         {
             try
             {
-                //search without filter
-                bool searchByStore = false;
+                //search without filter              
                 var products =
                     _unitOfWork.Products.GetProductsByName(searchParam.searchString);
 
                 if (!products.Any())
                 {
                     products = _unitOfWork.Products.SearchByStoreInfo(searchParam.searchString);
-                    searchByStore = true;
                 }
                 //filter
 
@@ -190,11 +158,7 @@ namespace BusinessLayer.Services
                     products = products.OrderByDescending(x => x.Rating);
                 }
                 if (searchParam.filterOption.location)
-                {
-                    if (!searchByStore)
-                    {
-                        products = products.GroupBy(x => x.StoreId).Select(x => x.FirstOrDefault());
-                    }
+                {                  
                     products = FiterByLocation(products, searchParam.currentLatitude, searchParam.currentLongitude);
                 }
                 //conver to DTO

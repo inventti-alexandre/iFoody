@@ -75,25 +75,6 @@ namespace WebApi.ApiController
                 return NotFound();
             }
         }
-        //Search paging
-        // GET /api/search/?searchString=trà&page=1&count=5&sortByRating=true|false
-        [HttpGet]
-        public IHttpActionResult SearchPaging(string searchString, int page, bool sortByRating, int? count)
-        {
-            try
-            {
-                var products = _searchService.SearchPaging(searchString, page, count);
-                if (products == null)
-                {
-                    return NotFound(); // Returns a NotFoundResult
-                }
-                return Ok(products);  // Returns an OkNegotiatedContentResult
-            }
-            catch (Exception e)
-            {
-                return NotFound();
-            }
-        }
         // GET api/search/?userId=?&count
         [HttpGet]
         public IHttpActionResult SuggestionListByUserId(Guid userId, int? count)
