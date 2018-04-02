@@ -15,6 +15,7 @@ import { BsPaginationComponent } from './components/bs-pagination/bs-pagination.
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BsRatingComponent } from './components/bs-rating/bs-rating.component';
+import { ResultItemComponent } from './components/result-item/result-item.component';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { BsRatingComponent } from './components/bs-rating/bs-rating.component';
     NotFoundComponent,
     BsRatingComponent,
     StoreItemComponent,
+    ResultItemComponent
   ],
   declarations: [
     BsBreadcrumbComponent,
@@ -41,6 +43,7 @@ import { BsRatingComponent } from './components/bs-rating/bs-rating.component';
     NotFoundComponent,
     BsRatingComponent,
     StoreItemComponent,
+    ResultItemComponent,
   ],
   providers: [
     UserService,
