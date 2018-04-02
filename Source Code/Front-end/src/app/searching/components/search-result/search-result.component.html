@@ -18,8 +18,12 @@
         <div class="row">
           <product-item [productId]="result.product.id"></product-item>
         </div>
+        <div>
+            <result-item [itemInfo]="result"></result-item>
+          </div>
       </div>
     </div>
+
 
     <div class="searchResult__pagination row">
       <bs-pagination [bigTotalItems]="totalPage*10" (targetPage)="getTargetPage($event)"></bs-pagination>

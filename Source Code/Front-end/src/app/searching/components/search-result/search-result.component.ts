@@ -24,7 +24,7 @@ export class SearchResultComponent implements OnInit {
     this.products = [];
     this.initPage = 1;
     this.totalPage = 0;
-    this.initCount = 20;
+    this.initCount = 18;
     this.filterOption={
       1:'location',
       2:'categories',
@@ -56,8 +56,6 @@ export class SearchResultComponent implements OnInit {
       console.log('searchString ', this.searchString);
       this.getSearchPaging(this.searchString,this.initPage);
     });
-    // let test = this.filterOption[1];
-    // console.log("filterOption", test);
   }
   seeMore(searchString, targetPage, totalPage){
     if(targetPage<=totalPage){

@@ -37,7 +37,17 @@ namespace DataModel.Repository
         {
             string searchString = SplitWords(name);
             string sql = "select * from Products where CONTAINS(Name,'" + searchString + "')";
-            return _iFoodyContext.Database.SqlQuery<Product>(sql).AsQueryable();
+            var products = _iFoodyContext.Database.SqlQuery<Product>(sql).AsQueryable();
+            if (products.Any())
+            {
+                var productsFilter = products.GroupBy(x => x.StoreId).Select(x => x.FirstOrDefault())
+                    .AsQueryable();
+                return productsFilter;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         //Search by category name
