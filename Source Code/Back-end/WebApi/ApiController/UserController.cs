@@ -133,7 +133,7 @@ namespace WebApi.ApiController
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, store);
                 }
-            }
+            }   
             catch (Exception e)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Got Exception");
@@ -145,7 +145,7 @@ namespace WebApi.ApiController
         [HttpGet]
         [Route("store/allProducts/{storeId?}")]
         public HttpResponseMessage GetProductInStore(Guid storeId)
-        {
+       {
             try
             {
                 var products = _productService.GetProductByStoreId(storeId);

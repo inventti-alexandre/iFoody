@@ -18,9 +18,9 @@
           <h2 class="col-xs-12 col-sm-8 col-md-8"> {{ productModel.product.name }} <span><i class="fa fa-1x" [ngClass]="isFavorited ? 'fa-heart' : 'fa-heart-o'" (click)="addFavoriteItem($event)"></i></span></h2>
           <div class="productDetail__info__rating col-xs-12 col-sm-8 col-md-8"><bs-rating [id]="productModel.product?.id" [rating]="productModel.product.rating" [ratingCount]="productModel.product.ratingCount"></bs-rating></div>
           <div  class="col-xs-12 col-sm-12 col-md-12"><span><i class="fa fa-map-marker fa-1x"></i></span> {{ productModel.store.name }} </div>
-          <div class="col-xs-12 col-sm-12 col-md-12"><span><i class="fa fa-location-arrow fa-1x"></i></span> {{ productModel.store.address }}</div>
-          <div  class="col-xs-12 col-sm-12 col-md-12"><span><i class="fa fa-clock-o fa-1x"></i></span> {{ productModel.store.openHour }} -  {{ productModel.store.closeHour }}  </div>
-          <div  class="col-xs-12 col-sm-12 col-md-12"><span><i class="fa fa-money fa-1x"></i></span> {{ productModel.product.price }} </div>
+          <div class="col-xs-12 col-sm-12 col-md-12"><span><i class="fa fa-location-arrow fa-1x"></i></span> {{ productModel.store.address + ', ' +  productModel.store.district + ', ' +  productModel.store.city }}</div>
+          <div  class="col-xs-12 col-sm-12 col-md-12"><span><i class="fa fa-clock-o fa-1x"></i></span> {{ productModel.store.openHour  | slice:0:5}} -  {{ productModel.store.closeHour | slice:0:5 }}  </div>
+          <div  class="col-xs-12 col-sm-12 col-md-12"><span><i class="fa fa-money fa-1x"></i></span> {{ productModel.product.price | number}} </div>
         </div>
       </div>
 

@@ -9,6 +9,7 @@ import { Component, OnInit, Output } from '@angular/core';
   styleUrls: ['./store-detail.component.scss']
 })
 export class StoreDetailComponent implements OnInit {
+  storeManager: false;
   storeId;
   storeIds: any[];
   @Output() storeModel: any;
@@ -21,19 +22,20 @@ export class StoreDetailComponent implements OnInit {
     private _userService: UserService
     ) {
     this.route.params.subscribe((params: Params) => {
-      console.log('params id ', params['id']);
+
       this.storeIds = [params['id']]; // For Google Map Api
       this.storeId = params['id'];
-      // this._storeService.GetStoreById(params['id'])
-      //   .subscribe((data: Response) => {
-      //     console.log('storeModel in parent: ', data);
-      //     this.storeModel = data; 
-      //   });
-      
+      console.log("in params");
       this._storeService.GetStoreById(params['id'])
         .subscribe(data => {
           console.log("storeInfoModel", data);
           this.storeInfoModel = data;
+          // if(data.userId === localStorage.getItem('user_id').replace(/['"]+/g, '')) {
+          //   console.log("is Store Manager");
+          // }
+          // else {
+          //   console.log('not Store Manager');
+          // }
           this._userService.getAllProductInStore(params['id'])
             .subscribe(result => {
               console.log("data return from GetALlProductInStore: ", result);
@@ -45,10 +47,9 @@ export class StoreDetailComponent implements OnInit {
         });
 
       
-
       
 
-    });
+      });
 
    }
 
