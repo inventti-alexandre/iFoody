@@ -23,5 +23,5 @@ export class ResultItemComponent implements OnInit {
     this.store = this.itemInfo.store;
     this.product = this.itemInfo.product;
     this.images = this.itemInfo.images;
-  };
+  }
 }

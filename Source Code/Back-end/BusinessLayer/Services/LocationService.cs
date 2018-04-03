@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BusinessEntities;
+using BusinessLayer.DTOs;
 using BusinessLayer.IServices;
 using DataModel;
 using DataModel.IUnitOfWork;
@@ -9,7 +10,6 @@ using System.Linq;
 using System.Net;
 using System.Transactions;
 using System.Xml.Linq;
-using BusinessLayer.DTOs;
 
 namespace BusinessLayer.Services
 {

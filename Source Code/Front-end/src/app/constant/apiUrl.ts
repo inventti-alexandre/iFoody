@@ -5,6 +5,7 @@ export const GetAllProduct = Domain + 'product';
 export const GetAllCategories = Domain + 'categories';
 export const ProductReview = Domain + 'product/review';
 export const ProductCategory = Domain + 'product/category';
+export const Product = Domain + 'product';
 
 // User URL
 export const GetUser = Domain + 'users';

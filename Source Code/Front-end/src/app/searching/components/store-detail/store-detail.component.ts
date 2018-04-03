@@ -9,12 +9,13 @@ import { Component, OnInit, Output } from '@angular/core';
   styleUrls: ['./store-detail.component.scss']
 })
 export class StoreDetailComponent implements OnInit {
-  storeManager: false;
+  storeManager = true;
   storeId;
   storeIds: any[];
   @Output() storeModel: any;
   storeInfoModel: any;
   productModel: any;
+  reviewList: any;
   constructor(
     private _storeService: StoreService, 
     private router: Router, 
@@ -25,17 +26,20 @@ export class StoreDetailComponent implements OnInit {
 
       this.storeIds = [params['id']]; // For Google Map Api
       this.storeId = params['id'];
+      this.reviewList = [];
+
       console.log("in params");
       this._storeService.GetStoreById(params['id'])
         .subscribe(data => {
           console.log("storeInfoModel", data);
           this.storeInfoModel = data;
-          // if(data.userId === localStorage.getItem('user_id').replace(/['"]+/g, '')) {
-          //   console.log("is Store Manager");
-          // }
-          // else {
-          //   console.log('not Store Manager');
-          // }
+          if(data.userId === localStorage.getItem('user_id').replace(/['"]+/g, '')) {
+            console.log("is Store Manager");
+          }
+          else {
+            this.storeManager = false;
+            console.log('not Store Manager');
+          }
           this._userService.getAllProductInStore(params['id'])
             .subscribe(result => {
               console.log("data return from GetALlProductInStore: ", result);
@@ -43,6 +47,13 @@ export class StoreDetailComponent implements OnInit {
             },
             error => {
               console.log(error);
+            });
+          
+          this._storeService.GetReviewListByStoreId(params['id'])
+            .subscribe(result => {
+              console.log("data return from getReviewListByStoreId: ", result);
+              this.reviewList.push(result);
+              console.log('reviewList', this.reviewList);
             });
         });
 

@@ -3,7 +3,7 @@ import { AuthService } from './../shared/services/auth.service';
 import { StoreService } from './../shared/services/store.service';
 import { ProductService } from './../shared/services/product.service';
 import { UserService } from './../shared/services/user.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RatingModule } from 'ngx-bootstrap/rating';
 import { SharedModule } from '../shared/shared.module';
 import { MatCheckboxModule, MatButtonModule } from '@angular/material';
@@ -25,18 +25,22 @@ import { SimilarStoreComponent } from './components/store-detail/similar-store/s
 import { NgModel } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { PopoverModule } from 'ngx-bootstrap/popover';
+import { ProductItemManagerComponent } from './components/store-detail/product-item-manager/product-item-manager.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
     CommonModule,
     CollapseModule.forRoot(),
     MatCheckboxModule,
+    RouterModule,
     PopoverModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCiZd64MtnFqNtuhvpWcGjBBjfzi0feu0Q'
     }),
     SharedModule,
     FormsModule,
+    ReactiveFormsModule,
     MatButtonModule,
     RatingModule,
     ButtonsModule.forRoot()
@@ -50,6 +54,7 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
     SearchResultComponent,
     MapComponent,
     StoreDetailComponent,
+    ProductItemManagerComponent,
     StoreDetailMenuComponent,
   ],
   declarations: [
@@ -63,6 +68,7 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
     StoreDetailInfoComponent,
     StoreDetailMenuComponent,
     SimilarStoreComponent,
+    ProductItemManagerComponent,
   ],
   providers: [
     UserService,

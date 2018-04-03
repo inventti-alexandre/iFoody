@@ -114,7 +114,7 @@ namespace WebApi.ApiController
             }
         }
 
-        // GET Store Review By Store Id
+        // GET Store Reviews By Store Id
         [HttpGet]
         [Route("review/{id?}")]
         public HttpResponseMessage GetStoreReviews(Guid id)

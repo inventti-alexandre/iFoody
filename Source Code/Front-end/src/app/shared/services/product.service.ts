@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Rx';
 import { IUploadProduct } from './../models/allModel';
 import { element } from 'protractor';
 import * as apiUrl from './../../constant/apiUrl';
@@ -8,7 +9,6 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import { tryCatch } from 'rxjs/util/tryCatch';
-import {Observable} from 'rxjs/Rx';
 import {CategoryService} from './category.service';
 import { AuthService } from './auth.service';
 
@@ -132,4 +132,22 @@ export class ProductService {
             .map((response: Response) => <any>response.json());
     }
   }
+
+  // Tuan made
+  // Update Product in StoreDetailComponent
+  updateProduct(id: string, model: any): Observable<any> {
+    console.log("updateProduct in service works");
+    console.log('model', model);
+
+    let body = JSON.stringify(model);
+    let headers = new Headers();
+    headers.append("Token", this.authToken); 
+    headers.append("Content-Type", "application/json");
+    let options = new RequestOptions({headers: headers});
+
+    return this._http.put(apiUrl.Product  + '/' + id.replace(/['"]+/g,''), body, options)
+      .map((response: Response) => <any>response.json());
+  }
+
 }
+

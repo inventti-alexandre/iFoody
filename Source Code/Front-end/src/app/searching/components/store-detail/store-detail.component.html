@@ -46,19 +46,32 @@
     </div>
     <hr/>
 
-    <div class="row storeDetail__menu">
-      <div class="col-sm-4 col-md-3 col-xs-6" *ngFor="let item of storeModel">
-        <div class="row">
-          <product-item [productId]="item?.product.id"></product-item>
+    <ng-template [ngIf]="!storeManager">
+      <div class="row storeDetail__menu">
+        <div class="col-sm-4 col-md-3 col-xs-6" *ngFor="let item of storeModel">
+          <div class="row">
+            <product-item [productId]="item?.product.id"></product-item>
+          </div>  
         </div>
       </div>
-    </div>
-    <hr/>
+      <hr/>
 
-    <!-- <div class="row storeDetail__review">
-      <div class="col-xs-12 col-sm-12" *ngFor="let i of [1,2,3,4,5,6]">
-        <review [storeId]="storeId"></review>
+      <div class="row storeDetail__review">
+        <div class="col-xs-12 col-sm-12" *ngFor="let i of [1,2,3,4,5,6]">
+          <review [storeId]="storeId"></review>
+        </div>
+      </div>  
+    </ng-template>
+
+    <ng-template [ngIf]="storeManager">
+      <div class="row storeDetail__menu__manager">
+        <div class="col-sm-12 col-md-12 col-xs-12" *ngFor="let item of storeModel">
+          <div class="row">
+            <product-item-manager [productId]="item?.product.id"></product-item-manager>
+          </div>  
+        </div>
       </div>
-    </div>   -->
+      <hr/>
+    </ng-template>
   </div>
 </div>

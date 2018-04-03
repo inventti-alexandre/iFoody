@@ -107,6 +107,8 @@ namespace BusinessLayer.Services
             try
             {
                 var reviews = _unitOfWork.Reviews.GetManyQueryable(r => r.StoreId == id).ToList();
+                var reviewDtos = new List<ReviewDto>();
+
                 if (reviews.Count > 0)
                 {
                     Mapper.CreateMap<Review, ReviewBusinessEntity>();
@@ -116,7 +118,6 @@ namespace BusinessLayer.Services
                     // Map to DTO
                     if (reviewEntities != null)
                     {
-                        var reviewDtos = new List<ReviewDto>();
                         foreach (var reviewEntity in reviewEntities)
                         {
                             // Get Store 
@@ -146,14 +147,13 @@ namespace BusinessLayer.Services
                             reviewDtos.Add(reviewDto);
                         }
                         return reviewDtos;
-
                     }
 
                     //var productsModel = new List<ProductBusinessEntity>();
 
                     // return productModel;
                 }
-                return null;
+                return reviewDtos;
             }
             catch (Exception e)
             {

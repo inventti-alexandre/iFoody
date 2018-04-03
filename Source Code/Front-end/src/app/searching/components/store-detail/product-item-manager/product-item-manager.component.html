@@ -1,0 +1,39 @@
+<div class="productItem col-xs-12 col-sm-12" *ngIf="productModel !== undefined && productModel != null">
+  <div class="row">
+    <div class="productItem__image col-xs-12 col-sm-3 col-md-3">
+      <a [routerLink]="['/product', productId]" (click)="getProductDetail()">
+        <img [src]="productModel.images.length>0?productModel.images[0].path:imageDefault" alt="Image Product">
+      </a>
+    </div>
+
+    <div class="productItem__rating col-xs-12 col-sm-3 col-md-3">
+      <bs-rating [id]="productModel.product?.id" [rating]="productModel.product.rating" [ratingCount]="productModel.product?.ratingCount"></bs-rating>
+    </div>
+
+    <div class="productItem__info col-xs-12 col-sm-5 col-md-5">
+      <div><label>Tên sản phẩm</label><input class="form-control" value="{{ productModel.product.name }}"/></div>
+      <div><label>Giá</label><input  class="form-control" value="{{ productModel.product.price | currency:'vnd':4.0 }}"/></div>
+      <div><label>Loại</label>
+        <!-- <input  class="form-control" value="{{ productModel.category?.name }}"/> -->
+        <select class="form-control">
+          <option *ngFor="let category of categories" [value]="category?.id">
+            {{ category?.name }}
+          </option>
+        </select>
+
+      </div>
+      <div><label>Mô tả sản phẩm</label><input  class="form-control" value="{{ productModel.product?.description }}"/></div>
+
+      <!-- <h4><span>Tên sản phẩm</span>{{ productModel.product.name }}</h4>
+      <h5><span>Giá</span>{{ productModel.product.price | currency:'vnd':4.0}}</h5>
+      <h5><span>Loại</span>{{ productModel.category?.name }}</h5>
+      <h5><span>Mô tả sản phẩm</span>{{ productModel.product?.description }}</h5>
+       -->
+    </div>
+    
+    <div class="productItem__submit col-xs-12 col-sm-1 col-md-1">
+        <button class="row btn btn-success">Áp dụng</button>
+        <button class="row btn btn-warning">Xóa Sản phẩm</button>
+    </div> 
+  </div>
+</div>

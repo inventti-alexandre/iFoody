@@ -123,7 +123,7 @@ namespace BusinessLayer.Services
                             Address = storeEntity.Address,
                             District = storeEntity.District,
                             City = storeEntity.City,
-                            //User = userEntity,
+                            UserId = storeEntity.UserId,
                             //Category = categoryEntity,
                             Images = imageEntities,
                         };
