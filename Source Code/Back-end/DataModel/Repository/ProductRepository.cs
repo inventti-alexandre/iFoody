@@ -11,6 +11,14 @@ namespace DataModel.Repository
         public Category category { get; set; }
         public List<Image> images { get; set; }
     }
+
+    public class ProductReturn
+    {
+        public Product product { get; set; }
+        public Store store { get; set; }
+        public Category category { get; set; }
+        public List<Image> images { get; set; }
+    }
     public class ProductRepository : GenericRepository<Product>, IProductRepository
     {
         private iFoodyEntities _iFoodyContext;
@@ -20,15 +28,17 @@ namespace DataModel.Repository
             this._iFoodyContext = iFoodyEntities;
         }
 
-        public IEnumerable<Product> GetProductsByListId(List<Guid?> listProductsId)
+        public List<ProductReturn> GetProductsInfoByListId(List<Guid> listProductsId)
         {
             if (listProductsId.Any())
             {
-                var products =
-                    _iFoodyContext.Products.Where(x => listProductsId.Contains(x.Id)).AsQueryable();
-                                          
-           
-                return products;
+                List<ProductReturn> result = new List<ProductReturn>();
+                foreach (var productId in listProductsId)
+                {
+                    ProductReturn item = CreateProductItemReturn(productId);
+                    result.Add(item);
+                }
+                return result;
 
             }
             else
@@ -37,6 +47,25 @@ namespace DataModel.Repository
             }
         }
 
+        public List<ProductReturn> GetProductInfo()
+        {
+            List<ProductReturn> result = new List<ProductReturn>();
+            List<Guid> listAllProductId = _iFoodyContext.Products.Select(x => x.Id).ToList();
+            if (listAllProductId.Any())
+            {
+                foreach (var productId in listAllProductId)
+                {
+                    ProductReturn item = CreateProductItemReturn(productId);
+                    result.Add(item);
+                }
+            }
+            else
+            {
+                result = null;
+            }
+          
+            return result;
+        }
         //Search by product name
         public IEnumerable<Product> GetProductsByName(string name)
         {
@@ -94,7 +123,6 @@ namespace DataModel.Repository
         }
 
         #region Return Store
-
         public List<SearchReturn> Search(string input)
         {
             List<SearchReturn> result = new List<SearchReturn>();
@@ -133,7 +161,7 @@ namespace DataModel.Repository
             {
                 foreach (var storeId in storeIds)
                 {
-                    SearchReturn item = createItemReturn(storeId);
+                    SearchReturn item = CreateSearchItemReturn(storeId);
                     result.Add(item);
                 }
             }
@@ -163,7 +191,7 @@ namespace DataModel.Repository
             }
             return searchString;
         }
-        private SearchReturn createItemReturn(Guid storeId)
+        private SearchReturn CreateSearchItemReturn(Guid storeId)
         {
             SearchReturn item = new SearchReturn()
             {
@@ -175,6 +203,23 @@ namespace DataModel.Repository
             item.category = _iFoodyContext.Categories.Where(x => x.Id == item.store.CategoryId).FirstOrDefault();
             IEnumerable<Guid> listImagesId =
                 _iFoodyContext.StoreImages.Where(x => x.StoreId == storeId).Select(x => x.ImageId);
+            item.images = _iFoodyContext.Images.Where(x => listImagesId.Contains(x.Id)).ToList();
+            return item;
+        }
+        private ProductReturn CreateProductItemReturn(Guid productId)
+        {
+            ProductReturn item = new ProductReturn()
+            {
+                product = null,
+                store = null,
+                category = null,
+                images = null
+            };
+            item.product = _iFoodyContext.Products.Where(x => x.Id == productId).FirstOrDefault();
+            item.store = _iFoodyContext.Stores.Where(x => x.Id == item.product.StoreId).FirstOrDefault();
+            item.category = _iFoodyContext.Categories.Where(x => x.Id == item.product.CategoryId).FirstOrDefault();
+            IEnumerable<Guid> listImagesId =
+                _iFoodyContext.ProductImages.Where(x => x.ProductId == productId).Select(x => x.ImageId);
             item.images = _iFoodyContext.Images.Where(x => listImagesId.Contains(x.Id)).ToList();
             return item;
         }

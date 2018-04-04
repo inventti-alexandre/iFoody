@@ -9,7 +9,8 @@ namespace DataModel.IRepository
         IEnumerable<Product> GetProductsByName(string name);
         IEnumerable<Product> SearchByStoreInfo(string searchString);
         IEnumerable<Product> SearchByCategoryName(string categoryName);
-        IEnumerable<Product> GetProductsByListId(List<Guid?> listProductsId);
+        List<ProductReturn> GetProductsInfoByListId(List<Guid> listProductsId);
+        List<ProductReturn> GetProductInfo();
         List<SearchReturn> Search(string input);
 
     }
