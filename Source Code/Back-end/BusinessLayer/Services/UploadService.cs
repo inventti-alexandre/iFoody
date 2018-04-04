@@ -10,6 +10,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Web.Hosting;
 
 namespace BusinessLayer.Services
 {
@@ -48,12 +49,15 @@ namespace BusinessLayer.Services
                     // Open Store or Upload Product
                     if (isOpenStore)
                     {
-                        detailPath = System.Web.HttpContext.Current.Server.MapPath("~/Content/Uploads/Stores") +
+                        //detailPath = System.Web.HttpContext.Current.Server.MapPath("~/Content/Uploads/Stores") +
+                        //     '/' + storeId.ToString();
+                        detailPath = HostingEnvironment.MapPath("~/Content/Uploads/Stores") +
                              '/' + storeId.ToString();
                     }
                     else
                     {
-                        detailPath = System.Web.HttpContext.Current.Server.MapPath("~/Content/Uploads/Stores/") + storeId.ToString() + '/' + productId.ToString();
+                        //detailPath = System.Web.HttpContext.Current.Server.MapPath("~/Content/Uploads/Stores/") + storeId.ToString() + '/' + productId.ToString();
+                        detailPath = HostingEnvironment.MapPath("~/Content/Uploads/Stores/") + storeId.ToString() + '/' + productId.ToString();
                     }
 
 
@@ -95,8 +99,8 @@ namespace BusinessLayer.Services
                         var imageEntity = new ImageBusinessEntity()
                         {
                             Name = file.FileName,
-                            Path = filePath
-                        };
+                            Path = "~/Content/Uploads/Stores/" + storeId.ToString() + '/' + productId.ToString() + '/' + file.FileName
+                    };
 
                         Mapper.CreateMap<ImageBusinessEntity, Image>();
                         var image = Mapper.Map<ImageBusinessEntity, Image>(imageEntity);
