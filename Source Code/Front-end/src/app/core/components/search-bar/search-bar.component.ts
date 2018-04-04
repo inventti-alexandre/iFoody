@@ -1,3 +1,4 @@
+import { ISearchParam } from './../../../shared/models/allModel';
 import { imageDefault } from "./../../../constant/global";
 import { ActivatedRoute, Params, Route, Router } from "@angular/router";
 import { Component, OnInit, Input } from "@angular/core";
@@ -24,6 +25,7 @@ export class SearchBarComponent implements OnInit {
   defaultPageResult;
   imageDefault: string;
   isNotFound: boolean;
+  searchParam:ISearchParam;
 
   constructor(
     private router: Router,
@@ -52,6 +54,21 @@ export class SearchBarComponent implements OnInit {
     this.defaultPageResult = 1;
     this.imageDefault = imageDefault;
     this.isNotFound = false;
+    this.searchParam = {
+      "searchString": "",
+      "page": this.defaultPageResult,
+      "currentLatitude": 0,
+      "currentLongitude": 0,
+      "categoriesListId": [],
+      "districtList": [],
+      "count": this.defaultSuggestionCount,
+      "filterOption":{
+        "location": false,
+        "categories":false,
+        "districts":false,
+        "rating": false
+      }
+    }
   }
   ngOnInit() {
     searchObject.hide();
@@ -120,20 +137,21 @@ export class SearchBarComponent implements OnInit {
     return isOpen;
   }
 
-  getSearchPaging(searchString, initPage) {
-    let trimSearchString = this.searchString.trim();
+  getSearchPaging() {
+    let trimSearchString = this.searchString.trim().replace(/ +(?= )/g,'');
     if(trimSearchString!==""){
+      this.searchParam.searchString = trimSearchString;
       return this._searchService
-      .SearchPaging(
-        trimSearchString.replace(/ +(?= )/g,''),
-        initPage,
-        false,
-        this.defaultSuggestionCount
-      )
+      .Search(this.searchParam)
       .subscribe(
         (data: Response) => {
-          this.suggestionList.splice(0, 1, data);
-          this.isNotFound = false;
+          if(data==null){
+            this.suggestionList = [];
+            this.isNotFound = true;
+          }else{
+            this.suggestionList.splice(0, 1, data);
+            this.isNotFound = false;
+          }
           console.log("search paging result", this.suggestionList);
         },
         err => {
@@ -146,7 +164,7 @@ export class SearchBarComponent implements OnInit {
 
   setSearchQueryParam=()=> {
     this.router.navigate(["/search"], {
-      queryParams: { name: this.searchString, area: this.area }
+      queryParams: { name: this.searchString,area: this.area}
     });
   }
 }

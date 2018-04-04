@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DataModel.Repository;
 
 namespace DataModel.IRepository
 {
@@ -9,5 +10,7 @@ namespace DataModel.IRepository
         IEnumerable<Product> SearchByStoreInfo(string searchString);
         IEnumerable<Product> SearchByCategoryName(string categoryName);
         IEnumerable<Product> GetProductsByListId(List<Guid?> listProductsId);
+        List<SearchReturn> Search(string input);
+
     }
 }

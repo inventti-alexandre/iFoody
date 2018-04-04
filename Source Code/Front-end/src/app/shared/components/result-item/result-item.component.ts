@@ -1,3 +1,4 @@
+import { imageDefault } from './../../../constant/global';
 import { ICategory,IStore,IProduct,IImages } from './../../models/allModel';
 import { Component, OnInit, Input} from "@angular/core";
 
@@ -11,17 +12,20 @@ export class ResultItemComponent implements OnInit {
   category:ICategory;
   store: IStore;
   product: IProduct;
-  images: IImages;
-  constructor() {}
+  images: IImages[];
+  imageDefault: string;
+  constructor() {
+    this.imageDefault = imageDefault;
+  }
 
   ngOnInit() {
-    this.test();
+    this.getItemInfo();
   }
-  test = () => {
-    console.log("item info is:", this.itemInfo);
+  getItemInfo = () => {
     this.category = this.itemInfo.category;
     this.store = this.itemInfo.store;
     this.product = this.itemInfo.product;
     this.images = this.itemInfo.images;
+    console.log("item info is:", this.images.length);
   };
 }

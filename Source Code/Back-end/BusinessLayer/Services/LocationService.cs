@@ -155,6 +155,26 @@ namespace BusinessLayer.Services
             }
         }
 
+        public double CalcStoreDistance(double currentLatitude, double currentLongitude,
+            Guid storeId)
+        {
+            try
+            {
+                var location = _unitOfWork.Locations.GetManyQueryable(x => x.StoreId == storeId).FirstOrDefault();
+                double distance = 0;
+                if (!location.Equals(null))
+                {
+                    var latitude = (double)location.Latitude;
+                    var longitude = (double)location.Longitude;
+                    distance = HaversineDistance(currentLatitude, currentLongitude, latitude, longitude);
+                }
+                return distance;               
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
+        }
 
         // Haversine Formula to calculate distance between two points. Use double type for better calculation
         public static double HaversineDistance(double lat1, double lng1, double lat2, double lng2, char unit = 'K')

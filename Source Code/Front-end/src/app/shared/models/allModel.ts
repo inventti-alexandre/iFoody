@@ -5,9 +5,11 @@ export interface IProduct {
   id: string;
   name: string;
   price: number;
+  rating: number;
   description: string;
   categoryId: string;
   storeId: string;
+  ratingCount: number;
 }
 
 export interface IUploadProduct {
@@ -26,6 +28,7 @@ export interface IStore {
   id: string;
   name: string;
   rating: number;
+  ratingCount: number;
   openHour: DatePipe;
   closeHour: DatePipe;
   lowestPrice: number;

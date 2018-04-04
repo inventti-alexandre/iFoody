@@ -4,20 +4,15 @@
       <search-filter></search-filter>
     </div>
 
-    <!-- <div style="text-align: center; font-weight:bold; margin-bottom:20px !important;margin-top:20px !important;  ">
-        <p style="font-size: 1.8em">Loading...</p>
-        <i class="fa fa-spinner fa-spin" style="font-size:36px"></i>
-    </div> -->
-
     <div class=" searchResult__map row">
       <map [storeIds]="storeIds"></map>
     </div>
 
     <div class="searchResult__items row">
       <div class="col-xs-6 col-md-3 col-sm-4" *ngFor="let result of products[0]?.results">
-        <div class="row">
+        <!-- <div class="row">
           <product-item [productId]="result.product.id"></product-item>
-        </div>
+        </div> -->
         <div>
             <result-item [itemInfo]="result"></result-item>
           </div>

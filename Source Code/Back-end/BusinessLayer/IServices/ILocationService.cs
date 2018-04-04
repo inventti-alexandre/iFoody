@@ -19,8 +19,7 @@ namespace BusinessLayer.IServices
         // Convert Address to Location
         dynamic GetLocationFromAddress(string input);
         List<LocationWithDistanceDto>FilterNearestLocations(double currentLatitude, double currentLongitude, List<Guid> storeIds);
-
-
+        double CalcStoreDistance(double currentLatitude, double currentLongitude, Guid storeId);
         // Get All Locations
         IEnumerable<LocationBusinessEntity> GetAllLocations();
     }
