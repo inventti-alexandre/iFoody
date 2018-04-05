@@ -7,8 +7,8 @@ namespace BusinessLayer.IServices
 {
     public interface ISearchService
     {
-        PagingReturnDto<ProductDto> SuggestionListByUserId(Guid userId, int? count);
-        PagingReturnDto<ProductDto> TopRatingProducts(int? count);
+        PagingReturnDto<SearchDto> SuggestionListByUserId(Guid userId, int? count);
+        PagingReturnDto<SearchDto> TopRatingProducts(int? count);
         PagingReturnDto<SearchDto> SearchDto_Search(SearchParam searchParam);
     }
 }

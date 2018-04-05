@@ -1,3 +1,5 @@
+import { ICategory } from './allModel';
+import { Store } from './../../constant/apiUrl';
 import { Params } from "@angular/router";
 import { DatePipe } from "@angular/common/src/pipes";
 
@@ -111,4 +113,10 @@ export interface ISearchParam {
     districts: boolean;
     rating: boolean;
   };
+}
+export interface ISearchResult{
+  Store: IStore,
+  Category: ICategory,
+  Images: IImages,
+  Distance: number
 }

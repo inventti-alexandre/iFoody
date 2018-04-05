@@ -26,27 +26,7 @@ namespace DataModel.Repository
         public ProductRepository(iFoodyEntities iFoodyEntities) : base(iFoodyEntities)
         {
             this._iFoodyContext = iFoodyEntities;
-        }
-
-        public List<ProductReturn> GetProductsInfoByListId(List<Guid> listProductsId)
-        {
-            if (listProductsId.Any())
-            {
-                List<ProductReturn> result = new List<ProductReturn>();
-                foreach (var productId in listProductsId)
-                {
-                    ProductReturn item = CreateProductItemReturn(productId);
-                    result.Add(item);
-                }
-                return result;
-
-            }
-            else
-            {
-                return null;
-            }
-        }
-
+        }      
         public List<ProductReturn> GetProductInfo()
         {
             List<ProductReturn> result = new List<ProductReturn>();
@@ -170,7 +150,28 @@ namespace DataModel.Repository
                 result = null;
             }
             return result;
-        }       
+        }
+
+        public List<SearchReturn> GetStoreReturnByListId(List<Guid> listStoreId)
+        {
+            List<SearchReturn> result = new List<SearchReturn>();
+            if (listStoreId.Any())
+            {
+                foreach (var id in listStoreId)
+                {
+                    SearchReturn item = CreateSearchItemReturn(id);
+                    if (item != null)
+                    {
+                        result.Add(item);
+                    }
+                }
+            }
+            else
+            {
+                result = null;
+            }
+            return result;
+        }
         #endregion
 
         #region private implement
@@ -200,11 +201,19 @@ namespace DataModel.Repository
                 images = null
             };
             item.store = _iFoodyContext.Stores.Where(x => x.Id == storeId).FirstOrDefault();
-            item.category = _iFoodyContext.Categories.Where(x => x.Id == item.store.CategoryId).FirstOrDefault();
-            IEnumerable<Guid> listImagesId =
-                _iFoodyContext.StoreImages.Where(x => x.StoreId == storeId).Select(x => x.ImageId);
-            item.images = _iFoodyContext.Images.Where(x => listImagesId.Contains(x.Id)).ToList();
-            return item;
+            if (item.store != null)
+            {
+                item.category = _iFoodyContext.Categories.Where(x => x.Id == item.store.CategoryId).FirstOrDefault();
+                IEnumerable<Guid> listImagesId =
+                    _iFoodyContext.StoreImages.Where(x => x.StoreId == storeId).Select(x => x.ImageId);
+                item.images = _iFoodyContext.Images.Where(x => listImagesId.Contains(x.Id)).ToList();
+                return item;
+            }
+            else
+            {
+                return null;
+            }
+            
         }
         private ProductReturn CreateProductItemReturn(Guid productId)
         {

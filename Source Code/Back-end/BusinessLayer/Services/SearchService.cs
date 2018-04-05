@@ -16,23 +16,86 @@ namespace BusinessLayer.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IProductService _productService;
         private readonly ILocationService _locationService;
-       
+        private readonly int _defaultPageRecordCount;
+
         public SearchService(IUnitOfWork unitOfWork,IProductService productService, ILocationService locationService)
         {
             _unitOfWork = unitOfWork;
             _productService = productService;
             _locationService = locationService;
+            _defaultPageRecordCount = 10;
         }
 
-        #region Suggestion return productDto
-        public PagingReturnDto<ProductDto> TopRatingProducts(int? count)
+        #region Search
+        public PagingReturnDto<SearchDto> SearchDto_Search(SearchParam searchParam)
         {
             try
             {
-                var topProducts = _unitOfWork.Products.GetProductInfo().OrderByDescending(x => x.product.Rating).ToList();
-                if (topProducts.Any())
+                PagingReturnDto<SearchDto> result = new PagingReturnDto<SearchDto>();
+                var searchBusiness = _unitOfWork.Products.Search(searchParam.searchString);
+                //filter
+                if (searchParam.filterOption.categories)
                 {
-                    return _productService.PagingProductDto(1, count, topProducts);
+                    searchBusiness =
+                        searchBusiness.Where(x => searchParam.categoriesListId.Any(y => y == x.store.CategoryId)).ToList();
+                }
+                if (searchParam.filterOption.districts)
+                {
+                    searchBusiness = FiterByDistricts(searchBusiness, searchParam.districtList);
+                }
+                if (searchParam.filterOption.location)
+                {
+                    searchBusiness = FiterByLocation(searchBusiness, searchParam.currentLatitude, searchParam.currentLongitude);
+                }
+                if (searchParam.filterOption.rating)
+                {
+                    searchBusiness = searchBusiness.OrderByDescending(x => x.store.Rating).ToList();
+                }
+                if (searchBusiness != null)
+                {
+                    PagingParam pagingParam = new PagingParam()
+                    {
+                        page = searchParam.page,
+                        count = searchParam.count,
+                        currentLatitude = searchParam.currentLatitude,
+                        currentLongitude = searchParam.currentLongitude
+                    };
+                    result = PagingSearchResult(pagingParam, searchBusiness);
+                }
+                else
+                {
+                    result = null;
+                }
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+        public PagingReturnDto<SearchDto> TopRatingProducts(int? count)
+        {
+            try
+            {
+                List<Guid?> topProductsStoreId = _unitOfWork.Products.GetAll().OrderByDescending(x => x.Rating)
+                                                .Select(x=>x.StoreId).ToList();
+                List<Guid> storeIds=new List<Guid>();
+                foreach (var id in topProductsStoreId)
+                {
+                    storeIds.Add(id.GetValueOrDefault());
+                }
+                var topStore = _unitOfWork.Products.GetStoreReturnByListId(storeIds);
+                if (topStore.Any())
+                {
+                    PagingParam pagingParam = new PagingParam()
+                    {
+                        page = 1,
+                        count = count??_defaultPageRecordCount,
+                        currentLatitude = 0,
+                        currentLongitude = 0
+                    };
+                    return PagingSearchResult(pagingParam,topStore);
                 }
                 else
                 {
@@ -45,22 +108,43 @@ namespace BusinessLayer.Services
                 return null;
             }
         }
-        public PagingReturnDto<ProductDto> SuggestionListByUserId(Guid userId, int? count)
+        public PagingReturnDto<SearchDto> SuggestionListByUserId(Guid userId, int? count)
         {
             try
             {
                 var favoriteList = _unitOfWork.FavoriteLists.GetManyQueryable(x => x.UserId == userId);
                 if (favoriteList.Any())
                 {
-                    List<Guid> listProductIds = new List<Guid>();
+                    List<Guid> storeIds = new List<Guid>();
                     foreach (var f in favoriteList)
                     {
-                        Guid id = f.ProductId.GetValueOrDefault();
-                        listProductIds.Add(id);
+                        Guid ?productId = f.ProductId;
+                        Guid ?storeId = f.StoreId;
+                        if (productId != null)
+                        {
+                            Guid? storeIdOfProduct =
+                            _unitOfWork.Products.GetById(productId).StoreId;
+                            if (storeIdOfProduct != null)
+                            {
+                                storeIds.Add(storeIdOfProduct.Value);
+                            }                           
+                        }
+                        if (storeId != null)
+                        {
+                            storeIds.Add(storeId.Value);
+                        }
                     }
-                    var products = _unitOfWork.Products.GetProductsInfoByListId(listProductIds)
-                        .OrderByDescending(x => x.product.Rating).ToList();
-                    return _productService.PagingProductDto(1, count, products);
+                    storeIds = storeIds.Distinct().ToList();
+                    var topStore = _unitOfWork.Products.GetStoreReturnByListId(storeIds);
+                    PagingParam pagingParam = new PagingParam()
+                    {
+                        page = 1,
+                        count = count ?? _defaultPageRecordCount,
+                        currentLatitude = 0,
+                        currentLongitude = 0
+                    };
+                    return PagingSearchResult(pagingParam, topStore);
+
                 }
                 else
                 {
@@ -74,48 +158,16 @@ namespace BusinessLayer.Services
         }
        
         #endregion
-        #region Search return searchDto
-        public PagingReturnDto<SearchDto> SearchDto_Search(SearchParam searchParam)
+        #region Private
+        
+        private class PagingParam
         {
-            try
-            {
-                PagingReturnDto<SearchDto> result = new PagingReturnDto<SearchDto>();
-                var searchBusiness = _unitOfWork.Products.Search(searchParam.searchString);
-                //filter
-                if (searchParam.filterOption.categories)
-                {
-                    searchBusiness =
-                        searchBusiness.Where(x => searchParam.categoriesListId.Any(y=>y==x.store.CategoryId)).ToList();
-                }
-                if (searchParam.filterOption.districts)
-                {
-                    searchBusiness = FiterByDistricts(searchBusiness, searchParam.districtList);
-                }              
-                if (searchParam.filterOption.location)
-                {
-                    searchBusiness = FiterByLocation(searchBusiness, searchParam.currentLatitude, searchParam.currentLongitude);
-                }
-                if (searchParam.filterOption.rating)
-                {
-                    searchBusiness = searchBusiness.OrderByDescending(x => x.store.Rating).ToList();
-                }
-                if (searchBusiness != null)
-                {
-                    result = PagingSearchResult(searchParam, searchBusiness);
-                }
-                else
-                {
-                    result = null;
-                }
-               
-              return result;
-            }
-            catch (Exception e)
-            {
-                return null;
-            }
+            public int page { get; set; }
+            public int count { get; set; }
+            public double currentLatitude { get; set; }
+            public double currentLongitude { get; set; }
         }
-        private PagingReturnDto<SearchDto> PagingSearchResult(SearchParam searchParam, List<SearchReturn> allResults)
+        private PagingReturnDto<SearchDto> PagingSearchResult(PagingParam searchParam, List<SearchReturn> allResults)
         {
             int takePage = searchParam.page;
             int takeCount = searchParam.count;
@@ -134,7 +186,7 @@ namespace BusinessLayer.Services
                     currentPage = takePage,
                     totalRecord = totalProducts,
                     totalPage = Convert.ToInt32(Math.Ceiling(tempTotalPage)),
-                    Results = MapToSearchDto(searchParam,page)
+                    Results = MapToSearchDto(searchParam.currentLatitude,searchParam.currentLongitude,page)
                 };
                 return pageDto;
             }
@@ -144,13 +196,13 @@ namespace BusinessLayer.Services
             }
 
         }
-        private IEnumerable<SearchDto> MapToSearchDto(SearchParam searchParam,List<SearchReturn> page)
+        private IEnumerable<SearchDto> MapToSearchDto(double currentLatitude,double currentLongitude, List<SearchReturn> page)
         {
             Mapper.CreateMap<Store, StoreBusinessEntity>();
             Mapper.CreateMap<Category, CategoryBusinessEntity>();
             Mapper.CreateMap<Image, ImageBusinessEntity>();
             Mapper.CreateMap<Location, LocationBusinessEntity>();
-            List<SearchDto> pageDto = new List<SearchDto>();
+            List<SearchDto> pageDto = new List<SearchDto>();           
             foreach (var item in page)
             {
                 SearchDto mapItem = new SearchDto()
@@ -158,8 +210,8 @@ namespace BusinessLayer.Services
                     Store = Mapper.Map<Store, StoreBusinessEntity>(item.store),
                     Category = Mapper.Map<Category, CategoryBusinessEntity>(item.category),
                     Images = Mapper.Map<List<Image>, List<ImageBusinessEntity>>(item.images),
-                    Distance = _locationService.CalcStoreDistance(searchParam.currentLatitude, 
-                                                                    searchParam.currentLongitude, item.store.Id)
+                    Distance = (currentLatitude!=0 && currentLongitude!=0)?
+                    _locationService.CalcStoreDistance(currentLatitude, currentLongitude, item.store.Id):0
                 };
                pageDto.Add(mapItem);
             }
@@ -195,12 +247,11 @@ namespace BusinessLayer.Services
                 listStoreId.Add(p.store.Id);
             }
             List<Guid> storesFilterId = _unitOfWork.Stores.GetManyQueryable(x => listStoreId.Contains(x.Id))
-                .Where(x => districts.Contains(x.District)).Select(x => x.Id).ToList();
+                .Where(x => districts.Any(d=>d.ToLower()==x.District.ToLower())).Select(x => x.Id).ToList();
             searchBusiness = searchBusiness.Where(x => storesFilterId.Contains(x.store.Id)).ToList();
             return searchBusiness;
         }
 
         #endregion
-
     }
 }

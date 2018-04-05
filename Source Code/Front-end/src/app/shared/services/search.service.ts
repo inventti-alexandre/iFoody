@@ -19,7 +19,6 @@ export class SearchService {
 
   public Search = (param:ISearchParam): Observable<any> => {
     let body = JSON.stringify(param);
-    console.log("body",body);
     let headers = new Headers();
     // headers.append("Token", this.authToken);
     headers.append("Content-Type", "application/json");
