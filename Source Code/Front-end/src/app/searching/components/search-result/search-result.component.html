@@ -1,7 +1,7 @@
 <div class="container">
   <div class="searchResult col-xs-12 col-sm-12">
     <div class="row searchResult__filter">
-      <search-filter></search-filter>
+      <search-filter (filterChange)="getSearchFiter($event)"></search-filter>
     </div>
 
     <div class=" searchResult__map row">

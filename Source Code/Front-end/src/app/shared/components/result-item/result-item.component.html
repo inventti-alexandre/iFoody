@@ -1,35 +1,38 @@
 <div class="result-item col-xs-12 col-sm-12">
   <div class="row-item filter-result-item">
     <div class="ri-avatar result-image">
-      <a target="_blank" href="" [title]="store.name">
-        <img [src]="images.length>0 ?images[0].path:imageDefault" [alt]="product.name+', '+store.name">
-        <ng-template [ngIf]="images.length>1">
+      <a target="_blank" href="" [title]="item.store.name">
+        <img [src]="item.images.path" [alt]="item.store.name" (error)="handelImgErro($event)">
+        <!-- <ng-template [ngIf]="item.Images.length>1">
           <div class="overlay">
-            <img src={{images[1].path}} [alt]="product.name+', '+store.name">
+            <img src={{item.Images[1].path}} [alt]="item.Store.name" (error)="handelImgErro($event)">
           </div>
-        </ng-template>
+        </ng-template> -->
       </a>
     </div>
 
     <div class="row-view-right">
       <div class="result-name">
         <div class="status">
-          <div class="point highlight-text">{{product.rating}}</div>
+          <div class="point highlight-text">{{item.store.rating}}</div>
         </div>
 
         <div class="resname">
           <h2>
-            <a target="_blank" href="" [title]="product.name + ' - '+ store.name">{{product.name + ' - '+ store.name}}</a>
+            <a target="_blank" href="" [title]="item.store.name">{{item.store.name}}</a>
           </h2>
           <div class="result-address">
             <div class="address">
-              <a target="_blank" href="" [title]="store.address +', '+store.district">
-                <span data-bind="text: Address">{{store.address}}</span>,
-                <span data-bind="text: District">{{store.district}}</span>,
-                <span data-bind="text: City">{{store.city}}</span>
+              <a target="_blank" href="" [title]="item.store.address +', '+item.store.district">
+                <span data-bind="text: Address">{{item.store.address}}</span>,
+                <span data-bind="text: District">{{item.store.district}}</span>,
+                <span data-bind="text: City">{{item.store.city}}</span>
               </a>
             </div>
-            <div class="distants">7.1 KM</div>
+            <ng-template [ngIf]="item.distance>0">
+              <div class="distants">{{item.distance}} KM</div>
+            </ng-template>
+
           </div>
         </div>
       </div>
@@ -37,15 +40,25 @@
         <span>
           <i class="fa fa-money" style="font-size:20px;vertical-align: middle"></i>
         </span>
-        <span>40,000 đ - 100,0000 đ</span>
+        <span>{{item.store.lowestPrice}} đ - {{item.store.highestPrice}} đ</span>
       </div>
 
       <div class="result-stats" style="border-bottom: 1px solid #eee;height:26px;">
-        <span class="suggest suggest--online"></span>
-        <span class="suggest-text suggest-text--opentime">Đang mở cửa</span>
+        <div class="suggest-opentime" *ngIf="checkOpenStore(item.store.openHour,item.store.closeHour);else closeStore">
+          <span class="suggest suggest--online"></span>
+          <span class="suggest-text suggest-text--opentime">Đang mở cửa</span>
+        </div>
+
+        <ng-template #closeStore>
+          <div class="suggest-opentime">
+            <span class="suggest suggest--offline"></span>
+            <span class="suggest-text suggest-text--closetime">Đang đóng cửa</span>
+          </div>
+        </ng-template>
+
         <span style="float:right">
           <span class="fa fa-comment" style="font-weight: normal;"></span>
-          <span data-bind="text: TotalReview.formatK(1)">{{product.ratingCount}}</span>
+          <span data-bind="text: TotalReview.formatK(1)">{{item.store.ratingCount}}</span>
         </span>
       </div>
 

@@ -5,7 +5,7 @@ import { Component, OnInit, Input } from "@angular/core";
 import { SearchService } from "./../../../shared/services/search.service";
 import { UserService } from "../../../shared/services/user.service";
 import * as _ from "lodash";
-import { handelImgErro } from "../../../shared/services/share-function.service";
+import { handelImgErro,checkOpenStore } from "../../../shared/services/share-function.service";
 declare var searchObject: any;
 
 @Component({
@@ -27,6 +27,7 @@ export class SearchBarComponent implements OnInit {
   isNotFound: boolean;
   searchParam: ISearchParam;
   handelImgErro = handelImgErro;
+  checkOpenStore = checkOpenStore;
 
   constructor(
     private router: Router,
@@ -118,27 +119,6 @@ export class SearchBarComponent implements OnInit {
       });
   };
 
-  checkOpenStore = (openHour, closeHour) => {
-    let openHourConvert = openHour.split(":");
-    let openTimeSeconds =
-      +openHourConvert[0] * 60 * 60 + +openHourConvert[1] * 60;
-
-    let closeHourConvert = closeHour.split(":");
-    let closeTimeSeconds =
-      +closeHourConvert[0] * 60 * 60 + +closeHourConvert[1] * 60;
-
-    let currentTime = new Date();
-    let currentSeconds =
-      currentTime.getHours() * 60 * 60 + currentTime.getMinutes() * 60;
-
-    let isOpen = false;
-    if (currentSeconds > openTimeSeconds && currentSeconds < closeTimeSeconds) {
-      isOpen = true;
-    }
-    // console.log(currentSeconds - openTimeSeconds);
-
-    return isOpen;
-  };
   handelChangeSearchBar = event => {
     setTimeout(() => {
         this.getSearchPaging();

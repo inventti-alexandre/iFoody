@@ -1,6 +1,6 @@
-import { imageDefault } from './../../../constant/global';
-import { ICategory,IStore,IProduct,IImages } from './../../models/allModel';
+import { ISearchResult } from './../../models/allModel';
 import { Component, OnInit, Input} from "@angular/core";
+import { handelImgErro,checkOpenStore } from "../../../shared/services/share-function.service";
 
 @Component({
   selector: "result-item",
@@ -9,23 +9,16 @@ import { Component, OnInit, Input} from "@angular/core";
 })
 export class ResultItemComponent implements OnInit {
   @Input("itemInfo") itemInfo;
-  category:ICategory;
-  store: IStore;
-  product: IProduct;
-  images: IImages[];
-  imageDefault: string;
+  item:ISearchResult;
+  handelImgErro = handelImgErro;
+  checkOpenStore= checkOpenStore;
   constructor() {
-    this.imageDefault = imageDefault;
   }
 
   ngOnInit() {
     this.getItemInfo();
   }
   getItemInfo = () => {
-    this.category = this.itemInfo.category;
-    this.store = this.itemInfo.store;
-    this.product = this.itemInfo.product;
-    this.images = this.itemInfo.images;
-    console.log("item info is:", this.images.length);
+    this.item = this.itemInfo;
   };
 }

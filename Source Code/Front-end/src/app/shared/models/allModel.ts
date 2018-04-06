@@ -115,8 +115,8 @@ export interface ISearchParam {
   };
 }
 export interface ISearchResult{
-  Store: IStore,
-  Category: ICategory,
-  Images: IImages,
-  Distance: number
+  store: IStore,
+  category: ICategory,
+  images: IImages,
+  distance: number
 }
