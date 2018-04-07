@@ -1,4 +1,4 @@
-.form-open-store {
+.form-store-profile {
     .signup-social {
         text-align: center;
     }
@@ -6,11 +6,23 @@
         height:20px;
         text-align: center;
     }
-    .address {
-        i {
-            float:left
+    .image {
+        // width:230px;
+        // max-height: 120px;
+        text-align: center;
+        overflow: hidden;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        border-radius: 3px;
+        // box-shadow: 2px 2px 2px #c5c5c5;
+        img{
+            width: 100%;
+            height:100%;
+            display: inline-block;
         }
     }
+
     i {
         position: absolute;
         right: 15px;
@@ -21,6 +33,7 @@
         position: relative;
         margin-bottom: 10px
     }
+
     .fa-times {
         top: 6px;
         z-index: 1000

@@ -15,7 +15,7 @@ export class FileUploadComponent implements OnInit {
     dragging = false;
     loaded = false;
     imageLoaded = false;
-    imageSrc = '';
+    @Input('imageSrc') imageSrc = '';
     // Tuan Add
     @Output() file: any;
   constructor() { 

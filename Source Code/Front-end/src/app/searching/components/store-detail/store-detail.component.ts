@@ -2,6 +2,8 @@ import { UserService } from './../../../shared/services/user.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { StoreService } from './../../../shared/services/store.service';
 import { Component, OnInit, Output } from '@angular/core';
+import { ImageDomain } from '../../../constant/apiUrl';
+import { imageDefault } from './../../../constant/global';
 
 @Component({
   selector: 'store-detail',
@@ -9,31 +11,67 @@ import { Component, OnInit, Output } from '@angular/core';
   styleUrls: ['./store-detail.component.scss']
 })
 export class StoreDetailComponent implements OnInit {
+  storeManager = true;
   storeId;
+  storeIds: any[];
   @Output() storeModel: any;
+  storeInfoModel: any;
   productModel: any;
+  reviewList: any;
+  imageDefault: any;
+  imageDomain:any;
+
   constructor(
     private _storeService: StoreService, 
     private router: Router, 
     private route: ActivatedRoute,
     private _userService: UserService
     ) {
+    this.imageDefault = imageDefault;
+    this.imageDomain = ImageDomain;
     this.route.params.subscribe((params: Params) => {
+
+      this.storeIds = [params['id']]; // For Google Map Api
       this.storeId = params['id'];
-      // this._storeService.GetStoreById(params['id'])
-      //   .subscribe((data: Response) => {
-      //     console.log('storeModel in parent: ', data);
-      //     this.storeModel = data; 
-      //   });
-      this._userService.getAllProductInStore(this.storeId)
-      .subscribe(data => {
-        console.log("data return from GetALlProductInStore: ", data);
-        this.storeModel = data;
-      },
-      error => {
-        console.log(error);
+      this.reviewList = [];
+
+      console.log("in params");
+      this._storeService.GetStoreById(params['id'])
+        .subscribe(data => {
+          console.log("storeInfoModel", data);
+          this.storeInfoModel = data;
+          if(data.userId === localStorage.getItem('user_id').replace(/['"]+/g, '')) {
+            console.log("is Store Manager");
+          }
+          else {
+            this.storeManager = false;
+            console.log('not Store Manager');
+          }
+          this.storeInfoModel.images.forEach(image => {
+            image.path = image.path.replace('~/','');
+          });
+
+          this._userService.getAllProductInStore(params['id'])
+            .subscribe(result => {
+              console.log("data return from GetALlProductInStore: ", result);
+              this.storeModel = result;
+            },
+            error => {
+              console.log(error);
+            });
+          
+          this._storeService.GetReviewListByStoreId(params['id'])
+            .subscribe(result => {
+              console.log("data return from getReviewListByStoreId: ", result);
+              this.reviewList.push(result);
+              console.log('reviewList', this.reviewList);
+            });
+        });
+
+      
+      
+
       });
-    });
 
    }
 

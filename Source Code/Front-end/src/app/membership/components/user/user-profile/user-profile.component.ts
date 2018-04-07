@@ -40,18 +40,16 @@ export class UserProfileComponent implements OnInit, ProfileChildren {
     
     this._userService.getUserById(this.activatedRoute.snapshot.paramMap.get('id'))
       .subscribe(u => {
-        this.user.setValue({
-          email: u.email,
-          lastname: u.lastName,
-          firstname: u.firstName,
-          gender: u.gender,
-          birthday: u.birthday,
-        });
+          this.user.setValue({
+            email: u.email,
+            lastname: u.lastName,
+            firstname: u.firstName,
+            gender: u.gender,
+            birthday: u.birthday,
+          });
         this.genderDisplay = (this.user.get("gender").value === 1)  ? "Nam" : "Nữ"; }
       );
       
-      // this.user.value(
-        // {email: getUser.},);
     this.cdr.detectChanges();
   }
 

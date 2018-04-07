@@ -1,53 +1,106 @@
 .storeDetail {
-    &__info {
-
+    margin-top: 25px;
+    font-size: 1.2em;
+    
+    h2 { 
+        font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif !important;
+        color:#484848 !important;
+        font-size: 28px !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.6px !important;
+        line-height: 32px !important;
+        margin-bottom: 50px;
     }
 
-    &__menu {
-        > div {
-            margin-bottom: 30px;
-            padding-right:10%;
-            box-shadow: 1px 2px 0px lightgray;
-            // border-bottom: 1px dashed grey;
+    &__photo {
+        @media screen and (max-width:585px) {
+            width: 100% !important;
+        }
+
+        &__main {
+            border: 2px solid black;
             overflow: hidden;
-            @media screen and (max-width: 992px) {
-                font-size: 0.9em !important
+            text-align: center; 
+            height:auto;
+            img {
+                display: block;
+                max-height: 360px;
+                box-shadow: 2px 2px 2px #A095A3;
+                width: 100%;
+                height: auto;
+                border-radius: 5px;
             }
-            @media screen and (max-width: 768px) {
-                font-size: 0.85em !important;
-                max-height:130px !important;
-                img {
-                    max-height:130px !important;
-                }
+        }
+
+        &__minor {
+            height: auto;
+            div {
+                margin-top: 5px;
+                overflow: hidden;
+                padding: 15px 5px !important;
+                border: 1px dashed white;
+                box-shadow: 0 0  2px #4375FF
             }
-            @media screen and (max-width: 524px) {
-                font-size: 0.75em !important;
-                max-height:90px !important;
-                img {
-                    max-height:90px !important;
-                }
+            img {
+                display: block;
+                max-height: 100px;
+                width: 100%;
+                height: auto;
             }
         }
     }
 
-    &__review {
-        div {
-            margin: 30px 15px;
-            border-bottom: 1px solid gray;
-            box-shadow: 0px 1px 0px grey;
-            padding-bottom: 25px
+    &__info {
+        
+        @media screen and (max-width:585px) {
+            width: 100% !important;
+        }   
+        h2 {
+            // height: 50px;
+            padding-left:20%;
+            color:#484848 !important;
+            // font-size: 28px !important;
+            font-weight: 700 !important;
+            letter-spacing: 1.2px !important;
+            line-height: 32px !important;
+            // span {
+            //     float:right;
+            // }
         }
+        &__rating {
+            // text-align: left;
+            padding-left: 0px !important; 
+        }
+        div {
+            position: relative;
+            padding-left: 45px;
+            line-height: 270%;
+            span {
+                position: absolute;
+                left: 18px;
+            }
+        }
+
+        i:hover {
+            cursor: pointer;
+            // color: orangered;
+        }
+
+        .fa-heart {
+            color:red
+        }
+
     }
 
-    &__similarStore {
-        display: table;
-        vertical-align: middle;
-        div {
-            display: table-row;
+    &__map {
+        map {
+          margin-bottom: 0 !important; 
         }
-        rating {
-            color:#6EEC3C;
-            font-size: 1.4em
+        
+        &__note {
+            background-color: peachpuff;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center
         }
     }
 }

@@ -1,34 +1,45 @@
-.form-open-store .signup-social {
+.form-store-profile .signup-social {
   text-align: center;
 }
 
-.form-open-store .line-signup {
+.form-store-profile .line-signup {
   height: 20px;
   text-align: center;
 }
 
-.form-open-store .address i {
-  float: left;
+.form-store-profile .image {
+  text-align: center;
+  overflow: hidden;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  border-radius: 3px;
 }
 
-.form-open-store i {
+.form-store-profile .image img {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+}
+
+.form-store-profile i {
   position: absolute;
   right: 15px;
   bottom: 8px;
   color: #4B4747;
 }
 
-.form-open-store div {
+.form-store-profile div {
   position: relative;
   margin-bottom: 10px;
 }
 
-.form-open-store .fa-times {
+.form-store-profile .fa-times {
   top: 6px;
   z-index: 1000;
 }
 
-.form-open-store button {
+.form-store-profile button {
   width: 30%;
   text-align: center;
   margin-right: 20px;

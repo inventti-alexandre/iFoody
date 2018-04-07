@@ -10,6 +10,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Web.Hosting;
 
 namespace BusinessLayer.Services
 {
@@ -31,50 +32,49 @@ namespace BusinessLayer.Services
                 {
                     var supportedTypes = new[] { "jpg", "jpeg", "png" };
                     var sizeLimit = 9999999;
-                    // Directory.CreateDirectory("~/Content/Uploads/");
-                    string path = "";
+                    //string path = "";
                     string detailPath;
 
-                    //// Check Guid
-                    //if (storeId == null)
-                    //{
-                    //    storeId = Guid.Empty;
-                    //}
-                    //if (productId == null)
-                    //{
-                    //    productId = Guid.Empty;
-                    //}
 
                     // Open Store or Upload Product
                     if (isOpenStore)
                     {
-                        detailPath = System.Web.HttpContext.Current.Server.MapPath("~/Content/Uploads/Stores") +
+                        //detailPath = System.Web.HttpContext.Current.Server.MapPath("~/Content/Uploads/Stores") +
+                        //     '/' + storeId.ToString();
+                        detailPath = HostingEnvironment.MapPath("~/Content/Uploads/Stores") +
                              '/' + storeId.ToString();
                     }
                     else
                     {
-                        detailPath = System.Web.HttpContext.Current.Server.MapPath("~/Content/Uploads/Stores/") + storeId.ToString() + '/' + productId.ToString();
+                        //detailPath = System.Web.HttpContext.Current.Server.MapPath("~/Content/Uploads/Stores/") + storeId.ToString() + '/' + productId.ToString();
+                        detailPath = HostingEnvironment.MapPath("~/Content/Uploads/Stores/") + storeId.ToString() + '/' + productId.ToString();
                     }
 
 
                     DirectoryInfo dir = Directory.CreateDirectory(detailPath);
 
                     var imageIds = new List<Guid>();
-                    var imageCount = 1;
+                    //var imageCount = 1;
                     foreach (var file in files)
                     {
                         // Check Supported File Extension and Check size limit
-
+                        if (file == null)
+                        {
+                            continue;
+                        }
                         var fileExt = Path.GetExtension(file.FileName).Substring(1);
 
                         // Change File Name
                         // file.FileName = file.FileName.Replace(file.FileName.Substring(0), name.Replace(' ', '-') + imageCount + fileExt);
-                        file.FileName = name.Replace(' ', '-') + '-' + imageCount + '.' + fileExt;
+                        Random rnd = new Random();
+                        var random = rnd.Next(10000, 99999);
+                        var today = DateTime.Now.ToString("yyyy-mm-dd");
+                        file.FileName = name.Replace(' ', '-') + '-' + today + '-' + random + '.' + "jpg");
                         file.FileName = file.FileName.ToLower();
                         file.FileName = string.Concat(file.FileName.Normalize(NormalizationForm.FormD).Where(
                                 c => CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark));
 
-                        imageCount++;
+                        //imageCount++;
                         ///////////////////
                         if (!supportedTypes.Contains(fileExt) || file.FileLength > sizeLimit)
                         {
@@ -92,11 +92,18 @@ namespace BusinessLayer.Services
                         httpPostedFileBaseCustom.SaveAs(filePath);
 
                         // Add link to SQL table
-                        var imageEntity = new ImageBusinessEntity()
+                        var imageEntity = new ImageBusinessEntity();
+                        if (isOpenStore)
                         {
-                            Name = file.FileName,
-                            Path = filePath
-                        };
+                            imageEntity.Name = file.FileName;
+                            imageEntity.Path = "~/Content/Uploads/Stores/" + storeId.ToString() + '/' + file.FileName;
+                        }
+                        else
+                        {
+                            imageEntity.Name = file.FileName;
+                            imageEntity.Path = "~/Content/Uploads/Stores/" + storeId.ToString() + '/' +
+                                               productId.ToString() + '/' + file.FileName;
+                        }
 
                         Mapper.CreateMap<ImageBusinessEntity, Image>();
                         var image = Mapper.Map<ImageBusinessEntity, Image>(imageEntity);
@@ -119,6 +126,20 @@ namespace BusinessLayer.Services
             }
         }
 
+        // Delete File
+        public bool DeleteFile(string localFilePath)
+        {
+            try
+            {
+                HttpPostedFileBaseCustom httpPostedFileBaseCustom = new HttpPostedFileBaseCustom(null, null, localFilePath);
+                httpPostedFileBaseCustom.Delete(localFilePath);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
 
         // Encode Base 64 String
         public string Base64Encode(string plainText)

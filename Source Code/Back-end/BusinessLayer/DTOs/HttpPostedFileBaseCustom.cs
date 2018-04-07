@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace BusinessLayer.DTOs
@@ -44,6 +40,22 @@ namespace BusinessLayer.DTOs
         {
             using (var file = File.Open(filename, FileMode.CreateNew))
                 stream.WriteTo(file);
+        }
+
+        public void Delete(string filename)
+        {
+            try
+            {
+                if (File.Exists(filename))
+                {
+                    File.Delete(filename);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }

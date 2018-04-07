@@ -1,9 +1,7 @@
-﻿using AutoMapper;
-using BusinessEntities;
+﻿using BusinessEntities;
 using BusinessLayer.DTOs;
 using BusinessLayer.IServices;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -176,7 +174,7 @@ namespace WebApi.ApiController
         {
             try
             {
-                var reviews = _reviewService.GetReviews(id).ToList();
+                var reviews = _reviewService.GetProductReviews(id).ToList();
                 if (reviews.Count > 0)
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, reviews);
@@ -230,7 +228,7 @@ namespace WebApi.ApiController
                 var authToken = Request.Headers.GetValues("Token").FirstOrDefault();
                 // var userToken = _tokenService.GetUserId(authToken);
 
-               // Mapper.CreateMap<UploadProductDto, ProductBusinessEntity>();
+                // Mapper.CreateMap<UploadProductDto, ProductBusinessEntity>();
                 // var productEntity = Mapper.Map<UploadProductDto, ProductBusinessEntity>(uploadProductDto);
 
                 var productId = _productService.CreateProduct(uploadProductDto);
@@ -242,6 +240,21 @@ namespace WebApi.ApiController
             {
                 return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Error unexpected");
             }
+        }
+
+        // PUT api/product/?id=
+        [HttpPut]
+        public IHttpActionResult Put([FromBody]UploadProductDto uploadProductDto)
+        {
+            try
+            {
+                return Ok(_productService.UpdateProduct(uploadProductDto));
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+
         }
 
         // DELETE api/product/?id=
@@ -257,21 +270,6 @@ namespace WebApi.ApiController
                 return NotFound();
             }
 
-
-        }
-
-        // PUT api/product/?id=
-        [HttpPut]
-        public IHttpActionResult Put([FromBody]ProductBusinessEntity productEntity)
-        {
-            try
-            {
-                return Ok(_productService.UpdateProduct(productEntity));
-            }
-            catch (Exception e)
-            {
-                return NotFound();
-            }
 
         }
     }

@@ -1,6 +1,7 @@
 /* File Uploader Styles  */
 label {
   width: 160px;
+  height: 80%;
 }
 
 .uploader input {
@@ -15,7 +16,6 @@ label {
   cursor: pointer;
   display: -webkit-flex;
   display: flex;
-  height: 200px;
   -webkit-justify-content: center;
   justify-content: center;
   outline: 3px dashed #ccc;

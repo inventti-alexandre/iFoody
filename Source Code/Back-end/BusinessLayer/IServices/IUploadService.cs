@@ -1,5 +1,5 @@
-﻿using System;
-using BusinessLayer.DTOs;
+﻿using BusinessLayer.DTOs;
+using System;
 using System.Collections.Generic;
 
 namespace BusinessLayer.IServices
@@ -8,6 +8,9 @@ namespace BusinessLayer.IServices
     {
         // Upload File
         List<Guid> UploadFile(List<FileUploadResult> files, bool isOpenStore, Guid storeId, Guid productId, string name);
+
+        // Delete File
+        bool DeleteFile(string localFilePath);
 
         // Encode Base 64 String
         string Base64Encode(string plainText);

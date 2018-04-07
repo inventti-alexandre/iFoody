@@ -321,26 +321,71 @@ namespace BusinessLayer.Services
         }
 
         // Store update Product
-        public bool UpdateProduct(ProductBusinessEntity productEntity)
+        public bool UpdateProduct(UploadProductDto uploadProductDto)
         {
-            var success = false;
-            if (productEntity != null)
+            try
             {
-                using (var scope = new TransactionScope())
+                if (uploadProductDto != null)
                 {
-                    var product = _unitOfWork.Products.GetById(productEntity.Id);
-                    if (product != null)
+                    Mapper.CreateMap<UploadProductDto, ProductBusinessEntity>().ForSourceMember(x => x.Images, opt => opt.Ignore());
+                    var productEntity = Mapper.Map<UploadProductDto, ProductBusinessEntity>(uploadProductDto);
+
+                    using (var scope = new TransactionScope())
                     {
-                        Mapper.CreateMap<ProductBusinessEntity, Product>().ForMember(x => x.Id, opt => opt.Ignore());
-                        Mapper.Map(productEntity, product);
+                        Mapper.CreateMap<ProductBusinessEntity, Product>();
+                        var product = Mapper.Map<ProductBusinessEntity, Product>(productEntity);
+
                         _unitOfWork.Products.Update(product);
                         _unitOfWork.Complete();
+
+                        // Update Image in FileSystem
+                        var imagesUploadList = new List<FileUploadResult>();
+                        var imageIds = new List<Guid>();
+
+                        foreach (var image in uploadProductDto.Images)
+                        {
+                            imagesUploadList.Add(image);
+                        }
+
+                        if (imagesUploadList.Any())
+                        {
+                            imageIds = _uploadService.UploadFile(imagesUploadList, true, product.StoreId.GetValueOrDefault(), product.Id, product.Name);
+                        }
+                        ///////////////////Add to StoreImage Table//////////////////////
+                        var imagesList =
+                              _unitOfWork.Images.GetManyQueryable(i => imageIds.Any(item => item == i.Id)).ToList();
+
+                        if (imagesList.Count == imageIds.Count)
+                        {
+                            // No need to update StoreImageEntity anymore
+                            return true;
+                        }
+
+                        if (imagesList.Any())
+                        {
+                            var newImagesList = imagesList.FindAll(x => imageIds.Any(y => y != x.Id));
+                            // Just update new more Image
+                            foreach (var item in newImagesList)
+                            {
+                                var newProductImageEntity = new ProductImageBusinessEntity()
+                                {
+                                    ProductId = product.Id,
+                                    ImageId = item.Id
+                                };
+                                _productImageService.CreateProductImage(newProductImageEntity);
+                            }
+                        }
                         scope.Complete();
-                        success = true;
+
+                        return true;
                     }
                 }
+                return false;
             }
-            return success;
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         // Tuan made

@@ -8,7 +8,8 @@ namespace BusinessLayer.IServices
     public interface IReviewService
     {
         IEnumerable<ReviewBusinessEntity> GetAllReviews();
-        IEnumerable<ReviewDto> GetReviews(Guid id);
+        IEnumerable<ReviewDto> GetProductReviews(Guid id);
+        IEnumerable<ReviewDto> GetStoreReviews(Guid id);
         Guid? InsertReview(ReviewBusinessEntity review);
         bool UpdateReview(ReviewBusinessEntity newReviewEntity);
         bool DeleteReview(Guid id);

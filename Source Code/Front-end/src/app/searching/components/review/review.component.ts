@@ -5,6 +5,7 @@ import { ProductService } from '../../../shared/services/product.service';
 import { Component, OnInit, Input, ChangeDetectorRef, AfterViewInit, AfterContentInit, AfterViewChecked } from '@angular/core';
 import * as apiUrl from '../../../constant/apiUrl';
 import { DatePipe } from '@angular/common';
+import { StoreService } from '../../../shared/services/store.service';
 declare var ratingObject1: any;
 
 @Component({
@@ -15,6 +16,7 @@ declare var ratingObject1: any;
 export class ReviewComponent implements OnInit, AfterViewChecked{
   rerender = false; // Refresh component when submit Review
   @Input() productId: string;
+  @Input() storeId: string;
   reviewsModel: any[];
   reviewQuantity: number;
   currentUserId: string;
@@ -31,6 +33,7 @@ export class ReviewComponent implements OnInit, AfterViewChecked{
 
   constructor(private _productService: ProductService, 
       private _userService: UserService,
+      private _storeService: StoreService,
       private datePipe: DatePipe,
       private cdRef:ChangeDetectorRef,
       private router: Router,
@@ -68,9 +71,9 @@ export class ReviewComponent implements OnInit, AfterViewChecked{
         date: this.today,
         userId: this.currentUserId.replace(/['"]+/g, ''),
         productId: this.productId,
-        storeId: null
+        storeId: this.storeId
     };
-    console.log(newReview);
+    console.log("newReview",newReview);
     this._userService.insertReview(newReview)
       .subscribe((response: Response) => {
         this.getReviewsData();
@@ -80,11 +83,20 @@ export class ReviewComponent implements OnInit, AfterViewChecked{
   }
 
   getReviewsData() {
-    this._productService.GetReviewListByProductId(this.productId)
+    if(this.productId != null) {
+      this._productService.GetReviewListByProductId(this.productId)
       .subscribe(data => {
         this.reviewsModel = data;
         this.reviewQuantity = this.reviewsModel.length;
       });
+    }
+    else if(this.storeId != null) {
+      this._storeService.GetReviewListByStoreId(this.storeId)
+        .subscribe(data => {
+          this.reviewsModel = data;
+          this.reviewQuantity = this.reviewsModel.length;
+        });
+    }
   
   }
 }

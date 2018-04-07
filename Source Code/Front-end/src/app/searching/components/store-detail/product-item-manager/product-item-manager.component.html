@@ -1,0 +1,65 @@
+<div class="productItem col-xs-12 col-sm-12" *ngIf="productModel !== undefined && productModel != null">
+  <form [formGroup]="productItemForm" (ngSubmit)="onSubmit()" class="row form-edit-profile">
+    <div class="productItem__image col-xs-12 col-sm-3 col-md-3">
+      <div class="row productItem__image__major">
+        <a>
+          <file-upload class="col-md-12 col-sm-12 col-xs-12" [imageSrc]="imageDomain + productModel.images[0]?.path" [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-upload>
+        </a>
+      </div>
+      <div class="row productItem__image__minor">
+        <div class="col-xs-3 col-md-3 col-sm-3">
+          <a>
+            <file-upload  [imageSrc]="imageDomain + productModel.images[1]?.path" [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-upload>
+          </a>
+        </div>
+        <div class="col-xs-3 col-md-3 col-sm-3">
+          <a>
+            <file-upload  [imageSrc]="imageDomain + productModel.images[2]?.path" [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-upload>
+          </a>
+        </div>
+        <div class="col-xs-3 col-md-3 col-sm-3">
+          <a>
+            <file-upload [imageSrc]="imageDomain + productModel.images[3]?.path" [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-upload>
+          </a>
+        </div>
+        <div class="col-xs-3 col-md-3 col-sm-3">
+          <a>
+            <file-upload  [imageSrc]="imageDomain + productModel.images[4]?.path" [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-upload>
+          <!-- <img [src]="imageDomain + productModel.images[0].path"  alt="Image Product" *ngIf="productModel.images.length>0">
+          <img [src]="imageDefault"  alt="Image Product" *ngIf="productModel.images.length==0"> -->
+        </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="productItem__rating col-xs-12 col-sm-3 col-md-3">
+      <bs-rating [id]="productModel.product?.id" [rating]="productModel.product.rating" [ratingCount]="productModel.product?.ratingCount"></bs-rating>
+    </div>
+
+    <div class="productItem__info col-xs-12 col-sm-5 col-md-5">
+      <div><label>Tên sản phẩm</label><input class="form-control" value="{{ productModel.product.name }}"/></div>
+      <div><label>Giá</label><input  class="form-control" value="{{ productModel.product.price | currency:'vnd':4.0 }}"/></div>
+      <div><label>Loại</label>
+        <!-- <input  class="form-control" value="{{ productModel.category?.name }}"/> -->
+        <select class="form-control">
+          <option *ngFor="let category of categories" [value]="category?.id">
+            {{ category?.name }}
+          </option>
+        </select>
+
+      </div>
+      <div><label>Mô tả sản phẩm</label><input  class="form-control" value="{{ productModel.product?.description }}"/></div>
+
+      <!-- <h4><span>Tên sản phẩm</span>{{ productModel.product.name }}</h4>
+      <h5><span>Giá</span>{{ productModel.product.price | currency:'vnd':4.0}}</h5>
+      <h5><span>Loại</span>{{ productModel.category?.name }}</h5>
+      <h5><span>Mô tả sản phẩm</span>{{ productModel.product?.description }}</h5>
+       -->
+    </div>
+    
+    <div class="productItem__submit col-xs-12 col-sm-1 col-md-1">
+        <button class="row btn btn-success btn-submit">Áp dụng</button>
+        <button class="row btn btn-warning btn-delete">Xóa Sản phẩm</button>
+    </div> 
+  </form>
+</div>

@@ -15,7 +15,7 @@ namespace BusinessLayer.IServices
         IEnumerable<ProductDto> GetProductsByCategory(Guid categoryId);
         IEnumerable<ProductInStoreDto> GetProductByStoreId(Guid storeId);
         Guid? CreateProduct(UploadProductDto uploadProductDto);
-        bool UpdateProduct(ProductBusinessEntity productEntity);
+        bool UpdateProduct(UploadProductDto uploadProductDto);
         bool UpdateRatingProperty(Guid productId, int newRating);
         bool DeleteProduct(Guid productId);
         IEnumerable<ProductDto> GetProductByCategoryId(Guid categoryId);

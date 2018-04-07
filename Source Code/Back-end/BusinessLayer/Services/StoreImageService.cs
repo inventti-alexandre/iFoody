@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using BusinessEntities;
+using BusinessLayer.IServices;
 using DataModel;
 using DataModel.IUnitOfWork;
 using System;
 using System.Transactions;
-using BusinessLayer.IServices;
 
 namespace BusinessLayer.Services
 {

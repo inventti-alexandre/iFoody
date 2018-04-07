@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Rx';
 import { IUploadProduct } from './../models/allModel';
 import { element } from 'protractor';
 import * as apiUrl from './../../constant/apiUrl';
@@ -8,20 +9,17 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import { tryCatch } from 'rxjs/util/tryCatch';
-import {Observable} from 'rxjs/Rx';
 import {CategoryService} from './category.service';
 import { AuthService } from './auth.service';
 
 @Injectable()
 export class ProductService {
   private actionUrl: string;
-  private reviewUrl: string;
   private getProductWithCategoryUrl: string;
   authToken: any;
   
   constructor(private _http: Http, private _authService: AuthService) {
     this.actionUrl = apiUrl.GetAllProduct;
-    this.reviewUrl = apiUrl.ProductReview;
     this.getProductWithCategoryUrl = apiUrl.ProductCategory;
     this.authToken = this._authService.retriveToken();
   }
@@ -128,12 +126,28 @@ export class ProductService {
   // Tuan made
   public GetReviewListByProductId(id: string): Observable<any> {
     console.log("getReviewListByProductId works");
-    // console.log(id);
+    console.log('productId', id);
     if(id != null) {
-      return this._http.get(this.reviewUrl + '/' + id.replace(/['"]+/g,''))
+      return this._http.get(apiUrl.ProductReview + '/' + id.replace(/['"]+/g,''))
             .map((response: Response) => <any>response.json());
     }
   }
 
+  // Tuan made
+  // Update Product in StoreDetailComponent
+  updateProduct(id: string, model: any): Observable<any> {
+    console.log("updateProduct in service works");
+    console.log('model', model);
+
+    let body = JSON.stringify(model);
+    let headers = new Headers();
+    headers.append("Token", this.authToken); 
+    headers.append("Content-Type", "application/json");
+    let options = new RequestOptions({headers: headers});
+
+    return this._http.put(apiUrl.Product  + '/' + id.replace(/['"]+/g,''), body, options)
+      .map((response: Response) => <any>response.json());
+  }
 
 }
+

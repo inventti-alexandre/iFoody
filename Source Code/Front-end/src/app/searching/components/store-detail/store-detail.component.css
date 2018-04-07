@@ -1,53 +1,102 @@
-.storeDetail__menu > div {
-  margin-bottom: 30px;
-  padding-right: 10%;
-  box-shadow: 1px 2px 0px lightgray;
+.storeDetail {
+  margin-top: 25px;
+  font-size: 1.2em;
+}
+
+.storeDetail h2 {
+  font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif !important;
+  color: #484848 !important;
+  font-size: 28px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.6px !important;
+  line-height: 32px !important;
+  margin-bottom: 50px;
+}
+
+@media screen and (max-width: 585px) {
+  .storeDetail__photo {
+    width: 100% !important;
+  }
+}
+
+.storeDetail__photo__main {
+  border: 2px solid black;
   overflow: hidden;
+  text-align: center;
+  height: auto;
 }
 
-@media screen and (max-width: 992px) {
-  .storeDetail__menu > div {
-    font-size: 0.9em !important;
+.storeDetail__photo__main img {
+  display: block;
+  max-height: 360px;
+  box-shadow: 2px 2px 2px #A095A3;
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.storeDetail__photo__minor {
+  height: auto;
+}
+
+.storeDetail__photo__minor div {
+  margin-top: 5px;
+  overflow: hidden;
+  padding: 15px 5px !important;
+  border: 1px dashed white;
+  box-shadow: 0 0  2px #4375FF;
+}
+
+.storeDetail__photo__minor img {
+  display: block;
+  max-height: 100px;
+  width: 100%;
+  height: auto;
+}
+
+@media screen and (max-width: 585px) {
+  .storeDetail__info {
+    width: 100% !important;
   }
 }
 
-@media screen and (max-width: 768px) {
-  .storeDetail__menu > div {
-    font-size: 0.85em !important;
-    max-height: 130px !important;
-  }
-  .storeDetail__menu > div img {
-    max-height: 130px !important;
-  }
+.storeDetail__info h2 {
+  padding-left: 20%;
+  color: #484848 !important;
+  font-weight: 700 !important;
+  letter-spacing: 1.2px !important;
+  line-height: 32px !important;
 }
 
-@media screen and (max-width: 524px) {
-  .storeDetail__menu > div {
-    font-size: 0.75em !important;
-    max-height: 90px !important;
-  }
-  .storeDetail__menu > div img {
-    max-height: 90px !important;
-  }
+.storeDetail__info__rating {
+  padding-left: 0px !important;
 }
 
-.storeDetail__review div {
-  margin: 30px 15px;
-  border-bottom: 1px solid gray;
-  box-shadow: 0px 1px 0px grey;
-  padding-bottom: 25px;
+.storeDetail__info div {
+  position: relative;
+  padding-left: 45px;
+  line-height: 270%;
 }
 
-.storeDetail__similarStore {
-  display: table;
-  vertical-align: middle;
+.storeDetail__info div span {
+  position: absolute;
+  left: 18px;
 }
 
-.storeDetail__similarStore div {
-  display: table-row;
+.storeDetail__info i:hover {
+  cursor: pointer;
 }
 
-.storeDetail__similarStore rating {
-  color: #6EEC3C;
-  font-size: 1.4em;
+.storeDetail__info .fa-heart {
+  color: red;
+}
+
+.storeDetail__map map {
+  margin-bottom: 0 !important;
+}
+
+.storeDetail__map__note {
+  background-color: peachpuff;
+  font-family: 'Courier New', Courier, monospace;
+  text-align: center;
 }

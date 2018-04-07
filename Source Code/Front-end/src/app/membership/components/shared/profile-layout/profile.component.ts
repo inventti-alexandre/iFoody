@@ -84,7 +84,6 @@ export class ProfileComponent implements OnInit, AfterViewChecked{
       if(params['option'] === 'store-profile') {
         this.childComponent = 'store-profile';
       }
-      
     });
   }
   loadChildrenComponent(event?) {
@@ -97,6 +96,10 @@ export class ProfileComponent implements OnInit, AfterViewChecked{
     }
     if(event.target.id === 'store-profile') {
       this.router.navigate(['profile', this.userId, 'store-profile']);
+    }
+    if(event.target.id === 'store-detail') {
+      console.log("store-detail access");
+      this.router.navigate(['store', this.storeId]);
     }
   }
 }

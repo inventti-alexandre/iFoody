@@ -123,7 +123,9 @@ export class UserService {
     console.log("getAllProductInStore in UserService works");
     console.log('storeId', storeId);
     if(storeId != null) {
-      return this._http.get(this.storeUrl + '/' + storeId.replace(/['"]+/g,'') + '/allProducts')
+      console.log("inside");
+      console.log(this.storeUrl + '/allProducts' + '/' + storeId.replace(/['"]+/g,''));
+      return this._http.get(this.storeUrl + '/allProducts' + '/' + storeId.replace(/['"]+/g,''))
             .map((response: Response) => <any>response.json());
     }
   }
@@ -282,7 +284,7 @@ export class UserService {
       .catch(this.handleError);
   }
 
-  // PUT - Update Store
+  // No user - PUT - Update Store
   updateStore(id: string, model: any): Observable<any> {
     console.log("Update Store works");
     let body = JSON.stringify(model);
