@@ -3,11 +3,11 @@
     <div class="ri-avatar result-image">
       <a target="_blank" href="" [title]="item.store.name">
         <img [src]="item.images.path" [alt]="item.store.name" (error)="handelImgErro($event)">
-        <!-- <ng-template [ngIf]="item.Images.length>1">
+        <ng-template [ngIf]="item.images.length>1">
           <div class="overlay">
-            <img src={{item.Images[1].path}} [alt]="item.Store.name" (error)="handelImgErro($event)">
+            <img src={{item.images[1].path}} [alt]="item.store.name" (error)="handelImgErro($event)">
           </div>
-        </ng-template> -->
+        </ng-template>
       </a>
     </div>
 
