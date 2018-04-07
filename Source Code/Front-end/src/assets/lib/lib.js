@@ -104,3 +104,15 @@ var favoriteObject = (function() {
     }
   }
 })(favoriteObject || {})
+
+var deleteImageObject = (function() {
+  return {
+    deleteImage: function(parent, id) {
+      console.log("inside deleteImage LIB.JS");
+        console.log("click", $(this).parents('#' + id));
+        console.log('file-upload last', $('.image file-upload:last'));
+        $(this).parents('#' + id).remove();
+        $('.image file-upload:last').clone().append('.image');
+    }
+  }
+})(deleteImageObject || {})

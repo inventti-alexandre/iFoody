@@ -211,7 +211,7 @@ namespace BusinessLayer.Services
         }
 
 
-        // Delete method
+        // No use - Delete method
         public bool DeleteImage(Guid id)
         {
             try

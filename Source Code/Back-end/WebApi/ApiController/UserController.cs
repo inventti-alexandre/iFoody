@@ -133,7 +133,7 @@ namespace WebApi.ApiController
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, store);
                 }
-            }   
+            }
             catch (Exception e)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Got Exception");
@@ -145,7 +145,7 @@ namespace WebApi.ApiController
         [HttpGet]
         [Route("store/allProducts/{storeId?}")]
         public HttpResponseMessage GetProductInStore(Guid storeId)
-       {
+        {
             try
             {
                 var products = _productService.GetProductByStoreId(storeId);
@@ -457,20 +457,24 @@ namespace WebApi.ApiController
             }
         }
 
-        // Put api/user/store/5
+        // Put api/user/store
         [HttpPut]
         [Route("store")]
         public HttpResponseMessage Put([FromBody] OpenStoreDto openStoreDto)
         {
             try
             {
-                if (openStoreDto != null)
+                if (openStoreDto == null)
                 {
-                    _storeService.UpdateStore(openStoreDto);
-                    return Request.CreateResponse(HttpStatusCode.OK, openStoreDto.Id);
+                    return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Cannot Update Store");
                 }
+                var authToken = Request.Headers.GetValues("Token").FirstOrDefault();
+                var userToken = _tokenService.GetUserId(authToken);
 
-                return Request.CreateResponse(HttpStatusCode.NotImplemented);
+                _storeService.UpdateStore(openStoreDto);
+
+                return Request.CreateResponse(HttpStatusCode.OK, openStoreDto.Id);
+
             }
             catch (Exception e)
             {
@@ -625,22 +629,6 @@ namespace WebApi.ApiController
             catch (Exception e)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Exception Fail!");
-            }
-        }
-
-        // Delete Store
-        [HttpDelete]
-        [Route("store/{id}")]
-        public HttpResponseMessage DeleteStore(Guid id)
-        {
-            try
-            {
-                _storeService.DeleteStore(id);
-                return Request.CreateResponse(HttpStatusCode.OK);
-            }
-            catch (Exception e)
-            {
-                return Request.CreateResponse(HttpStatusCode.ExpectationFailed, "Exception Fail!");
             }
         }
 

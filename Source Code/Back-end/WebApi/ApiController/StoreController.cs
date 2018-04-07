@@ -134,5 +134,21 @@ namespace WebApi.ApiController
             }
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No Review found for this Store");
         }
+
+        // Delete Store
+        [HttpDelete]
+        [Route("{id?}")]
+        public HttpResponseMessage DeleteStore(Guid id)
+        {
+            try
+            {
+                _storeService.DeleteStore(id);
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.ExpectationFailed, "Exception Fail!");
+            }
+        }
     }
 }

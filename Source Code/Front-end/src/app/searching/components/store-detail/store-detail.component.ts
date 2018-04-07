@@ -2,6 +2,8 @@ import { UserService } from './../../../shared/services/user.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { StoreService } from './../../../shared/services/store.service';
 import { Component, OnInit, Output } from '@angular/core';
+import { ImageDomain } from '../../../constant/apiUrl';
+import { imageDefault } from './../../../constant/global';
 
 @Component({
   selector: 'store-detail',
@@ -16,12 +18,17 @@ export class StoreDetailComponent implements OnInit {
   storeInfoModel: any;
   productModel: any;
   reviewList: any;
+  imageDefault: any;
+  imageDomain:any;
+
   constructor(
     private _storeService: StoreService, 
     private router: Router, 
     private route: ActivatedRoute,
     private _userService: UserService
     ) {
+    this.imageDefault = imageDefault;
+    this.imageDomain = ImageDomain;
     this.route.params.subscribe((params: Params) => {
 
       this.storeIds = [params['id']]; // For Google Map Api
@@ -40,6 +47,10 @@ export class StoreDetailComponent implements OnInit {
             this.storeManager = false;
             console.log('not Store Manager');
           }
+          this.storeInfoModel.images.forEach(image => {
+            image.path = image.path.replace('~/','');
+          });
+
           this._userService.getAllProductInStore(params['id'])
             .subscribe(result => {
               console.log("data return from GetALlProductInStore: ", result);

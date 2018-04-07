@@ -1,5 +1,7 @@
-// export const Domain = 'https://api.chicken2018.club/api/';
-export const Domain = 'http://localhost:62025/api/';
+export const Domain = 'https://api.chicken2018.club/api/';
+// export const Domain = 'http://localhost:62025/api/';
+
+export const ImageDomain = 'https://api.chicken2018.club/';
 // Product URL
 export const GetAllProduct = Domain + 'product';
 export const GetAllCategories = Domain + 'categories';

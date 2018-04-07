@@ -27,6 +27,8 @@ import { DatePipe } from '@angular/common';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { ProductItemManagerComponent } from './components/store-detail/product-item-manager/product-item-manager.component';
 import { RouterModule } from '@angular/router';
+import { FileUploadComponent } from '../uploading/file-upload/file-upload.component';
+import { UploadingModule } from '../uploading/uploading.module';
 
 @NgModule({
   imports: [
@@ -43,7 +45,8 @@ import { RouterModule } from '@angular/router';
     ReactiveFormsModule,
     MatButtonModule,
     RatingModule,
-    ButtonsModule.forRoot()
+    ButtonsModule.forRoot(),
+    UploadingModule
   ],
   exports: [
     SearchFilterComponent,
@@ -69,6 +72,9 @@ import { RouterModule } from '@angular/router';
     StoreDetailMenuComponent,
     SimilarStoreComponent,
     ProductItemManagerComponent,
+  ],
+  entryComponents: [
+    FileUploadComponent
   ],
   providers: [
     UserService,

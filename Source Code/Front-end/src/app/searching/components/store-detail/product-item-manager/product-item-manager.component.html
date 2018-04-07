@@ -1,9 +1,35 @@
 <div class="productItem col-xs-12 col-sm-12" *ngIf="productModel !== undefined && productModel != null">
-  <div class="row">
+  <form [formGroup]="productItemForm" (ngSubmit)="onSubmit()" class="row form-edit-profile">
     <div class="productItem__image col-xs-12 col-sm-3 col-md-3">
-      <a [routerLink]="['/product', productId]" (click)="getProductDetail()">
-        <img [src]="productModel.images.length>0?productModel.images[0].path:imageDefault" alt="Image Product">
-      </a>
+      <div class="row productItem__image__major">
+        <a>
+          <file-upload class="col-md-12 col-sm-12 col-xs-12" [imageSrc]="imageDomain + productModel.images[0]?.path" [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-upload>
+        </a>
+      </div>
+      <div class="row productItem__image__minor">
+        <div class="col-xs-3 col-md-3 col-sm-3">
+          <a>
+            <file-upload  [imageSrc]="imageDomain + productModel.images[1]?.path" [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-upload>
+          </a>
+        </div>
+        <div class="col-xs-3 col-md-3 col-sm-3">
+          <a>
+            <file-upload  [imageSrc]="imageDomain + productModel.images[2]?.path" [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-upload>
+          </a>
+        </div>
+        <div class="col-xs-3 col-md-3 col-sm-3">
+          <a>
+            <file-upload [imageSrc]="imageDomain + productModel.images[3]?.path" [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-upload>
+          </a>
+        </div>
+        <div class="col-xs-3 col-md-3 col-sm-3">
+          <a>
+            <file-upload  [imageSrc]="imageDomain + productModel.images[4]?.path" [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-upload>
+          <!-- <img [src]="imageDomain + productModel.images[0].path"  alt="Image Product" *ngIf="productModel.images.length>0">
+          <img [src]="imageDefault"  alt="Image Product" *ngIf="productModel.images.length==0"> -->
+        </a>
+        </div>
+      </div>
     </div>
 
     <div class="productItem__rating col-xs-12 col-sm-3 col-md-3">
@@ -32,8 +58,8 @@
     </div>
     
     <div class="productItem__submit col-xs-12 col-sm-1 col-md-1">
-        <button class="row btn btn-success">Áp dụng</button>
-        <button class="row btn btn-warning">Xóa Sản phẩm</button>
+        <button class="row btn btn-success btn-submit">Áp dụng</button>
+        <button class="row btn btn-warning btn-delete">Xóa Sản phẩm</button>
     </div> 
-  </div>
+  </form>
 </div>

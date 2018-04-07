@@ -242,6 +242,21 @@ namespace WebApi.ApiController
             }
         }
 
+        // PUT api/product/?id=
+        [HttpPut]
+        public IHttpActionResult Put([FromBody]UploadProductDto uploadProductDto)
+        {
+            try
+            {
+                return Ok(_productService.UpdateProduct(uploadProductDto));
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+
+        }
+
         // DELETE api/product/?id=
         [HttpDelete]
         public IHttpActionResult Delete(Guid id)
@@ -255,21 +270,6 @@ namespace WebApi.ApiController
                 return NotFound();
             }
 
-
-        }
-
-        // PUT api/product/?id=
-        [HttpPut]
-        public IHttpActionResult Put([FromBody]ProductBusinessEntity productEntity)
-        {
-            try
-            {
-                return Ok(_productService.UpdateProduct(productEntity));
-            }
-            catch (Exception e)
-            {
-                return NotFound();
-            }
 
         }
     }

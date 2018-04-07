@@ -244,7 +244,7 @@ namespace BusinessLayer.Services
 
                         if (imagesList.Any())
                         {
-                            var newProductImagesList = new List<StoreImageBusinessEntity>();
+                            // var newProductImagesList = new List<StoreImageBusinessEntity>();
 
                             foreach (var image in imagesList)
                             {
@@ -280,14 +280,54 @@ namespace BusinessLayer.Services
             {
                 if (openStoreDto != null)
                 {
+                    Mapper.CreateMap<OpenStoreDto, StoreBusinessEntity>().ForSourceMember(x => x.Images, opt => opt.Ignore());
+                    var storeEntity = Mapper.Map<OpenStoreDto, StoreBusinessEntity>(openStoreDto);
+
                     using (var scope = new TransactionScope())
                     {
-                        Mapper.CreateMap<OpenStoreDto, Store>().ForSourceMember(x => x.Images, opt => opt.Ignore());
-                        var store = Mapper.Map<OpenStoreDto, Store>(openStoreDto);
+                        Mapper.CreateMap<StoreBusinessEntity, Store>();
+                        var store = Mapper.Map<StoreBusinessEntity, Store>(storeEntity);
 
                         _unitOfWork.Stores.Update(store);
-
                         _unitOfWork.Complete();
+
+                        // Update Image in FileSystem
+                        var imagesUploadList = new List<FileUploadResult>();
+                        var imageIds = new List<Guid>();
+
+                        foreach (var image in openStoreDto.Images)
+                        {
+                            imagesUploadList.Add(image);
+                        }
+
+                        if (imagesUploadList.Any())
+                        {
+                            imageIds = _uploadService.UploadFile(imagesUploadList, true, store.Id, Guid.Empty, store.Name);
+                        }
+                        ///////////////////Add to StoreImage Table//////////////////////
+                        var imagesList =
+                              _unitOfWork.Images.GetManyQueryable(i => imageIds.Any(item => item == i.Id)).ToList();
+
+                       // if (imagesList.Count == imageIds.Count)
+                        // {
+                            // No need to update StoreImageEntity anymore
+                           // return true;
+                       // }
+
+                        if (imagesList.Any())
+                        {
+                            var newImagesList = imagesList.FindAll(x => imageIds.Any(y => y != x.Id));
+                            // Just update new more Image
+                            foreach (var item in newImagesList)
+                            {
+                                var newStoreImageEntity = new StoreImageBusinessEntity()
+                                {
+                                    StoreId = store.Id,
+                                    ImageId = item.Id
+                                };
+                                _storeImageService.CreateStoreImage(newStoreImageEntity);
+                            }
+                        }
                         scope.Complete();
 
                         return true;

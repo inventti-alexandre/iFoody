@@ -12,10 +12,12 @@ namespace WebApi.ApiController
     public class ImageController : System.Web.Http.ApiController
     {
         private readonly IImageService _imageService;
+        private readonly IUploadService _uploadService;
 
-        public ImageController(IImageService imageService)
+        public ImageController(IImageService imageService, IUploadService uploadService)
         {
             _imageService = imageService;
+            _uploadService = uploadService;
         }
 
         // GET api/image
@@ -120,57 +122,19 @@ namespace WebApi.ApiController
             }
         }
 
-        //// POST api/image
-        //[HttpPost]
-        //public HttpResponseMessage Post([FromBody] List<ImageBusinessEntity> images, Guid? userId)
-        //{
-        //    try
-        //    {
-        //        _imageService.UploadImage(images, userId);
-        //        return Request.CreateResponse(HttpStatusCode.OK);
-        //    }
-        //    catch (CookieException e)
-        //    {
-        //        return Request.CreateResponse(HttpStatusCode.ExpectationFailed, "Unexpection Error!");
-        //    }
-        //}
-
-        //// Put api/put/5
-        //[HttpPut]
-        //public HttpResponseMessage Put([FromBody] ImageBusinessEntity image)
-        //{
-        //    try
-        //    {
-        //        if (!image.Equals(null))
-        //        {
-        //            _imageService.UpdateImage(image);
-        //            return Request.CreateResponse(HttpStatusCode.OK);
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Exception Error");
-        //    }
-        //    return Request.CreateResponse(HttpStatusCode.NotFound, "User Not Found!");
-        //}
-
-        //// DELETE api/product/5
-        //[HttpDelete]
-        //public HttpResponseMessage Delete(Guid id)
-        //{
-        //    try
-        //    {
-        //        if (!id.Equals(null))
-        //        {
-        //            _imageService.DeleteImage(id);
-        //            return Request.CreateResponse(HttpStatusCode.OK);
-        //        }
-        //        return Request.CreateResponse(HttpStatusCode.NotImplemented, "Not Implemented!");
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Exception Error!");
-        //    }
-        //}
+        // DELETE api/image/
+        [HttpDelete]
+        [Route("api/image/{path?}")]
+        public HttpResponseMessage Delete(string path)
+        {
+            try
+            {
+                return _uploadService.DeleteFile(path) ? Request.CreateResponse(HttpStatusCode.OK) : Request.CreateResponse(HttpStatusCode.NotImplemented, "Not Implemented!");
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Exception Error!");
+            }
+        }
     }
 }
