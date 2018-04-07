@@ -1,3 +1,5 @@
+import { ICategory } from './allModel';
+import { Store } from './../../constant/apiUrl';
 import { Params } from "@angular/router";
 import { DatePipe } from "@angular/common/src/pipes";
 
@@ -5,9 +7,11 @@ export interface IProduct {
   id: string;
   name: string;
   price: number;
+  rating: number;
   description: string;
   categoryId: string;
   storeId: string;
+  ratingCount: number;
 }
 
 export interface IUploadProduct {
@@ -26,6 +30,7 @@ export interface IStore {
   id: string;
   name: string;
   rating: number;
+  ratingCount: number;
   openHour: DatePipe;
   closeHour: DatePipe;
   lowestPrice: number;
@@ -108,4 +113,10 @@ export interface ISearchParam {
     districts: boolean;
     rating: boolean;
   };
+}
+export interface ISearchResult{
+  store: IStore,
+  category: ICategory,
+  images: IImages,
+  distance: number
 }

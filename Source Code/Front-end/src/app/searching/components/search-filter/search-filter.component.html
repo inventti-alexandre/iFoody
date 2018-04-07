@@ -21,13 +21,7 @@
           <div  class="parents-well">
             <div class="well well-lg well-search-type">
               <div class="row well-search-type">
-                  <mat-checkbox class='col-xs-12 col-sm-6 col-md-6 well-item'>Ăn Vặt</mat-checkbox>
-                  <mat-checkbox class='col-xs-12 col-sm-6 col-md-6 well-item'>Trà Sữa</mat-checkbox>
-                  <mat-checkbox class='col-xs-12 col-sm-6 col-md-6 well-item'>Cafe</mat-checkbox>
-                  <mat-checkbox class='col-xs-12 col-sm-6 col-md-6 well-item'>Lẩu</mat-checkbox>
-                  <mat-checkbox class='col-xs-12 col-sm-6 col-md-6 well-item'>Thức Ăn nhanh</mat-checkbox>
-                  <mat-checkbox class='col-xs-12 col-sm-6 col-md-6 well-item'>Bánh</mat-checkbox>
-                  <mat-checkbox class='col-xs-12 col-sm-6 col-md-6 well-item'>Cơm</mat-checkbox>
+                  <mat-checkbox *ngFor="let category of categories" class="col-xs-12 col-sm-6 col-md-6" [value]="category.id" (change)="chooseCategories($event)">{{category.name}}</mat-checkbox>
               </div>
             </div>
           </div>

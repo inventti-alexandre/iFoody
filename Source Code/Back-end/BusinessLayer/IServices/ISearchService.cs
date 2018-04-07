@@ -7,11 +7,8 @@ namespace BusinessLayer.IServices
 {
     public interface ISearchService
     {
-        IEnumerable<ProductDto> SearchByProductName(string productName);
-        IEnumerable<ProductDto> SearchByStoreInfo(string searchString);
-        IEnumerable<ProductDto> SearchByCategoryName(string categoryName);
-        PagingReturnDto<ProductDto> SuggestionListByUserId(Guid userId, int? count);
-        PagingReturnDto<ProductDto> TopRatingProducts(int? count);
-        PagingReturnDto<ProductDto> Searching(SearchParam searchParam);
+        PagingReturnDto<SearchDto> SuggestionListByUserId(Guid userId, int? count);
+        PagingReturnDto<SearchDto> TopRatingProducts(int? count);
+        PagingReturnDto<SearchDto> SearchDto_Search(SearchParam searchParam);
     }
 }

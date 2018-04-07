@@ -1,8 +1,8 @@
 import { element } from "protractor";
-import { ICategory } from "./../models/allModel";
+import { ICategory,ISearchParam } from "./../models/allModel";
 import * as apiUrl from "./../../constant/apiUrl";
 import { Injectable } from "@angular/core";
-import { Http, Response, Headers } from "@angular/http";
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import "rxjs/Rx";
 import { Observable } from "rxjs/Rx";
 
@@ -11,55 +11,25 @@ export class SearchService {
   private actionUrl: string;
 
   constructor(private _http: Http) {
-    this.actionUrl = apiUrl.SearchPaging;
+    this.actionUrl = apiUrl.Search;
   }
   public fomatParamater = p => {
     return (p = p.replace(/['"]+/g, ""));
   }
 
-  public SearchPaging = (searchString, page, sortByRating, count?): Observable<any> => {
-    let listProduct=[];
-    let url;
-    if (count) {
-      url =
-        this.actionUrl +
-        "/?searchString=" +
-        searchString +
-        "&page=" +
-        page +
-        "&sortByRating=" +
-        sortByRating +
-        "&count=" +
-        count;
-    } else {
-      url =
-        this.actionUrl +
-        "/?searchString=" +
-        searchString +
-        "&page=" +
-        page +
-        "&sortByRating=" +
-        sortByRating +
-        "&count";
-    }
-    return this._http
-      .get(url)
+  public Search = (param:ISearchParam): Observable<any> => {
+    let body = JSON.stringify(param);
+    let headers = new Headers();
+    // headers.append("Token", this.authToken);
+    headers.append("Content-Type", "application/json");
+
+    let options = new RequestOptions( {headers: headers});
+
+    return this._http.post(this.actionUrl, body,options)
       .map((response: Response) => <any>response.json())
-      .do(x => {
-        listProduct.push(x);
-      });
-      // get status
-      // .map((response) => {
-      //   let status = response.status;
-      //   let data = response.json();
-      //   return [{ status: status, data: data }];
-      // })
-      // .catch((error: any) => {
-      //   if (error.status === 404) {
-      //     let data = error.json();
-      //     return  [{ status: error.status, data: error }];
-      //   }
-      // });
+      .catch((erro:any)=>{
+        throw Observable.throw(erro);
+      })
   }
 
   public SuggestListByUserId = (userId, count?): Observable<any> => {

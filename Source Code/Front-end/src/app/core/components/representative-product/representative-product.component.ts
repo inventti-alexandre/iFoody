@@ -1,4 +1,4 @@
-import { Component, OnInit, group, AfterContentInit, 
+import { Component, OnInit, group, AfterContentInit,
   AfterContentChecked, OnChanges, OnDestroy, DoCheck, AfterViewChecked, AfterViewInit } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { Http } from '@angular/http';
@@ -22,12 +22,10 @@ export class RepresentativeProductComponent implements OnInit{
     this.products = [];
     this.initPage = 1;
     this.initCount = 8;
-    console.log("Constructor");
   }
-  
+
   ngOnInit() {
-    console.log("ngOnInit");
-    // get all cetegory:
+    // get all cetegory
     this._categoryService.GetAll()
       .subscribe(data => this.categories = data,
       error => console.log(error),

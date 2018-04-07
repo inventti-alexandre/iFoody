@@ -1,9 +1,11 @@
+import { ISearchParam, ISearchResult } from "./../../../shared/models/allModel";
 import { imageDefault } from "./../../../constant/global";
 import { ActivatedRoute, Params, Route, Router } from "@angular/router";
 import { Component, OnInit, Input } from "@angular/core";
 import { SearchService } from "./../../../shared/services/search.service";
 import { UserService } from "../../../shared/services/user.service";
 import * as _ from "lodash";
+import { handelImgErro,checkOpenStore } from "../../../shared/services/share-function.service";
 declare var searchObject: any;
 
 @Component({
@@ -14,7 +16,6 @@ declare var searchObject: any;
 })
 export class SearchBarComponent implements OnInit {
   @Input("searchString") searchString;
-  @Input("area") area;
 
   districts: any[];
   suggestionList: any[];
@@ -24,6 +25,9 @@ export class SearchBarComponent implements OnInit {
   defaultPageResult;
   imageDefault: string;
   isNotFound: boolean;
+  searchParam: ISearchParam;
+  handelImgErro = handelImgErro;
+  checkOpenStore = checkOpenStore;
 
   constructor(
     private router: Router,
@@ -32,6 +36,7 @@ export class SearchBarComponent implements OnInit {
   ) {
     this.searchString = "";
     this.districts = [
+      1,2,3,4,5,6,7,8,9,10,11,12,
       "Bình Thạnh",
       "Tân Bình",
       "Phú Nhuận",
@@ -52,23 +57,39 @@ export class SearchBarComponent implements OnInit {
     this.defaultPageResult = 1;
     this.imageDefault = imageDefault;
     this.isNotFound = false;
+    this.searchParam = {
+      searchString: "",
+      page: this.defaultPageResult,
+      currentLatitude: 0,
+      currentLongitude: 0,
+      categoriesListId: [],
+      districtList: [],
+      count: this.defaultSuggestionCount,
+      filterOption: {
+        location: false,
+        categories: false,
+        districts: false,
+        rating: false
+      }
+    };
   }
   ngOnInit() {
     searchObject.hide();
-    // this.getSuggestionListByRating(5);
-    // this.getSuggestionListByUserId("cc736f75-4b3f-457b-9110-2272455e282d");
   }
   getSuggestionList = () => {
     if (this.defaultSuggestionList.length === 0) {
       if (this.userId !== "") {
-        this.getSuggestionListByUserId(this.userId,this.defaultSuggestionCount);
+        this.getSuggestionListByUserId(
+          this.userId,
+          this.defaultSuggestionCount
+        );
       } else {
         this.getSuggestionListByRating(this.defaultSuggestionCount);
       }
     } else {
       this.suggestionList = _.cloneDeep(this.defaultSuggestionList);
     }
-  }
+  };
 
   getSuggestionListByRating = (count?) => {
     return this._searchService
@@ -82,7 +103,7 @@ export class SearchBarComponent implements OnInit {
           console.log("suggest result empty");
         }
       });
-  }
+  };
 
   getSuggestionListByUserId = (userId, count?) => {
     return this._searchService
@@ -96,44 +117,26 @@ export class SearchBarComponent implements OnInit {
           console.log("suggest result empty");
         }
       });
-  }
+  };
 
-  checkOpenStore = (openHour, closeHour) => {
-    let openHourConvert = openHour.split(":");
-    let openTimeSeconds =
-      +openHourConvert[0] * 60 * 60 + +openHourConvert[1] * 60;
-
-    let closeHourConvert = closeHour.split(":");
-    let closeTimeSeconds =
-      +closeHourConvert[0] * 60 * 60 + +closeHourConvert[1] * 60;
-
-    let currentTime = new Date();
-    let currentSeconds =
-      currentTime.getHours() * 60 * 60 + currentTime.getMinutes() * 60;
-
-    let isOpen = false;
-    if (currentSeconds > openTimeSeconds && currentSeconds < closeTimeSeconds) {
-      isOpen = true;
-    }
-    // console.log(currentSeconds - openTimeSeconds);
-
-    return isOpen;
-  }
-
-  getSearchPaging(searchString, initPage) {
-    let trimSearchString = this.searchString.trim();
-    if(trimSearchString!==""){
-      return this._searchService
-      .SearchPaging(
-        trimSearchString.replace(/ +(?= )/g,''),
-        initPage,
-        false,
-        this.defaultSuggestionCount
-      )
-      .subscribe(
+  handelChangeSearchBar = event => {
+    setTimeout(() => {
+        this.getSearchPaging();
+    }, 1000);
+  };
+  getSearchPaging = () => {
+    let trimSearchString = this.searchString.trim().replace(/ +(?= )/g, "");
+    if (trimSearchString !== "") {
+      this.searchParam.searchString = trimSearchString;
+      return this._searchService.Search(this.searchParam).subscribe(
         (data: Response) => {
-          this.suggestionList.splice(0, 1, data);
-          this.isNotFound = false;
+          if (data == null) {
+            this.suggestionList = [];
+            this.isNotFound = true;
+          } else {
+            this.suggestionList.splice(0, 1, data);
+            this.isNotFound = false;
+          }
           console.log("search paging result", this.suggestionList);
         },
         err => {
@@ -142,11 +145,28 @@ export class SearchBarComponent implements OnInit {
         }
       );
     }
-  }
-
-  setSearchQueryParam=()=> {
+  };
+  setSearchQueryParam = () => {
     this.router.navigate(["/search"], {
-      queryParams: { name: this.searchString, area: this.area }
+      queryParams: { name: this.searchString, districts: this.searchParam.districtList}
     });
+  };
+  chooseDistrict=(event)=>{
+    if(event.checked){
+      this.searchParam.districtList.push(event.source.value)
+    }else{
+      for(let i=0;i<this.searchParam.districtList.length;i++){
+        if(this.searchParam.districtList[i]==event.source.value){
+          this.searchParam.districtList.splice(i, 1);
+          break;
+        }
+      }
+    }
+    if(this.searchParam.districtList.length>0){
+      this.searchParam.filterOption.districts = true;
+    }else{
+      this.searchParam.filterOption.districts = false;
+    }
+    console.log("click",event, this.searchParam.districtList);
   }
 }

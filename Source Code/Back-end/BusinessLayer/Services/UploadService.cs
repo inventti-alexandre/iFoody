@@ -69,7 +69,7 @@ namespace BusinessLayer.Services
                         Random rnd = new Random();
                         var random = rnd.Next(10000, 99999);
                         var today = DateTime.Now.ToString("yyyy-mm-dd");
-                        file.FileName = name.Replace(' ', '-') + '-' + today + '-' + random + '.' + "jpg");
+                        file.FileName = name.Replace(' ', '-') + '-' + today + '-' + random + '.' + "jpg";
                         file.FileName = file.FileName.ToLower();
                         file.FileName = string.Concat(file.FileName.Normalize(NormalizationForm.FormD).Where(
                                 c => CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark));

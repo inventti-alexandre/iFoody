@@ -38,7 +38,7 @@ export const AuthToken = "auth_token";
 export const UserId = "user_id";
 
 // Search URL
-export const SearchPaging = Domain + 'search';
+export const Search = Domain + 'search';
 
 // Image URL
 export const GetImageByStoreId = Domain + 'image/store';

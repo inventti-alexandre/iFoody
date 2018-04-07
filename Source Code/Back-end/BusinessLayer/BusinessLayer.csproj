@@ -75,6 +75,7 @@
     <Compile Include="DTOs\ProductInStoreDto.cs" />
     <Compile Include="DTOs\ReviewDto.cs" />
     <Compile Include="DTOs\LocationDto.cs" />
+    <Compile Include="DTOs\SearchDto.cs" />
     <Compile Include="DTOs\StoreDto.cs" />
     <Compile Include="DTOs\StoreImageDto.cs" />
     <Compile Include="DTOs\UploadProductDto.cs" />
