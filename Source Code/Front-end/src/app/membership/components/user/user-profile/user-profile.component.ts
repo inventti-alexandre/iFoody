@@ -21,6 +21,14 @@ export class UserProfileComponent implements OnInit, ProfileChildren {
   constructor(private cdr: ChangeDetectorRef, private _userService: UserService, private activatedRoute: ActivatedRoute) {
     this.userIdKey = apiUrl.UserId;
     this.userId = localStorage.getItem(this.userIdKey);
+    this.genderDisplay = "Giới tính" ;
+    this.user = new FormGroup({
+      email: new FormControl(),
+      gender: new FormControl(),
+      lastname: new FormControl(),
+      firstname: new FormControl(),
+      birthday: new FormControl(),
+    });
    }
 
   applyTheme(pop: any) {
@@ -30,13 +38,13 @@ export class UserProfileComponent implements OnInit, ProfileChildren {
   }
 
   ngOnInit() {
-    this.user = new FormGroup({
-      email: new FormControl(),
-      gender: new FormControl(),
-      lastname: new FormControl(),
-      firstname: new FormControl(),
-      birthday: new FormControl(),
-    });
+    // this.user = new FormGroup({
+    //   email: new FormControl(),
+    //   gender: new FormControl(),
+    //   lastname: new FormControl(),
+    //   firstname: new FormControl(),
+    //   birthday: new FormControl(),
+    // });
     
     this._userService.getUserById(this.activatedRoute.snapshot.paramMap.get('id'))
       .subscribe(u => {

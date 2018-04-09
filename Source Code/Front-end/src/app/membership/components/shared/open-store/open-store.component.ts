@@ -340,12 +340,13 @@ export class OpenStoreComponent implements OnInit {
       }
     });
     this.storeForm.patchValue({'images': this.fileUploads});
+    console.log("storeFrom before service", this.storeForm.value);
     this._storeService.openStore(this.storeForm.value)
       .subscribe(
         response => {
-            alert("Đăng ký thành công!!!");
-            this.router.navigate(['/']);
-            location.reload();
+            console.log('response', response);
+            this.router.navigate(['/profile', this.userId, 'store-profile']);
+            // location.reload();
           },
         error => {
             console.log('Response error ?!');

@@ -17,10 +17,12 @@ namespace BusinessLayer.Services
     public class UploadService : IUploadService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IImageService _imageService;
 
-        public UploadService(IUnitOfWork unitOfWork)
+        public UploadService(IUnitOfWork unitOfWork, IImageService imageService)
         {
             _unitOfWork = unitOfWork;
+            _imageService = imageService;
         }
 
         // Upload Files
@@ -68,7 +70,7 @@ namespace BusinessLayer.Services
                         // file.FileName = file.FileName.Replace(file.FileName.Substring(0), name.Replace(' ', '-') + imageCount + fileExt);
                         Random rnd = new Random();
                         var random = rnd.Next(10000, 99999);
-                        var today = DateTime.Now.ToString("yyyy-mm-dd");
+                        var today = DateTime.Now.ToString("yyyy-MM-dd");
                         file.FileName = name.Replace(' ', '-') + '-' + today + '-' + random + '.' + "jpg";
                         file.FileName = file.FileName.ToLower();
                         file.FileName = string.Concat(file.FileName.Normalize(NormalizationForm.FormD).Where(
@@ -127,13 +129,19 @@ namespace BusinessLayer.Services
         }
 
         // Delete File
-        public bool DeleteFile(string localFilePath)
+        public bool DeleteFile(Guid id)
         {
             try
             {
-                HttpPostedFileBaseCustom httpPostedFileBaseCustom = new HttpPostedFileBaseCustom(null, null, localFilePath);
-                httpPostedFileBaseCustom.Delete(localFilePath);
-                return true;
+                if (id != null && id != Guid.Empty)
+                {
+                    var image = _imageService.Get(id);
+
+                    HttpPostedFileBaseCustom httpPostedFileBaseCustom = new HttpPostedFileBaseCustom(null, null, image.Path);
+                    httpPostedFileBaseCustom.Delete(image.Path);
+                    return true;
+                }
+                return false;
             }
             catch (Exception e)
             {

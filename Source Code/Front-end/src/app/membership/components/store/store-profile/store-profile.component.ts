@@ -7,7 +7,7 @@ import { IStore } from '../../../../shared/models/allModel';
 import { Component, OnInit, Input, ChangeDetectorRef, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StoreService } from '../../../../shared/services/store.service';
-import { ImageDomain } from './../../../../constant/apiUrl';
+import { ImageDomain, UserId } from './../../../../constant/apiUrl';
 import { FileUploadComponent } from '../../../../uploading/file-upload/file-upload.component';
 import { UserService } from '../../../../shared/services/user.service';
 declare var deleteImageObject: any;
@@ -26,6 +26,7 @@ export class StoreProfileComponent implements OnInit, ProfileChildren, AfterView
   images: any;
   imageDefault: any;
   imageDomain:any;
+  userId: any;
   @ViewChildren(FileUploadComponent) fileUploadComponent: QueryList<any>;
   fileUploads: any[];
   fileUploadComponentQuantity: any[];
@@ -43,6 +44,7 @@ export class StoreProfileComponent implements OnInit, ProfileChildren, AfterView
       this.imageDefault = imageDefault;
       this.imageDomain = ImageDomain;
       this.fileUploads = [];
+      this.userId = localStorage.getItem(apiUrl.UserId).replace(/['"]+/g, '');
 
       this.storeForm = new FormGroup({
         id: new FormControl(),
@@ -59,6 +61,7 @@ export class StoreProfileComponent implements OnInit, ProfileChildren, AfterView
         district: new FormControl(),
         city: new FormControl(),
         categoryId: new FormControl(),
+        userId: new FormControl(),
         images: new FormControl()
       });
 
@@ -84,6 +87,7 @@ export class StoreProfileComponent implements OnInit, ProfileChildren, AfterView
           district: this.store.district,
           city: this.store.city,
           categoryId: this.store.categoryId,
+          userId: this.userId,
           images: []
         });
 
@@ -160,7 +164,7 @@ export class StoreProfileComponent implements OnInit, ProfileChildren, AfterView
       .subscribe(result => {
         console.log('result', result);
         alert("Xóa thành công!!!");
-        deleteImageObject.deleteImage(id);
+        deleteImageObject.deleteImage('image',id);
         console.log("Delete   DONE");
       });
   }

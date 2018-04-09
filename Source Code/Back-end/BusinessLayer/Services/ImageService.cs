@@ -17,10 +17,14 @@ namespace BusinessLayer.Services
     public class ImageService : IImageService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IProductImageService _productImageService;
+        private readonly IStoreImageService _storeImageService;
 
         // Constructor
-        public ImageService(IUnitOfWork unitOfWork)
+        public ImageService(IUnitOfWork unitOfWork, IProductImageService productImageService, IStoreImageService storeImageService)
         {
+            _productImageService = productImageService;
+            _storeImageService = storeImageService;
             _unitOfWork = unitOfWork;
         }
 
@@ -45,6 +49,22 @@ namespace BusinessLayer.Services
         }
 
         // Get Image By id
+        public ImageBusinessEntity Get(Guid id)
+        {
+            try
+            {
+                var image = _unitOfWork.Images.GetById(id);
+                Mapper.CreateMap<Image, ImageBusinessEntity>();
+                var model = Mapper.Map<Image, ImageBusinessEntity>(image);
+                return model;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        // Get Images By id
         public IEnumerable<ImageBusinessEntity> GetImage(Guid id)
         {
             try
@@ -211,20 +231,46 @@ namespace BusinessLayer.Services
         }
 
 
-        // No use - Delete method
-        public bool DeleteImage(Guid id)
+        // Delete Product Image in Table SQL
+        public bool DeleteProductImage(Guid id)
         {
             try
             {
                 using (var scope = new TransactionScope())
                 {
-                    _unitOfWork.UserImages.Delete(i => i.ImageId == id);
+                    _unitOfWork.ProductImages.Delete(i => i.ImageId == id);
                     _unitOfWork.Images.Delete(id);
 
                     _unitOfWork.Complete();
                     scope.Complete();
                     return true;
                 };
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        // Delete Store Image in Table SQL
+        public bool DeleteStoreImage(Guid id)
+        {
+            try
+            {
+
+                if (id != Guid.Empty && id != null)
+                {
+                    using (var scope = new TransactionScope())
+                    {
+                        _unitOfWork.StoreImages.Delete(i => i.ImageId == id);
+                        _unitOfWork.Images.Delete(id);
+
+                        _unitOfWork.Complete();
+                        scope.Complete();
+                        return true;
+                    }
+                }
+                return false;
             }
             catch (Exception e)
             {

@@ -104,8 +104,6 @@ export class StoreService {
     let headers = new Headers();
     headers.append("Token", this.authToken); 
     headers.append("Content-Type", "application/json");
-    headers.append('Access-Control-Allow-Origin', 'http://localhost:4200');
-    headers.append('Access-Control-Allow-Credentials', 'true');
 
     let options = new RequestOptions( {headers: headers});
 
@@ -114,7 +112,20 @@ export class StoreService {
       .catch(this.handleError); 
   }
 
-  // Handle Error in Other Methods
+  // Delete Product Image
+  deleteImage(id: string): Observable<any> {
+    console.log("deleteImage in StoreService works.");
+    let headers = new Headers();
+    headers.append("Token", this.authToken); 
+    headers.append("Content-Type", "application/json");
+    let options = new RequestOptions({headers: headers});
+
+    return this._http.delete(apiUrl.StoreImage + '/' + id, options)
+      .map((response: Response) => <any>response.json())
+      .catch(this.handleError);
+  }
+
+  // Handle Error
   private handleError(error: Response) {
     console.log("handleError works.");
     console.error(error);

@@ -613,24 +613,24 @@ namespace WebApi.ApiController
 
 
         // Delete Image
-        [HttpDelete]
-        [Route("image/{id}")]
-        public HttpResponseMessage DeleteImage(Guid id)
-        {
-            try
-            {
-                if (!id.Equals(null))
-                {
-                    _imageService.DeleteImage(id);
-                    return Request.CreateResponse(HttpStatusCode.OK);
-                }
-                return Request.CreateResponse(HttpStatusCode.NotImplemented, "Not Implemented!");
-            }
-            catch (Exception e)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Exception Fail!");
-            }
-        }
+        //[HttpDelete]
+        //[Route("image/{id}")]
+        //public HttpResponseMessage DeleteImage(Guid id)
+        //{
+        //    try
+        //    {
+        //        if (!id.Equals(null))
+        //        {
+        //            _imageService.DeleteImage(id);
+        //            return Request.CreateResponse(HttpStatusCode.OK);
+        //        }
+        //        return Request.CreateResponse(HttpStatusCode.NotImplemented, "Not Implemented!");
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Exception Fail!");
+        //    }
+        //}
 
         // Delete Review
         [HttpDelete]
@@ -717,6 +717,31 @@ namespace WebApi.ApiController
             catch (Exception e)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Exception unexpected");
+            }
+        }
+
+        // DELETE api/image/
+        [HttpDelete]
+        [Route("image/{id?}")]
+        public HttpResponseMessage DeleteImage(Guid id)
+        {
+            try
+            {
+                if (_uploadService.DeleteFile(id))
+                {
+                    if (_imageService.DeleteStoreImage(id))
+                    {
+                        {
+                            return Request.CreateResponse(HttpStatusCode.OK);
+                        }
+                    }
+                    return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Not Delete StoreImage in table yet");
+                }
+                return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Not Implemented!");
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Exception Error!");
             }
         }
     }

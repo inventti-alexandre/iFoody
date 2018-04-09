@@ -17,12 +17,16 @@ namespace WebApi.ApiController
         private readonly IStoreService _storeService;
         private readonly ILocationService _locationService;
         private readonly IReviewService _reviewService;
+        private readonly IImageService _imageService;
+        private readonly IUploadService _uploadService;
 
-        public StoreController(IStoreService storeService, ILocationService locationService, IReviewService reviewService)
+        public StoreController(IStoreService storeService, ILocationService locationService, IReviewService reviewService, IImageService imageService, IUploadService uploadService)
         {
             _storeService = storeService;
             _locationService = locationService;
             _reviewService = reviewService;
+            _imageService = imageService;
+            _uploadService = uploadService;
         }
 
         // GET All api/store
@@ -148,6 +152,32 @@ namespace WebApi.ApiController
             catch (Exception e)
             {
                 return Request.CreateResponse(HttpStatusCode.ExpectationFailed, "Exception Fail!");
+            }
+        }
+
+        // DELETE api/stores/image/
+        [HttpDelete]
+        [Route("image/{id?}")]
+        public HttpResponseMessage DeleteImage(Guid id)
+        {
+            try
+            {
+                if (_uploadService.DeleteFile(id))
+                {
+                    if (_imageService.DeleteProductImage(id))
+                    {
+                        {
+                            return Request.CreateResponse(HttpStatusCode.OK);
+                        }
+                    }
+                    return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Not Delete Image in table yet");
+                }
+                return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Not Implemented!");
+            }
+            catch
+                (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Exception Error!");
             }
         }
     }

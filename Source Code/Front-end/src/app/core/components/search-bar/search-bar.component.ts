@@ -89,7 +89,7 @@ export class SearchBarComponent implements OnInit {
     } else {
       this.suggestionList = _.cloneDeep(this.defaultSuggestionList);
     }
-  };
+  }
 
   getSuggestionListByRating = (count?) => {
     return this._searchService
@@ -103,7 +103,7 @@ export class SearchBarComponent implements OnInit {
           console.log("suggest result empty");
         }
       });
-  };
+  }
 
   getSuggestionListByUserId = (userId, count?) => {
     return this._searchService
@@ -117,13 +117,14 @@ export class SearchBarComponent implements OnInit {
           console.log("suggest result empty");
         }
       });
-  };
+  }
 
   handelChangeSearchBar = event => {
     setTimeout(() => {
         this.getSearchPaging();
     }, 1000);
-  };
+  }
+
   getSearchPaging = () => {
     let trimSearchString = this.searchString.trim().replace(/ +(?= )/g, "");
     if (trimSearchString !== "") {
@@ -145,12 +146,14 @@ export class SearchBarComponent implements OnInit {
         }
       );
     }
-  };
+  }
+  
   setSearchQueryParam = () => {
     this.router.navigate(["/search"], {
       queryParams: { name: this.searchString, districts: this.searchParam.districtList}
     });
-  };
+  }
+
   chooseDistrict=(event)=>{
     if(event.checked){
       this.searchParam.districtList.push(event.source.value)

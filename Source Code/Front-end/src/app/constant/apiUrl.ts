@@ -1,5 +1,5 @@
-export const Domain = 'https://api.chicken2018.club/api/';
-// export const Domain = 'http://localhost:62025/api/';
+// export const Domain = 'https://api.chicken2018.club/api/';
+export const Domain = 'http://localhost:62025/api/';
 
 export const ImageDomain = 'https://api.chicken2018.club/';
 // Product URL
@@ -19,7 +19,7 @@ export const Review = Domain + 'users/review';
 export const Comment = Domain + 'users/comment';
 export const Store = Domain + 'users/store';
 export const OpenStore = Domain + 'users/open-store';
-export const Image = Domain + 'users/image';
+export const UserImage = Domain + 'users/image';
 export const FavoriteList = Domain + 'users/favorite-list';
 // export const FavoriteListWithUser = Domain + 'users/favorite-list';
 // export const FavoriteList = Domain + 'favorite-list';
@@ -32,6 +32,7 @@ export const ChangePassword = Domain + 'users/change-password';
 export const GetStore = Domain + 'stores';
 export const GetStoreAddresses = Domain + 'stores/addresses';
 export const StoreReview = Domain + 'stores/review';
+export const StoreImage = Domain + 'stores/image';
 
 // Key of LocalStorage
 export const AuthToken = "auth_token";
