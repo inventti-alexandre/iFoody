@@ -1,15 +1,14 @@
-import { imageDefault } from './../../constant/global';
-import { Injectable } from '@angular/core';
+import { imageDefault } from "./../../constant/global";
+import { Injectable } from "@angular/core";
 
 @Injectable()
 export class ShareFunctionService {
-
-  constructor() { }
+  constructor() {}
 }
-export function handelImgErro(event){
+export function handelImgErro(event) {
   event.target.src = imageDefault;
 }
-export function checkOpenStore(openHour, closeHour){
+export function checkOpenStore(openHour, closeHour) {
   let openHourConvert = openHour.split(":");
   let openTimeSeconds =
     +openHourConvert[0] * 60 * 60 + +openHourConvert[1] * 60;
@@ -27,4 +26,18 @@ export function checkOpenStore(openHour, closeHour){
     isOpen = true;
   }
   return isOpen;
-};
+}
+export function getCurrentLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(successCallback,errorCallback,{timeout:10000});
+  }
+  function successCallback(position) {
+    debugger
+    var pos;
+    pos.lat = position.coords.latitude;
+    pos.lng = position.coords.longitude;
+    return pos
+  }
+  function errorCallback(){debugger}
+}
+

@@ -1,6 +1,7 @@
 import { ISearchResult } from './../../models/allModel';
 import { Component, OnInit, Input} from "@angular/core";
 import { handelImgErro,checkOpenStore } from "../../../shared/services/share-function.service";
+import { imageDefault } from "../../../constant/global";
 
 @Component({
   selector: "result-item",
@@ -10,6 +11,7 @@ import { handelImgErro,checkOpenStore } from "../../../shared/services/share-fun
 export class ResultItemComponent implements OnInit {
   @Input("itemInfo") itemInfo;
   item:ISearchResult;
+  imageDefault = imageDefault;
   handelImgErro = handelImgErro;
   checkOpenStore= checkOpenStore;
   constructor() {

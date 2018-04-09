@@ -61,7 +61,7 @@ namespace BusinessLayer.Services
                         if (file == null)
                         {
                             continue;
-                        }
+                        }   
                         var fileExt = Path.GetExtension(file.FileName).Substring(1);
 
                         // Change File Name

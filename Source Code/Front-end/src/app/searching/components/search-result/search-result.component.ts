@@ -1,8 +1,9 @@
 import { forEach } from '@angular/router/src/utils/collection';
 import { ISearchParam } from './../../../shared/models/allModel';
 import { SearchService } from './../../../shared/services/search.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
+
 @Component({
   selector: 'search-result',
   templateUrl: './search-result.component.html',
@@ -26,6 +27,13 @@ export class SearchResultComponent implements OnInit {
     this.initPage = 1;
     this.totalPage = 0;
     this.initCount = 20;
+  }
+
+  ngOnInit() {
+    this.getParam();
+  }
+
+  initDefautlValue=()=>{
     this.searchParam = {
       "searchString": "",
       "page": this.initPage,
@@ -43,10 +51,6 @@ export class SearchResultComponent implements OnInit {
     }
     this.storeIds=[];
   }
-  ngOnInit() {
-    this.getParam();
-  }
-
   setDistrictFilterOption=()=>{
     if(this.searchParam.districtList.length>0){
       this.searchParam.filterOption.districts = true;
@@ -55,7 +59,7 @@ export class SearchResultComponent implements OnInit {
     }
   }
   setStoreIds=(result)=>{
-    this.storeIds = [];
+    this.storeIds=[];
     result.forEach(item=>{
       this.storeIds.push(item.store.id);
     })
@@ -71,9 +75,7 @@ export class SearchResultComponent implements OnInit {
           }else{
             this.products.push(data);
           }
-          if(this.totalPage==0){
-            this.totalPage =this.products[0].totalPage;
-          }
+          this.totalPage =this.products[0].totalPage;
           this.setStoreIds(this.products[0].results);
           console.log("page",this.products[0].currentPage, this.products[0], this.storeIds);
         });
@@ -82,9 +84,12 @@ export class SearchResultComponent implements OnInit {
   }
   getParam=()=>{
     this.router.queryParams.subscribe((params: Params) => {
-      this.searchParam.searchString = params['name'];
-      this.searchParam.districtList = params['districts'];
-      console.log('searchString ', this.searchParam);
+      this.initDefautlValue();
+      this.searchParam.searchString = params['name']?params['name']:"";
+      if(params['districts']){
+        let districts = params['districts'].split(",");
+        this.searchParam.districtList = districts;
+      }
       this.getSearchPaging(this.initPage);
     });
   }
@@ -107,5 +112,4 @@ export class SearchResultComponent implements OnInit {
     this.getSearchPaging(this.initPage);
     console.log("i word", this.searchParam);
   }
-
 }

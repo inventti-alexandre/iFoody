@@ -2,8 +2,8 @@
   <div class="row-item filter-result-item">
     <div class="ri-avatar result-image">
       <a target="_blank" href="" [title]="item.store.name">
-        <img [src]="item.images.path" [alt]="item.store.name" (error)="handelImgErro($event)">
-        <ng-template [ngIf]="item.images.length>1">
+        <img [src]="item.images.length > 0 ?item.images[0].path:imageDefault" [alt]="item.store.name" (error)="handelImgErro($event)">
+        <ng-template [ngIf]="item.images.length > 1">
           <div class="overlay">
             <img src={{item.images[1].path}} [alt]="item.store.name" (error)="handelImgErro($event)">
           </div>
@@ -47,19 +47,24 @@
         <div class="suggest-opentime" *ngIf="checkOpenStore(item.store.openHour,item.store.closeHour);else closeStore">
           <span class="suggest suggest--online"></span>
           <span class="suggest-text suggest-text--opentime">Đang mở cửa</span>
+          <span style="float:right">
+            <span class="fa fa-comment" style="font-weight: normal;"></span>
+            <span data-bind="text: TotalReview.formatK(1)">{{item.store.ratingCount}}</span>
+          </span>
         </div>
 
         <ng-template #closeStore>
           <div class="suggest-opentime">
             <span class="suggest suggest--offline"></span>
             <span class="suggest-text suggest-text--closetime">Đang đóng cửa</span>
+            <span style="float:right">
+              <span class="fa fa-comment" style="font-weight: normal;"></span>
+              <span data-bind="text: TotalReview.formatK(1)">{{item.store.ratingCount}}</span>
+            </span>
           </div>
         </ng-template>
 
-        <span style="float:right">
-          <span class="fa fa-comment" style="font-weight: normal;"></span>
-          <span data-bind="text: TotalReview.formatK(1)">{{item.store.ratingCount}}</span>
-        </span>
+
       </div>
 
     </div>

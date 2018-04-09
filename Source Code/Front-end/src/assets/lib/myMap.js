@@ -19,7 +19,7 @@ function calculateAndDisplayRoute (directionsService, directionsDisplay, pointA,
         }
     });
 };
-// // Get Address List from API 
+// // Get Address List from API
 // function getAddressList(addressListFromHttpRequest) {
 //     //To Do
 //     console.log("getAddressList in myMap.js works");
@@ -31,9 +31,9 @@ function calculateAndDisplayRoute (directionsService, directionsDisplay, pointA,
 // }
 
 ////////////////////////////
-// Initiallize Map Object 
+// Initiallize Map Object
 var mapObject = (function() {
-    return {    
+    return {
         initMap1: function() {
             // For Geocoding Service
             geocoder = new google.maps.Geocoder();
@@ -67,14 +67,14 @@ var mapObject = (function() {
                 [belmont.info, belmont.lat, belmont.long, 1],
                 [sheridan.info, sheridan.lat, sheridan.long, 2],
             ];
-            
+
             var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 10,
+                zoom: 12,
                 center: new google.maps.LatLng(10.7610076, 106.6788873),
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 gestureHandling: 'greedy'
             });
-            
+
             var infoWindow = new google.maps.InfoWindow({});
             var marker, i, y;
             /////////////////////////////////////////
@@ -97,10 +97,10 @@ var mapObject = (function() {
                     map: map,
                     icon: pinCurrentLocationImage,
                     animation: google.maps.Animation.DROP,
-                }); 
+                });
 
                 currentMarker = currentMarkerTemp;
-               
+
                 // google.maps.event.addListener(marker, 'click', (function (marker, i) {
                 //     return function () {
                 //         //infoWindow.setContent(locations[i][0]);
@@ -108,9 +108,9 @@ var mapObject = (function() {
                 //     }
                 // })(marker, i));
 
-                // map.setCenter(pos); 
+                // map.setCenter(pos);
                 map.setCenter(new google.maps.LatLng(10.7610076, 106.6788873));
-                
+
                 }, function() {
                      handleLocationError(true, infoWindow, map.getCenter());
                 });
@@ -126,7 +126,7 @@ var mapObject = (function() {
             //////////////////////////
             //addressList.forEach(element => {
                 // GeoCoding
-                
+
                 // geocoder.geocode( { 'address': element}, function(results, status) {
                 //     if (status == 'OK') {
                 //         console.log("44444");
@@ -161,7 +161,7 @@ var mapObject = (function() {
                                 position: myLatlng,
                                 animation: google.maps.Animation.DROP,
                         });
-                        console.log(marker);
+                        // console.log(marker);
                         google.maps.event.addListener(marker, 'click', (function (marker, y) {
                             return function () {
                                  // get route from A to B
@@ -197,7 +197,7 @@ var mapObject = (function() {
                 //     animation: google.maps.Animation.DROP,
                 // });
 
-                
+
                 //console.log("marker: ",marker);
                 ///////////////
                 // console.log("i trong for: ", i);
@@ -213,7 +213,7 @@ var mapObject = (function() {
                 // })(marker, i));
             // }
         },
-        // Get Address Array from Service 
+        // Get Address Array from Service
         getAddressList: function(addressListFromHttpRequest) {
             console.log("addressListFromHttpRequest: ", addressListFromHttpRequest);
             addressList = [];
@@ -252,7 +252,7 @@ function handleLocationError (browserHasGeolocation, infoWindow, pos) {
     infoWindow.setContent(browserHasGeolocation ?
                   'Error: The Geolocation service failed.' :
                   'Error: Your browser doesn\'t support geolocation.');
-    infoWindow.open(map);    
+    infoWindow.open(map);
 }
 // function calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, pointB) {
 //     console.log("calculate");
@@ -265,7 +265,7 @@ function handleLocationError (browserHasGeolocation, infoWindow, pos) {
 //     };
 //     console.log(request);
 //     directionsService.route(request, function (response, status) {
-        
+
 //         if (status == google.maps.DirectionsStatus.OK) {
 //             directionsDisplay.setDirections(response);
 //         } else {
@@ -275,12 +275,12 @@ function handleLocationError (browserHasGeolocation, infoWindow, pos) {
 // }
 
 // function handleLocationError (browserHasGeolocation, infoWindow, pos) {
-    
+
 //     infoWindow.setPosition(pos);
 //     infoWindow.setContent(browserHasGeolocation ?
 //                   'Error: The Geolocation service failed.' :
 //                   'Error: Your browser doesn\'t support geolocation.');
-//     infoWindow.open(map);    
+//     infoWindow.open(map);
 // }
 
 // function initMap() {
@@ -308,7 +308,7 @@ function handleLocationError (browserHasGeolocation, infoWindow, pos) {
 //         lat: 42.002707,
 //         long: -87.661236
 //     };
-    
+
 //     var locations = [
 //         [broadway.info, broadway.lat, broadway.long, 0],
 //         [belmont.info, belmont.lat, belmont.long, 1],
@@ -321,7 +321,7 @@ function handleLocationError (browserHasGeolocation, infoWindow, pos) {
 //         mapTypeId: google.maps.MapTypeId.ROADMAP
 //     });
 //     console.log("22222");
-    
+
 //     var infowindow = new google.maps.InfoWindow({});
 
 //     var marker, i;
@@ -341,5 +341,5 @@ function handleLocationError (browserHasGeolocation, infoWindow, pos) {
 //         })(marker, i));
 //     }
 //     console.log("44444");
-    
+
 // }

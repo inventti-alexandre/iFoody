@@ -1,11 +1,11 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Output, EventEmitter, Input} from '@angular/core';
 
 @Component({
   selector: 'bs-pagination',
   templateUrl: './bs-pagination.component.html',
   styleUrls: ['./bs-pagination.component.scss']
 })
-export class BsPaginationComponent  {
+export class BsPaginationComponent   {
   @Output() targetPage = new EventEmitter();
   @Input('maxSize') maxSize;
   @Input('bigTotalItems') bigTotalItems;

@@ -117,6 +117,6 @@ export interface ISearchParam {
 export interface ISearchResult{
   store: IStore,
   category: ICategory,
-  images: IImages,
+  images: IImages[],
   distance: number
 }

@@ -1,13 +1,15 @@
-import { Component, OnInit, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, DoCheck} from '@angular/core';
 import { CategoryService } from '../../../shared/services/category.service';
-declare var searchObject: any;
+
+declare var currentLocationObject: any;
+declare var currentLocationGlobal : any;
 
 @Component({
   selector: 'search-filter',
   templateUrl: './search-filter.component.html',
   styleUrls: ['./search-filter.component.scss']
 })
-export class SearchFilterComponent implements OnInit {
+export class SearchFilterComponent implements OnInit, DoCheck {
   public categories: any[];
   public searchFilter;
   @Output("filterChange") filterChange= new EventEmitter();
@@ -27,7 +29,11 @@ export class SearchFilterComponent implements OnInit {
   ];
   constructor(private _categoryService: CategoryService) {
     this.categories = [];
+  }
+  resetSearchFilter=()=>{
     this.searchFilter={
+      "currentLatitude": 0,
+      "currentLongitude": 0,
       "categoriesListId": [],
       "filterOption":{
         "location": false,
@@ -37,8 +43,8 @@ export class SearchFilterComponent implements OnInit {
     }
   }
   ngOnInit() {
+    this.resetSearchFilter();
     this.getAllCategories();
-    searchObject.hide();
   }
   getAllCategories=()=>{
     this._categoryService.GetAll()
@@ -70,19 +76,15 @@ export class SearchFilterComponent implements OnInit {
     //TEST
     this.filterChange.emit(this.searchFilter);
   }
-
-  typeCollapsed(){
-
+  ngDoCheck() {
+    if(this.searchFilter.currentLatitude === 0 && currentLocationGlobal!== undefined){
+      this.searchFilter.currentLatitude = currentLocationGlobal.lat;
+      this.searchFilter.currentLongitude = currentLocationGlobal.lng;
+      this.searchFilter.filterOption.location = true;
+      console.log('currentLocationGlobal',this.searchFilter);
+    }
   }
-  typeExpanded() {
-
+  setLocationFilter=()=>{
+    currentLocationObject.get();
   }
-
-  loadScript(url) {
-    // console.log('preparing to load...');
-    // let node = document.createElement('script');
-    // node.src = url;
-    // node.type = 'text/javascript';
-    // document.getElementsByTagName('head')[0].appendChild(node);
- }
 }

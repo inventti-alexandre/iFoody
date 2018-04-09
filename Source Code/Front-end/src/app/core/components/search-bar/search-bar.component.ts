@@ -119,7 +119,7 @@ export class SearchBarComponent implements OnInit {
       });
   };
 
-  handelChangeSearchBar = event => {
+  handelChangeSearchBar = () => {
     setTimeout(() => {
         this.getSearchPaging();
     }, 1000);
@@ -146,9 +146,13 @@ export class SearchBarComponent implements OnInit {
       );
     }
   };
-  setSearchQueryParam = () => {
+  setSearchQueryParam = (hide) => {
+    if(hide){
+      searchObject.hide();
+    }
+    let districts = this.searchParam.districtList.toString();
     this.router.navigate(["/search"], {
-      queryParams: { name: this.searchString, districts: this.searchParam.districtList}
+      queryParams: { name: this.searchString, districts: districts}
     });
   };
   chooseDistrict=(event)=>{
@@ -167,6 +171,6 @@ export class SearchBarComponent implements OnInit {
     }else{
       this.searchParam.filterOption.districts = false;
     }
-    console.log("click",event, this.searchParam.districtList);
+    this.handelChangeSearchBar();
   }
 }

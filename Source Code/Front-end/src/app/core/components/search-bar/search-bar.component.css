@@ -7,6 +7,7 @@
   height: auto;
   width: 100%;
   margin-top: 35px;
+  z-index: 1;
 }
 
 .searchBar__byName {
@@ -146,4 +147,11 @@
   cursor: default;
   text-decoration: none;
   color: black;
+}
+
+.searchBar .moreResult {
+  color: dodgerblue;
+  font-style: italic;
+  text-align: right;
+  cursor: pointer;
 }
