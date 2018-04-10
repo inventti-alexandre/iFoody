@@ -50,7 +50,6 @@ export class SearchFilterComponent implements OnInit, DoCheck {
     this._categoryService.GetAll()
       .subscribe(data => {
         this.categories = data;
-        console.log("categories:", this.categories);
       },
       error => console.log(error),
     )
@@ -71,7 +70,6 @@ export class SearchFilterComponent implements OnInit, DoCheck {
     }else{
       this.searchFilter.filterOption.categories = false;
     }
-    console.log("click",this.searchFilter.categoriesListId);
 
     //TEST
     this.filterChange.emit(this.searchFilter);
@@ -81,7 +79,6 @@ export class SearchFilterComponent implements OnInit, DoCheck {
       this.searchFilter.currentLatitude = currentLocationGlobal.lat;
       this.searchFilter.currentLongitude = currentLocationGlobal.lng;
       this.searchFilter.filterOption.location = true;
-      console.log('currentLocationGlobal',this.searchFilter);
     }
   }
   setLocationFilter=()=>{

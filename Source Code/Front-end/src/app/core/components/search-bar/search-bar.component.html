@@ -1,7 +1,7 @@
 <div class=" searchBar input-group" id="searchBarParents">
   <div class="" id="searchNameBarParents">
     <input [(ngModel)]="searchString" class="form-control searchBar__byName" name="name" placeholder="Món ăn, địa điểm, loại hình..."
-      autocomplete="off" (keyup.enter)="setSearchQueryParam(false)" (ngModelChange)="handelChangeSearchBar()" (click)="searchString==''?getSuggestionList():false"
+      autocomplete="off" (keyup.enter)="searchString!=''?setSearchQueryParam(true):false" (ngModelChange)="handelChangeSearchBar()" (click)="searchString==''?getSuggestionList():false"
     />
     <!-- GỢI Ý SẢN PHẨM -->
     <div class="parents-well">
@@ -64,11 +64,11 @@
   </div>
 
   <div id="searchLocationBarParents">
-    <input type="button" class="form-control searchBar__byLocation" autocomplete="false" value="Chọn khu vực">
+    <input type="button" [disabled]="searchString.trim()==''?true:false" value="Chọn khu vực" [title]="searchString.trim()==''? 'Bạn phải chọn món ăn/địa điểm/loại trước' : ''" class="form-control searchBar__byLocation" [ngClass]="searchString.trim()==''? 'not-active' : ''">
 
-    <a (click)="setSearchQueryParam(true)" [ngClass]="[suggestionList.length==0 || searchString.trim()==''? 'not-active' : '']">
+    <a (click)="setSearchQueryParam(true)">
       <small>
-        <span class="glyphicon glyphicon-search"></span>
+        <span class="glyphicon glyphicon-search" [ngClass]="[searchString.trim()==''? 'not-active not-allow-click' : '']"></span>
       </small>
     </a>
     <!-- ///////////////////// -->

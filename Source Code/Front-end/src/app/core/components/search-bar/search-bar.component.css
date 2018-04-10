@@ -143,10 +143,14 @@
 }
 
 .searchBar .not-active {
-  pointer-events: none;
-  cursor: default;
+  background-color: #ebebe0;
+  cursor: not-allowed;
   text-decoration: none;
   color: black;
+}
+
+.searchBar .not-allow-click {
+  pointer-events: none;
 }
 
 .searchBar .moreResult {

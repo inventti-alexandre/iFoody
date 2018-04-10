@@ -125,10 +125,14 @@
   clear: both;
 }
 .not-active {
-  pointer-events: none;
-  cursor: default;
+  background-color: #ebebe0;
+  // pointer-events: none;
+  cursor: not-allowed;
   text-decoration:none;
   color:black;
+}
+.not-allow-click{
+  pointer-events: none;
 }
 .moreResult{
   color: dodgerblue;

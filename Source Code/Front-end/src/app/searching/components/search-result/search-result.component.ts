@@ -2,7 +2,8 @@ import { forEach } from '@angular/router/src/utils/collection';
 import { ISearchParam } from './../../../shared/models/allModel';
 import { SearchService } from './../../../shared/services/search.service';
 import { Component, OnInit, Input} from '@angular/core';
-import { ActivatedRoute, Router, Params } from '@angular/router';
+import { ActivatedRoute, Router, Params, NavigationEnd  } from '@angular/router';
+import {scrollTop} from './../../../shared/services/share-function.service';
 
 @Component({
   selector: 'search-result',
@@ -11,10 +12,10 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
   providers: [SearchService]
 })
 export class SearchResultComponent implements OnInit {
-  results: any;
   addressList: string[]; // To get string Address List, like  ['268 Le Lai', '192 Ly Thai To']
   targetPage: number; // Value get from Bs-Pagination
   storeIds: any[];
+  scrollTop = scrollTop;
 
   public products: any[];
   public initPage;
@@ -22,7 +23,7 @@ export class SearchResultComponent implements OnInit {
   public initCount;
   public searchParam: ISearchParam;
 
-  constructor(private _searchService: SearchService, private router: ActivatedRoute,) {
+  constructor(private _searchService: SearchService, private router: ActivatedRoute, private router1: Router) {
     this.products = [];
     this.initPage = 1;
     this.totalPage = 0;
@@ -31,6 +32,7 @@ export class SearchResultComponent implements OnInit {
 
   ngOnInit() {
     this.getParam();
+    this.scrollTop(this.router1);
   }
 
   initDefautlValue=()=>{
@@ -66,18 +68,17 @@ export class SearchResultComponent implements OnInit {
   }
   getSearchPaging(targetPage) {
     if(this.searchParam.searchString != "") {
+      if(this.products.length!==0){
+        this.products=[];
+      }
       this.searchParam.page = targetPage;
       this.setDistrictFilterOption();
       return this._searchService.Search(this.searchParam)
         .subscribe((data: Response) => {
-          if(this.products.length!==0){
-            this.products.splice(0, 1, data);
-          }else{
-            this.products.push(data);
-          }
+          this.products.push(data);
           this.totalPage =this.products[0].totalPage;
           this.setStoreIds(this.products[0].results);
-          console.log("page",this.products[0].currentPage, this.products[0], this.storeIds);
+          // console.log("page",this.products[0].currentPage, this.products[0], this.storeIds);
         });
     }
     return null;
@@ -90,13 +91,18 @@ export class SearchResultComponent implements OnInit {
         let districts = params['districts'].split(",");
         this.searchParam.districtList = districts;
       }
+      this.initPage = params['page'];
       this.getSearchPaging(this.initPage);
     });
   }
 
   seeMore(targetPage, totalPage){
     if(targetPage<=totalPage){
-      this.getSearchPaging(targetPage);
+      let districts = this.searchParam.districtList.toString();
+      this.router1.navigate(["/search"], {
+        queryParams: { name: this.searchParam.searchString, districts: districts, page: this.targetPage}
+      });
+      // this.getSearchPaging(targetPage);
     }
   }
 

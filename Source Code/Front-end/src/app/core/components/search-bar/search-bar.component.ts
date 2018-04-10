@@ -152,7 +152,7 @@ export class SearchBarComponent implements OnInit {
     }
     let districts = this.searchParam.districtList.toString();
     this.router.navigate(["/search"], {
-      queryParams: { name: this.searchString, districts: districts}
+      queryParams: { name: this.searchString, districts: districts, page: this.defaultPageResult}
     });
   };
   chooseDistrict=(event)=>{

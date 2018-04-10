@@ -215,7 +215,7 @@ var mapObject = (function() {
         },
         // Get Address Array from Service
         getAddressList: function(addressListFromHttpRequest) {
-            console.log("addressListFromHttpRequest: ", addressListFromHttpRequest);
+            // console.log("addressListFromHttpRequest: ", addressListFromHttpRequest);
             addressList = [];
             if(addressListFromHttpRequest != null) {
                 addressListFromHttpRequest.forEach(element => {

@@ -1,5 +1,6 @@
 import { imageDefault } from "./../../constant/global";
 import { Injectable } from "@angular/core";
+import { Router, NavigationEnd  } from '@angular/router';
 
 @Injectable()
 export class ShareFunctionService {
@@ -27,17 +28,12 @@ export function checkOpenStore(openHour, closeHour) {
   }
   return isOpen;
 }
-export function getCurrentLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(successCallback,errorCallback,{timeout:10000});
-  }
-  function successCallback(position) {
-    debugger
-    var pos;
-    pos.lat = position.coords.latitude;
-    pos.lng = position.coords.longitude;
-    return pos
-  }
-  function errorCallback(){debugger}
+export function scrollTop(router){
+  router.events.subscribe((evt) => {
+    if (!(evt instanceof NavigationEnd)) {
+        return;
+    }
+    window.scroll(0, 0);
+  });
 }
 
