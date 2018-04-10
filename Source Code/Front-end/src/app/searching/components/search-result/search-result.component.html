@@ -20,13 +20,12 @@
       </div>
 
       <div class="searchResult__items row">
-        <div class="col-xs-6 col-md-3 col-sm-4" *ngFor="let result of products[0]?.results">
-          <div>
-            <result-item [itemInfo]="result"></result-item>
+          <div class="col-sm-4 col-md-3 col-xs-6 item" *ngFor="let result of products[0]?.results">
+            <div class="row">
+              <result-item [itemInfo]="result"></result-item>
+            </div>
           </div>
-        </div>
       </div>
-
 
       <div class="searchResult__pagination row">
         <bs-pagination [bigTotalItems]="totalPage*10" (targetPage)="getTargetPage($event)"></bs-pagination>

@@ -1,4 +1,3 @@
-import { ICategory } from './allModel';
 import { Store } from './../../constant/apiUrl';
 import { Params } from "@angular/router";
 import { DatePipe } from "@angular/common/src/pipes";
@@ -119,4 +118,10 @@ export interface ISearchResult{
   category: ICategory,
   images: IImages[],
   distance: number
+}
+export interface IProductItem{
+  product: IProduct,
+  store: IStore,
+  images: IImages[],
+  category: ICategory
 }

@@ -14,7 +14,7 @@
     <div class="row-view-right">
       <div class="result-name">
         <div class="status">
-          <div class="point highlight-text">{{item.store.rating}}</div>
+          <div class="point highlight-text">{{item.store.rating?item.store.rating:'--'}}</div>
         </div>
 
         <div class="resname">
@@ -49,7 +49,7 @@
           <span class="suggest-text suggest-text--opentime">Đang mở cửa</span>
           <span style="float:right">
             <span class="fa fa-comment" style="font-weight: normal;"></span>
-            <span data-bind="text: TotalReview.formatK(1)">{{item.store.ratingCount}}</span>
+            <span data-bind="text: TotalReview.formatK(1)">{{item.store.ratingCount?item.store.ratingCount:'0'}}</span>
           </span>
         </div>
 
@@ -59,7 +59,7 @@
             <span class="suggest-text suggest-text--closetime">Đang đóng cửa</span>
             <span style="float:right">
               <span class="fa fa-comment" style="font-weight: normal;"></span>
-              <span data-bind="text: TotalReview.formatK(1)">{{item.store.ratingCount}}</span>
+              <span data-bind="text: TotalReview.formatK(1)">{{item.store.ratingCount?item.store.ratingCount:'0'}}</span>
             </span>
           </div>
         </ng-template>

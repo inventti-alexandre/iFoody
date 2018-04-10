@@ -1,13 +1,66 @@
-<div class="product-item col-xs-12 col-sm-12" *ngIf="productModel !== undefined && productModel != null">
-  <div class="image row">
-    <a [routerLink]="['/product', productId]" (click)="getProductDetail()">
-      <img [src]="productModel.images.length>0?productModel.images[0].path:imageDefault" alt="Image Product">
-    </a>
+<div class="result-item col-xs-12 col-sm-12">
+    <div class="row-item filter-result-item">
+      <div class="ri-avatar result-image">
+        <a href="" [title]="productModel.product.name" [routerLink]="['/product', productId]" (click)="getProductDetail()">
+          <img [src]="productModel.images.length > 0 ?productModel.images[0].path:imageDefault" [alt]="productModel.product.name" (error)="handelImgErro($event)">
+          <ng-template [ngIf]="productModel.images.length > 1">
+            <div class="overlay">
+              <img src={{productModel.images[1].path}} [alt]="productModel.product.name" (error)="handelImgErro($event)">
+            </div>
+          </ng-template>
+        </a>
+      </div>
+
+      <div class="row-view-right">
+        <div class="result-name">
+          <div class="status">
+            <div class="point highlight-text">{{productModel.product.rating?productModel.product.rating:'--'}}</div>
+          </div>
+
+          <div class="resname">
+            <h2>
+              <a [routerLink]="['/product', productId]" (click)="getProductDetail()" [title]="productModel.product.name">{{productModel.product.name}}</a>
+            </h2>
+            <div class="result-address">
+              <div class="address">
+                <a target="_blank" href="" [title]="productModel.store.address +', '+productModel.store.district">
+                  <span data-bind="text: Address">{{productModel.store.address}}</span>,
+                  <span data-bind="text: District">{{productModel.store.district}}</span>,
+                  <span data-bind="text: City">{{productModel.store.city}}</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="price">
+          <span>
+            <i class="fa fa-money" style="font-size:20px;vertical-align: middle"></i>
+          </span>
+          <span>{{productModel.product.price}} đ </span>
+        </div>
+
+        <div class="result-stats" style="border-bottom: 1px solid #eee;height:26px;">
+          <div class="suggest-opentime" *ngIf="checkOpenStore(productModel.store.openHour,productModel.store.closeHour);else closeStore">
+            <span class="suggest suggest--online"></span>
+            <span class="suggest-text suggest-text--opentime">Đang mở cửa</span>
+            <span style="float:right">
+              <span class="fa fa-comment" style="font-weight: normal;"></span>
+              <span data-bind="text: TotalReview.formatK(1)">{{productModel.product.ratingCount?productModel.product.ratingCount:'0'}}</span>
+            </span>
+          </div>
+
+          <ng-template #closeStore>
+            <div class="suggest-opentime">
+              <span class="suggest suggest--offline"></span>
+              <span class="suggest-text suggest-text--closetime">Đang đóng cửa</span>
+              <span style="float:right">
+                <span class="fa fa-comment" style="font-weight: normal;"></span>
+                <span data-bind="text: TotalReview.formatK(1)">{{productModel.product.ratingCount?productModel.product.ratingCount:'0'}}</span>
+              </span>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <bs-rating [id]="productModel.product?.id" [rating]="productModel.product.rating" [ratingCount]="productModel.product?.ratingCount"></bs-rating>
-
-  <h4>{{ productModel.product.name }}</h4>
-
-  <h5>{{ productModel.product.price | currency:'vnd':4.0}}</h5>
-</div>
