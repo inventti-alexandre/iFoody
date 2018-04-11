@@ -1,19 +1,27 @@
 <div class=" searchBar input-group" id="searchBarParents">
   <div class="" id="searchNameBarParents">
-    <input [(ngModel)]="searchString" class="form-control searchBar__byName" name="name" placeholder="Món ăn, địa điểm, loại hình..." autocomplete="off"
-      (ngModelChange)="handelChangeSearchBar($event)" (click)="searchString==''?getSuggestionList():false"
-    />
+    <input [(ngModel)]="searchString" class="form-control searchBar__byName" name="name" placeholder="Món ăn, địa điểm, loại hình..." title="Món ăn, địa điểm, loại hình..."
+      autocomplete="off" (keyup.enter)="searchString!=''?setSearchQueryParam(true):false" (ngModelChange)="handelChangeSearchBar()"
+      (click)="searchString==''?getSuggestionList():false" />
     <!-- GỢI Ý SẢN PHẨM -->
     <div class="parents-well">
       <div class="well well-lg well-search-name">
         <div class="row well-search-name">
           <ul class="col-xs-12 col-sm-12 col-md-12">
             <ng-template [ngIf]="suggestionList.length>0">
-              <div class="col-xs-12 col-sm-12 col-md-12">Gợi ý tìm kiếm</div>
+              <div class="col-xs-6 col-sm-6 col-md-6">Gợi ý tìm kiếm</div>
+
+              <ng-template [ngIf]="searchString!=''">
+                <div class="col-xs-6 col-sm-6 col-md-6 moreResult" (click)="setSearchQueryParam(false)">
+                  Xem thêm
+                </div>
+              </ng-template>
+
               <li class="advertising col-xs-12 col-sm-12 col-md-12" *ngFor="let result of suggestionList[0].results">
                 <a [routerLink]="['/store', result.store.id]" class="suggestion-box-item" title="result.store.name">
                   <div class="suggestion-box-item-left">
-                    <img [src]="result.images.length>0?result.images[0].path:imageDefault" (error)="handelImgErro($event)" alt="result.store.name" title="result.store.name">
+                    <img [src]="result.images.length>0?result.images[0].path:imageDefault" (error)="handelImgErro($event)" alt="result.store.name"
+                      title="result.store.name">
                   </div>
                   <div class="suggestion-box-item-right col-xs-12 col-sm-12 col-md-10">
                     <div class="suggestion-box-item-right-res-name">{{result.store.name}}</div>
@@ -47,7 +55,7 @@
 
             <ng-template [ngIf]="suggestionList.length==0&&isNotFound">
               <div class="col-xs-12 col-sm-12 col-md-12" style="text-align:center">
-                <img src="./assets/images/search/icon_noresult.png" />
+                <img src="./assets/images/search/icon_noresult.png" style="max-width:100%" />
               </div>
             </ng-template>
 
@@ -58,11 +66,12 @@
   </div>
 
   <div id="searchLocationBarParents">
-    <input type="button" class="form-control searchBar__byLocation" autocomplete="false" value="Chọn khu vực">
+    <input type="button" [disabled]="searchString.trim()==''?true:false" [value]="filterDisplay" [title]="searchString.trim()==''? 'Bạn phải chọn món ăn/địa điểm/loại trước' : ''"
+      class="form-control searchBar__byLocation" [ngClass]="{'not-active':searchString.trim()=='','filterChoosen':searchParam.districtList.length>0}">
 
-    <a [routerLink]="['/search']" (click)="setSearchQueryParam()" [ngClass]="[suggestionList.length==0 || searchString.trim()==''? 'not-active' : '']">
+    <a (click)="setSearchQueryParam(true)">
       <small>
-        <span class="glyphicon glyphicon-search"></span>
+        <span class="glyphicon glyphicon-search" [ngClass]="[searchString.trim()==''? 'not-active not-allow-click' : '']"></span>
       </small>
     </a>
     <!-- ///////////////////// -->

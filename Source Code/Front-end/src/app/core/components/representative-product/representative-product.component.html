@@ -1,27 +1,41 @@
 <div class="container">
-  <div class="row listCategory">
-    <div class="col-md-12" *ngFor="let group of products; let i=index">
-      <h3>{{group.results[0].category.name}}</h3>
-      <div class="row category" [ngClass]="[i < products.length-1 ? 'category--border' : '']">
-        <div class="col-md-12 category__row">
-          <div class="row">
-            <div class="col-sm-4 col-md-3 col-xs-6" *ngFor="let p of group.results">
-              <div class="row">
-                <product-item [productId]="p.product.id"></product-item>
+  <ng-template [ngIf]="products.length==0">
+    <div class="row listCategory">
+      <loading-page></loading-page>
+    </div>
+  </ng-template>
+  <ng-template [ngIf]="products.length>0">
+    <div class="row listCategory">
+      <div class="col-md-12" *ngFor="let group of products; let i=index">
+        <h3>{{group.results[0].category.name}}</h3>
+        <div class="row category" [ngClass]="[i < products.length-1 ? 'category--border' : '']">
+          <div class="col-md-12 category__row">
+            <div class="row">
+              <div class="col-sm-4 col-md-3 col-xs-6" *ngFor="let productInfo of group.results">
+                <div class="row">
+                  <product-item [productInfo]="productInfo"></product-item>
+                </div>
               </div>
             </div>
           </div>
+
+          <ng-template [ngIf]="group.currentPage<group.totalPage">
+            <ng-template [ngIf]="loadingMore==group.results[0].category.id">
+              <div class="row no-margin" style="text-align:center">
+                <div>
+                  <i class="fa fa-spinner fa-spin" style="font-size:36px"></i>
+                </div>
+              </div>
+            </ng-template>
+            <div class="row no-margin seeMoreBtn">
+              <i (click)="seeMore(group.results[0].category.id,group.currentPage,group.totalPage)" class="fa fa-angle-double-down" style="font-size:36px"></i>
+            </div>
+          </ng-template>
+
         </div>
-
-        <ng-template [ngIf]="group.currentPage<group.totalPage">
-          <div class="row no-margin seeMoreBtn">
-            <i  (click)="seeMore(group.results[0].category.id,group.currentPage,group.totalPage)" class="fa fa-angle-double-down" style="font-size:36px"></i>
-          </div>
-        </ng-template>
-
       </div>
     </div>
-  </div>
+  </ng-template>
 </div>
 
 <bottom-slider></bottom-slider>

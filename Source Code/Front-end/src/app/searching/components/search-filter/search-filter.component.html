@@ -1,7 +1,7 @@
 <div class="col-xs-12 searchFilter">
   <div class="row">
     <div class="searchFilter__item">
-      <button type="button" class="btn btn-default">Gần tôi nhất</button>
+      <button type="button" class="btn btn-default " [ngClass]="searchFilter.filterOption.location?'btn-choosen':''" (click)="chooseLocationFilter()">Gần tôi nhất</button>
     </div>
     <div class="searchFilter__item">
       <button type="button" class="btn btn-default">Phổ biến nhất</button>
@@ -10,12 +10,12 @@
       <button type="button" class="btn btn-default">Nhiều người xem</button>
     </div>
     <div class="searchFilter__item">
-      <button type="button" class="btn btn-default">Đánh giá cao nhất</button>
+      <button type="button" class="btn btn-default" [ngClass]="searchFilter.filterOption.rating?'btn-choosen':''" (click)="chooseRatingFilter()">Đánh giá cao nhất</button>
     </div>
     <div class="searchFilter__item">
       <div class="searchFilter__item__type" id="searchTypeParents">
-        <button type="button" class="btn btn-default no-padding-left-right">
-            Chọn Loại
+        <button type="button" class="btn btn-default no-padding-left-right" [ngClass]="searchFilter.filterOption.categories?'btn-choosen':''">
+            {{filterCategoriesDisplay}}
             <i class="fa fa-angle-down"></i>
           </button>
           <div  class="parents-well">

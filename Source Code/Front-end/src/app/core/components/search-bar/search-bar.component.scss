@@ -5,10 +5,15 @@
     height: auto;
     width: 100%;
     margin-top: 35px;
+    z-index: 1;
   }
   &__byName {
     border-radius: 8px 0px 0px 8px !important;
     width: 60% !important;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   &__byLocation {
    // border-top-right-radius: 4px !important;
@@ -124,9 +129,22 @@
   clear: both;
 }
 .not-active {
-  pointer-events: none;
-  cursor: default;
+  background-color: #ebebe0;
+  // pointer-events: none;
+  cursor: not-allowed;
   text-decoration:none;
   color:black;
+}
+.not-allow-click{
+  pointer-events: none;
+}
+.moreResult{
+  color: dodgerblue;
+  font-style: italic;
+  text-align: right;
+  cursor: pointer;
+}
+.filterChoosen{
+  color: #f44336;
 }
 }

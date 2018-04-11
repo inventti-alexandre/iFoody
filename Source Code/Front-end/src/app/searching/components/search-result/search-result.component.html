@@ -1,27 +1,37 @@
 <div class="container">
-  <div class="searchResult col-xs-12 col-sm-12">
-    <div class="row searchResult__filter">
-      <search-filter (filterChange)="getSearchFiter($event)"></search-filter>
+  <ng-template [ngIf]="products.length==0">
+    <div class="col-xs-12 col-sm-12">
+      <loading-page></loading-page>
     </div>
+  </ng-template>
+  <ng-template [ngIf]="products.length>0">
+    <div class="searchResult col-xs-12 col-sm-12">
+      <div class="row searchResult__filter">
+        <search-filter (filterChange)="getSearchFiter($event)"></search-filter>
+      </div>
 
-    <div class=" searchResult__map row">
-      <map [storeIds]="storeIds"></map>
-    </div>
+      <ng-template [ngIf]="isLoading">
+        <div class="row">
+          <loading-page></loading-page>
+        </div>
+      </ng-template>
+      <ng-template [ngIf]="!isLoading">
+        <div class=" searchResult__map row">
+          <map [storeIds]="storeIds"></map>
+        </div>
 
-    <div class="searchResult__items row">
-      <div class="col-xs-6 col-md-3 col-sm-4" *ngFor="let result of products[0]?.results">
-        <!-- <div class="row">
-          <product-item [productId]="result.product.id"></product-item>
-        </div> -->
-        <div>
-            <result-item [itemInfo]="result"></result-item>
+        <div class="searchResult__items row">
+          <div class="col-sm-4 col-md-3 col-xs-6 item" *ngFor="let result of products[0]?.results">
+            <div class="row">
+              <result-item [itemInfo]="result"></result-item>
+            </div>
           </div>
+        </div>
+      </ng-template>
+
+      <div class="searchResult__pagination row">
+        <bs-pagination [bigTotalItems]="totalPage*10" (targetPage)="getTargetPage($event)"></bs-pagination>
       </div>
     </div>
-
-
-    <div class="searchResult__pagination row">
-      <bs-pagination [bigTotalItems]="totalPage*10" (targetPage)="getTargetPage($event)"></bs-pagination>
-    </div>
-  </div>
+  </ng-template>
 </div>

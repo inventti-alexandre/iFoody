@@ -1,11 +1,12 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Output, EventEmitter, Input} from '@angular/core';
+import { ActivatedRoute, Params} from '@angular/router';
 
 @Component({
   selector: 'bs-pagination',
   templateUrl: './bs-pagination.component.html',
   styleUrls: ['./bs-pagination.component.scss']
 })
-export class BsPaginationComponent  {
+export class BsPaginationComponent   {
   @Output() targetPage = new EventEmitter();
   @Input('maxSize') maxSize;
   @Input('bigTotalItems') bigTotalItems;
@@ -17,14 +18,22 @@ export class BsPaginationComponent  {
   Truoc: string;
   previousPage:number;
 
-  constructor() {
+  constructor(private router: ActivatedRoute) {
     this.maxSize = 5;
     // this.bigTotalItems = 35;  // Above Round
     this.Dau = "Đầu";
     this.Cuoi = "Cuối";
     this.Sau = "Sau";
     this.Truoc = "Trước";
-    this.previousPage = this.bigCurrentPage;
+  }
+  ngOnInit() {
+    this.getParam();
+  }
+  getParam=()=>{
+    this.router.queryParams.subscribe((params: Params) => {
+      this.bigCurrentPage = Number(params['page']);
+      this.previousPage = this.bigCurrentPage;
+    });
   }
   changePage(page: any) {
     // console.log("page", page);

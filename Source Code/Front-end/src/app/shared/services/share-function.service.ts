@@ -1,15 +1,15 @@
-import { imageDefault } from './../../constant/global';
-import { Injectable } from '@angular/core';
+import { imageDefault } from "./../../constant/global";
+import { Injectable } from "@angular/core";
+import { Router, NavigationEnd  } from '@angular/router';
 
 @Injectable()
 export class ShareFunctionService {
-
-  constructor() { }
+  constructor() {}
 }
-export function handelImgErro(event){
+export function handelImgErro(event) {
   event.target.src = imageDefault;
 }
-export function checkOpenStore(openHour, closeHour){
+export function checkOpenStore(openHour, closeHour) {
   let openHourConvert = openHour.split(":");
   let openTimeSeconds =
     +openHourConvert[0] * 60 * 60 + +openHourConvert[1] * 60;
@@ -27,4 +27,13 @@ export function checkOpenStore(openHour, closeHour){
     isOpen = true;
   }
   return isOpen;
-};
+}
+export function scrollTop(router){
+  router.events.subscribe((evt) => {
+    if (!(evt instanceof NavigationEnd)) {
+        return;
+    }
+    window.scroll(0, 0);
+  });
+}
+

@@ -1,5 +1,7 @@
 var currentPositionGlobal;
 // Modal Login, SignUp
+var currentLocationGlobal;
+
 function modalOpen() {
     $document.find('body').addClass('modal-open');
 }
@@ -41,8 +43,8 @@ var searchObject = (function() {
   }
 })(searchObject || {})
 
-// For Collapse Search with Checkbox 
-$(document).click(function(event) { 
+// For Collapse Search with Checkbox
+$(document).click(function(event) {
   if($(event.target).parents('.parents-well').length > 0 && $(event.target).closest('#searchNameBarParents').length == 0) {
     //event.stopPropagation();
     console.log("aaaaaaaaa");
@@ -56,7 +58,7 @@ $(document).click(function(event) {
     else {
       $('.well-search-type').hide();
     }
-  } 
+  }
   if($(event.target).closest('#searchTypeParents').length  == 0 ) {
     $('.well-search-type').hide();
   }
@@ -71,7 +73,7 @@ $(document).click(function(event) {
     else {
       $('.well-search-area').hide();
     }
-  } 
+  }
   if($(event.target).closest('#searchLocationBarParents').length == 0) {
     $('.well-search-area').hide();
   }
@@ -86,7 +88,7 @@ $(document).click(function(event) {
     else {
        $('.well-search-name').hide();
     }
-  } 
+  }
   if($(event.target).closest('#searchNameBarParents').length == 0) {
     $('.well-search-name').hide();
   }
@@ -130,3 +132,39 @@ var deleteImageObject = (function() {
     }
   }
 })(deleteImageObject || {})
+
+var currentLocationObject = (function() {
+  return {
+    get: function() {
+      console.log("get current location in LIB.JS");
+      if (navigator.geolocation) {
+        console.log("navigator.geolocation ok");
+        navigator.geolocation.getCurrentPosition(success, error);
+        console.log("currentLocationGlobal -", currentLocationGlobal, "-123");
+        return currentLocationGlobal;
+      }
+      else {
+        console.log("ko vao navigator.geolocation");
+      }
+    }
+  }
+})(currentLocationObject || {})
+
+function success(position) {
+  $.ajax({
+    success: setTimeout(function() {
+      console.log("in callback function");
+      var pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        currentLocationGlobal = pos;
+        console.log("pos ne: ", pos);
+        return pos;
+      }, 0)
+    })
+}
+
+function error() {
+  console.log("error");
+}
