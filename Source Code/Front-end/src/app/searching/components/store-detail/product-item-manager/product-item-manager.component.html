@@ -1,11 +1,20 @@
-<div class="productItem col-xs-12 col-sm-12" *ngIf="productModel !== undefined && productModel != null">
+<div [id]="productModel?.product.id" class="productItem col-xs-12 col-sm-12" *ngIf="productModel !== undefined && productModel != null">
   <form [formGroup]="productItemForm" (ngSubmit)="onSubmit()" class="row form-edit-profile">
-    <div class="productItem__image col-xs-12 col-sm-3 col-md-3">
-      <div class="row productItem__image__major">
+    <div class="productItem__image image col-xs-12 col-sm-3 col-md-3">
+      
+      <div [id]="image?.id" class="col-md-4 col-sm-4 col-xs-4" *ngFor="let image of images">
+        <img [src]="imageDomain + image?.path" [alt]="image?.name">
+        <div class="deleteBtn"><span (click)="deleteImage(image?.id)"><i class="fa fa-times fa-1x"></i></span></div>
+      </div>
+      <file-upload class="fileUploadComponent col-md-4 col-sm-4 col-xs-4" *ngFor="let index of fileUploadComponentQuantity" [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-upload>
+      <file-upload class="fileUploadComponent col-md-4 col-sm-4 col-xs-4" style="display: none" [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-upload>
+      
+      <!-- <div class="row productItem__image__major">
         <a>
-          <file-upload class="col-md-12 col-sm-12 col-xs-12" [imageSrc]="imageDomain + productModel.images[0]?.path" [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-upload>
+          <file-upload class="col-md-12 col-sm-12 col-xs-12" [imageSrc]="imageDomain + images[0]?.path" [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-upload>
         </a>
       </div>
+
       <div class="row productItem__image__minor">
         <div class="col-xs-3 col-md-3 col-sm-3">
           <a>
@@ -25,30 +34,27 @@
         <div class="col-xs-3 col-md-3 col-sm-3">
           <a>
             <file-upload  [imageSrc]="imageDomain + productModel.images[4]?.path" [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-upload>
-          <!-- <img [src]="imageDomain + productModel.images[0].path"  alt="Image Product" *ngIf="productModel.images.length>0">
+          <!<img [src]="imageDomain + productModel.images[0].path"  alt="Image Product" *ngIf="productModel.images.length>0">
           <img [src]="imageDefault"  alt="Image Product" *ngIf="productModel.images.length==0"> -->
-        </a>
-        </div>
-      </div>
+      <!-- </div> -->
     </div>
-
     <div class="productItem__rating col-xs-12 col-sm-3 col-md-3">
       <bs-rating [id]="productModel.product?.id" [rating]="productModel.product.rating" [ratingCount]="productModel.product?.ratingCount"></bs-rating>
     </div>
 
     <div class="productItem__info col-xs-12 col-sm-5 col-md-5">
-      <div><label>Tên sản phẩm</label><input class="form-control" value="{{ productModel.product.name }}"/></div>
-      <div><label>Giá</label><input  class="form-control" value="{{ productModel.product.price | currency:'vnd':4.0 }}"/></div>
+      <div><label>Tên sản phẩm</label><input class="form-control" formControlName="name" value="{{ productModel.product.name }}"/></div>
+      <div><label>Giá</label><input  class="form-control" formControlName="price" value="{{ productModel.product.price | currency:'vnd':4.0 }}"/></div>
       <div><label>Loại</label>
         <!-- <input  class="form-control" value="{{ productModel.category?.name }}"/> -->
-        <select class="form-control">
+        <select class="form-control" formControlName="categoryId">
           <option *ngFor="let category of categories" [value]="category?.id">
             {{ category?.name }}
           </option>
         </select>
 
       </div>
-      <div><label>Mô tả sản phẩm</label><input  class="form-control" value="{{ productModel.product?.description }}"/></div>
+      <div><label>Mô tả sản phẩm</label><input  class="form-control" formControlName="description" value="{{ productModel.product?.description }}"/></div>
 
       <!-- <h4><span>Tên sản phẩm</span>{{ productModel.product.name }}</h4>
       <h5><span>Giá</span>{{ productModel.product.price | currency:'vnd':4.0}}</h5>
@@ -59,7 +65,7 @@
     
     <div class="productItem__submit col-xs-12 col-sm-1 col-md-1">
         <button class="row btn btn-success btn-submit">Áp dụng</button>
-        <button class="row btn btn-warning btn-delete">Xóa Sản phẩm</button>
+        <button class="row btn btn-warning btn-delete" type="button" (click)="deleteProduct()">Xóa Sản phẩm</button>
     </div> 
   </form>
 </div>

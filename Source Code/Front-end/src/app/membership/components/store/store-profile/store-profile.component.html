@@ -27,10 +27,6 @@
           </div>
         </div>
       
-        <div class="test image1">
-          
-        </div>
-      
         <div>
           <label for="">Tên Cửa Hàng</label>
           <input type="text" formControlName="name" class="form-control input-lg" placeholder="Tên cửa hàng...">
@@ -112,8 +108,9 @@
             <i class="fa fa-user-circle fa-2x"></i>
         </div>
   
-        <button type="submit" class="btn btn-primary btn-update btn-lg col-xs-12 col-sm-4 col-sm-offset-2">CẬP NHẬT</button>
+        <button type="submit" class="btn btn-primary btn-update btn-lg col-xs-12 col-sm-4">CẬP NHẬT</button>
         <button type="button" (click)="backToGeneral()" class="btn btn-default btn-lg col-xs-12 col-sm-4 ">HỦY</button>
+        <button type="button" (click)="deleteStore()" class="btn btn-warning btn-lg col-xs-12 col-sm-4 ">XÓA CỬA HÀNG</button>
       </form>
     </div>
   </div>

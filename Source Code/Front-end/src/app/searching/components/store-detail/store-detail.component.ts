@@ -4,6 +4,7 @@ import { StoreService } from './../../../shared/services/store.service';
 import { Component, OnInit, Output } from '@angular/core';
 import { ImageDomain } from '../../../constant/apiUrl';
 import { imageDefault } from './../../../constant/global';
+declare var deleteImageObject: any;
 
 @Component({
   selector: 'store-detail',
@@ -14,9 +15,8 @@ export class StoreDetailComponent implements OnInit {
   storeManager = true;
   storeId;
   storeIds: any[];
-  @Output() storeModel: any;
+  @Output() productModel: any;
   storeInfoModel: any;
-  productModel: any;
   reviewList: any;
   imageDefault: any;
   imageDomain:any;
@@ -27,8 +27,25 @@ export class StoreDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private _userService: UserService
     ) {
+    window.scrollTo(0,0);
     this.imageDefault = imageDefault;
     this.imageDomain = ImageDomain;
+    this.storeInfoModel = {
+      address: "...................",
+      categoryId: "...................",
+      city:"...................",
+      closeHour:"...................",
+      description:"...................",
+      district:"...................",
+      highestPrice:"...................",
+      images:[],
+      lowestPrice:"...................",
+      name:"...................",
+      openHour:"...................",
+      rating:0,
+      ratingCount:0
+    };
+
     this.route.params.subscribe((params: Params) => {
 
       this.storeIds = [params['id']]; // For Google Map Api
@@ -54,7 +71,7 @@ export class StoreDetailComponent implements OnInit {
           this._userService.getAllProductInStore(params['id'])
             .subscribe(result => {
               console.log("data return from GetALlProductInStore: ", result);
-              this.storeModel = result;
+              this.productModel = result;
             },
             error => {
               console.log(error);

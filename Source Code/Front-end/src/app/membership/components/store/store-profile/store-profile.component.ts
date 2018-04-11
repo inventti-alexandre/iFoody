@@ -111,6 +111,7 @@ export class StoreProfileComponent implements OnInit, ProfileChildren, AfterView
     }
 
   ngOnInit() {
+    window.scrollTo(0,0);
     this._categoryService.GetAll()
       .subscribe(response => {
         this.categories = response;
@@ -148,12 +149,15 @@ export class StoreProfileComponent implements OnInit, ProfileChildren, AfterView
     this.storeForm.patchValue({'images': this.fileUploads});
     console.log('onsubmit', this.storeForm.value);
     this.fileUploads = [];
-    this._storeService.updateStore(this.storeForm.value)
+    this._storeService.updateStore(this.store.id, this.storeForm.value)
       .subscribe(response => {
-        console.log("update successfully");
+        console.log("Cập nhật thành công");
         console.log("response in TS", response);
         alert("updateStore successfully!!!");
       });
+
+    window.scrollTo(0,0);
+      
     
   }
 
@@ -169,8 +173,20 @@ export class StoreProfileComponent implements OnInit, ProfileChildren, AfterView
       });
   }
 
+  deleteStore() {
+    console.log('deleteStore TS works');
+    if(confirm("Bạn muốn xóa " + this.store.name + '?')) {
+      this._storeService.deleteStore(this.store.id)
+        .subscribe(result => {
+          console.log('result tra ve', result);
+          alert("Xóa Cửa hàng thành công!!!");
+        });
+      }
+  }
+
   backToGeneral() {
     console.log("backtoGeneral works");
     this.router.navigate(["profile", localStorage.getItem("user_id").replace(/['"]+/g, ''), 'overview']);
   }
+
 }

@@ -283,7 +283,7 @@ export class UserService {
       .catch(this.handleError);
   }
 
-  // No user - PUT - Update Store
+  // Noooo user - PUT - Update Store
   updateStore(id: string, model: any): Observable<any> {
     console.log("Update Store works");
     let body = JSON.stringify(model);

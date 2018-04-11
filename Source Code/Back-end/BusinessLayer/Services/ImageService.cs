@@ -142,6 +142,39 @@ namespace BusinessLayer.Services
             }
         }
 
+        // Get All Images Id By Product Id 
+        public IEnumerable<Guid> GetImageIdsByProductId(Guid productId)
+        {
+            try
+            {
+                var imageIds =
+                    _unitOfWork.ProductImages.GetManyQueryable(x => x.ProductId == productId).Select(y => y.ImageId).ToList();
+                //var images = _unitOfWork.Images.GetManyQueryable(x => imageIds.Any(y => y == x.Id)).ToList();
+                //Mapper.CreateMap<Image, ImageBusinessEntity>();
+                //var model = Mapper.Map<List<Image>, List<ImageBusinessEntity>>(images);
+                return imageIds;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        // Get All Images Id By Product Id 
+        public IEnumerable<Guid> GetImageIdsByStoreId(Guid storeId)
+        {
+            try
+            {
+                var imageIds =
+                    _unitOfWork.StoreImages.GetManyQueryable(x => x.StoreId == storeId).Select(y => y.ImageId).ToList();
+                return imageIds;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
         // No Use - Upload Image (Simplied User or User has Store)  
         public Task<List<FileUploadResult>> UploadImage(List<string> imageStrings, string fileName, Guid? userId, Guid? storeId, Guid? productId)
         {
@@ -231,7 +264,7 @@ namespace BusinessLayer.Services
         }
 
 
-        // Delete Product Image in Table SQL
+        // Delete Product Images and Images in Table SQL
         public bool DeleteProductImage(Guid id)
         {
             try
@@ -252,7 +285,7 @@ namespace BusinessLayer.Services
             }
         }
 
-        // Delete Store Image in Table SQL
+        // Delete Store Images and Images in Table SQL
         public bool DeleteStoreImage(Guid id)
         {
             try

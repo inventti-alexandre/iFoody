@@ -97,7 +97,7 @@ export class StoreService {
   }
 
   // UPDATE Store
-  updateStore(model: any) {
+  updateStore(id: any, model: any) {
     console.log("updateStore SErvice");
     console.log('model', model);
     let body = JSON.stringify(model);
@@ -107,8 +107,7 @@ export class StoreService {
 
     let options = new RequestOptions( {headers: headers});
 
-    return this._http.put(apiUrl.Store, body, options)
-      .map((response: Response) => <any>response.json())
+    return this._http.put(apiUrl.Store + '/' + id.replace(/['"]+/g,''), body, options)
       .catch(this.handleError); 
   }
 
@@ -121,8 +120,20 @@ export class StoreService {
     let options = new RequestOptions({headers: headers});
 
     return this._http.delete(apiUrl.StoreImage + '/' + id, options)
-      .map((response: Response) => <any>response.json())
+      // .map((response: Response) => <any>response.json())
       .catch(this.handleError);
+  }
+
+  // Delete Store in StoreDetailComponent
+  deleteStore(id: string): Observable<any> {
+    console.log("delete store in StoreService works");
+    let headers = new Headers();
+    headers.append("Token", this.authToken); 
+    headers.append("Content-Type", "application/json");
+    let options = new RequestOptions({headers: headers});
+
+    return this._http.delete(apiUrl.DeleteStore  + '/' + id.replace(/['"]+/g,''), options)
+    .catch(this.handleError);
   }
 
   // Handle Error

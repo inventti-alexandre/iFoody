@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { ProductUploadComponent } from './product-upload/product-upload.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { UserService } from '../shared/services/user.service';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { UserService } from '../shared/services/user.service';
     MatSelectModule,
     FormsModule,
     MatButtonModule,
+    RouterModule,
   ],
   exports: [
     ProductUploadComponent,

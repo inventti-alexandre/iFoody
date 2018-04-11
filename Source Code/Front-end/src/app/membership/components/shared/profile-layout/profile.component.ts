@@ -53,6 +53,7 @@ export class ProfileComponent implements OnInit, AfterViewChecked{
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {
+    window.scrollTo(0,0);
     this._userService.getUserById(localStorage.getItem(apiUrl.UserId))
       .subscribe(response => {
         setTimeout( () => {
@@ -71,12 +72,7 @@ export class ProfileComponent implements OnInit, AfterViewChecked{
 
   ngOnInit() {
     this.childComponent = 'user-profile';
-    this.router.events.subscribe((evt) => {
-      if (!(evt instanceof NavigationEnd)) {
-          return;
-      }
-      window.scrollTo(0, 0);
-  });
+
   }
 
   ngAfterViewChecked() {

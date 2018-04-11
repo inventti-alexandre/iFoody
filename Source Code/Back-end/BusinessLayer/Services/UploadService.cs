@@ -75,6 +75,10 @@ namespace BusinessLayer.Services
                         file.FileName = file.FileName.ToLower();
                         file.FileName = string.Concat(file.FileName.Normalize(NormalizationForm.FormD).Where(
                                 c => CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark));
+                        // Convert to ASCII
+
+                        file.FileName = ReplaceUnicodeService.ReplaceUnicode(file.FileName);
+
 
                         //imageCount++;
                         ///////////////////
@@ -97,11 +101,13 @@ namespace BusinessLayer.Services
                         var imageEntity = new ImageBusinessEntity();
                         if (isOpenStore)
                         {
+                            imageEntity.Id = new Guid();
                             imageEntity.Name = file.FileName;
                             imageEntity.Path = "~/Content/Uploads/Stores/" + storeId.ToString() + '/' + file.FileName;
                         }
                         else
                         {
+                            imageEntity.Id = new Guid();
                             imageEntity.Name = file.FileName;
                             imageEntity.Path = "~/Content/Uploads/Stores/" + storeId.ToString() + '/' +
                                                productId.ToString() + '/' + file.FileName;
@@ -113,7 +119,7 @@ namespace BusinessLayer.Services
                         _unitOfWork.Complete();
 
                         var firstOrDefault =
-                               _unitOfWork.Images.GetManyQueryable(i => i.Id == image.Id).FirstOrDefault();
+                               _unitOfWork.Images.GetById(imageEntity.Id);
 
                         if (firstOrDefault != null) imageIds.Add(firstOrDefault.Id);
                     }

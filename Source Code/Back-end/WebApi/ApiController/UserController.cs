@@ -459,8 +459,8 @@ namespace WebApi.ApiController
 
         // Put api/user/store
         [HttpPut]
-        [Route("store")]
-        public HttpResponseMessage Put([FromBody] OpenStoreDto openStoreDto)
+        [Route("store/{id?}")]
+        public HttpResponseMessage Put(Guid id, [FromBody] OpenStoreDto openStoreDto)
         {
             try
             {

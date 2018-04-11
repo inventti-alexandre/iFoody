@@ -19,14 +19,16 @@ namespace WebApi.ApiController
         private readonly IReviewService _reviewService;
         private readonly IImageService _imageService;
         private readonly IUploadService _uploadService;
+        private readonly IProductService _productService;
 
-        public StoreController(IStoreService storeService, ILocationService locationService, IReviewService reviewService, IImageService imageService, IUploadService uploadService)
+        public StoreController(IStoreService storeService, ILocationService locationService, IReviewService reviewService, IImageService imageService, IUploadService uploadService, IProductService productService)
         {
             _storeService = storeService;
             _locationService = locationService;
             _reviewService = reviewService;
             _imageService = imageService;
             _uploadService = uploadService;
+            _productService = productService;
         }
 
         // GET All api/store
@@ -146,6 +148,27 @@ namespace WebApi.ApiController
         {
             try
             {
+                // Get All Products in Store
+                var productIds = _productService.GetProductIdsByStoreId(id).ToList();
+                // Delete Product and Product Image first
+                foreach (var productId in productIds)
+                {
+                    var imageIds = _imageService.GetImageIdsByProductId(productId).ToList();
+                    foreach (var imageId in imageIds)
+                    {
+                        _imageService.DeleteProductImage(imageId);
+                    }
+                    _productService.DeleteProduct(id);
+                }
+
+                ///////////////////////////////////////////
+                /// Delete Store and Store Image
+                var otherImageIds = _imageService.GetImageIdsByStoreId(id).ToList();
+                foreach (var imageId in otherImageIds)
+                {
+                    _imageService.DeleteStoreImage(imageId);
+                }
+
                 _storeService.DeleteStore(id);
                 return Request.CreateResponse(HttpStatusCode.OK);
             }

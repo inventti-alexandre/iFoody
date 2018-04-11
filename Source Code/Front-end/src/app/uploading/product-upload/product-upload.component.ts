@@ -16,7 +16,7 @@ import * as apiUrl from '../../constant/apiUrl';
 import * as model from '../../shared/models/allModel';
 import { CategoryService } from '../../shared/services/category.service';
 import { FileUploadComponent } from '../file-upload/file-upload.component';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'product-upload',
@@ -43,11 +43,14 @@ export class ProductUploadComponent implements OnInit {
     private _productService: ProductService,
     private componentFactoryResolver: ComponentFactoryResolver,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private elRef: ElementRef
   ) { 
+    window.scrollTo(0,0);
     this.userId = localStorage.getItem(apiUrl.UserId);
     this.categories = [];
     this.fileUploads = [];
+    this.storeId = '';
     this._storeService.GetStoreByUserId(this.userId).subscribe(data=> {
       console.log(data);
       this.storeId = data.id;
@@ -191,8 +194,13 @@ export class ProductUploadComponent implements OnInit {
       this._productService.addNewProduct(this.uploadProductForm.value).subscribe(
         (data) => {
           console.log("new product add success",data);
-          alert("Thêm sản phẩm thành công");
-          this.router.navigate(['/']);
+          alert("Thêm sản phẩm thành công. Mời nhập thêm sản phẩm khác!!!");
+          
+          this.uploadProductForm.reset();
+          this.fileUploadComponent.forEach(component => {
+            component.imageSrc = "";
+          });
+          window.scrollTo(0,0);
         },
         error => {
           console.log("error: ", error);
