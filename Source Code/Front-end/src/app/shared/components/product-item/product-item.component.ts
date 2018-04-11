@@ -45,7 +45,6 @@ export class ProductItemComponent implements OnInit {
     if (this.productInfo) {
       this.productId = this.productInfo.product.id;
       this.productModel = this.productInfo;
-      console.log("productModel", this.productModel);
     }
   };
 

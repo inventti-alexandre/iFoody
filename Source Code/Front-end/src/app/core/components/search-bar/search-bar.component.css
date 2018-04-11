@@ -13,6 +13,10 @@
 .searchBar__byName {
   border-radius: 8px 0px 0px 8px !important;
   width: 60% !important;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .searchBar__byLocation {
@@ -158,4 +162,8 @@
   font-style: italic;
   text-align: right;
   cursor: pointer;
+}
+
+.searchBar .filterChoosen {
+  color: #f44336;
 }

@@ -27,6 +27,7 @@ export class RepresentativeProductComponent implements OnInit {
   public categories: any[];
   public initPage;
   public initCount;
+  public loadingMore;
 
   constructor(
     private _productService: ProductService,
@@ -35,6 +36,7 @@ export class RepresentativeProductComponent implements OnInit {
     this.products = [];
     this.initPage = 1;
     this.initCount = 8;
+    this.loadingMore = 0;
   }
 
   ngOnInit() {
@@ -79,6 +81,7 @@ export class RepresentativeProductComponent implements OnInit {
           } else {
             console.log("emptty");
           }
+          this.loadingMore = 0;
         },
         // error => console.log(error),
         () => {}
@@ -86,6 +89,7 @@ export class RepresentativeProductComponent implements OnInit {
   }
   seeMore(id, currentPage, totalPage) {
     if (currentPage < totalPage) {
+      this.loadingMore = id;
       this.getNextPage(id, currentPage + 1);
     }
   }

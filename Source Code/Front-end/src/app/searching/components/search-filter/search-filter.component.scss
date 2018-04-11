@@ -18,7 +18,7 @@
     }
 
 
-    &__item:nth-child(1) button {
+    &__item .btn-choosen {
         background-color: #C04324;
         border-color: #C04324;
         &:hover {

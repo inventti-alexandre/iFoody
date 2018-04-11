@@ -1,3 +1,4 @@
+import { NotResultComponent } from './shared/components/not-result/not-result.component';
 import { StoreDetailInfoComponent } from './searching/components/store-detail/store-detail-info/store-detail-info.component';
 import { StoreDetailComponent } from './searching/components/store-detail/store-detail.component';
 import { AuthGuardService as AuthGuard } from './shared/services/auth-guard.service';
@@ -72,6 +73,10 @@ const routes: Routes = [
         redirectTo: '/home',
         pathMatch: 'full'
         // 'full' property to match exactly the same with URL (another is 'prefix'  - not recommend)
+    },
+    {
+      path: 'search/notResult',
+      component: NotResultComponent
     },
     {
         path: '**',

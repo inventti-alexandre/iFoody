@@ -19,12 +19,12 @@
   background-color: #113C3D;
 }
 
-.searchFilter__item:nth-child(1) button {
+.searchFilter__item .btn-choosen {
   background-color: #C04324;
   border-color: #C04324;
 }
 
-.searchFilter__item:nth-child(1) button:hover {
+.searchFilter__item .btn-choosen:hover {
   background-color: #D6705A;
   border-color: #D6705A;
 }

@@ -22,12 +22,14 @@ export class SearchResultComponent implements OnInit {
   public totalPage;
   public initCount;
   public searchParam: ISearchParam;
+  public isLoading: boolean;
 
   constructor(private _searchService: SearchService, private router: ActivatedRoute, private router1: Router) {
-    this.products = [];
     this.initPage = 1;
     this.totalPage = 0;
     this.initCount = 20;
+    this.isLoading = true;
+    this.initDefautlValue();
   }
 
   ngOnInit() {
@@ -51,6 +53,7 @@ export class SearchResultComponent implements OnInit {
         "rating": false
       }
     }
+    this.products = [];
     this.storeIds=[];
   }
   setDistrictFilterOption=()=>{
@@ -67,25 +70,35 @@ export class SearchResultComponent implements OnInit {
     })
   }
   getSearchPaging(targetPage) {
+    this.isLoading = true;
     if(this.searchParam.searchString != "") {
-      if(this.products.length!==0){
-        this.products=[];
-      }
       this.searchParam.page = targetPage;
       this.setDistrictFilterOption();
       return this._searchService.Search(this.searchParam)
         .subscribe((data: Response) => {
-          this.products.push(data);
-          this.totalPage =this.products[0].totalPage;
-          this.setStoreIds(this.products[0].results);
-          // console.log("page",this.products[0].currentPage, this.products[0], this.storeIds);
+          if(data!==null){
+            if(this.products.length!==0){
+              this.products.splice(0,1,data);
+            }else{
+              this.products.push(data);
+            }
+            this.isLoading = false;
+            this.totalPage =this.products[0].totalPage;
+            this.setStoreIds(this.products[0].results);
+            console.log("page",this.products);
+          }else{
+            this.router1.navigate(["/search/notResult"]);
+          }
         });
+    }else{
+      this.router1.navigate(["/search/notResult"]);
     }
-    return null;
   }
   getParam=()=>{
     this.router.queryParams.subscribe((params: Params) => {
-      this.initDefautlValue();
+      if(params['name']!==this.searchParam.searchString){
+        this.initDefautlValue();
+      }
       this.searchParam.searchString = params['name']?params['name']:"";
       if(params['districts']){
         let districts = params['districts'].split(",");
@@ -95,14 +108,19 @@ export class SearchResultComponent implements OnInit {
       this.getSearchPaging(this.initPage);
     });
   }
-
+  routerSearch=(page)=>{
+    let districts = this.searchParam.districtList.toString();
+    let filterByLocation = this.searchParam.filterOption.location.toString();
+    let filterByRating = this.searchParam.filterOption.rating.toString();
+    let filterByCategories = this.searchParam.categoriesListId.length.toString();
+    this.router1.navigate(["/search"], {
+      queryParams: { name: this.searchParam.searchString, districts: districts, filterByLocation: filterByLocation, filterByRating: filterByRating, filterByCategories: filterByCategories, page: page}
+    });
+    // this.getParam();
+  }
   seeMore(targetPage, totalPage){
     if(targetPage<=totalPage){
-      let districts = this.searchParam.districtList.toString();
-      this.router1.navigate(["/search"], {
-        queryParams: { name: this.searchParam.searchString, districts: districts, page: this.targetPage}
-      });
-      // this.getSearchPaging(targetPage);
+      this.routerSearch(this.targetPage);
     }
   }
 
@@ -115,7 +133,9 @@ export class SearchResultComponent implements OnInit {
     this.searchParam.filterOption.categories = searchFilter.filterOption.categories;
     this.searchParam.filterOption.location = searchFilter.filterOption.location;
     this.searchParam.filterOption.rating = searchFilter.filterOption.rating;
-    this.getSearchPaging(this.initPage);
+    this.searchParam.currentLatitude = searchFilter.currentLatitude;
+    this.searchParam.currentLongitude = searchFilter.currentLongitude;
+    this.routerSearch(1);
     console.log("i word", this.searchParam);
   }
 }

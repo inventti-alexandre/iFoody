@@ -30,7 +30,7 @@
               </a>
             </div>
             <ng-template [ngIf]="item.distance>0">
-              <div class="distants">{{item.distance}} KM</div>
+              <div class="distants">{{item.distance.toFixed(1)}} KM</div>
             </ng-template>
 
           </div>

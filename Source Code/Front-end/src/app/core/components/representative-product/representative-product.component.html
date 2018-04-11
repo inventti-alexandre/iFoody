@@ -20,6 +20,13 @@
           </div>
 
           <ng-template [ngIf]="group.currentPage<group.totalPage">
+            <ng-template [ngIf]="loadingMore==group.results[0].category.id">
+              <div class="row no-margin" style="text-align:center">
+                <div>
+                  <i class="fa fa-spinner fa-spin" style="font-size:36px"></i>
+                </div>
+              </div>
+            </ng-template>
             <div class="row no-margin seeMoreBtn">
               <i (click)="seeMore(group.results[0].category.id,group.currentPage,group.totalPage)" class="fa fa-angle-double-down" style="font-size:36px"></i>
             </div>

@@ -1,36 +1,24 @@
 import { Component, OnInit, Output, EventEmitter, DoCheck} from '@angular/core';
 import { CategoryService } from '../../../shared/services/category.service';
-
-declare var currentLocationObject: any;
-declare var currentLocationGlobal : any;
+declare var currentLocationGlobal;
+currentLocationGlobal = {
+  lat:10.7924923,
+  lng:106.6417418,
+};
 
 @Component({
   selector: 'search-filter',
   templateUrl: './search-filter.component.html',
   styleUrls: ['./search-filter.component.scss']
 })
-export class SearchFilterComponent implements OnInit, DoCheck {
+export class SearchFilterComponent implements OnInit{
   public categories: any[];
   public searchFilter;
+  public filterCategoriesDisplay: string;
   @Output("filterChange") filterChange= new EventEmitter();
-  items = [
-    {
-      id: 1,
-      text: 'First item'
-    },
-    {
-      id: 2,
-      text: 'Second item'
-    },
-    {
-      id: 3,
-      text: 'Third item'
-    }
-  ];
   constructor(private _categoryService: CategoryService) {
     this.categories = [];
-  }
-  resetSearchFilter=()=>{
+    this.filterCategoriesDisplay = "Chọn loại"
     this.searchFilter={
       "currentLatitude": 0,
       "currentLongitude": 0,
@@ -42,8 +30,13 @@ export class SearchFilterComponent implements OnInit, DoCheck {
       }
     }
   }
+  resetSearchFilter=()=>{
+    this.searchFilter.currentLatitude = 0;
+    this.searchFilter.currentLongitude = 0;
+    this.searchFilter.filterOption.location = false;
+    this.searchFilter.filterOption.rating = false;
+  }
   ngOnInit() {
-    this.resetSearchFilter();
     this.getAllCategories();
   }
   getAllCategories=()=>{
@@ -67,21 +60,24 @@ export class SearchFilterComponent implements OnInit, DoCheck {
     }
     if(this.searchFilter.categoriesListId.length>0){
       this.searchFilter.filterOption.categories = true;
+      this.filterCategoriesDisplay = this.searchFilter.categoriesListId.length + ' loại';
     }else{
       this.searchFilter.filterOption.categories = false;
+      this.filterCategoriesDisplay = "Chọn loại";
     }
-
-    //TEST
     this.filterChange.emit(this.searchFilter);
   }
-  ngDoCheck() {
-    if(this.searchFilter.currentLatitude === 0 && currentLocationGlobal!== undefined){
-      this.searchFilter.currentLatitude = currentLocationGlobal.lat;
-      this.searchFilter.currentLongitude = currentLocationGlobal.lng;
-      this.searchFilter.filterOption.location = true;
-    }
+  chooseLocationFilter=()=>{
+    this.resetSearchFilter();
+    this.searchFilter.currentLatitude = currentLocationGlobal.lat;
+    this.searchFilter.currentLongitude = currentLocationGlobal.lng;
+    this.searchFilter.filterOption.location = true;
+    this.filterChange.emit(this.searchFilter);
+    // alert(1);
   }
-  setLocationFilter=()=>{
-    currentLocationObject.get();
+  chooseRatingFilter=()=>{
+    this.resetSearchFilter();
+    this.searchFilter.filterOption.rating = true;
+    this.filterChange.emit(this.searchFilter);
   }
 }

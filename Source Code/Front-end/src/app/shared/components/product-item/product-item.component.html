@@ -19,7 +19,7 @@
 
           <div class="resname">
             <h2>
-              <a [routerLink]="['/product', productId]" (click)="getProductDetail()" [title]="productModel.product.name">{{productModel.product.name}}</a>
+              <a [routerLink]="['/product', productId]" (click)="getProductDetail()" [title]="productModel.product.name+ ' - '+ productModel.store.name">{{productModel.product.name+ ' - '+ productModel.store.name}}</a>
             </h2>
             <div class="result-address">
               <div class="address">
