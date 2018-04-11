@@ -122,19 +122,6 @@ namespace WebApi.ApiController
             }
         }
 
-        // DELETE api/image/
-        [HttpDelete]
-        [Route("api/image/{path?}")]
-        public HttpResponseMessage Delete(string path)
-        {
-            try
-            {
-                return _uploadService.DeleteFile(path) ? Request.CreateResponse(HttpStatusCode.OK) : Request.CreateResponse(HttpStatusCode.NotImplemented, "Not Implemented!");
-            }
-            catch (Exception e)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Exception Error!");
-            }
-        }
+        
     }
 }

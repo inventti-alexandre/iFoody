@@ -4,11 +4,28 @@ var directionsService;
 var geocoder;
 var addressList;
 
+$(document).ready(function() {
+    console.log("document ready");
+    if (navigator.geolocation) {
+      console.log("in if navigator");
+      navigator.geolocation.getCurrentPosition(function(position) {
+        console.log("in getCurrentPosition");
+        var pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+      };
+      currentPositionGlobal = pos;
+      console.log(currentPositionGlobal);
+      console.log(pos);})
+    }
+})
+
+
 // Get Direction from Current Location to Marker
 function calculateAndDisplayRoute (directionsService, directionsDisplay, pointA, pointB) {
     var request = {
-        origin: pointA.position,
-        destination: pointB.position,
+        origin: pointB.position,
+        destination: pointA.position,
         avoidTolls: true,
         avoidHighways: false,
         travelMode: 'DRIVING'

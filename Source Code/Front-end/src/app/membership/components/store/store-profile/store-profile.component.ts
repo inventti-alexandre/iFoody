@@ -7,7 +7,7 @@ import { IStore } from '../../../../shared/models/allModel';
 import { Component, OnInit, Input, ChangeDetectorRef, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StoreService } from '../../../../shared/services/store.service';
-import { ImageDomain } from './../../../../constant/apiUrl';
+import { ImageDomain, UserId } from './../../../../constant/apiUrl';
 import { FileUploadComponent } from '../../../../uploading/file-upload/file-upload.component';
 import { UserService } from '../../../../shared/services/user.service';
 declare var deleteImageObject: any;
@@ -26,6 +26,7 @@ export class StoreProfileComponent implements OnInit, ProfileChildren, AfterView
   images: any;
   imageDefault: any;
   imageDomain:any;
+  userId: any;
   @ViewChildren(FileUploadComponent) fileUploadComponent: QueryList<any>;
   fileUploads: any[];
   fileUploadComponentQuantity: any[];
@@ -43,6 +44,7 @@ export class StoreProfileComponent implements OnInit, ProfileChildren, AfterView
       this.imageDefault = imageDefault;
       this.imageDomain = ImageDomain;
       this.fileUploads = [];
+      this.userId = localStorage.getItem(apiUrl.UserId).replace(/['"]+/g, '');
 
       this.storeForm = new FormGroup({
         id: new FormControl(),
@@ -59,6 +61,7 @@ export class StoreProfileComponent implements OnInit, ProfileChildren, AfterView
         district: new FormControl(),
         city: new FormControl(),
         categoryId: new FormControl(),
+        userId: new FormControl(),
         images: new FormControl()
       });
 
@@ -84,6 +87,7 @@ export class StoreProfileComponent implements OnInit, ProfileChildren, AfterView
           district: this.store.district,
           city: this.store.city,
           categoryId: this.store.categoryId,
+          userId: this.userId,
           images: []
         });
 
@@ -107,6 +111,7 @@ export class StoreProfileComponent implements OnInit, ProfileChildren, AfterView
     }
 
   ngOnInit() {
+    window.scrollTo(0,0);
     this._categoryService.GetAll()
       .subscribe(response => {
         this.categories = response;
@@ -144,12 +149,15 @@ export class StoreProfileComponent implements OnInit, ProfileChildren, AfterView
     this.storeForm.patchValue({'images': this.fileUploads});
     console.log('onsubmit', this.storeForm.value);
     this.fileUploads = [];
-    this._storeService.updateStore(this.storeForm.value)
+    this._storeService.updateStore(this.store.id, this.storeForm.value)
       .subscribe(response => {
-        console.log("update successfully");
+        console.log("Cập nhật thành công");
         console.log("response in TS", response);
         alert("updateStore successfully!!!");
       });
+
+    window.scrollTo(0,0);
+      
     
   }
 
@@ -160,13 +168,25 @@ export class StoreProfileComponent implements OnInit, ProfileChildren, AfterView
       .subscribe(result => {
         console.log('result', result);
         alert("Xóa thành công!!!");
-        deleteImageObject.deleteImage(id);
+        deleteImageObject.deleteImage('image',id);
         console.log("Delete   DONE");
       });
+  }
+
+  deleteStore() {
+    console.log('deleteStore TS works');
+    if(confirm("Bạn muốn xóa " + this.store.name + '?')) {
+      this._storeService.deleteStore(this.store.id)
+        .subscribe(result => {
+          console.log('result tra ve', result);
+          alert("Xóa Cửa hàng thành công!!!");
+        });
+      }
   }
 
   backToGeneral() {
     console.log("backtoGeneral works");
     this.router.navigate(["profile", localStorage.getItem("user_id").replace(/['"]+/g, ''), 'overview']);
   }
+
 }

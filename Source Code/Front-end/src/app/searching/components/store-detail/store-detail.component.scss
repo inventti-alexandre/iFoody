@@ -18,14 +18,15 @@
         }
 
         &__main {
-            border: 2px solid black;
+            border: 1px dashed white;
             overflow: hidden;
             text-align: center; 
             height:auto;
             img {
                 display: block;
                 max-height: 360px;
-                box-shadow: 2px 2px 2px #A095A3;
+                border: 1px dashed white;
+                box-shadow: 0 0  2px #4375FF;
                 width: 100%;
                 height: auto;
                 border-radius: 5px;

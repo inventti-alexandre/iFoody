@@ -13,6 +13,9 @@ namespace BusinessLayer.IServices
         List<ImageBusinessEntity> GetAll();
 
         // Get Image by Id
+        ImageBusinessEntity Get(Guid id);
+
+        // Get Images by Id
         IEnumerable<ImageBusinessEntity> GetImage(Guid id);
 
         // Get Image By StoreId
@@ -24,11 +27,20 @@ namespace BusinessLayer.IServices
         // Get all Image in StoreImage Table - for testing
         IEnumerable<StoreImageBusinessEntity> GetAllStoreImages();
 
+        // Get All Images Id By Product Id 
+        IEnumerable<Guid> GetImageIdsByProductId(Guid productId);
+
+        // Get All Images Id By Store Id 
+        IEnumerable<Guid> GetImageIdsByStoreId(Guid storeId);
+
         // Upload Image
         Task<List<FileUploadResult>> UploadImage(List<string> imagesEntity, string fileName, Guid? userId, Guid? storeId, Guid? productId);
 
-        // Delete method
-        bool DeleteImage(Guid id);
+        // Delete Store Image
+        bool DeleteStoreImage(Guid id);
+
+        // Delete Product Image
+        bool DeleteProductImage(Guid id);
 
         // Update method
         bool UpdateImage(ImageBusinessEntity imageEntity);

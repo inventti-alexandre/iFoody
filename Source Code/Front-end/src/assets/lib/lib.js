@@ -1,3 +1,4 @@
+var currentPositionGlobal;
 // Modal Login, SignUp
 var currentLocationGlobal;
 
@@ -11,8 +12,21 @@ $(document).on("hidden.bs.modal",".sub-modal.modal", function () {
 
 // Active Class in All navbar
 $(document).ready(function() {
+  // console.log("document ready");
+  // if (navigator.geolocation) {
+  //   console.log("in if navigator");
+  //   navigator.geolocation.getCurrentPosition(function(position) {
+  //     console.log("in getCurrentPosition");
+  //     var pos = {
+  //       lat: position.coords.latitude,
+  //       lng: position.coords.longitude
+  //   };
+  //   currentPositionGlobal = pos;
+  //   console.log(pos);})
+  // }
+  // console.log('afterloading' ,currentPositionGlobal);
+  
   $(".nav a").on("click", function(){
-    console.log("a tag click");
     $(".nav").find(".active").removeClass("active");
     $(this).parent().addClass("active");
   });
@@ -110,11 +124,11 @@ var favoriteObject = (function() {
 var deleteImageObject = (function() {
   return {
     deleteImage: function(parent, id) {
-      console.log("inside deleteImage LIB.JS");
-        console.log("click", $(this).parents('#' + id));
-        console.log('file-upload last', $('.image file-upload:last'));
-        $(this).parents('#' + id).remove();
-        $('.image file-upload:last').clone().append('.image');
+        let newFileUpload = $('.image file-upload:last').clone();
+        $(newFileUpload).attr("style", "display: block !important");
+        // $(newFileUpload).insertBefore($('.image file-upload:last'));
+        $(newFileUpload).insertBefore($('#' + id));
+        $('.'+ parent).children('#' + id).remove();
     }
   }
 })(deleteImageObject || {})

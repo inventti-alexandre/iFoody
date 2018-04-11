@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Web;
+using System.Web.Hosting;
 
 namespace BusinessLayer.DTOs
 {
@@ -46,9 +47,13 @@ namespace BusinessLayer.DTOs
         {
             try
             {
-                if (File.Exists(filename))
+                if (filename != null)
                 {
-                    File.Delete(filename);
+                    var file = new FileInfo(HostingEnvironment.MapPath(filename));
+                    if (file.Exists)
+                    {
+                        file.Delete();
+                    }
                 }
             }
             catch (Exception e)

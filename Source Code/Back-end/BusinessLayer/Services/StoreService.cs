@@ -239,19 +239,18 @@ namespace BusinessLayer.Services
                             imageIds = _uploadService.UploadFile(imagesUploadList, true, store.Id, Guid.Empty, store.Name);
                         }
                         ///////////////////Add to StoreImage Table//////////////////////
-                        var imagesList =
-                              _unitOfWork.Images.GetManyQueryable(i => imageIds.Any(item => item == i.Id)).ToList();
+                        //var imagesList = _unitOfWork.Images.GetManyQueryable(i => imageIds.Any(item => item == i.Id)).ToList();
 
-                        if (imagesList.Any())
+                        if (imageIds.Any())
                         {
                             // var newProductImagesList = new List<StoreImageBusinessEntity>();
 
-                            foreach (var image in imagesList)
+                            foreach (var imageId in imageIds)
                             {
                                 var newStoreImageEntity = new StoreImageBusinessEntity()
                                 {
                                     StoreId = store.Id,
-                                    ImageId = image.Id
+                                    ImageId = imageId
                                 };
                                 _storeImageService.CreateStoreImage(newStoreImageEntity);
                             }
@@ -305,25 +304,24 @@ namespace BusinessLayer.Services
                             imageIds = _uploadService.UploadFile(imagesUploadList, true, store.Id, Guid.Empty, store.Name);
                         }
                         ///////////////////Add to StoreImage Table//////////////////////
-                        var imagesList =
-                              _unitOfWork.Images.GetManyQueryable(i => imageIds.Any(item => item == i.Id)).ToList();
+                        //var imagesList = _unitOfWork.Images.GetManyQueryable(i => imageIds.Any(item => item == i.Id)).ToList();
 
-                       // if (imagesList.Count == imageIds.Count)
+                        // if (imagesList.Count == imageIds.Count)
                         // {
-                            // No need to update StoreImageEntity anymore
-                           // return true;
-                       // }
+                        // No need to update StoreImageEntity anymore
+                        // return true;
+                        // }
 
-                        if (imagesList.Any())
+                        if (imageIds.Any())
                         {
-                            var newImagesList = imagesList.FindAll(x => imageIds.Any(y => y != x.Id));
+                            //var newImagesList = imagesList.FindAll(x => imageIds.Any(y => y != x.Id));
                             // Just update new more Image
-                            foreach (var item in newImagesList)
+                            foreach (var imageId in imageIds)
                             {
                                 var newStoreImageEntity = new StoreImageBusinessEntity()
                                 {
                                     StoreId = store.Id,
-                                    ImageId = item.Id
+                                    ImageId = imageId
                                 };
                                 _storeImageService.CreateStoreImage(newStoreImageEntity);
                             }

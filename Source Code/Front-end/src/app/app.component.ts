@@ -1,13 +1,14 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatCheckboxModule } from '@angular/material';
-import { Component } from '@angular/core';
+import { Component, AfterViewChecked } from '@angular/core';
+declare var currentPositionGlobal: any;
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css',]
 })
-export class AppComponent {
+export class AppComponent  {
     constructor (private route:ActivatedRoute, private router: Router) {
         route.queryParams.subscribe();
     }

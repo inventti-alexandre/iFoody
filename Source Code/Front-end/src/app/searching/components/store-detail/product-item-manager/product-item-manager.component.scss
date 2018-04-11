@@ -9,12 +9,20 @@
         margin-right: auto;
         display: block;
         border-radius: 3px;
+        text-align: center;
         img{
-            width: 100%;
-            height:100%;
+            width: 75px;
+            height:60px;
+        }
+        span {
+            margin-left: 7%;
+            i:hover {
+                cursor: pointer;
+            }
         }
         file-upload {
-            height: 100%
+            // height: 70px;
+            // width: 75px;
         }   
         &__major {
             padding-left: 45px;
@@ -33,7 +41,7 @@
     &__info {
         position: relative;
         div {
-            line-height: 2.2em;
+            line-height: 2.5em;
             padding: 3px;
             label {
                 width: 31%;

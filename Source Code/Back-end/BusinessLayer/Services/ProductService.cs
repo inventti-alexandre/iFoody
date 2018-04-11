@@ -4,11 +4,11 @@ using BusinessLayer.DTOs;
 using BusinessLayer.IServices;
 using DataModel;
 using DataModel.IUnitOfWork;
+using DataModel.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
-using DataModel.Repository;
 
 namespace BusinessLayer.Services
 {
@@ -102,7 +102,7 @@ namespace BusinessLayer.Services
             try
             {
                 // Get All Products Entity List
-                var products = _unitOfWork.Products.GetProductInfo().Where(x=>x.product.CategoryId==categoryId).ToList();
+                var products = _unitOfWork.Products.GetProductInfo().Where(x => x.product.CategoryId == categoryId).ToList();
                 if (products.Any())
                 {
                     return MapToProductDto(products);
@@ -180,7 +180,7 @@ namespace BusinessLayer.Services
             }
         }
 
-        // GET All Products By StoreId -- Tuan Made
+        // GET All Products By StoreId -- return Entity -- Tuan Made
         public IEnumerable<ProductInStoreDto> GetProductByStoreId(Guid storeId)
         {
             try
@@ -240,6 +240,22 @@ namespace BusinessLayer.Services
             }
         }
 
+        // Get All Products By StoreId -- return list Id -- Tuan Made
+        public IEnumerable<Guid> GetProductIdsByStoreId(Guid storeId)
+        {
+            try
+            {
+                // Get All Products Entity List
+                var productIds = _unitOfWork.Products.GetManyQueryable(p => p.StoreId == storeId).Select(x => x.Id).ToList();
+
+                return productIds;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
         // User upload Product into Store
         public Guid? CreateProduct(UploadProductDto uploadProductDto)
         {
@@ -268,19 +284,18 @@ namespace BusinessLayer.Services
                         imageIds = _uploadService.UploadFile(imagesUploadList, false, product.StoreId.GetValueOrDefault(), product.Id, product.Name);
                     }
                     ///////////////////Add to StoreImage Table//////////////////////
-                    var imagesList =
-                          _unitOfWork.Images.GetManyQueryable(i => imageIds.Any(item => item == i.Id)).ToList();
+                    //var imagesList = _unitOfWork.Images.GetManyQueryable(i => imageIds.Any(item => item == i.Id)).ToList();
 
-                    if (imagesList.Any())
+                    if (imageIds.Any())
                     {
                         var newProductImagesList = new List<StoreImageBusinessEntity>();
 
-                        foreach (var image in imagesList)
+                        foreach (var imageId in imageIds)
                         {
                             var newProductImageEntity = new ProductImageBusinessEntity()
                             {
                                 ProductId = product.Id,
-                                ImageId = image.Id
+                                ImageId = imageId
                             };
                             _productImageService.CreateProductImage(newProductImageEntity);
                         }
@@ -352,25 +367,20 @@ namespace BusinessLayer.Services
                             imageIds = _uploadService.UploadFile(imagesUploadList, true, product.StoreId.GetValueOrDefault(), product.Id, product.Name);
                         }
                         ///////////////////Add to StoreImage Table//////////////////////
-                        var imagesList =
-                              _unitOfWork.Images.GetManyQueryable(i => imageIds.Any(item => item == i.Id)).ToList();
+                        //var imagesList = _unitOfWork.Images.GetManyQueryable(i => imageIds.Any(item => item == i.Id)).ToList();
 
-                        if (imagesList.Count == imageIds.Count)
-                        {
-                            // No need to update StoreImageEntity anymore
-                            return true;
-                        }
 
-                        if (imagesList.Any())
+
+                        if (imageIds.Any())
                         {
-                            var newImagesList = imagesList.FindAll(x => imageIds.Any(y => y != x.Id));
+                            // var newImagesList = imagesList.FindAll(x => imageIds.Any(y => y != x.Id));
                             // Just update new more Image
-                            foreach (var item in newImagesList)
+                            foreach (var imageId in imageIds)
                             {
                                 var newProductImageEntity = new ProductImageBusinessEntity()
                                 {
                                     ProductId = product.Id,
-                                    ImageId = item.Id
+                                    ImageId = imageId
                                 };
                                 _productImageService.CreateProductImage(newProductImageEntity);
                             }
@@ -473,7 +483,7 @@ namespace BusinessLayer.Services
         {
             try
             {
-                var allProducts = _unitOfWork.Products.GetProductInfo().Where(x=>x.product.CategoryId==categoryId).ToList();
+                var allProducts = _unitOfWork.Products.GetProductInfo().Where(x => x.product.CategoryId == categoryId).ToList();
                 if (allProducts.Any())
                 {
                     return PagingProductDto(page, count, allProducts);

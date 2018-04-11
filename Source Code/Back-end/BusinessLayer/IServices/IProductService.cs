@@ -20,6 +20,7 @@ namespace BusinessLayer.IServices
         bool DeleteProduct(Guid productId);
         IEnumerable<ProductDto> GetProductByCategoryId(Guid categoryId);
         IEnumerable<ImageBusinessEntity> GetAllImageByProductId(Guid productId);
+        IEnumerable<Guid> GetProductIdsByStoreId(Guid storeId);
         PagingReturnDto<ProductDto> PagingAllProducts(int page, int? count);
         PagingReturnDto<ProductDto> PagingAllProductsByCategory(Guid categoryId, int page, int? count);
         PagingReturnDto<ProductDto> PagingProductDto(int pageIndex, int? count, List<ProductReturn> allProducts);

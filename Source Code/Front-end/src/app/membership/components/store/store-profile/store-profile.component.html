@@ -8,13 +8,15 @@
               <!-- <div *ngFor="let image of images" class="col-md-2 col-sm-4 col-xs-6 image"> -->
                   <div [id]="image?.id" class="col-md-2 col-sm-4 col-xs-6" *ngFor="let image of images">
                       <img [src]="imageDomain + image?.path" [alt]="image?.name">
-                      <div (click)="deleteImage(image?.id)">Xóa</div>
+                      <div class="deleteBtn" (click)="deleteImage(image?.id)">Xóa</div>
                   </div>
                   <!-- <file-upload class="col-md-2 col-sm-4 col-xs-6" [imageSrc]="imageDomain + images[0]?.path" [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-upload>
                   <file-upload class="col-md-2 col-sm-4 col-xs-6" [imageSrc]="imageDomain + images[1]?.path" [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-upload>
                   <file-upload class="col-md-2 col-sm-4 col-xs-6" [imageSrc]="imageDomain + images[2]?.path" [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-upload>
                   <file-upload class="col-md-2 col-sm-4 col-xs-6" [imageSrc]="imageDomain + images[3]?.path" [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-upload> -->
                   <file-upload class="fileUploadComponent col-md-2 col-sm-4 col-xs-6" *ngFor="let index of fileUploadComponentQuantity" [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-upload>
+                  <file-upload class="fileUploadComponent col-md-2 col-sm-4 col-xs-6" style="display: none" [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-upload>
+                  
                 <!-- <img [src]="imageDomain + image.path"  alt="Image Product" *ngIf="images.length > 0">
                 <img [src]="imageDefault"  alt="Image Product" *ngIf="images.length == 0">      -->
               <!-- </div> -->
@@ -23,10 +25,6 @@
                 <p style="font-style: italic">Nhấp vào hình để thay đổi</p>
             </div>
           </div>
-        </div>
-      
-        <div class="test image1">
-          
         </div>
       
         <div>
@@ -110,8 +108,9 @@
             <i class="fa fa-user-circle fa-2x"></i>
         </div>
   
-        <button type="submit" class="btn btn-primary btn-update btn-lg col-xs-12 col-sm-4 col-sm-offset-2">CẬP NHẬT</button>
+        <button type="submit" class="btn btn-primary btn-update btn-lg col-xs-12 col-sm-4">CẬP NHẬT</button>
         <button type="button" (click)="backToGeneral()" class="btn btn-default btn-lg col-xs-12 col-sm-4 ">HỦY</button>
+        <button type="button" (click)="deleteStore()" class="btn btn-warning btn-lg col-xs-12 col-sm-4 ">XÓA CỬA HÀNG</button>
       </form>
     </div>
   </div>

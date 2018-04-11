@@ -1,4 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from './../../../../shared/services/user.service';
 import { ProfileChildren } from '../../../models/profileChildren';
 import { IUser } from './../../../../shared/models/allModel';
@@ -18,9 +18,22 @@ export class UserProfileComponent implements OnInit, ProfileChildren {
   userIdKey: string;
   genderDisplay: string;
 
-  constructor(private cdr: ChangeDetectorRef, private _userService: UserService, private activatedRoute: ActivatedRoute) {
+  constructor(
+    private cdr: ChangeDetectorRef, 
+    private _userService: UserService, 
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) {
     this.userIdKey = apiUrl.UserId;
     this.userId = localStorage.getItem(this.userIdKey);
+    this.genderDisplay = "Giới tính" ;
+    this.user = new FormGroup({
+      email: new FormControl(),
+      gender: new FormControl(),
+      lastname: new FormControl(),
+      firstname: new FormControl(),
+      birthday: new FormControl(),
+    });
    }
 
   applyTheme(pop: any) {
@@ -30,13 +43,13 @@ export class UserProfileComponent implements OnInit, ProfileChildren {
   }
 
   ngOnInit() {
-    this.user = new FormGroup({
-      email: new FormControl(),
-      gender: new FormControl(),
-      lastname: new FormControl(),
-      firstname: new FormControl(),
-      birthday: new FormControl(),
-    });
+    // this.user = new FormGroup({
+    //   email: new FormControl(),
+    //   gender: new FormControl(),
+    //   lastname: new FormControl(),
+    //   firstname: new FormControl(),
+    //   birthday: new FormControl(),
+    // });
     
     this._userService.getUserById(this.activatedRoute.snapshot.paramMap.get('id'))
       .subscribe(u => {
@@ -60,6 +73,11 @@ export class UserProfileComponent implements OnInit, ProfileChildren {
         this.user = data;
         alert("Cập nhật thành công.");
       });
+  }
+
+  backToHome() {
+    console.log("ve home");
+    this.router.navigate(['/home']);
   }
 
 }

@@ -41,7 +41,6 @@ export class UserService {
     this.reviewUrl = apiUrl.Review;
     this.commentUrl = apiUrl.Comment;
     this.storeUrl = apiUrl.Store;
-    this.imageUrl = apiUrl.Image;
     this.favoriteListUrl = apiUrl.FavoriteList;
     this.authToken = this._authService.retriveToken();
     this.userId = localStorage.getItem("user_id");
@@ -284,7 +283,7 @@ export class UserService {
       .catch(this.handleError);
   }
 
-  // No user - PUT - Update Store
+  // Noooo user - PUT - Update Store
   updateStore(id: string, model: any): Observable<any> {
     console.log("Update Store works");
     let body = JSON.stringify(model);
@@ -356,16 +355,16 @@ export class UserService {
       .catch(this.handleError);
   }
 
-  // DELETE - Image
+  // DELETE Store Image
   deleteImage(id: string): Observable<any> {
-    console.log("delete Image works.");
+    console.log("deleteImage in Userservice works.");
     let headers = new Headers();
     headers.append("Token", this.authToken); 
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({headers: headers});
 
-    return this._http.delete(this.imageUrl + '/' + id, options)
-      .map((response: Response) => <any>response.json())
+    return this._http.delete(apiUrl.UserImage + '/' + id, options)
+      // .map((response: Response) => <any>response.json())
       .catch(this.handleError);
   }
 

@@ -1,5 +1,4 @@
-﻿using BusinessEntities;
-using BusinessLayer.DTOs;
+﻿using BusinessLayer.DTOs;
 using BusinessLayer.IServices;
 using System;
 using System.Linq;
@@ -17,13 +16,15 @@ namespace WebApi.ApiController
         private readonly IProductService _productService;
         private readonly IReviewService _reviewService;
         private readonly IUploadService _uploadService;
+        private readonly IImageService _imageService;
 
 
-        public ProductController(IProductService productServices, IReviewService reviewService, IUploadService uploadService)
+        public ProductController(IProductService productServices, IReviewService reviewService, IUploadService uploadService, IImageService imageService)
         {
             _productService = productServices;
             _reviewService = reviewService;
             _uploadService = uploadService;
+            _imageService = imageService;
         }
 
         // GET api/product
@@ -244,7 +245,8 @@ namespace WebApi.ApiController
 
         // PUT api/product/?id=
         [HttpPut]
-        public IHttpActionResult Put([FromBody]UploadProductDto uploadProductDto)
+        [Route("api/product/{id?}")]
+        public IHttpActionResult Put(Guid id, [FromBody]UploadProductDto uploadProductDto)
         {
             try
             {
@@ -259,11 +261,19 @@ namespace WebApi.ApiController
 
         // DELETE api/product/?id=
         [HttpDelete]
+        [Route("api/product/{id?}")]
         public IHttpActionResult Delete(Guid id)
         {
             try
             {
-                return Ok(_productService.DeleteProduct(id));
+                var imageIds = _imageService.GetImageIdsByProductId(id).ToList();
+                foreach (var imageId in imageIds)
+                {
+                    _imageService.DeleteProductImage(imageId);
+                }
+                _productService.DeleteProduct(id);
+
+                return Ok();
             }
             catch (Exception e)
             {

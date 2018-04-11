@@ -27,7 +27,7 @@ import { ProfileDirective } from '../../../directives/profile.directive';
 import { UserService } from '../../../../shared/services/user.service';
 import * as apiUrl from '../../../../constant/apiUrl';
 import { setTimeout } from 'timers';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router, NavigationEnd } from '@angular/router';
 import { StoreService } from '../../../../shared/services/store.service';
 
 @Component({
@@ -53,6 +53,7 @@ export class ProfileComponent implements OnInit, AfterViewChecked{
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {
+    window.scrollTo(0,0);
     this._userService.getUserById(localStorage.getItem(apiUrl.UserId))
       .subscribe(response => {
         setTimeout( () => {
@@ -71,6 +72,7 @@ export class ProfileComponent implements OnInit, AfterViewChecked{
 
   ngOnInit() {
     this.childComponent = 'user-profile';
+
   }
 
   ngAfterViewChecked() {

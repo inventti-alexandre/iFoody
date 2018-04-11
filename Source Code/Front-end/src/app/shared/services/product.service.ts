@@ -64,6 +64,7 @@ export class ProductService {
           listProduct.push(x);
         });
   }
+
   public PagingAllProductsByCategory=(categoryId,page, count?): Observable<any> => {
     let listProduct = [];
     let url;
@@ -78,19 +79,20 @@ export class ProductService {
           listProduct.push(x);
         });
   }
-   // POST - Product updload
-   // Tuan modified
-  addNewProduct=(product:IUploadProduct):Observable<any>=> {
-    let body = JSON.stringify(product);
-    let headers = new Headers({'Content-Type' : 'application/json'});
-    headers.append("Token", this.authToken); 
-    let options = new RequestOptions( {headers: headers});
 
-    console.log('product in service', product);
-    return this._http.post(this.actionUrl, body, options)
-      .map((response: Response) => <IUploadProduct>response.json())
-      .catch(this.handleError);
-  }
+  // POST - Product updload
+  // Tuan modified
+  addNewProduct=(product):Observable<any>=> {
+  let body = JSON.stringify(product);
+  let headers = new Headers({'Content-Type' : 'application/json'});
+  headers.append("Token", this.authToken); 
+  let options = new RequestOptions( {headers: headers});
+
+  console.log('product in service', product);
+  return this._http.post(this.actionUrl, body, options)
+    .map((response: Response) => <any>response.json())
+    .catch(this.handleError);
+}
   // public GetProductByCategory=(categoryName, products, result): Observable<any> => {
   //   console.log('GetProductByCategory works');
   //   if(products != null) {
@@ -146,8 +148,25 @@ export class ProductService {
     let options = new RequestOptions({headers: headers});
 
     return this._http.put(apiUrl.Product  + '/' + id.replace(/['"]+/g,''), body, options)
-      .map((response: Response) => <any>response.json());
+    .catch(this.handleError);
+      
   }
+
+  // Tuan made
+  // Delete Product in StoreDetailComponent
+  deleteProduct(id: string): Observable<any> {
+    console.log("delete product in productservice works");
+    console.log('id', id);
+    let headers = new Headers();
+    headers.append("Token", this.authToken); 
+    headers.append("Content-Type", "application/json");
+    let options = new RequestOptions({headers: headers});
+
+    return this._http.delete(apiUrl.Product  + '/' + id.replace(/['"]+/g,''), options)
+    .catch(this.handleError);
+  }
+
+  
 
 }
 

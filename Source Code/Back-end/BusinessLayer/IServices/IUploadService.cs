@@ -10,7 +10,7 @@ namespace BusinessLayer.IServices
         List<Guid> UploadFile(List<FileUploadResult> files, bool isOpenStore, Guid storeId, Guid productId, string name);
 
         // Delete File
-        bool DeleteFile(string localFilePath);
+        bool DeleteFile(Guid id);
 
         // Encode Base 64 String
         string Base64Encode(string plainText);
