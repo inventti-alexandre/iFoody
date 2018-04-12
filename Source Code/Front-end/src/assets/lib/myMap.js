@@ -5,18 +5,15 @@ var geocoder;
 var addressList;
 
 $(document).ready(function() {
-    console.log("document ready");
     if (navigator.geolocation) {
-      console.log("in if navigator");
       navigator.geolocation.getCurrentPosition(function(position) {
-        console.log("in getCurrentPosition");
         var pos = {
           lat: position.coords.latitude,
           lng: position.coords.longitude
       };
       currentPositionGlobal = pos;
       console.log(currentPositionGlobal);
-      console.log(pos);})
+      })
     }
 })
 

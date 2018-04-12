@@ -3,7 +3,8 @@ import { ModalDirective } from 'ngx-bootstrap';
 import { IUser } from '../../../../shared/models/allModel';
 import { UserService } from '../../../../shared/services/user.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { Component, Inject, OnDestroy, OnInit, Renderer2, TemplateRef, ViewChild, Output } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, Renderer2, TemplateRef, 
+  ViewChild, Output, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -15,7 +16,7 @@ import { window } from 'rxjs/operators/window';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
 })
-export class SignupComponent implements OnInit, OnDestroy {
+export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
   userForm: FormGroup; 
   user: IUser;  // assign userForm to this variable, transform to UserService
   @ViewChild('signupModal') public signupModal: ModalDirective;
@@ -33,7 +34,9 @@ export class SignupComponent implements OnInit, OnDestroy {
     // private renderer: Renderer2,
     private route: ActivatedRoute,
     private router: Router,
-    private _userService: UserService ) { 
+    private _userService: UserService,
+    // This is used to push change detection for ng2
+    private cdRef: ChangeDetectorRef ) { 
     // this.renderer.addClass(document.body, 'modal-open');
     // let body = document.getElementsByTagName('body')[0];
     // console.log(this.maxDate);
@@ -51,6 +54,11 @@ export class SignupComponent implements OnInit, OnDestroy {
       readPolicy: new FormControl(),
     });
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+  }
+  
+  ngAfterViewChecked() {
+    // explicit change detection to avoid "expression-has-changed-after-it-was-checked-error"
+    this.cdRef.detectChanges();
   }
 
   /**
@@ -129,8 +137,10 @@ export class SignupComponent implements OnInit, OnDestroy {
         this.hide();
           this._userService.signIn(this.userForm.get('email').value, this.userForm.get("password").value)
           .subscribe((response: Response) => {
-            this.router.navigate([this.returnUrl]);
-            this.reload();
+            setTimeout(() => {
+              this.router.navigate([this.returnUrl]);
+              this.reload();
+            }, 0);
           });
       });
   }

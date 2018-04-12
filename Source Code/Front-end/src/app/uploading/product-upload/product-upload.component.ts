@@ -51,11 +51,6 @@ export class ProductUploadComponent implements OnInit {
     this.categories = [];
     this.fileUploads = [];
     this.storeId = '';
-    this._storeService.GetStoreByUserId(this.userId).subscribe(data=> {
-      console.log(data);
-      this.storeId = data.id;
-      this.storeName = data.name;
-    });
   }
   
   // createProduct=(info)=>{
@@ -121,9 +116,13 @@ export class ProductUploadComponent implements OnInit {
     this._categoryService.GetAll().subscribe(data=>{
       this.categories = data;
     });
-    console.log("this.storeId", this.storeId);
-    this.uploadProductForm.patchValue({'storeId': this.storeId});
-    
+    this._storeService.GetStoreByUserId(this.userId).subscribe(data=> {
+      console.log("data: ",data);
+      this.storeId = data.id;
+      this.storeName = data.name;
+      this.uploadProductForm.patchValue({'storeId': this.storeId});
+      console.log("this.storeId in subcribe", this.storeId);
+    });
   }
 
   checkFormValid() { 
@@ -143,7 +142,7 @@ export class ProductUploadComponent implements OnInit {
 
   // Tuan made - Handle Images Upload
   handleFile(imageContent) {
-    // console.log("handleFile works");
+    console.log("handleFile works");
     // console.log(this.fileUpload);
     // this.fileUploads.push(
     //   {'localFilePath': '',
@@ -154,13 +153,6 @@ export class ProductUploadComponent implements OnInit {
     // });
     // console.log("handleFile22 works");
     // this.uploadProductForm.patchValue({'images': this.fileUploads});
-  }
-
-  // Tuan made - Add more Upload Image
-  addNewComponentEvent() {
-    // console.log("addnew works");
-    // let componentFactory = this.componentFactoryResolver.resolveComponentFactory(FileUploadComponent);
-    // this.newUpload.createComponent(componentFactory);
   }
 
 
@@ -200,15 +192,23 @@ export class ProductUploadComponent implements OnInit {
           this.fileUploadComponent.forEach(component => {
             component.imageSrc = "";
           });
+          this.fileUploads = [];
+          // this.reload();
           window.scrollTo(0,0);
         },
         error => {
           console.log("error: ", error);
           alert("Thông tin sản phẩm không chính xác. Xin nhập lại!");
           this.uploadProductForm.reset();
+          this.fileUploads = [];
         }
       );
     }
+  }
+
+  reload() {
+    console.log("reload work");
+    location.reload();
   }
 }
 

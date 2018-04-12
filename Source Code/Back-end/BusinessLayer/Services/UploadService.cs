@@ -63,7 +63,7 @@ namespace BusinessLayer.Services
                         if (file == null)
                         {
                             continue;
-                        }   
+                        }
                         var fileExt = Path.GetExtension(file.FileName).Substring(1);
 
                         // Change File Name
@@ -101,13 +101,11 @@ namespace BusinessLayer.Services
                         var imageEntity = new ImageBusinessEntity();
                         if (isOpenStore)
                         {
-                            imageEntity.Id = new Guid();
                             imageEntity.Name = file.FileName;
                             imageEntity.Path = "~/Content/Uploads/Stores/" + storeId.ToString() + '/' + file.FileName;
                         }
                         else
                         {
-                            imageEntity.Id = new Guid();
                             imageEntity.Name = file.FileName;
                             imageEntity.Path = "~/Content/Uploads/Stores/" + storeId.ToString() + '/' +
                                                productId.ToString() + '/' + file.FileName;
@@ -119,7 +117,7 @@ namespace BusinessLayer.Services
                         _unitOfWork.Complete();
 
                         var firstOrDefault =
-                               _unitOfWork.Images.GetById(imageEntity.Id);
+                               _unitOfWork.Images.GetById(image.Id);
 
                         if (firstOrDefault != null) imageIds.Add(firstOrDefault.Id);
                     }

@@ -127,7 +127,8 @@ var deleteImageObject = (function() {
         let newFileUpload = $('.image file-upload:last').clone();
         $(newFileUpload).attr("style", "display: block !important");
         // $(newFileUpload).insertBefore($('.image file-upload:last'));
-        $(newFileUpload).insertBefore($('#' + id));
+        $(newFileUpload).insertBefore($('.image file-upload:last'));
+        // $(newFileUpload).insertBefore($('#' + id));
         $('.'+ parent).children('#' + id).remove();
     }
   }
