@@ -24,7 +24,7 @@ namespace WebApi.ApiController
         {
             try
             {
-                var products = _searchService.SuggestionListByUserId(userId,count);
+                var products = _searchService.GetRecommendation(userId, count);
                 if (products == null)
                 {
                     return NotFound(); // Returns a NotFoundResult
@@ -66,23 +66,6 @@ namespace WebApi.ApiController
                 return NotFound();
             }
 
-        }
-        [HttpGet]
-        public IHttpActionResult Test(Guid userIdRecommender, int? count)
-        {
-            try
-            {
-                var products = _searchService.GetRecommendation(userIdRecommender, count);
-                if (products == null)
-                {
-                    return NotFound(); // Returns a NotFoundResult
-                }
-                return Ok(products);  // Returns an OkNegotiatedContentResult
-            }
-            catch (Exception e)
-            {
-                return NotFound();
-            }
         }
 
     }
