@@ -168,7 +168,7 @@ namespace BusinessLayer.Services
         {
             try
             {
-                var ordersDataModel = _unitOfWork.FavoriteLists.LoadDbRecommender();
+                var ordersDataModel = _unitOfWork.FavoriteLists.LoadStoreRecommender();
 
                 // get list id of favorite view -> id of stores which user like
                 var currentFavoriteIdList = _unitOfWork.FavoriteLists.GetListIdFromViewByUserId(userId); 

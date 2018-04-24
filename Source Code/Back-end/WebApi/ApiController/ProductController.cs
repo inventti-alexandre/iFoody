@@ -279,8 +279,24 @@ namespace WebApi.ApiController
             {
                 return NotFound();
             }
-
-
+        }
+        [HttpGet]
+        [Route("api/product/{productId?}/{page?}/{count?}")]
+        public IHttpActionResult GetSimilarProducts(Guid productId, int page, int? count)
+        {
+            try
+            {
+                var products = _productService.GetSimilarProducts(productId, page, count);
+                if (products == null)
+                {
+                    return NotFound(); // Returns a NotFoundResult
+                }
+                return Ok(products);  // Returns an OkNegotiatedContentResult
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
         }
     }
 }
