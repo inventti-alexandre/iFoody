@@ -5,8 +5,11 @@ namespace DataModel.IRepository
 {
     public interface IFavoriteListRepository : IGenericRepository<FavoriteList>
     {
-        IDataModel LoadDbRecommender(string prefValFld = null);
+        IDataModel LoadStoreRecommender(string prefValFld = null);
+        IDataModel LoadProductRecommender(string prefValFld = null);
         long[] GetListIdFromViewByUserId(Guid userId);
+        long GetProductKey(Guid productId);
         Guid GetStoreIdByStoreKey(long storeKey);
+        Guid GetProductIdByProductKey(long productKey);
     }
 }

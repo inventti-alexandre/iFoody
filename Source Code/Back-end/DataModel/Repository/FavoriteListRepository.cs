@@ -17,8 +17,8 @@ namespace DataModel.Repository
 
     public class RecommenderView
     {
-        public long StoreKey { get; set; }
-        public long CategoryKey { get; set; }
+        public long AttributeKey { get; set; }
+        public long ItemKey { get; set; }  
     }
     public class FavoriteListRepository : GenericRepository<FavoriteList>, IFavoriteListRepository
     {
@@ -47,7 +47,20 @@ namespace DataModel.Repository
                 return null;
             }
         }
+        public long GetProductKey(Guid productId)
+        {
+            string sql = "select ProductKey from ProductIdView where ProductId = '" + productId + "'";
+            long productKey = _iFoodyContext.Database.SqlQuery<long>(sql).FirstOrDefault();
+            return productKey;
+        }
 
+        public Guid GetProductIdByProductKey(long productKey)
+        {
+            string sql = "select ProductId from ProductIdView where ProductKey = '" + productKey + "'";
+            Guid productId = _iFoodyContext.Database.SqlQuery<Guid>(sql).FirstOrDefault();
+            return productId;
+        }
+      
         public Guid GetStoreIdByStoreKey(long storeKey)
         {
             string sql = "select StoreId from StoresIdView where StoreKey = '" + storeKey + "'";
@@ -55,17 +68,29 @@ namespace DataModel.Repository
             return storeId;
         }
 
-        public IDataModel LoadDbRecommender(string prefValFld = null)
+        public IDataModel LoadProductRecommender(string prefValFld = null)
+        {
+            string sql = "select * from RecommenderProductView ORDER BY (ItemKey)";
+            var dbRdr = _iFoodyContext.Database.SqlQuery<RecommenderView>(sql).AsQueryable();
+            return LoadDb(dbRdr, prefValFld);
+        }
+
+        public IDataModel LoadStoreRecommender(string prefValFld = null)
+        {
+            string sql = "select * from RecommenderStoreView ORDER BY (ItemKey)";
+            var dbRdr = _iFoodyContext.Database.SqlQuery<RecommenderView>(sql).AsQueryable();
+            return LoadDb(dbRdr, prefValFld);
+        }
+
+        #region private implement
+        private IDataModel LoadDb(IQueryable<RecommenderView> dbRdr, string prefValFld = null)
         {
             var hasPrefVal = !String.IsNullOrEmpty(prefValFld);
-            string sql = "select * from RecommenderView ORDER BY (StoreKey)";
-            var dbRdr = _iFoodyContext.Database.SqlQuery<RecommenderView>(sql).AsQueryable();
-
             FastByIDMap<IList<IPreference>> data = new FastByIDMap<IList<IPreference>>();
             foreach (var item in dbRdr)
             {
-                long userID = Convert.ToInt64(item.CategoryKey);
-                long itemID = Convert.ToInt64(item.StoreKey);
+                long userID = Convert.ToInt64(item.AttributeKey);
+                long itemID = Convert.ToInt64(item.ItemKey);
 
                 var userPrefs = data.Get(userID);
                 if (userPrefs == null)
@@ -94,5 +119,7 @@ namespace DataModel.Repository
             }
             return new GenericDataModel(newData);
         }
+
+        #endregion
     }
 }

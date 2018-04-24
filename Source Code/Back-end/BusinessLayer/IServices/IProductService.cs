@@ -23,6 +23,7 @@ namespace BusinessLayer.IServices
         PagingReturnDto<ProductDto> PagingAllProducts(int page, int? count);
         PagingReturnDto<ProductDto> PagingAllProductsByCategory(Guid categoryId, int page, int? count);
         PagingReturnDto<ProductDto> PagingProductDto(int pageIndex, int? count, List<ProductReturn> allProducts);
+        PagingReturnDto<ProductDto> GetSimilarProducts(Guid productId, int page, int? count);
         IEnumerable<ProductDto> MapToProductDto(List<ProductReturn> page);
     }
 }

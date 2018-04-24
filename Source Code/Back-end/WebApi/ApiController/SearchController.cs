@@ -66,7 +66,6 @@ namespace WebApi.ApiController
                 return NotFound();
             }
 
-        }
-
-    }
+        }        
+   }
 }
