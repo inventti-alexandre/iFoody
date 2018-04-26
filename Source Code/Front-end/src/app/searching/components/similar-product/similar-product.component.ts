@@ -1,4 +1,3 @@
-import { IProduct } from './../../../shared/models/allModel';
 import { ProductService } from '../../../shared/services/product.service';
 import { Component, OnInit, Input } from '@angular/core';
 
@@ -8,40 +7,45 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./similar-product.component.scss']
 })
 export class SimilarProductComponent implements OnInit {
-  @Input() categoryId: string; 
   @Input() productId: string;
-  similarProducts: any[];
-  size = 20;
+  public similarProducts: any[];
+  public data: any;
+  public initPage;
+  public totalPage;
+  public initCount;
+  public isLoading:Boolean;
 
-  constructor(private _productService: ProductService) { 
-    console.log("similarProduct component works");
-    console.log('categoryId', this.categoryId);
+  constructor(private _productService: ProductService) {
+    this.initPage = 1;
+    this.totalPage = 0;
+    this.initCount = 20;
+    this.similarProducts = [];
+    this.data = [];
+    this.isLoading = true;
   }
 
   ngOnInit() {
-    this._productService.GetProductByCategoryId(this.categoryId)
-                      .subscribe(data => {
-                        console.log("similar");
-                        // console.log(data);
-                        this.similarProducts = data;
-                        if(this.similarProducts.length > 0) {
-                          let filterProductId = this.productId;
-                          this.similarProducts = this.similarProducts.filter(function(item) {
-                            if(item.product.id === filterProductId) {
-                              return false;
-                            }
-                            return true;
-                          }); 
-                          console.log('similarProducts', this.similarProducts);
-                          
-                          if (this.similarProducts.length < 20) {
-                            this.similarProducts.slice(0,this.similarProducts.length);
-                          }
-                          else {
-                            this.similarProducts.slice(0, 20);
-                          }
-                        }
-                      });
+    this.getSimilarProducts(this.productId,this.initPage,this.initCount);
+  }
+  getSimilarProducts(productId,page,count){
+    this.isLoading = true;
+    // let result = this._productService.getSimilarProducts(productId,page,count);
+    this._productService.getSimilarProducts(productId,page,count)
+    .subscribe((data: Response) => {
+        this.isLoading = false;
+        this.data = data;
+        if(data.status===404){
+
+        }else{
+          this.data.results.forEach(product=>{
+            this.similarProducts.push(product);
+          })
+          console.log("wtf", this.similarProducts);
+        }
+    })
+  }
+  seeMore(nextPage){
+    this.getSimilarProducts(this.productId,nextPage,this.initCount);
   }
 
 }

@@ -493,6 +493,7 @@ namespace BusinessLayer.Services
                 var productKey = _unitOfWork.FavoriteLists.GetProductKey(productId);
 
                 var modelWithCurrentUser = GetDataModelForNewUser(ordersDataModel, productKey);
+                var totalProducts = _unitOfWork.Products.GetTotalProducts();
 
                 var similarity = new LogLikelihoodSimilarity(modelWithCurrentUser);
 
@@ -501,7 +502,7 @@ namespace BusinessLayer.Services
 
                 var recommender = new GenericBooleanPrefItemBasedRecommender(modelWithCurrentUser, similarity);
 
-                var recommendedItems = recommender.Recommend(PlusAnonymousUserDataModel.TEMP_USER_ID, count ?? _defaultPageRecordCount, null);
+                var recommendedItems = recommender.Recommend(PlusAnonymousUserDataModel.TEMP_USER_ID, totalProducts, null);
                 if (recommendedItems.Any())
                 {
                     List<Guid> productIds = new List<Guid>();

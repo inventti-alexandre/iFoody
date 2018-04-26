@@ -28,12 +28,12 @@
           <h2 class="col-xs-12 col-sm-12 col-md-12"><span><i class="fa fa-flag-checkered fa-1x pull-right"></i></span></h2>
           <map [storeIds]="[productModel.store?.id]"></map>
           <div class="productDetail__map__note col-xs-12 col-sm-12 col-md-12">Nhấp vào địa điểm để xem đường đi ngắn nhất</div>
-      </div>  
+      </div>
     </div>
     <hr/>
 
     <div class="row">
-      <h3>Đánh Giá</h3>
+      <h4>Đánh Giá</h4>
       <div class="productDetail__review col-xs-12 col-sm-12">
         <review [productId]="productId"></review>
       </div>
@@ -43,7 +43,7 @@
     <div class="row">
       <h4>Sản Phẩm Tương Tự</h4>
       <div class="productDetail__similar col-xs-12 col-sm-12">
-        <similar-product [categoryId]="categoryId" [productId]="productId"></similar-product>
+        <similar-product [productId]="productId"></similar-product>
       </div>
     </div>
   </div>
