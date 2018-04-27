@@ -2,14 +2,14 @@ import { IUploadProduct } from './../../shared/models/allModel';
 import { ProductService } from './../../shared/services/product.service';
 import { StoreService } from '../../shared/services/store.service';
 import {
-   Component, 
-   OnInit, 
-   ViewChild, 
-   ComponentFactoryResolver, 
+   Component,
+   OnInit,
+   ViewChild,
+   ComponentFactoryResolver,
    ViewContainerRef,
-   ViewChildren, 
-   ElementRef, 
-   QueryList, 
+   ViewChildren,
+   ElementRef,
+   QueryList,
    OnChanges} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import * as apiUrl from '../../constant/apiUrl';
@@ -17,6 +17,7 @@ import * as model from '../../shared/models/allModel';
 import { CategoryService } from '../../shared/services/category.service';
 import { FileUploadComponent } from '../file-upload/file-upload.component';
 import { Router, ActivatedRoute } from '@angular/router';
+import { enCodeUrl } from "../../shared/services/share-function.service";
 
 @Component({
   selector: 'product-upload',
@@ -33,19 +34,20 @@ export class ProductUploadComponent implements OnInit {
   // @ViewChild(FileUploadComponent) fileUpload;
   @ViewChildren(FileUploadComponent) fileUploadComponent: QueryList<any>;
   fileUploads: any[];
+  enCodeUrl = enCodeUrl;
   // @ViewChild('newUpload',{ read: ViewContainerRef }) newUpload: ViewContainerRef;
-  
+
   // store: string;
 
   constructor(
-    private _storeService: StoreService, 
+    private _storeService: StoreService,
     private _categoryService:CategoryService,
     private _productService: ProductService,
     private componentFactoryResolver: ComponentFactoryResolver,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private elRef: ElementRef
-  ) { 
+  ) {
     window.scrollTo(0,0);
     this.userId = localStorage.getItem(apiUrl.UserId);
     this.categories = [];
@@ -57,7 +59,7 @@ export class ProductUploadComponent implements OnInit {
       this.storeName = data.name;
     });
   }
-  
+
   // createProduct=(info)=>{
   //   // let product={
   //   //   id:null,
@@ -79,7 +81,7 @@ export class ProductUploadComponent implements OnInit {
   //   this.newProduct.images = this.fileUploads;
   //   // this.newProduct.images = null;
   //   console.log('newproduct', this.newProduct);
-    
+
   //   // this.newProduct.name = info.name;
   //   // this.newProduct.price = info.price;
   //   // this.newProduct.description = info.description;
@@ -93,7 +95,7 @@ export class ProductUploadComponent implements OnInit {
   // }
 
   // onSubmit(event) {
-  //   if(event.detail===1){ // check double click 
+  //   if(event.detail===1){ // check double click
   //     this.createIProduct(this.uploadProduct.value);
   //     this._productService.addNewProduct(this.newProduct).subscribe(
   //       (data) => console.log("new product add success",data)
@@ -104,7 +106,7 @@ export class ProductUploadComponent implements OnInit {
   select(){
      // console.log('type', this.uploadProduct.value);
   }
-  
+
   ngOnInit() {
     console.log("ngOnInit works");
     this.uploadProductForm = new FormGroup({
@@ -123,10 +125,10 @@ export class ProductUploadComponent implements OnInit {
     });
     console.log("this.storeId", this.storeId);
     this.uploadProductForm.patchValue({'storeId': this.storeId});
-    
+
   }
 
-  checkFormValid() { 
+  checkFormValid() {
     console.log("checkFormValid works");
     if(this.uploadProductForm.get('name').value &&
     this.uploadProductForm.get('price').value &&
@@ -136,7 +138,7 @@ export class ProductUploadComponent implements OnInit {
     {
       this.elRef.nativeElement.querySelector(".btn-upload").disabled = false;
     }
-    else { 
+    else {
       this.elRef.nativeElement.querySelector(".btn-upload").disabled = true;
     }
   }
@@ -165,7 +167,7 @@ export class ProductUploadComponent implements OnInit {
 
 
   onSubmit(value: any) {
-    if(value.detail===1){ // check double click 
+    if(value.detail===1){ // check double click
          console.log("form", this.uploadProductForm);
       // console.log("onSubmit works");
       // console.log('imagecontentlist: ', this.imageContentList);
@@ -184,18 +186,18 @@ export class ProductUploadComponent implements OnInit {
           });
         }
       });
-    
+
       console.log("this.storeId", this.storeId);
       this.uploadProductForm.patchValue({'storeId': this.storeId});
-   
+
       this.uploadProductForm.patchValue({'images': this.fileUploads});
-      
+
       // this.createProduct(this.uploadProductForm.value);
       this._productService.addNewProduct(this.uploadProductForm.value).subscribe(
         (data) => {
           console.log("new product add success",data);
           alert("Thêm sản phẩm thành công. Mời nhập thêm sản phẩm khác!!!");
-          
+
           this.uploadProductForm.reset();
           this.fileUploadComponent.forEach(component => {
             component.imageSrc = "";

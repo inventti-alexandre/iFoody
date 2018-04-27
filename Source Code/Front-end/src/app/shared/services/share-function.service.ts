@@ -36,4 +36,10 @@ export function scrollTop(router){
     window.scroll(0, 0);
   });
 }
+export function enCodeUrl(para){
+    return btoa(para);
+}
+export function deCodeUrl(para){
+  return atob(para);
+}
 

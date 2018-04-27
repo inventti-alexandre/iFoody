@@ -76,7 +76,10 @@ export class StoreService {
     console.log('storeId', id);
     if(id != null) {
       return this._http.get(apiUrl.StoreReview + '/' + id.replace(/['"]+/g,''))
-            .map((response: Response) => <any>response.json());
+            .map((response: Response) => <any>response.json())
+            .catch((erro: any) => {
+              return Observable.of(erro);
+            })
     }
   }
 
@@ -108,14 +111,14 @@ export class StoreService {
     let options = new RequestOptions( {headers: headers});
 
     return this._http.put(apiUrl.Store + '/' + id.replace(/['"]+/g,''), body, options)
-      .catch(this.handleError); 
+      .catch(this.handleError);
   }
 
   // Delete Product Image
   deleteImage(id: string): Observable<any> {
     console.log("deleteImage in StoreService works.");
     let headers = new Headers();
-    headers.append("Token", this.authToken); 
+    headers.append("Token", this.authToken);
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({headers: headers});
 
@@ -128,7 +131,7 @@ export class StoreService {
   deleteStore(id: string): Observable<any> {
     console.log("delete store in StoreService works");
     let headers = new Headers();
-    headers.append("Token", this.authToken); 
+    headers.append("Token", this.authToken);
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({headers: headers});
 
