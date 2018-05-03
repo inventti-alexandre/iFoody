@@ -157,7 +157,10 @@ export class ProductService {
     if (id != null) {
       return this._http
         .get(apiUrl.ProductReview + "/" + id.replace(/['"]+/g, ""))
-        .map((response: Response) => <any>response.json());
+        .map((response: Response) => <any>response.json())
+        .catch((erro: any) => {
+          return Observable.of(erro);
+        });
     }
   }
 

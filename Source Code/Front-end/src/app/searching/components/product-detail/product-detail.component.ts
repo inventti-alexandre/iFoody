@@ -10,6 +10,7 @@ import {
   ChangeDetectorRef
 } from "@angular/core";
 import * as apiUrl from "../../../constant/apiUrl";
+import { deCodeUrl } from "./../../../shared/services/share-function.service";
 @Component({
   selector: "product-detail",
   templateUrl: "./product-detail.component.html",
@@ -26,61 +27,56 @@ export class ProductDetailComponent implements OnInit {
   isFavorited = false;
   favoriteId: string;
   imageDefault: string;
+  deCodeUrl = deCodeUrl;
+  isLoadingProduct: Boolean;
 
-  constructor(private _productService: ProductService, 
-      private router: Router, 
-      private route: ActivatedRoute,
-      private _userService: UserService,
-      private elRef:ElementRef,
-      private zone:NgZone,
-      private ref:ChangeDetectorRef
-    ) {
-        this.userIdKey = apiUrl.UserId;
-        this.storeId = [];
-   }
+  constructor(
+    private _productService: ProductService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private _userService: UserService,
+    private elRef: ElementRef,
+    private zone: NgZone,
+    private ref: ChangeDetectorRef
+  ) {
+    this.userIdKey = apiUrl.UserId;
+    this.storeId = [];
+    this.isLoadingProduct = true;
+  }
 
   ngOnInit() {
+    this.getProductDetail();
+  }
+  getProductDetail = () => {
     this.route.params.subscribe((params: Params) => {
-      this.productId = params["id"];
-      this.getProductDetail();
-    });
-  }
-  getProductDetail = () => {  
-    this._productService
-      .GetProductById(this.productId)
-      .subscribe((data: Response) => {
-        this.productModel = data;
-        console.log("productModel ", this.productModel);
-        this.categoryId = this.productModel.category.id;
-        console.log("categoryId", this.categoryId);
-      });
+      this.productId = deCodeUrl(params["id"]);
+      this.isLoadingProduct = true;
 
-    this._productService.GetProductById(this.productId)
-    .subscribe((data: Response) => {
-      this.productModel = data; 
-      console.log('productModel ', this.productModel);
-      this.categoryId = this.productModel.category.id;
-      console.log('categoryId', this.categoryId);
-      this.storeId.push(this.productModel.store.id);
-      console.log(this.storeId);
-    });
-
-    // Product is Favorited or not
-    this._userService
-      .getFavoriteList(localStorage.getItem(apiUrl.UserId))
-      .subscribe(response => {
-        response.forEach(element => {
-          if (element.productId === this.productId) {
-            this.favoriteId = element.id;
-            console.log("favoriteList: ", element);
-            // let Component know Change of properties and update. Same with ChangeDetectorRef
-            setTimeout(() => (this.isFavorited = true), 0);
-            return;
-          }
+      this._productService
+        .GetProductById(this.productId)
+        .subscribe((data: Response) => {
+          this.productModel = data;
+          this.isLoadingProduct = false;
+          this.categoryId = this.productModel.category.id;
+          this.storeId.push(this.productModel.store.id);
         });
-      });
-  }
 
+      // Product is Favorited or not
+      this._userService
+        .getFavoriteList(localStorage.getItem(apiUrl.UserId))
+        .subscribe(response => {
+          response.forEach(element => {
+            if (element.productId === this.productId) {
+              this.favoriteId = element.id;
+              console.log("favoriteList: ", element);
+              // let Component know Change of properties and update. Same with ChangeDetectorRef
+              setTimeout(() => (this.isFavorited = true), 0);
+              return;
+            }
+          });
+        });
+    });
+  };
 
   addFavoriteItem() {
     console.log("addFavoriteItem works");
@@ -90,20 +86,22 @@ export class ProductDetailComponent implements OnInit {
     if (this.isFavorited === false) {
       // this._userService.InsertFavoriteProduct(localStorage.getItem(this.userIdKey), this.productId, null)
       let userId = localStorage.getItem(this.userIdKey);
-      let storeIdLocal = (this.productId != null) ? null: this.storeId; // Just Get either Product or Store Id
-      let model = {'userId':userId.replace(/['"]+/g,''), 'productId': this.productId, 'storeId': storeIdLocal};
+      let storeIdLocal = this.productId != null ? null : this.storeId; // Just Get either Product or Store Id
+      let model = {
+        userId: userId.replace(/['"]+/g, ""),
+        productId: this.productId,
+        storeId: storeIdLocal
+      };
       console.log(model);
-      this._userService.InsertFavoriteProduct(model)
-      .subscribe(response => {
-          console.log("response", response);
-          this.isFavorited = true;
-          alert("Thêm mục yêu thích thành công!");
-          console.log(this.isFavorited);
+      this._userService.InsertFavoriteProduct(model).subscribe(response => {
+        console.log("response", response);
+        this.isFavorited = true;
+        alert("Thêm mục yêu thích thành công!");
+        console.log(this.isFavorited);
       });
-    }
-    else {
+    } else {
       console.log("else works");
-      alert("Đã tồn tại trong mục yêu thích"); 
+      alert("Đã tồn tại trong mục yêu thích");
       // console.log("in else: ",this.favoriteId);
       // this._userService.deleteFavoriteItem(this.favoriteId)
       //   .subscribe(response => {

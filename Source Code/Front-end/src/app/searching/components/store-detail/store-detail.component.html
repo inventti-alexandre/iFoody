@@ -77,9 +77,10 @@
         </ng-template>
 
         <ng-template [ngIf]="!isLoadingProducts">
+          <h4>Thực đơn</h4>
           <div class="col-sm-4 col-md-3 col-xs-6" *ngFor="let item of productModel">
             <div class="row">
-              <product-item [productId]="item?.product.id"></product-item>
+              <product-item [productInfo]="item"></product-item>
             </div>
           </div>
         </ng-template>
@@ -98,6 +99,7 @@
           </div>
         </ng-template>
         <ng-template [ngIf]="!isLoadingReview">
+          <h4>Đánh Giá</h4>
           <div class="col-xs-12 col-sm-12">
             <review [storeId]="storeId"></review>
           </div>
