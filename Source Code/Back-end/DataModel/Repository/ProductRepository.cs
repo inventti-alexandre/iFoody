@@ -172,6 +172,13 @@ namespace DataModel.Repository
             }
             return result;
         }
+        public int GetTotalProducts()
+        {
+            //by product
+            string sql = "select Count(1) from Products";
+            int result = _iFoodyContext.Database.SqlQuery<int>(sql).FirstOrDefault();
+            return result;
+        }
         #endregion
 
         #region private implement
@@ -232,7 +239,8 @@ namespace DataModel.Repository
             item.images = _iFoodyContext.Images.Where(x => listImagesId.Contains(x.Id)).ToList();
             return item;
         }
-        #endregion
+
+      #endregion
 
 
     }

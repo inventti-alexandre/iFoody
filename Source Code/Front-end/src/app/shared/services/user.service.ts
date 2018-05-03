@@ -45,12 +45,12 @@ export class UserService {
     this.authToken = this._authService.retriveToken();
     this.userId = localStorage.getItem("user_id");
   }
-  
+
   // Check Authenticated
   public getAuthenticated() {
    return false;
   }
-  
+
   // GET All Users
   // For Admin
   getAllUsers(): Observable<any> {
@@ -59,7 +59,7 @@ export class UserService {
       .map((response: Response) => <any>response.json())
       .catch(this.handleError);
   }
-  
+
   // GET Many Users
   // For Admin
   getManyUser(idList: string[]): Observable<any> {
@@ -85,7 +85,7 @@ export class UserService {
   getUserById(id: string): Observable<any> {
     if(id != null) {
       return this._http.get(this.getUrl + '/' + id.replace(/['"]+/g, ''))
-        .map((response: Response) => 
+        .map((response: Response) =>
           <any>response.json())
         .catch(this.handleError);
     }
@@ -98,7 +98,7 @@ export class UserService {
     if(id != null) {
       return this._http.get(this.favoriteListUrl + '/' + id.replace(/['"]+/g, ''))
         .map((response: Response) => {
-            return <any>response.json() ; 
+            return <any>response.json() ;
            })
         .catch(this.handleError);
     }
@@ -110,7 +110,7 @@ export class UserService {
     if(id != null) {
       return this._http.get(this.storeUrl + '/' + id.replace(/['"]+/g, ''))
         .map((response: Response) => {
-            return <any>response.json() ; 
+            return <any>response.json() ;
            })
         .catch(this.handleError);
     }
@@ -119,13 +119,13 @@ export class UserService {
 
   // GET Products in Store By StoreId
   getAllProductInStore(storeId: string): Observable<any> {
-    console.log("getAllProductInStore in UserService works");
-    console.log('storeId', storeId);
     if(storeId != null) {
-      console.log("inside");
       console.log(this.storeUrl + '/allProducts' + '/' + storeId.replace(/['"]+/g,''));
       return this._http.get(this.storeUrl + '/allProducts' + '/' + storeId.replace(/['"]+/g,''))
-            .map((response: Response) => <any>response.json());
+            .map((response: Response) => <any>response.json())
+            .catch((erro: any) => {
+              return Observable.of(erro);
+            })
     }
   }
 
@@ -139,7 +139,7 @@ export class UserService {
     }
   }
 
-  // POST - User Sign up 
+  // POST - User Sign up
   signUp(user: IUser): Observable<any> {
     console.log("SignUp works");
     let body = JSON.stringify(user);
@@ -154,7 +154,7 @@ export class UserService {
   // POST - User Sign In
   signIn(email: string, password: string) {
     let headers: Headers = new Headers();
-    headers.append("Authorization", "Basic " + btoa(email + ":" + password)); 
+    headers.append("Authorization", "Basic " + btoa(email + ":" + password));
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions( {headers: headers});
     console.log("SIGN IN");
@@ -163,7 +163,7 @@ export class UserService {
       .do((x: IToken) => {
         console.log(x);
           this._authService.storeToken(x.authToken);
-          this.isAuthenticated = true; 
+          this.isAuthenticated = true;
           this._authService.storeUserId(x.userId);
           // let user = this.getUserById(x.userId).map((data: Response) => data.json()).subscribe(u => u.json());
       });
@@ -174,7 +174,7 @@ export class UserService {
     console.log("uploadImage works");
     let body = JSON.stringify(model);
     let headers = new Headers();
-    headers.append("Token", this.authToken); 
+    headers.append("Token", this.authToken);
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions( {headers: headers});
 
@@ -188,14 +188,14 @@ export class UserService {
     console.log("insertReview works.");
     let body = JSON.stringify(model);
     let headers = new Headers();
-    headers.append("Token", this.authToken); 
+    headers.append("Token", this.authToken);
     headers.append("Content-Type", "application/json");
     console.log(body);
     let options = new RequestOptions( {headers: headers});
 
     return this._http.post(this.reviewUrl, body, options)
       .map((response: Response) => <any>response.json())
-      .catch(this.handleError); 
+      .catch(this.handleError);
   }
 
   // POST - Insert Comment
@@ -203,13 +203,13 @@ export class UserService {
     console.log("insertComment works.");
     let body = JSON.stringify(model);
     let headers = new Headers();
-    headers.append("Token", this.authToken); 
+    headers.append("Token", this.authToken);
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions( {headers: headers});
 
     return this._http.post(this.commentUrl, body, options)
       .map((response: Response) => <any>response.json())
-      .catch(this.handleError); 
+      .catch(this.handleError);
   }
 
   // POST - User Sign Out
@@ -222,32 +222,32 @@ export class UserService {
   // POST - Insert Favorite Product
   // InsertFavoriteProduct(userId: string, productId: string, storeId: string) {
   InsertFavoriteProduct(model: any) {
-    
+
     console.log("InsertFavoriteProduct Service works");
-    
+
     // let body = JSON.stringify({'userId': userId.replace(/['"]+/g,''), 'productId': productId, 'storeId': storeId});
     let body = JSON.stringify(model);
     console.log("body http", body);
     let headers = new Headers({'Content-Type' : 'application/json'});
-    headers.append("Token", this.authToken); 
+    headers.append("Token", this.authToken);
     let options = new RequestOptions( {headers: headers});
 
     return this._http.post(this.favoriteListUrl, body, options)
       .map((response: Response) => <any>response.json())
       .catch(this.handleError);
   }
-   
+
   // PUT - Update User
   updateUser(id: string, model: any): Observable<any> {
     console.log("Update User works");
-    console.log(id);  
+    console.log(id);
     console.log(model);
     let body = JSON.stringify(model);
     let headers = new Headers();
-    headers.append("Token", this.authToken); 
+    headers.append("Token", this.authToken);
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({headers: headers});
-    
+
     return this._http.put(this.getUrl + '/' + id.replace(/['"]+/g,''), body, options)
       .map((response: Response) =>
               // <any>response.json()
@@ -261,10 +261,10 @@ export class UserService {
   updatePassword(email: string, oldPassword: string, newPassword: string): Observable<any> {
     if(email != null && oldPassword != null && newPassword != null) {
       let headers: Headers = new Headers();
-      headers.append("Authorization", "Basic " + btoa(email + ":" + oldPassword + ":" + newPassword)); 
+      headers.append("Authorization", "Basic " + btoa(email + ":" + oldPassword + ":" + newPassword));
       headers.append("Content-Type", "application/json");
       let options = new RequestOptions( {headers: headers});
-  
+
       return this._http.put(apiUrl.ChangePassword, null, options);
     }
   }
@@ -274,10 +274,10 @@ export class UserService {
     console.log("Update Image works");
     let body = JSON.stringify(model);
     let headers = new Headers();
-    headers.append("Token", this.authToken); 
+    headers.append("Token", this.authToken);
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({headers: headers});
-    
+
     return this._http.put(this.imageUrl + '/' + id, body, options)
       .map((response: Response) => <any>response.json())
       .catch(this.handleError);
@@ -288,10 +288,10 @@ export class UserService {
     console.log("Update Store works");
     let body = JSON.stringify(model);
     let headers = new Headers();
-    headers.append("Token", this.authToken); 
+    headers.append("Token", this.authToken);
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({headers: headers});
-    
+
     return this._http.put(this.storeUrl + '/' + id, body, options)
       .map((response: Response) => <any>response.json())
       .catch(this.handleError);
@@ -302,10 +302,10 @@ export class UserService {
     console.log("Update Review works");
     let body = JSON.stringify(model);
     let headers = new Headers();
-    headers.append("Token", this.authToken); 
+    headers.append("Token", this.authToken);
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({headers: headers});
-    
+
     return this._http.put(this.reviewUrl + '/' + id, body, options)
       .map((response: Response) => <any>response.json())
       .catch(this.handleError);
@@ -316,10 +316,10 @@ export class UserService {
     console.log("Update Comment works");
     let body = JSON.stringify(model);
     let headers = new Headers();
-    headers.append("Token", this.authToken); 
+    headers.append("Token", this.authToken);
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({headers: headers});
-    
+
     return this._http.put(this.commentUrl + '/' + id, body, options)
       .map((response: Response) => <any>response.json())
       .catch(this.handleError);
@@ -330,7 +330,7 @@ export class UserService {
   deleteUser(id: string): Observable<any> {
     console.log("delete User works.");
     let headers = new Headers();
-    headers.append("Token", this.authToken); 
+    headers.append("Token", this.authToken);
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({headers: headers});
 
@@ -338,17 +338,17 @@ export class UserService {
       .map((response: Response) => <any>response.json())
       .catch(this.handleError);
   }
-  
+
   // DELETE - Favorite Item
   deleteFavoriteItem(model: any): Observable<any> {
     console.log("delete Favorite Item works.");
     let body = encodeURIComponent(JSON.stringify(model));
     console.log("body encoded", body);
     let headers = new Headers();
-    headers.append("Token", this.authToken); 
+    headers.append("Token", this.authToken);
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({headers: headers});
-    
+
     return this._http.delete(this.favoriteListUrl + '?item=' + body, options)
       .map((response: Response) => console.log("respóne", response))
       .do(x => alert("Đã xóa mục yêu thích!"))
@@ -359,7 +359,7 @@ export class UserService {
   deleteImage(id: string): Observable<any> {
     console.log("deleteImage in Userservice works.");
     let headers = new Headers();
-    headers.append("Token", this.authToken); 
+    headers.append("Token", this.authToken);
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({headers: headers});
 
@@ -372,7 +372,7 @@ export class UserService {
   deleteStore(id: string): Observable<any> {
     console.log("delete Store works.");
     let headers = new Headers();
-    headers.append("Token", this.authToken); 
+    headers.append("Token", this.authToken);
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({headers: headers});
 
@@ -385,7 +385,7 @@ export class UserService {
   deleteReview(id: string): Observable<any> {
     console.log("delete Review works.");
     let headers = new Headers();
-    headers.append("Token", this.authToken); 
+    headers.append("Token", this.authToken);
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({headers: headers});
 
@@ -398,7 +398,7 @@ export class UserService {
   deleteComment(id: string): Observable<any> {
     console.log("delete Comment works.");
     let headers = new Headers();
-    headers.append("Token", this.authToken); 
+    headers.append("Token", this.authToken);
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({headers: headers});
 

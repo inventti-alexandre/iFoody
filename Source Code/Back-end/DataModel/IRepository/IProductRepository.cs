@@ -12,5 +12,6 @@ namespace DataModel.IRepository
         List<ProductReturn> GetProductInfo();
         List<SearchReturn> Search(string input);
         List<SearchReturn> GetStoreReturnByListId(List<Guid> listStoreId);
+        int GetTotalProducts();
     }
 }

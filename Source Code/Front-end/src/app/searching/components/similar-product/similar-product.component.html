@@ -1,12 +1,37 @@
-<div class="similarProduct col-xs-6 col-sm-6" *ngFor="let similarProduct of similarProducts">
-  <div class="row">
-    <div class="similarProduct__photo col-xs-5 col-sm-5">
-      <img [src]="similarProduct.images[0]?.path" alt="similarProduct?  .name">
-    </div>
-
-    <div class="similarProduct__content  col-xs-7 col-sm-7">
-      <h3>{{ similarProduct.product.name }}<span><i class="fa fa-heart-o fa-1x"></i></span></h3>
-      <div>{{ similarProduct.product.price | currency:'vnd':4.0 }}</div>
+<div class="row similarProduct">
+  <div class="col-md-12 category__row">
+    <div class="row">
+      <ng-template [ngIf]="similarProducts.length==0 && isLoading">
+        <div class="row">
+          <div class="row no-margin" style="text-align:center">
+            <div>
+              <i class="fa fa-spinner fa-spin" style="font-size:36px"></i>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template [ngIf]="similarProducts.length==0 && !isLoading">
+        <p style="font-size: 11px; text-align: center">Không tìm thấy sản phẩm tương tự</p>
+      </ng-template>
+      <ng-template [ngIf]="similarProducts.length!=0">
+        <div class="col-sm-4 col-md-3 col-xs-6 item" *ngFor="let productInfo of similarProducts">
+          <div class="row">
+            <product-item [productInfo]="productInfo"></product-item>
+          </div>
+        </div>
+        <ng-template [ngIf]="data.currentPage<data.totalPage">
+          <ng-template [ngIf]="isLoading">
+              <div class="row no-margin" style="text-align:center">
+                <div>
+                  <i class="fa fa-spinner fa-spin" style="font-size:36px"></i>
+                </div>
+              </div>
+            </ng-template>
+          <div class="row no-margin seeMoreBtn">
+            <i (click)="seeMore(data.currentPage+1)" class="fa fa-angle-double-down" style="font-size:36px"></i>
+          </div>
+        </ng-template>
+      </ng-template>
     </div>
   </div>
 </div>

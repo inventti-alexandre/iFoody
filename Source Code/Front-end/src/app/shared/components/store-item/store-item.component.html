@@ -1,6 +1,6 @@
 <div class="store-item col-xs-12 col-sm-12" *ngIf="storeModel != null">
   <div class="image row">
-    <a [routerLink]="['/store', storeId]" (click)="getStoreDetail()">
+    <a [routerLink]="['/store', enCodeUrl(storeId)]" (click)="getStoreDetail()">
       <img [src]="storeModel.images[0].path" alt="Store">
     </a>
   </div>
@@ -8,6 +8,6 @@
   <bs-rating [rating]="storeModel.rating" [ratingCount]="storeModel.ratingCount"></bs-rating>
 
   <h4>{{ storeModel.store.name }}</h4>
-  
+
   <!-- <h5>{{ store.price | currency:'vnd':4.0}}</h5> -->
 </div>

@@ -29,3 +29,18 @@
 .similarProduct__content div :last-child {
   margin-bottom: 0;
 }
+
+@media only screen and (max-width: 500px) {
+  .similarProduct .item {
+    width: 100% !important;
+  }
+}
+
+.similarProduct .seeMoreBtn {
+  float: right;
+  cursor: pointer;
+}
+
+.similarProduct .seeMoreBtn i:hover {
+  color: #337ab7;
+}

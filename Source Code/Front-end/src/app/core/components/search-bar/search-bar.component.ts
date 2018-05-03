@@ -5,7 +5,7 @@ import { Component, OnInit, Input } from "@angular/core";
 import { SearchService } from "./../../../shared/services/search.service";
 import { UserService } from "../../../shared/services/user.service";
 import * as _ from "lodash";
-import { handelImgErro,checkOpenStore } from "../../../shared/services/share-function.service";
+import { handelImgErro,checkOpenStore,enCodeUrl } from "../../../shared/services/share-function.service";
 declare var searchObject: any;
 
 @Component({
@@ -29,6 +29,7 @@ export class SearchBarComponent implements OnInit {
   searchParam: ISearchParam;
   handelImgErro = handelImgErro;
   checkOpenStore = checkOpenStore;
+  enCode = enCodeUrl;
 
   constructor(
     private router: Router,
@@ -155,7 +156,6 @@ export class SearchBarComponent implements OnInit {
       queryParams: { name: this.searchString, districts: districts, page: this.defaultPageResult}
     });
   }
-
   chooseDistrict=(event)=>{
     if(event.checked){
       this.searchParam.districtList.push(event.source.value)

@@ -10,9 +10,9 @@ declare var ratingObject: any;
   styleUrls: ['./bs-rating.component.scss']
 })
 export class BsRatingComponent implements OnInit, AfterViewInit {
- 
-  @Input('rating') rating;  
-  @Input('ratingCount') ratingCount: number;  
+
+  @Input('rating') rating;
+  @Input('ratingCount') ratingCount: number;
   @Input('id') id: any;
 
   public max = 5;
@@ -21,13 +21,13 @@ export class BsRatingComponent implements OnInit, AfterViewInit {
   isFair: boolean; // "fair" for rating which greater than 4.0
   isMedium: boolean; // "medium" for rating which equal to or greater than 3.5
   isBad: boolean; // "bad" for rating which less than 3.5
- 
+
   public overStar:number;
   // public percent:number;
   constructor (
       private elementRef: ElementRef,
-      private _productService: ProductService, 
-      private _http: Http, 
+      private _productService: ProductService,
+      private _http: Http,
       private route: ActivatedRoute,
       private router: Router) {
     // this.ratingCount = 0;
@@ -41,7 +41,7 @@ export class BsRatingComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.ratingCount = (this.ratingCount > 0) ? this.ratingCount : 0;
   }
-  
+
   ngAfterViewInit() {
     ratingObject.removeBorderLine();
   }
@@ -64,25 +64,25 @@ export class BsRatingComponent implements OnInit, AfterViewInit {
   // public resetStar():void {
   //   this.overStar = void 0;
   // }
-  
+
   // currentRate: number;
   // ratingNumber: number;
   // max = 5;
- 
-  
-  
+
+
+
 
   // // modify variable for setting color to rating
   // private getStatus() {
   //   if (this.currentRate >= 4.5) {this.isGood = true;}
   //   else if (this.currentRate >= 4.0) {this.isFair = true;}
-  //   else if (this.currentRate >= 3.5) {this.isMedium = true;}  
+  //   else if (this.currentRate >= 3.5) {this.isMedium = true;}
   //   else  {this.isBad = true;}
   // }
   private getStatus() {
     if (this.rating >= 4.5) {this.isGood = true;}
     else if (this.rating >= 4.0) {this.isFair = true;}
-    else if (this.rating >= 3.5) {this.isMedium = true;}  
+    else if (this.rating >= 3.5) {this.isMedium = true;}
     else  {this.isBad = true;}
   }
 }

@@ -29,7 +29,7 @@ import * as apiUrl from '../../../../constant/apiUrl';
 import { setTimeout } from 'timers';
 import { ActivatedRoute, Params, Router, NavigationEnd } from '@angular/router';
 import { StoreService } from '../../../../shared/services/store.service';
-
+import { enCodeUrl } from "../../../../shared/services/share-function.service";
 @Component({
   selector: 'profile',
   templateUrl: './profile.component.html',
@@ -45,6 +45,7 @@ export class ProfileComponent implements OnInit, AfterViewChecked{
   store: any;
   query_params: Params;
   @Input() childComponent;
+  enCodeUrl = enCodeUrl;
 
   constructor(
     private _profileService: ProfileService,
@@ -66,7 +67,7 @@ export class ProfileComponent implements OnInit, AfterViewChecked{
               this.store = result;
             });
       });
-   
+
     this.userId = localStorage.getItem(apiUrl.UserId).replace(/['"]+/g, '');
   }
 
@@ -101,7 +102,7 @@ export class ProfileComponent implements OnInit, AfterViewChecked{
     }
     if(event.target.id === 'store-detail') {
       console.log("store-detail access");
-      this.router.navigate(['store', this.storeId]);
+      this.router.navigate(['store', enCodeUrl(this.storeId)]);
     }
   }
 }
