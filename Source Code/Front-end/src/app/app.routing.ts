@@ -53,6 +53,15 @@ const routes: Routes = [
     },
     {
         path: 'admin',
+        redirectTo: 'admin/profile',
+        pathMatch: 'full'
+    },
+    {
+        path: 'admin/:option',
+        component: AdminComponent
+    },
+    {
+        path: 'admin/:option/:id?',
         component: AdminComponent
     },
     {

@@ -1,12 +1,12 @@
 .admin-profile{
     width: 100%;
-    background-color: wheat;
+    background-color: darkslategrey;
     .control-label{
         text-align: right;
     }
     h2{
         text-align: center;
-        color: #1d89e6;
+        color: white;
     }
     a{
         font-style: italic;
@@ -39,6 +39,7 @@
     }
     .changePass{
         text-align: right;
+        color: white;
     }
 }
 

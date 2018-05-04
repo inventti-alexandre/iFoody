@@ -38,8 +38,8 @@ namespace WebApi.ApiController
         {
             try
             {
-                var store = _storeService.GetAllStore();
-                if (store == null)
+                var store = _storeService.GetAllStore().GroupBy(x => x.CategoryId);
+                if (store.Any())
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not Found Store");
                 }
@@ -139,6 +139,83 @@ namespace WebApi.ApiController
                 return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Got Exception");
             }
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No Review found for this Store");
+        }
+
+        // Get Store By Category Id
+        [HttpGet]
+        [Route("category/{id?}")]
+        public HttpResponseMessage GetStoreByCategoryId(Guid categoryId)
+        {
+            try
+            {
+                var stores = _storeService.GetStoreByCategoryId(categoryId).ToList();
+                if (!stores.Any())
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not Found Stores");
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, stores);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Expectation Failed");
+            }
+        }
+
+        // Get Store By District, City
+        [HttpGet]
+        [Route("{city?}/{district?}")]
+        public HttpResponseMessage GetStoreByDistrict(string city, string district)
+        {
+            try
+            {
+                var stores = _storeService.GetStoreByDistrict(city, district).ToList();
+                if (!stores.Any())
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not Found Stores");
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, stores);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Expectation Failed");
+            }
+        }
+
+        // Get Store By Name
+        [HttpGet]
+        [Route("{name?}")]
+        public HttpResponseMessage GetStoreByName(string name)
+        {
+            try
+            {
+                var stores = _storeService.GetStoreByName(name).ToList();
+                if (!stores.Any())
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not Found Stores");
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, stores);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Expectation Failed");
+            }
+        }
+
+        // Get Count of Total Stores
+        [HttpGet]
+        [Route("count")]
+        public HttpResponseMessage GetCountOfTotalStores()
+        {
+            try
+            {
+                var count = _storeService.GetAllStore().Count();
+                return Request.CreateResponse(HttpStatusCode.OK, count);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Got Exception");
+            }
+
         }
 
         // Delete Store

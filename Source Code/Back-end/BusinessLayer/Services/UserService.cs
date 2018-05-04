@@ -73,6 +73,7 @@ namespace BusinessLayer.Services
             }
         }
 
+
         // Update HasStore Variable after Openning Store
         public bool UpdateHasStoreProperty(Guid userId)
         {

@@ -93,6 +93,7 @@
 }
 
 .storeDetail__map map {
+  height: 120%;
   margin-bottom: 0 !important;
 }
 

@@ -1,6 +1,6 @@
 .admin-profile {
   width: 100%;
-  background-color: wheat;
+  background-color: darkslategrey;
 }
 
 .admin-profile .control-label {
@@ -9,7 +9,7 @@
 
 .admin-profile h2 {
   text-align: center;
-  color: #1d89e6;
+  color: white;
 }
 
 .admin-profile a {
@@ -46,4 +46,5 @@
 
 .admin-profile .changePass {
   text-align: right;
+  color: white;
 }

@@ -1,3 +1,4 @@
+import { AuthService } from './../../shared/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminProductComponent implements OnInit {
   storeName = "Hot & Cold";
+  totalProducts: number;
   listProducts =[
     {
       avatar:"https://media.cooky.vn/images/blog-2016/fan-cuong-tra-sua-cung-chua-chac-biet-het-7-su-that-thu-vi-nay-1.jpg",
@@ -79,9 +81,23 @@ export class AdminProductComponent implements OnInit {
       description:"Sản phẩm thích hợp cho sinh viên"
     },
   ];
-  constructor() { }
+  constructor(private _authService: AuthService) {
+    this.totalProducts = 0;
+   }
 
   ngOnInit() {
+    this._authService.getCountOfTotalProducts()
+      .subscribe(result => {
+        console.log('result Products', result);
+        this.totalProducts = result;
+      });
+
+    this._authService.getAllUsers()
+      .subscribe(data => {
+        console.log('getAllUsers Data return', data);
+        this.listProducts = [];
+        this.listProducts.push(data);
+      });
   }
 
 }

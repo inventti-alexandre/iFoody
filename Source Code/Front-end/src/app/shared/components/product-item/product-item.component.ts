@@ -46,7 +46,7 @@ export class ProductItemComponent implements OnInit {
       this.productId = this.productInfo.product.id;
       this.productModel = this.productInfo;
     }
-  };
+  }
 
   getProductDetail() {
     console.log("getProductDetail works");

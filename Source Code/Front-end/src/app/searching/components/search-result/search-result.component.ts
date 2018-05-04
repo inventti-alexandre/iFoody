@@ -114,7 +114,8 @@ export class SearchResultComponent implements OnInit {
     let filterByRating = this.searchParam.filterOption.rating.toString();
     let filterByCategories = this.searchParam.categoriesListId.length.toString();
     this.router1.navigate(["/search"], {
-      queryParams: { name: this.searchParam.searchString, districts: districts, filterByLocation: filterByLocation, filterByRating: filterByRating, filterByCategories: filterByCategories, page: page}
+      queryParams: { name: this.searchParam.searchString, districts: districts, filterByLocation:
+         filterByLocation, filterByRating: filterByRating, filterByCategories: filterByCategories, page: page}
     });
     // this.getParam();
   }

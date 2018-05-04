@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'admin-user',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin-user.component.scss']
 })
 export class AdminUserComponent implements OnInit {
+  totalUsers: number;
   listUsers=[
     {
       name:"Meo Nguyen",
@@ -62,9 +64,23 @@ export class AdminUserComponent implements OnInit {
       day:"22/12/2012",
     }
   ];
-  constructor() { }
+  constructor(private _authService: AuthService) { 
+    this.totalUsers = 0;
+  }
 
   ngOnInit() {
+    this._authService.getCountOfTotalUsers()
+      .subscribe(result => {
+        console.log('result USers', result);
+        this.totalUsers = result;
+      });
+    
+    this._authService.getAllUsers()
+      .subscribe(data => {
+        console.log('getAllUsers Data return', data);
+        this.listUsers = [];
+        this.listUsers.push(data);
+      });
   }
 
 }

@@ -2,8 +2,18 @@
 <html lang="en">
 
 <head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-117555285-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-117555285-1');
+  </script>
   <meta charset="utf-8">
-  <title>IFoody</title>
+  <meta name="description" CONTENT="Địa điểm ăn uống, ẩm thực tại TP. HCM - Nơi chia sẻ và đánh giá địa điểm, với hàng ngàn địa điểm về ẩm thực, giải trí cùng hàng ngàn bình luận. Tham gia để chia sẻ trải nghiệm với cộng đồng.">
+  <title>iFoody - Ẩm thực & Giải trí</title>
   <base href="/">
   <link href="https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans|Roboto" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,13 +24,403 @@
   <script src="./assets/lib/lib.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/ngx-bootstrap/datepicker/bs-datepicker.css">
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoFTnB4okHik62ntJRxqyiBtad34IZAsw">
-    </script>
-    <script src="./assets/lib/myMap.js"></script>
+  </script>
+  <script src="./assets/lib/myMap.js"></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-117555285-1"></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+
+<!-- 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+  
+  <link rel="stylesheet" type="text/html" href="./assets/style/chartjs-visualizations.css"> -->
+
 </head>
 
 <body class="mat-app-background">
   <!-- mat-app-background class is Angular Material prebuilt-theme -->
   <app-root></app-root>
+  
+  
+ 
+  <script>
+    (function (w, d, s, g, js, fjs) {
+      g = w.gapi || (w.gapi = {}); g.analytics = { q: [], ready: function (cb) { this.q.push(cb) } };
+      js = d.createElement(s); fjs = d.getElementsByTagName(s)[0];
+      js.src = 'https://apis.google.com/js/platform.js';
+      fjs.parentNode.insertBefore(js, fjs); js.onload = function () { g.load('analytics') };
+    }(window, document, 'script'));
+  </script>
+
+  <script>
+      var CLIENT_ID = '18172811433-ear5dh24ithkfegcqnrbq44jah9btijg.apps.googleusercontent.com';
+      gapi.analytics.ready(function() {
+        gapi.analytics.auth.authorize({
+          container: 'embed-api-auth-container',
+          clientid: CLIENT_ID
+        });
+        
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Lượt truy cập mỗi ngày trong 30 ngày gần đây
+        var viewSelector = new gapi.analytics.ViewSelector({
+          container: 'view-selector-container'
+        });
+        viewSelector.execute();
+        var dataChart = new gapi.analytics.googleCharts.DataChart({
+          query: {
+            metrics: 'ga:sessions',
+            dimensions: 'ga:date',
+            'start-date': '30daysAgo',
+            'end-date': 'yesterday'
+          },
+          chart: {
+            container: 'chart-container',
+            type: 'LINE',
+            options: {
+              width: '100%'
+            }
+          }
+        });
+        viewSelector.on('change', function(ids) {
+          dataChart.set({query: {ids: ids}}).execute();
+        });
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Quốc gia truy cập trong vòng 7 ngày gần đây
+        // Quốc gia truy cập trong vòng 30 ngày gần đây
+        var viewSelector1 = new gapi.analytics.ViewSelector({
+          container: 'view-selector-1-container'
+        });
+        var viewSelector2 = new gapi.analytics.ViewSelector({
+          container: 'view-selector-2-container'
+        });
+
+        viewSelector1.execute();
+        viewSelector2.execute();
+
+        var dataChart1 = new gapi.analytics.googleCharts.DataChart({
+          query: {
+            metrics: 'ga:sessions',
+            dimensions: 'ga:country',
+            'start-date': '7daysAgo',
+            'end-date': 'today',
+            'max-results': 10,
+            sort: '-ga:sessions'
+          },
+          chart: {
+            container: 'chart-1-container',
+            type: 'GEO'
+          }
+        });
+        var dataChart12 = new gapi.analytics.googleCharts.DataChart({
+          query: {
+            metrics: 'ga:sessions',
+            dimensions: 'ga:country',
+            'start-date': '7daysAgo',
+            'end-date': 'today',
+            'max-results': 10,
+            sort: '-ga:sessions'
+          },
+          chart: {
+            container: 'chart-12-container',
+            type: 'PIE',
+            options: {
+              width: '100%',
+              pieHole: 4/9
+            }
+          }
+        });
+
+        var dataChart2 = new gapi.analytics.googleCharts.DataChart({
+          query: {
+            metrics: 'ga:sessions',
+            dimensions: 'ga:country',
+            'start-date': '30daysAgo',
+            'end-date': 'today',
+            'max-results': 10,
+            sort: '-ga:sessions'
+          },
+          chart: {
+            container: 'chart-2-container',
+            type: 'GEO',
+          }
+        });
+        var dataChart22 = new gapi.analytics.googleCharts.DataChart({
+          query: {
+            metrics: 'ga:sessions',
+            dimensions: 'ga:country',
+            'start-date': '30daysAgo',
+            'end-date': 'today',
+            'max-results': 10,
+            sort: '-ga:sessions'
+          },
+          chart: {
+            container: 'chart-22-container',
+            type: 'PIE',
+            options: {
+              width: '100%',
+              pieHole: 4/9
+            }
+          }
+        });
+
+        viewSelector1.on('change', function(ids) {
+          dataChart1.set({query: {ids: ids}}).execute();
+          dataChart12.set({query: {ids: ids}}).execute();
+        });
+        viewSelector2.on('change', function(ids) {
+          dataChart2.set({query: {ids: ids}}).execute();
+          dataChart22.set({query: {ids: ids}}).execute();
+        });
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Trình duyệt sử dụng trong 7 ngày gần đây
+        var mainChart = new gapi.analytics.googleCharts.DataChart({
+          query: {
+            'dimensions': 'ga:operatingSystem,ga:operatingSystemVersion,ga:browser,ga:browserVersion',
+            'metrics': 'ga:sessions',
+            'sort': '-ga:sessions',
+            'max-results': '6'
+          },
+          chart: {
+            type: 'TABLE',
+            container: 'main-chart-container',
+            options: {
+              width: '100%'
+            }
+          }
+        });
+        var breakdownChart = new gapi.analytics.googleCharts.DataChart({
+          query: {
+            'dimensions': 'ga:date',
+            'metrics': 'ga:sessions',
+            'start-date': '7daysAgo',
+            'end-date': 'yesterday'
+          },
+          chart: {
+            type: 'LINE',
+            container: 'breakdown-chart-container',
+            options: {
+              width: '100%'
+            }
+          }
+        });
+        var mainChartRowClickListener;
+        viewSelector.on('change', function(ids) {
+          var options = {query: {ids: ids}};
+          if (mainChartRowClickListener) {
+            google.visualization.events.removeListener(mainChartRowClickListener);
+          }
+          mainChart.set(options).execute();
+          breakdownChart.set(options);
+          if (breakdownChart.get().query.filters) breakdownChart.execute();
+        });
+        mainChart.on('success', function(response) {
+          var chart = response.chart;
+          var dataTable = response.dataTable;
+          mainChartRowClickListener = google.visualization.events
+              .addListener(chart, 'select', function(event) {
+                if (!chart.getSelection().length) return;
+                var row =  chart.getSelection()[0].row;
+                var browser =  dataTable.getValue(row, 0);
+                var options = {
+                  query: {
+                    filters: 'ga:browser==' + browser
+                  },
+                  chart: {
+                    options: {
+                      title: browser
+                    }
+                  }
+                };
+                breakdownChart.set(options).execute();
+          });
+        });
+       
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Tỷ lệ người dùng quay trở lại Website
+        var viewSelector3 = new gapi.analytics.ViewSelector({
+          container: 'view-selector-3-container'
+        });
+        viewSelector3.execute();
+
+        var dataChart3 = new gapi.analytics.googleCharts.DataChart({
+          query: {
+            metrics: 'ga:users',
+            dimensions: 'ga:userType',
+          },
+          chart: {
+            container: 'chart-3-container',
+            type: 'PIE',
+            options: {
+              width: '100%',
+              pieHole: 4/9
+            }
+          }
+        })
+
+        viewSelector3.on('change', function(ids) {
+          dataChart3.set({query: {ids: ids}}).execute();
+        });
+        
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Thời gian Onsite
+        var viewSelector4 = new gapi.analytics.ViewSelector({
+          container: 'view-selector-4-container'
+        });
+        viewSelector4.execute();
+        var dataChart4 = new gapi.analytics.googleCharts.DataChart({
+          query: {
+            metrics: 'ga:sessions,ga:avgSessionDuration',
+            dimensions: 'ga:date',
+            'start-date': '14daysAgo',
+            'end-date': 'today'
+          },
+          chart: {
+            container: 'chart-4-container',
+            type: 'LINE',
+            options: {
+              width: '100%'
+            }
+          }
+        });
+        viewSelector4.on('change', function(ids) {
+          dataChart4.set({query: {ids: ids}}).execute();
+        });
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Tỷ lệ người dùng truy cập lại trong 7 ngày
+        var viewSelector5 = new gapi.analytics.ViewSelector({
+          container: 'view-selector-5-container'
+        });
+        viewSelector5.execute();
+        var dataChart5 = new gapi.analytics.googleCharts.DataChart({
+          query: {
+            metrics: 'ga:7dayUsers',
+            dimensions: 'ga:date',
+            'end-date': 'today'
+          },
+          chart: {
+            container: 'chart-5-container',
+            type: 'LINE'
+          }
+        });
+        viewSelector5.on('change', function(ids) {
+          dataChart5.set({query: {ids: ids}}).execute();
+        });
+     
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Nguồn gốc truy cập
+        var viewSelector6 = new gapi.analytics.ViewSelector({
+          container: 'view-selector-6-container'
+        });
+        viewSelector6.execute();
+        var dataChart6 = new gapi.analytics.googleCharts.DataChart({
+          query: {
+            metrics: 'ga:sessions,ga:pageviews,ga:sessionDuration',
+            dimensions: 'ga:source,ga:medium',
+            'start-date': '14daysAgo',
+            'end-date': 'today',
+            // sort: '-ga:sessions'
+          },
+          chart: {
+            container: 'chart-6-container',
+            type: 'TABLE',
+            options: {
+              width: '100%'
+            }
+          }
+        });
+        viewSelector6.on('change', function(ids) {
+          dataChart6.set({query: {ids: ids}}).execute();
+        });
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Top Nội Dung
+        var viewSelector7 = new gapi.analytics.ViewSelector({
+          container: 'view-selector-7-container'
+        });
+        viewSelector7.execute();
+        var dataChart7 = new gapi.analytics.googleCharts.DataChart({
+          query: {
+            metrics: 'ga:pageviews,ga:uniquePageviews,ga:timeOnPage,ga:bounces,ga:entrances',
+            dimensions: 'ga:pagePath',
+            'start-date': '14daysAgo',
+            'end-date': 'today',
+            'max-results': 10,
+            sort: '-ga:pageviews',
+          },
+          chart: {
+            container: 'chart-7-container',
+            type: 'TABLE',
+            options: {
+              width: '100%'
+            }
+          }
+        });
+        viewSelector7.on('change', function(ids) {
+          dataChart7.set({query: {ids: ids}}).execute();
+        });
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Exit Page
+        var viewSelector8 = new gapi.analytics.ViewSelector({
+          container: 'view-selector-8-container'
+        });
+        viewSelector8.execute();
+        var dataChart8 = new gapi.analytics.googleCharts.DataChart({
+          query: {
+            metrics: 'ga:exits,ga:pageviews',
+            dimensions: 'ga:exitPagePath',
+            'start-date': '14daysAgo',
+            'end-date': 'today',
+            'max-results': 10,
+            sort: '-ga:exits',
+          },
+          chart: {
+            container: 'chart-8-container',
+            type: 'TABLE',
+            options: {
+              width: '100%'
+            }
+          }
+        });
+        viewSelector8.on('change', function(ids) {
+          dataChart8.set({query: {ids: ids}}).execute();
+        });
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Exit Page
+        var viewSelector9 = new gapi.analytics.ViewSelector({
+          container: 'view-selector-9-container'
+        });
+        viewSelector9.execute();
+        var dataChart9 = new gapi.analytics.googleCharts.DataChart({
+          query: {
+            metrics: 'ga:sessions,ga:pageviews,ga:sessionDuration',
+            dimensions: 'ga:mobileDeviceInfo,ga:source',
+            'start-date': '14daysAgo',
+            'end-date': 'today',
+            'max-results': 10,
+            'segment': 'gaid::-14'
+          },
+          chart: {
+            container: 'chart-9-container',
+            type: 'TABLE',
+            options: {
+              width: '100%'
+            }
+          }
+        });
+        viewSelector9.on('change', function(ids) {
+          dataChart9.set({query: {ids: ids}}).execute();
+        });
+
+      });
+  </script>
+ 
 </body>
 
 </html>

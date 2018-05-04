@@ -1,6 +1,6 @@
 <div class="admin-product col-sm-12 col-xs-12">
   <h2>{{storeName}}</h2>
-
+  <h4>Tổng số User: {{ totalProducts }}</h4>
   <div *ngFor="let product of listProducts; let i=index" class="store">
     <div class="row">
         <admin-product-item [productInfo]="product" [index]="i"></admin-product-item>  

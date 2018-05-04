@@ -130,6 +130,7 @@ export class StoreProfileComponent implements OnInit, ProfileChildren, AfterView
     }
   }
 
+  // Update Store
   onSubmit() {
     console.log('this.fileUploadComponent', this.fileUploadComponent);
     this.fileUploadComponent.forEach(component => {

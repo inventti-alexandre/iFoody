@@ -53,7 +53,7 @@ namespace WebApi.ApiController
             _locationService = locationService;
         }
 
-        // Get api/user
+        // Get api/users/getAll
         [HttpGet]
         [Route("getAll")]
         // [AuthorizationRequired]
@@ -80,7 +80,7 @@ namespace WebApi.ApiController
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Users not found");
         }
 
-        // GET api/user/5
+        // GET api/users/5
         [HttpGet]
         [Route("{id?}")]
         public HttpResponseMessage Get(Guid id)
@@ -98,6 +98,23 @@ namespace WebApi.ApiController
                 return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Got Exception");
             }
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No User found for this id");
+
+        }
+
+        // Get Count of Total Users
+        [HttpGet]
+        [Route("count")]
+        public HttpResponseMessage GetCountOfTotalUsers()
+        {
+            try
+            {
+                var count = _userService.GetAllUsers().Count();
+                return Request.CreateResponse(HttpStatusCode.OK, count);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Got Exception");
+            }
 
         }
 

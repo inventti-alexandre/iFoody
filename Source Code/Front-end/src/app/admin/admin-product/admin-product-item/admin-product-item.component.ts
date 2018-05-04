@@ -36,7 +36,6 @@ export class AdminProductItemComponent implements OnInit {
     return;
   }
   ngOnInit() {
-    //console.log(this.productInfo);
   }
 
 }

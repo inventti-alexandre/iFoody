@@ -88,6 +88,7 @@ export class ProfileComponent implements OnInit, AfterViewChecked{
       }
     });
   }
+  
   loadChildrenComponent(event?) {
     this.childComponent = event.target.id;
     if(event.target.id === 'overview') {

@@ -1,6 +1,5 @@
-var currentPositionGlobal;
 // Modal Login, SignUp
-var currentLocationGlobal;
+// var currentLocationGlobal;
 
 function modalOpen() {
     $document.find('body').addClass('modal-open');
@@ -12,20 +11,6 @@ $(document).on("hidden.bs.modal",".sub-modal.modal", function () {
 
 // Active Class in All navbar
 $(document).ready(function() {
-  // console.log("document ready");
-  // if (navigator.geolocation) {
-  //   console.log("in if navigator");
-  //   navigator.geolocation.getCurrentPosition(function(position) {
-  //     console.log("in getCurrentPosition");
-  //     var pos = {
-  //       lat: position.coords.latitude,
-  //       lng: position.coords.longitude
-  //   };
-  //   currentPositionGlobal = pos;
-  //   console.log(pos);})
-  // }
-  // console.log('afterloading' ,currentPositionGlobal);
-  
   $(".nav a").on("click", function(){
     $(".nav").find(".active").removeClass("active");
     $(this).parent().addClass("active");
@@ -134,22 +119,22 @@ var deleteImageObject = (function() {
   }
 })(deleteImageObject || {})
 
-var currentLocationObject = (function() {
-  return {
-    get: function() {
-      console.log("get current location in LIB.JS");
-      if (navigator.geolocation) {
-        console.log("navigator.geolocation ok");
-        navigator.geolocation.getCurrentPosition(success, error);
-        console.log("currentLocationGlobal -", currentLocationGlobal, "-123");
-        return currentLocationGlobal;
-      }
-      else {
-        console.log("ko vao navigator.geolocation");
-      }
-    }
-  }
-})(currentLocationObject || {})
+// var currentLocationObject = (function() {
+//   return {
+//     get: function() {
+//       console.log("get current location in LIB.JS");
+//       if (navigator.geolocation) {
+//         console.log("navigator.geolocation ok");
+//         navigator.geolocation.getCurrentPosition(success, error);
+//         console.log("currentLocationGlobal -", currentLocationGlobal, "-123");
+//         return currentLocationGlobal;
+//       }
+//       else {
+//         console.log("ko vao navigator.geolocation");
+//       }
+//     }
+//   }
+// })(currentLocationObject || {})
 
 function success(position) {
   $.ajax({
@@ -169,3 +154,4 @@ function success(position) {
 function error() {
   console.log("error");
 }
+

@@ -25,6 +25,7 @@ import { AdminUserComponent } from './admin-user/admin-user.component';
 import { UserItemComponent } from './admin-user/user-item/user-item.component';
 import { AdminProductComponent } from './admin-product/admin-product.component';
 import { AdminProductItemComponent } from './admin-product/admin-product-item/admin-product-item.component';
+import { AdminStatisticComponent } from './admin-statistic/admin-statistic.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -82,6 +83,8 @@ import { AdminProductItemComponent } from './admin-product/admin-product-item/ad
     AdminProductItemComponent,
 
     AdminComponent,
+
+    AdminStatisticComponent,
 
 
   ],

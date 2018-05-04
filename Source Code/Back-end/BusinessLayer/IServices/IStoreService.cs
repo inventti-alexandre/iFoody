@@ -15,8 +15,17 @@ namespace BusinessLayer.IServices
         // Get One Store By Id
         StoreDto GetStoreById(Guid? id);
 
+        // Get Stores By District
+        IEnumerable<StoreBusinessEntity> GetStoreByDistrict(string city, string district);
+
+        // Get Stores By Name
+        IEnumerable<StoreBusinessEntity> GetStoreByName(string name);
+
         // Get Store By User Id
         StoreBusinessEntity GetStoreByUserId(Guid userId);
+
+        // Get Store By Category Id
+        IEnumerable<StoreBusinessEntity> GetStoreByCategoryId(Guid id);
 
         // Get Store's Address
         dynamic GetStoreAddress(List<Guid> ids);

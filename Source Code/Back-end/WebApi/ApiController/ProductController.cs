@@ -49,7 +49,7 @@ namespace WebApi.ApiController
         // Tuan made
         // GET api/getAllProductsWithoutDto
         [HttpGet]
-        [Route("api/getAllProductsWithoutDto")]
+        [Route("api/product/getAllProductsWithoutDto")]
         public IHttpActionResult GetAllProductsWithoutDto()
         {
             try
@@ -147,7 +147,7 @@ namespace WebApi.ApiController
 
         // Get api/product/?categoryId=
         [HttpGet]
-        [Route("api/product/category/{categoryId}")]
+        [Route("api/product/category/{categoryId?}")]
         public HttpResponseMessage GetProductByCategoryId(Guid categoryId)
         {
             try
@@ -188,6 +188,7 @@ namespace WebApi.ApiController
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No Review found for this Product");
         }
 
+
         // Tuan made
         // GET api/user/review
         [HttpGet]
@@ -212,6 +213,24 @@ namespace WebApi.ApiController
             }
 
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Reviews not found");
+        }
+
+        // Tuan made
+        // Get Count of Total Stores
+        [HttpGet]
+        [Route("count")]
+        public HttpResponseMessage GetCountOfTotalProducts()
+        {
+            try
+            {
+                var count = _productService.GetAllProductsWithoutDto().Count();
+                return Request.CreateResponse(HttpStatusCode.OK, count);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotImplemented, "Got Exception");
+            }
+
         }
 
         //POST api/product

@@ -16,8 +16,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BsRatingComponent } from './components/bs-rating/bs-rating.component';
 import { ResultItemComponent } from './components/result-item/result-item.component';
-import { LoadingPageComponent } from './components/loading-page/loading-page.component';
-import { NotResultComponent } from './components/not-result/not-result.component';
 
 
 @NgModule({
@@ -36,9 +34,7 @@ import { NotResultComponent } from './components/not-result/not-result.component
     NotFoundComponent,
     BsRatingComponent,
     StoreItemComponent,
-    ResultItemComponent,
-    LoadingPageComponent,
-    NotResultComponent,
+    ResultItemComponent
   ],
   declarations: [
     BsBreadcrumbComponent,
@@ -48,8 +44,6 @@ import { NotResultComponent } from './components/not-result/not-result.component
     BsRatingComponent,
     StoreItemComponent,
     ResultItemComponent,
-    LoadingPageComponent,
-    NotResultComponent,
   ],
   providers: [
     UserService,

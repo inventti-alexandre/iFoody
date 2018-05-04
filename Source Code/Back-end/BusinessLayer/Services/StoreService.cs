@@ -139,6 +139,28 @@ namespace BusinessLayer.Services
             return null;
         }
 
+        // Get Store By Category Id
+        public IEnumerable<StoreBusinessEntity> GetStoreByCategoryId(Guid id)
+        {
+            try
+            {
+                if (id != null && id != Guid.Empty)
+                {
+                    var stores = _unitOfWork.Stores.GetManyQueryable(i => i.CategoryId == id).ToList();
+
+                    Mapper.CreateMap<List<Store>, List<StoreBusinessEntity>>();
+                    var storeEntity = Mapper.Map<List<Store>, List<StoreBusinessEntity>>(stores);
+                    return storeEntity;
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+
+            return null;
+        }
+
         // Get One Store By UserId
         public StoreBusinessEntity GetStoreByUserId(Guid userId)
         {
@@ -163,8 +185,48 @@ namespace BusinessLayer.Services
             {
                 return null;
             }
+        }
 
-            return null;
+        // Get Stores By District
+        public IEnumerable<StoreBusinessEntity> GetStoreByDistrict(string city, string district)
+        {
+            try
+            {
+                if (district != null && city != null)
+                {
+                    var stores =
+                        _unitOfWork.Stores.GetManyQueryable(x => x.District == district && x.City == city).ToList();
+                    Mapper.CreateMap<List<Store>, List<StoreBusinessEntity>>();
+                    var storeEntity = Mapper.Map<List<Store>, List<StoreBusinessEntity>>(stores);
+                    return storeEntity;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        // Get Stores By Name
+        public IEnumerable<StoreBusinessEntity> GetStoreByName(string name)
+        {
+            try
+            {
+                if (name != null)
+                {
+                    var stores =
+                        _unitOfWork.Stores.GetManyQueryable(x => x.Name == name).ToList();
+                    Mapper.CreateMap<List<Store>, List<StoreBusinessEntity>>();
+                    var storeEntity = Mapper.Map<List<Store>, List<StoreBusinessEntity>>(stores);
+                    return storeEntity;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         // No USE!!!!! Get Store's Address from IDs list

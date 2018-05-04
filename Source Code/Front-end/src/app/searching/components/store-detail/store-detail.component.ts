@@ -5,6 +5,9 @@ import { Component, OnInit, Output } from '@angular/core';
 import { ImageDomain } from '../../../constant/apiUrl';
 import { imageDefault } from './../../../constant/global';
 declare var deleteImageObject: any;
+declare var mainStoreImage: any;
+declare var nameStore: any;
+declare var addressStore: any;
 
 @Component({
   selector: 'store-detail',
@@ -20,6 +23,7 @@ export class StoreDetailComponent implements OnInit {
   reviewList: any;
   imageDefault: any;
   imageDomain:any;
+  productsQuantity: any;
 
   constructor(
     private _storeService: StoreService, 
@@ -30,6 +34,7 @@ export class StoreDetailComponent implements OnInit {
     window.scrollTo(0,0);
     this.imageDefault = imageDefault;
     this.imageDomain = ImageDomain;
+    this.productsQuantity = 0;
     this.storeInfoModel = {
       address: "...................",
       categoryId: "...................",
@@ -57,6 +62,7 @@ export class StoreDetailComponent implements OnInit {
         .subscribe(data => {
           console.log("storeInfoModel", data);
           this.storeInfoModel = data;
+          
           if(data.userId === localStorage.getItem('user_id').replace(/['"]+/g, '')) {
             console.log("is Store Manager");
           }
@@ -68,10 +74,23 @@ export class StoreDetailComponent implements OnInit {
             image.path = image.path.replace('~/','');
           });
 
+          if(this.storeInfoModel != null && this.storeInfoModel.images.length > 0) {
+            mainStoreImage = this.imageDomain + data.images[0].path;
+            nameStore = this.storeInfoModel.name;
+            addressStore = this.storeInfoModel.address + ', ' + this.storeInfoModel.district;
+          }
+          else {
+            mainStoreImage = this.imageDefault;
+            nameStore = "Cửa hàng";
+            addressStore = "";
+          }
+
+
           this._userService.getAllProductInStore(params['id'])
             .subscribe(result => {
               console.log("data return from GetALlProductInStore: ", result);
               this.productModel = result;
+              this.productsQuantity = result.length;
             },
             error => {
               console.log(error);

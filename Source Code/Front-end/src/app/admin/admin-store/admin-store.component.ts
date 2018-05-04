@@ -1,4 +1,6 @@
+import { AuthService } from './../../shared/services/auth.service';
 import { Component, OnInit } from '@angular/core';
+import { StoreService } from '../../shared/services/store.service';
 
 @Component({
   selector: 'admin-store',
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
   
 })
 export class AdminStoreComponent implements OnInit {
-
+  totalStores: number;
   listStore = [
     {
       type:"Trà sữa"
@@ -40,9 +42,23 @@ export class AdminStoreComponent implements OnInit {
       type: "Quán cơm"
     },
   ];
-  constructor() { }
+  constructor(private _authService: AuthService) { 
+    this.totalStores = 0;
+  }
 
   ngOnInit() {
+    this._authService.getCountOfTotalStores()
+      .subscribe(result => {
+        console.log("Total Stores result", result);
+        this.totalStores = result;
+      });
+    
+    this._authService.getAllStores()
+      .subscribe(data => {
+        console.log('getAllStore Data return', data);
+        this.listStore = [];
+        this.listStore.push(data);
+      });
   }
 
 }

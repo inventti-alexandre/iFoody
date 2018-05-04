@@ -345,6 +345,7 @@ export class OpenStoreComponent implements OnInit {
       .subscribe(
         response => {
             console.log('response', response);
+            alert("Mở cửa hàng thành công");
             this.router.navigate(['/profile', this.userId, 'store-profile']);
             // location.reload();
           },

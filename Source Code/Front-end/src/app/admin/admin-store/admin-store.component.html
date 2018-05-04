@@ -1,10 +1,8 @@
 <div class="admin-store col-sm-12 col-xs-12">
   <h2>Danh sách cửa hàng</h2>
-
-  <div *ngFor="let store of listStore; let i=index" class="store">
-    <div class="row">
+  <h4>Tổng số cửa hàng: {{ totalStores }}</h4>
+  <div *ngFor="let store of listStore; let i=index" class="store row">
         <store-item [type]= "store.type" [index]="i"></store-item>        
-    </div>
   </div>
   <div class="row admin-store__pagination">
       <bs-pagination></bs-pagination>

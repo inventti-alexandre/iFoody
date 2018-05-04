@@ -41,7 +41,7 @@
       </div>
 
       <div class="storeDetail__map col-xs-12 col-sm-12 col-md-3">
-        <h4 class="col-xs-12 col-sm-12 col-md-12"><span><i class="fa fa-flag-checkered fa-1x pull-right"></i></span></h4>
+        <!-- <h4 class="col-xs-12 col-sm-12 col-md-12"><span><i class="fa fa-flag-checkered fa-1x pull-right"></i></span></h4> -->
         <map [storeIds]="storeIds"></map>
         <div class="storeDetail__map__note col-xs-12 col-sm-12 col-md-12">Nhấp vào địa điểm màu đỏ để xem đường đi ngắn nhất từ vị trí hiện tại của bạn</div>
       </div>
@@ -51,6 +51,7 @@
 
     <ng-template [ngIf]="!storeManager">
       <div class="row storeDetail__menu">
+        <div style="font-style: itatlic; font-size: 1.5em">Tất cả: {{ productsQuantity }} sản phẩm</div>
         <div class="col-sm-4 col-md-3 col-xs-6" *ngFor="let item of productModel">
           <div class="row">
             <product-item [productId]="item?.product.id"></product-item>
