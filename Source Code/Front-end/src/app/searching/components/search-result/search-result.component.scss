@@ -1,9 +1,11 @@
 .searchResult {
-    margin-top: 25px;
-    border-top: 1px solid grey;
-    padding-top: 10px;
     &__pagination {
         text-align: center;
+    }
+    .resultNumber{
+      margin-top: 20px;
+      text-align: center;
+      color: #3a58fb;
     }
 }
 @media only screen and (max-width: 500px) {

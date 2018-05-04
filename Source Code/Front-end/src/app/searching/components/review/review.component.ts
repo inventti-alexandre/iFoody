@@ -17,40 +17,46 @@ export class ReviewComponent implements OnInit, AfterViewChecked{
   rerender = false; // Refresh component when submit Review
   @Input() productId: string;
   @Input() storeId: string;
-  reviewsModel: any[];
+  reviewsModel: any;
   reviewQuantity: number;
   currentUserId: string;
   currentUser: IUser;
   newRate: number;
   today: any;
   newReviewContent: string;
+  isLoading: Boolean;
+  isReviewNull: Boolean;
+  isSubmitReview: Boolean;
 
   public max = 5;
   public rate;
   public isReadonly: boolean;
- 
+
   public overStar:number;
 
-  constructor(private _productService: ProductService, 
+  constructor(private _productService: ProductService,
       private _userService: UserService,
       private _storeService: StoreService,
       private datePipe: DatePipe,
       private cdRef:ChangeDetectorRef,
       private router: Router,
-      private activatedRoute: ActivatedRoute) 
-    { 
+      private activatedRoute: ActivatedRoute)
+    {
       this.isReadonly = false;
       this.today = new Date(Date.now());
       this.currentUserId = localStorage.getItem(apiUrl.UserId);
+      this.isLoading = true;
+      this.isReviewNull = true;
+      this.isSubmitReview = false;
     }
-  
+
   ngOnInit() {
     this.getReviewsData();
     this._userService.getUserById(this.currentUserId)
       .subscribe(data => {
         this.currentUser = data;
       });
-    
+
   }
   ngAfterViewChecked() {
     ratingObject1.removeBorderLineReview();
@@ -59,8 +65,9 @@ export class ReviewComponent implements OnInit, AfterViewChecked{
   public hoveringOver(value:number):void {
     this.newRate = value;
   }
-  
+
   onSubmit() {
+    this.isSubmitReview = true;
     if(this.newRate === undefined || this.newRate <= 1) {
       this.newRate = 1;
     }
@@ -83,20 +90,37 @@ export class ReviewComponent implements OnInit, AfterViewChecked{
   }
 
   getReviewsData() {
+    if(!this.isSubmitReview){
+      this.isLoading = true;
+    }
     if(this.productId != null) {
       this._productService.GetReviewListByProductId(this.productId)
-      .subscribe(data => {
-        this.reviewsModel = data;
-        this.reviewQuantity = this.reviewsModel.length;
+      .subscribe((data: Response) => {
+        if(data.status==undefined){
+          this.reviewsModel = data;
+          this.reviewQuantity = this.reviewsModel.length;
+          this.isLoading = false;
+          this.isReviewNull = false;
+        }else{
+          this.isReviewNull = true;
+          this.isLoading = false;
+        }
       });
     }
     else if(this.storeId != null) {
       this._storeService.GetReviewListByStoreId(this.storeId)
-        .subscribe(data => {
-          this.reviewsModel = data;
-          this.reviewQuantity = this.reviewsModel.length;
+        .subscribe((data: Response) => {
+          if(data.status==undefined){
+            this.reviewsModel = data;
+            this.reviewQuantity = this.reviewsModel.length;
+            this.isLoading = false;
+            this.isReviewNull = false;
+          }else{
+            this.isReviewNull = true;
+            this.isLoading = false;
+          }
         });
     }
-  
+
   }
 }

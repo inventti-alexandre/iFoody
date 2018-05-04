@@ -1,5 +1,5 @@
 <div class="product-upload col-sm-6 col-xs-12">
-  <h2><a [routerLink]="['/store', storeId]">{{ storeName }} </a></h2>
+  <h2><a [routerLink]="['/store', enCodeUrl(storeId)]">{{ storeName }} </a></h2>
   <form [formGroup]="uploadProductForm"  (ngSubmit)="onSubmit($event)">
 
     <div>

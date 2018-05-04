@@ -1,7 +1,7 @@
 <div class="result-item col-xs-12 col-sm-12">
   <div class="row-item filter-result-item">
     <div class="ri-avatar result-image">
-      <a target="_blank" href="" [title]="item.store.name">
+      <a target="blank" href="" [routerLink]="['/store', enCodeUrl(item.store.id)]" [title]="item.store.name">
         <img [src]="item.images.length > 0 ?item.images[0].path:imageDefault" [alt]="item.store.name" (error)="handelImgErro($event)">
         <ng-template [ngIf]="item.images.length > 1">
           <div class="overlay">
@@ -19,11 +19,11 @@
 
         <div class="resname">
           <h2>
-            <a target="_blank" href="" [title]="item.store.name">{{item.store.name}}</a>
+            <a target="blank" href="" [routerLink]="['/store', enCodeUrl(item.store.id)]" [title]="item.store.name">{{item.store.name}}</a>
           </h2>
           <div class="result-address">
             <div class="address">
-              <a target="_blank" href="" [title]="item.store.address +', '+item.store.district">
+              <a target="blank" href="" [routerLink]="['/store', enCodeUrl(item.store.id)]" [title]="item.store.address +', '+item.store.district">
                 <span data-bind="text: Address">{{item.store.address}}</span>,
                 <span data-bind="text: District">{{item.store.district}}</span>,
                 <span data-bind="text: City">{{item.store.city}}</span>

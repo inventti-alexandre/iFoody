@@ -9,6 +9,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
+using NReco.CF.Taste.Impl.Model;
+using NReco.CF.Taste.Impl.Recommender;
+using NReco.CF.Taste.Impl.Similarity;
+using NReco.CF.Taste.Model;
 
 namespace BusinessLayer.Services
 {
@@ -479,6 +483,54 @@ namespace BusinessLayer.Services
                 return null;
             }
         }
+        public PagingReturnDto<ProductDto> GetSimilarProducts(Guid productId,int page, int? count)
+        {
+            try
+            {
+                var ordersDataModel = _unitOfWork.FavoriteLists.LoadProductRecommender();
+
+                // get list id of favorite view -> id of stores which user like
+                var productKey = _unitOfWork.FavoriteLists.GetProductKey(productId);
+
+                var modelWithCurrentUser = GetDataModelForNewUser(ordersDataModel, productKey);
+                var totalProducts = _unitOfWork.Products.GetTotalProducts();
+
+                var similarity = new LogLikelihoodSimilarity(modelWithCurrentUser);
+
+                // in this example, we have no preference values (scores)
+                // to get correct results 'BooleanfPref' recommenders should be used
+
+                var recommender = new GenericBooleanPrefItemBasedRecommender(modelWithCurrentUser, similarity);
+
+                var recommendedItems = recommender.Recommend(PlusAnonymousUserDataModel.TEMP_USER_ID, totalProducts, null);
+                if (recommendedItems.Any())
+                {
+                    List<Guid> productIds = new List<Guid>();
+                    foreach (var item in recommendedItems)
+                    {
+                        productIds.Add(_unitOfWork.FavoriteLists.GetProductIdByProductKey(item.GetItemID()));
+                    }
+                    var similarProducts = _unitOfWork.Products.GetProductInfo()
+                                            .Where(x=>productIds.Any(y=>y==x.product.Id)).ToList();
+                    if (similarProducts.Any())
+                    {
+                        return PagingProductDto(page, count, similarProducts);
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
         public PagingReturnDto<ProductDto> PagingAllProductsByCategory(Guid categoryId, int page, int? count)
         {
             try
@@ -591,6 +643,19 @@ namespace BusinessLayer.Services
 
 
         }
+        private IDataModel GetDataModelForNewUser(IDataModel baseModel, params long[] preferredItems)
+        {
+            var plusAnonymModel = new PlusAnonymousUserDataModel(baseModel);
+            var prefArr = new BooleanUserPreferenceArray(preferredItems.Length);
+            prefArr.SetUserID(0, PlusAnonymousUserDataModel.TEMP_USER_ID);
+            for (int i = 0; i < preferredItems.Length; i++)
+            {
+                prefArr.SetItemID(i, preferredItems[i]);
+            }
+            plusAnonymModel.SetTempPrefs(prefArr);
+            return plusAnonymModel;
+        }
+
         #endregion
 
     }

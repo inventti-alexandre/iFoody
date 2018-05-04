@@ -5,7 +5,7 @@ import { Component, OnInit, Input } from "@angular/core";
 import { SearchService } from "./../../../shared/services/search.service";
 import { UserService } from "../../../shared/services/user.service";
 import * as _ from "lodash";
-import { handelImgErro,checkOpenStore } from "../../../shared/services/share-function.service";
+import { handelImgErro,checkOpenStore,enCodeUrl } from "../../../shared/services/share-function.service";
 declare var searchObject: any;
 
 @Component({
@@ -17,6 +17,7 @@ declare var searchObject: any;
 export class SearchBarComponent implements OnInit {
   @Input("searchString") searchString;
 
+  filterDisplay: string;
   districts: any[];
   suggestionList: any[];
   userId: string;
@@ -28,12 +29,14 @@ export class SearchBarComponent implements OnInit {
   searchParam: ISearchParam;
   handelImgErro = handelImgErro;
   checkOpenStore = checkOpenStore;
+  enCode = enCodeUrl;
 
   constructor(
     private router: Router,
     private _searchService: SearchService,
     private _userService: UserService
   ) {
+    this.filterDisplay = "Chọn khu vực";
     this.searchString = "";
     this.districts = [
       1,2,3,4,5,6,7,8,9,10,11,12,
@@ -119,7 +122,7 @@ export class SearchBarComponent implements OnInit {
       });
   }
 
-  handelChangeSearchBar = event => {
+  handelChangeSearchBar = () => {
     setTimeout(() => {
         this.getSearchPaging();
     }, 1000);
@@ -128,35 +131,34 @@ export class SearchBarComponent implements OnInit {
   getSearchPaging = () => {
     let trimSearchString = this.searchString.trim().replace(/ +(?= )/g, "");
     if (trimSearchString !== "") {
+      this.suggestionList = [];
+      this.isNotFound = false;
       this.searchParam.searchString = trimSearchString;
       return this._searchService.Search(this.searchParam).subscribe(
         (data: Response) => {
-          if (data == null) {
-            this.suggestionList = [];
+          if (data != null) {
+            this.suggestionList.push(data);
+          }else{
             this.isNotFound = true;
-          } else {
-            this.suggestionList.splice(0, 1, data);
-            this.isNotFound = false;
           }
           console.log("search paging result", this.suggestionList);
         },
-        err => {
-          this.suggestionList = [];
-          this.isNotFound = true;
-        }
+        err => {}
       );
     }
-  }
-
-  setSearchQueryParam = () => {
+  };
+  setSearchQueryParam = (hide) => {
+    if(hide){
+      searchObject.hide();
+    }
+    let districts = this.searchParam.districtList.toString();
     this.router.navigate(["/search"], {
-      queryParams: { name: this.searchString, districts: this.searchParam.districtList}
+      queryParams: { name: this.searchString, districts: districts, page: this.defaultPageResult}
     });
   }
-
   chooseDistrict=(event)=>{
     if(event.checked){
-      this.searchParam.districtList.push(event.source.value);
+      this.searchParam.districtList.push(event.source.value)
     }else{
       for(let i=0;i<this.searchParam.districtList.length;i++){
         if(this.searchParam.districtList[i]===event.source.value){
@@ -167,9 +169,11 @@ export class SearchBarComponent implements OnInit {
     }
     if(this.searchParam.districtList.length>0){
       this.searchParam.filterOption.districts = true;
+      this.filterDisplay = 'Bộ lọc (' + this.searchParam.districtList.length + ')';
     }else{
       this.searchParam.filterOption.districts = false;
+      this.filterDisplay = "Chọn khu vực";
     }
-    console.log("click",event, this.searchParam.districtList);
+    this.handelChangeSearchBar();
   }
 }

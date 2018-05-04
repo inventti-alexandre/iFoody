@@ -18,7 +18,7 @@
               </ng-template>
 
               <li class="advertising col-xs-12 col-sm-12 col-md-12" *ngFor="let result of suggestionList[0].results">
-                <a [routerLink]="['/store', result.store.id]" class="suggestion-box-item" title="result.store.name">
+                <a [routerLink]="['/store', enCode(result.store.id)]" class="suggestion-box-item" title="result.store.name">
                   <div class="suggestion-box-item-left">
                     <img [src]="result.images.length>0?result.images[0].path:imageDefault" (error)="handelImgErro($event)" alt="result.store.name"
                       title="result.store.name">

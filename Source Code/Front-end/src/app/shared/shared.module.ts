@@ -1,3 +1,5 @@
+import { LoadingPageComponent } from './components/loading-page/loading-page.component';
+import { NotResultComponent } from './components/not-result/not-result.component';
 import { StoreItemComponent } from './components/store-item/store-item.component';
 import { PaginationModule } from 'ngx-bootstrap';
 import { FormsModule } from '@angular/forms';
@@ -34,7 +36,9 @@ import { ResultItemComponent } from './components/result-item/result-item.compon
     NotFoundComponent,
     BsRatingComponent,
     StoreItemComponent,
-    ResultItemComponent
+    ResultItemComponent,
+    NotResultComponent,
+    LoadingPageComponent
   ],
   declarations: [
     BsBreadcrumbComponent,
@@ -44,6 +48,8 @@ import { ResultItemComponent } from './components/result-item/result-item.compon
     BsRatingComponent,
     StoreItemComponent,
     ResultItemComponent,
+    NotResultComponent,
+    LoadingPageComponent
   ],
   providers: [
     UserService,
