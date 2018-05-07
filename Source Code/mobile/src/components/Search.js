@@ -14,13 +14,10 @@ class Search extends Component {
       };
   }
 
-  componentDidMount() {
+  componentWillMount() {
   }
 
   render() {
-    console.log('inside Search component');
-    console.log('this.state ', this.state);
-    console.log('this.state.text ', this.state.text);
     return (
         <View style={styles.containerStyle}>
            <SearchBar

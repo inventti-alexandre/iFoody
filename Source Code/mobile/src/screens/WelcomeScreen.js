@@ -4,11 +4,9 @@ import Welcome from '../../src/components/Welcome';
 
 export default class WelcomeScreen extends Component {
   componentWillMount() {
-    console.log('willMount');
   }
 
   componentDidMount() {
-      console.log('dismount in welcomeScreen');
        // Start counting when the page is loaded
        this.timeoutHandle = setTimeout(() => {
             // Add your logic for the tra nsition

@@ -9,37 +9,69 @@ import {
   StyleSheet,
   ScrollView,
   FlatList,
-  Text
+  Text,
 } from 'react-native';
 import { Button, Divider } from 'react-native-elements';
-import axios from 'axios';
 import Tabs from '../components/Tabs';
 import Search from '../components/Search';
 import GeneralButton from '../components/GeneralButton';
 import FavoriteScreen from './FavoriteScreen';
+import ProfileScreen from './ProfileScreen';
 import LoginScreen from './LoginScreen';
-import { GetAllCategories } from '../assets/constants/apiUrl';
+import LoginManager from '../services/LoginManager';
 
 export default class HomeScreen extends Component {
-
-  state = {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoggedIn: false,
       categoryList: [],
-      storeList: []
+      storeList: [],
+      user: {}
+    };
   }
+
 
   componentWillMount() {
-    axios.get(GetAllCategories)
-      .then(response => {
-        console.log('response ', response);
-        this.setState({ categoryList: response.data });
-        console.log('After setState', this.state);
-      });
+      LoginManager.isLoggedIn()
+        .then(response => {
+          console.log('response of LoginManager ', response);
+          this.setState({ isLoggedIn: false });
+        });
   }
 
+  componentWillReceiveProps() {
+    console.log('componentWillReceiveProps');
+  }
+
+shouldComponentUpdate() {
+  console.log('shouldComponentUpdate run');
+  console.log('this.state in Home', this.state.isLoggedIn);
+  return true;
+}
+componentWillUpdate() {
+  console.log('componentWillUpdate');
+}
+componentDidUpdate() {
+  console.log('componentDidUpdate. This.state.isLoggedIn: ', this.state.isLoggedIn);
+}
+
+handler = (value) => {
+  console.log('handler method in HOME Component. VALUE from child is: ', value);
+    this.setState({
+      isLoggedIn: value.isLoggedIn,
+      user: value
+    });
+  }
+
+changeTab = () => {
+  console.log('changeTab');
+}
   render() {
+    console.log('render. this.state is: ', this.state);
     return (
       <View style={styles.containerStyle}>
-        <Tabs>
+        <Tabs onClick={this.changeTab}>
            {/* First tab */}
            <ScrollView
               title="Tìm Kiếm"
@@ -51,7 +83,7 @@ export default class HomeScreen extends Component {
              <View style={styles.searchStyle}>
 
               <Search />
-
+              <Button onPress={this.onPressButton111} />
               <View style={styles.buttonContainerStyle}>
                 <Button
                   title='Gần Đây'
@@ -87,7 +119,7 @@ export default class HomeScreen extends Component {
                 iconType="simple-line-icon"
                 style={styles.contentStyle}
            >
-             <FavoriteScreen />
+             <FavoriteScreen user={this.state.user} />
            </ScrollView>
 
            {/* Third tab */}
@@ -96,8 +128,12 @@ export default class HomeScreen extends Component {
               iconName="user-o"
               iconType="font-awesome"
               style={styles.contentStyle}
+              onClick={this.changeTab}
            >
-            <LoginScreen />
+           {this.state.isLoggedIn
+             ? <ProfileScreen handler={this.handler} user={this.state.user} />
+             : <LoginScreen handler={this.handler} />
+           }
            </ScrollView>
        </Tabs>
       </View>

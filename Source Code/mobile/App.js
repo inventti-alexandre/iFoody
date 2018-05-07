@@ -12,12 +12,12 @@ import {
 import AllReviewsScreen from './src/screens/AllReviewsScreen';
 import DetailProductScreen from './src/screens/DetailProductScreen';
 import DetailStoreScreen from './src/screens/DetailStoreScreen';
-import FavoriteScreen from './src/screens/FavoriteScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import ViewAllScreen from './src/screens/ViewAllScreen';
 import WelcomeScreen from './src/screens/WelcomeScreen';
+import FavoriteScreen from './src/screens/FavoriteScreen';
 
 type Props = {};
 
@@ -31,7 +31,7 @@ export default class App extends Component<Props> {
   }
 }
 
-const RootStack = StackNavigator(
+export const RootStack = StackNavigator(
   {
     AllReview: {
       screen: AllReviewsScreen,
@@ -68,7 +68,7 @@ const RootStack = StackNavigator(
     Welcome: {
       screen: WelcomeScreen,
       navigationOptions: { header: null }
-    }
+    },
   },
   {
     initialRouteName: 'Welcome',
