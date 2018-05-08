@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { Text, View, FlatList, ListItem } from 'react-native';
 import axios from 'axios';
 import { FavoriteList, Product, Store } from '../assets/constants/apiUrl';
+import ProductItem from '../components/ProductItem';
+import StoreItem from '../components/StoreItem';
 
 export default class FavoriteScreen extends Component {
   constructor(props) {
@@ -108,10 +110,13 @@ export default class FavoriteScreen extends Component {
   render() {
     console.log('in render', this.state.productList);
     console.log('in render', this.state.storeList);
-    return (
-      <View>
-        <Text>{this.state.storeList.name}</Text>
-      </View>
+    return ([
+          this.state.productList.map((item, key) => (
+            <ProductItem key={key} item={item} />
+          )),
+          this.state.storeList.map((item, key) => (
+            <StoreItem key={key} item={item} />
+          ))]
     );
   }
 }

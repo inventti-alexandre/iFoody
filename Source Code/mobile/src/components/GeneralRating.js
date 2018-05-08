@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { Rating } from 'react-native-elements';
 
 class GeneralRating extends Component {
-
+  constructor(props) {
+    super(props);
+    console.log('Generating Component. Props is: ', this.props);
+  }
   ratingCompleted(rating) {
     console.log(`Rating is: ${rating}`);
   }
@@ -15,7 +18,7 @@ class GeneralRating extends Component {
         showReadOnlyText='false'
         type="star"
         fractions={1}
-        startingValue={3.4}
+        startingValue={this.props.value}
         type='custom'
         imageSize={10}
         onFinishRating={this.ratingCompleted}
