@@ -22,38 +22,11 @@ class Search extends Component {
     console.log('this.state ', this.state);
     console.log('this.state.text ', this.state.text);
     return (
-        <View style={styles.containerStyle}>
+        <View>
            <SearchBar
-              containerStyle={{
-                backgroundColor: 'transparent',
-                borderBottomWidth: 0,
-                borderTopWidth: 0,
-              }}
-              inputStyle={{
-                marginLeft: 10,
-                marginRight: 10,
-                paddingLeft: 50,
-                height: 45,
-                color: '#a3a375',
-                backgroundColor: 'white',
-                fontFamily: 'quicksand-regular',
-                borderWidth: 1,
-                borderColor: 'black',
-                shadowColor: '#a3a375',
-                shadowOffset: {
-                  width: 0, height: 5
-                },
-                shadowOpacity: 0.1,
-                shadowRadius: 2,
-              }}
-              icon={{
-                color: '#a3a375',
-                style: {
-                  fontSize: 20,
-                  // marginTop: 0,
-                  marginLeft: 10
-                }
-              }}
+              containerStyle={styles.containerStyle}
+              inputStyle={styles.inputStyle}
+              icon={styles.iconStyle}
               noIcon={this.state.noIcon}
               lightTheme
               clearIcon={this.state.clearIcon}
@@ -74,8 +47,35 @@ class Search extends Component {
 
 const styles = {
   containerStyle: {
+    backgroundColor: 'transparent',
+    borderBottomWidth: 0,
+    borderTopWidth: 0,
   },
-
+  inputStyle: {
+    marginLeft: 10,
+    marginRight: 10,
+    paddingLeft: 50,
+    height: 45,
+    color: '#a3a375',
+    backgroundColor: 'white',
+    fontFamily: 'quicksand-regular',
+    borderWidth: 1,
+    borderColor: 'black',
+    shadowColor: '#a3a375',
+    shadowOffset: {
+      width: 0, height: 5
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+  },
+  iconStyle: {
+    color: '#a3a375',
+    style: {
+      fontSize: 20,
+      // marginTop: 0,
+      marginLeft: 10
+    }
+  }
 };
 
 export default Search;
