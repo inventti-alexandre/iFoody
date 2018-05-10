@@ -19,15 +19,14 @@ import Search from "../components/Search";
 import GeneralButton from "../components/GeneralButton";
 import FavoriteScreen from "./FavoriteScreen";
 import LoginScreen from "./LoginScreen";
-import { GetAllCategories } from "../assets/constants/apiUrl";
 import SearchService from "../services/SearchService";
+import CategoryService from "../services/CategoryService";
 import Modal from "react-native-modal";
 import CheckBox from "react-native-check-box";
 
 export default class SearchResultScreen extends Component {
   state = {
     categoryList: [],
-    storeList: [],
     districts: [
       1,
       2,
@@ -54,22 +53,100 @@ export default class SearchResultScreen extends Component {
       "Củ Chi",
       "Cần Giờ"
     ],
-    isModalVisible: false
+    searchResults: {
+      currentPage: 0,
+      results: [],
+      totalPage: 0,
+      totalRecord: 0
+    },
+    isModalVisible: false,
+    searchParam: {
+      searchString: "",
+      page: 1,
+      currentLatitude: 0,
+      currentLongitude: 0,
+      categoriesListId: [],
+      districtList: [],
+      count: 10,
+      filterOption: {
+        location: false,
+        categories: false,
+        districts: false,
+        rating: false
+      }
+    }
   };
-  _toggleModal = () =>
+  initDefautlValue = () => {
+    this.setState({
+      searchParam: {
+        searchString: "",
+        page: this.initPage,
+        currentLatitude: 0,
+        currentLongitude: 0,
+        categoriesListId: [],
+        districtList: [],
+        count: this.initCount,
+        filterOption: {
+          location: false,
+          categories: false,
+          districts: false,
+          rating: false
+        }
+      }
+    });
+  };
+  _toggleModal = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
+  };
   onClick(data) {
     data.checked = !data.checked;
     let msg = data.checked ? "you checked " : "you unchecked ";
     // this.toast.show(msg + data.name);
   }
+  search = page => {
+    if (
+      this.state.searchResults.currentPage <= this.state.searchResults.totalPage && this.state.searchParam.searchString!==''
+    ) {
+      SearchService.PagingSearching(this.state.searchParam).then(data => {
+        if (data != null) {
+          this.setState({ searchResults: data });
+        } else {
+          this.setState({
+            searchResults: {
+              currentPage: 0,
+              results: [],
+              totalPage: 0,
+              totalRecord: 0
+            }
+          });
+        }
+        console.log("test 22222222", this.state.searchResults);
+      });
+    }
+  };
 
   componentWillMount() {
-    SearchService.getAllCategories().then(data => {
+    CategoryService.GetCategories().then(data => {
       this.setState({ categoryList: data });
-      console.log("test 22222222", this.state.categoryList);
     });
   }
+  getSearchString = searchString => {
+    if(searchString!==this.state.searchParam.searchString){
+      this.setState(
+        prevState => ({
+          searchParam: {
+            ...prevState.searchParam,
+            searchString: searchString
+          }
+        }),
+        function() {
+          console.log("search", this.state.searchParam);
+          let page = this.state.searchResults.currentPage;
+          this.search(page++);
+        }
+      );
+    }
+  };
 
   render() {
     let districtsKey = 1;
@@ -84,7 +161,7 @@ export default class SearchResultScreen extends Component {
             style={styles.contentStyle}
           >
             <View style={styles.searchStyle}>
-              <Search />
+              <Search searchString={this.getSearchString} />
 
               <View style={styles.buttonContainerStyle}>
                 <Button

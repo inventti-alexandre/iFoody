@@ -25,7 +25,7 @@ class ProductItem extends Component {
     return (
       <Card
         style={{
-          width: Dimensions.get("window").width / 2,
+          width: Dimensions.get("window").width / 4,
           justifyContent: "center",
           alignItems: "center"
         }}
@@ -36,11 +36,11 @@ class ProductItem extends Component {
           style={styles.imageStyle}
         />
 
-        <View>
+        <View style={{}}>
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
-            <Text>{item.product.name}</Text>
+            <Text  style={{ width: Dimensions.get("window").width / 4, height: 40 }}>{item.product.name}</Text>
             <GeneralRating rating={item.product.rating?item.product.rating:0}/>
           </View>
           <View style={{ flexDirection: "row" }}>
@@ -50,7 +50,7 @@ class ProductItem extends Component {
           </View>
 
           <Text
-            style={{ width: Dimensions.get("window").width / 2, height: 50 }}
+            style={{ width: Dimensions.get("window").width / 4, height: 70 }}
           >
             {item.store.address +
               ", " +
@@ -81,7 +81,7 @@ export default ProductItem;
 const styles = StyleSheet.create({
   imageStyle: {
     flexDirection: "row",
-    height: 200,
+    height: 150,
     width: '100%',
   }
 });

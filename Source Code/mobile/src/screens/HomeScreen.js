@@ -34,6 +34,9 @@ export default class HomeScreen extends Component {
       this.setState({ categoryList: data });
     });
   };
+  getSearchString=()=>{
+    
+  }
 
   render() {
     return (
@@ -47,14 +50,17 @@ export default class HomeScreen extends Component {
             style={styles.contentStyle}
           >
             <View style={styles.searchStyle}>
-              <Search />
+              <Search searchString={this.getSearchString} />
 
               <View style={styles.categoryContainerStyle}>
                 <FlatList
                   data={this.state.categoryList}
                   keyExtractor={item => item.id}
                   renderItem={({ item }) => (
-                    <FlatListroducts categoryInfo={item} navigation={this.props.navigation} />
+                    <FlatListroducts
+                      categoryInfo={item}
+                      navigation={this.props.navigation}
+                    />
                   )}
                 />
 
