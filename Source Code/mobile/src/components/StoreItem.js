@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { Icon, Card, Button } from 'react-native-elements';
 import Animation from 'lottie-react-native';
-import image from '../assets/images/test2.jpg';
 import GeneralRating from './GeneralRating';
 import anim from '../assets/externals/airbnb/heart_with_particles.json';
+import imageDefault from '../assets/constants/global';
 
 class StoreItem extends Component {
   constructor(props) {
     super(props);
-    console.log('Constructor StoreItem. Props is: ', this.props.item);
+    console.log('Constructor StoreItem. Props is: ', this.props);
+    console.log('this.props.buttonItemDisplay', this.props.buttonItemDisplay);
   }
 
   componentDidMount() {
@@ -22,7 +23,11 @@ class StoreItem extends Component {
     return (
       <Card
         containerStyle={styles.containerStyle}
-        image={{ uri: this.props.item.images[0].path }}
+        image={{ uri:
+          this.props.item.images.length > 0
+          ? this.props.item.images[0].path
+          : imageDefault
+        }}
         imageStyle={styles.image}
       >
         <View style={styles.animationStyle}>
@@ -62,7 +67,7 @@ class StoreItem extends Component {
           </View>
 
           <Text>
-            {this.props.item.address}
+            {this.props.item.address}, {this.props.item.district}
           </Text>
 
         </View>
@@ -70,8 +75,17 @@ class StoreItem extends Component {
           icon={{ name: 'code' }}
           backgroundColor='#03A9F4'
           fontFamily='Lato'
-          buttonStyle={{ borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0 }}
+          buttonStyle={{
+              borderRadius: 0,
+              marginLeft: 0,
+              marginRight: 0,
+              marginBottom: 0,
+              display: this.props.buttonItemDisplay }}
           title='Xem Ngay'
+          onPress={() => {
+            console.log('Xem Ngay Clicked!!!!');
+            this.props.navigateInItem({ screenName: 'DetailStore', id: this.props.item.id });
+          }}
         />
       </Card>
     );
@@ -84,7 +98,7 @@ const styles = {
   },
   animationStyle: {
     position: 'absolute',
-    top: -155,
+    top: -220,
     right: 0
   },
   image: {

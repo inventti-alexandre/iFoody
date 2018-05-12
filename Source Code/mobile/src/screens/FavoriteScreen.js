@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Text, View, FlatList, ListItem } from 'react-native';
 import axios from 'axios';
 import { FavoriteList, Product, Store } from '../assets/constants/apiUrl';
 import ProductItem from '../components/ProductItem';
@@ -14,11 +13,11 @@ export default class FavoriteScreen extends Component {
       storeIdList: [],
       productList: [],
       storeList: [],
-      user: this.props.user
+      user: this.props.user,
+      clickedItem: ''
     };
-    console.log('constructor in favoriteScreen. this.state is: ', this.props.user);
+    console.log('constructor in favoriteScreen. this.props is: ', this.props);
   }
-
   componentWillMount() {
     console.log('componentWillMount');
   }
@@ -107,15 +106,38 @@ export default class FavoriteScreen extends Component {
     });
   }
 
+  handlerStore = (value) => {
+    console.log('handler in DetailStoreScreen works. Value is', value);
+    console.log('this.props', this.props);
+    console.log('Finish navigate DetailStoreScreen');
+  }
+
+  handlerProduct = (value) => {
+    console.log('handler in DetailProductScreen works. Value is', value);
+    this.props.navigation.navigate(value.screenName, { id: value.id });
+  }
+
+  navigateInItem = (value) => {
+    console.log('navigateInItem works');
+    console.log('value is: ', value);
+    this.props.navigation.navigate(value.screenName, { id: value.id });
+  }
+
   render() {
     console.log('in render', this.state.productList);
     console.log('in render', this.state.storeList);
     return ([
           this.state.productList.map((item, key) => (
-            <ProductItem key={key} item={item} />
+            <ProductItem
+              key={key} item={item}
+              navigateInItem={this.navigateInItem}
+            />
           )),
           this.state.storeList.map((item, key) => (
-            <StoreItem key={key} item={item} />
+            <StoreItem
+              key={key} item={item}
+              navigateInItem={this.navigateInItem}
+            />
           ))]
     );
   }

@@ -24,6 +24,7 @@ export const Store = `${Domain}users/store`;
 export const OpenStore = `${Domain}users/open-store`;
 export const UserImage = `${Domain}users/image`;
 export const FavoriteList = `${Domain}users/favorite-list`;
+export const GetAllProductsInStore = `${Domain}users/store/allProducts`;
 // export const FavoriteListWithUser = Domain + 'users/favorite-list';
 // export const FavoriteList = Domain + 'favorite-list';
 

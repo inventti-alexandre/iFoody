@@ -15,7 +15,9 @@ import { Button, Divider } from 'react-native-elements';
 import Tabs from '../components/Tabs';
 import Search from '../components/Search';
 import GeneralButton from '../components/GeneralButton';
+import Map from '../components/Map';
 import FavoriteScreen from './FavoriteScreen';
+import DetailStoreScreen from './DetailStoreScreen';
 import ProfileScreen from './ProfileScreen';
 import LoginScreen from './LoginScreen';
 import LoginManager from '../services/LoginManager';
@@ -38,6 +40,7 @@ export default class HomeScreen extends Component {
           console.log('response of LoginManager ', response);
           this.setState({ isLoggedIn: false });
         });
+        console.log('this.props.navigation', this.props);
   }
 
   componentWillReceiveProps() {
@@ -83,7 +86,6 @@ changeTab = () => {
              <View style={styles.searchStyle}>
 
               <Search />
-              <Button onPress={this.onPressButton111} />
               <View style={styles.buttonContainerStyle}>
                 <Button
                   title='Gần Đây'
@@ -107,7 +109,7 @@ changeTab = () => {
               keyExtractor={(item) => item.id}
              />
 
-               <GeneralButton onPress={() => this.props.navigation.navigate('Welcome')}>Xem Tất Cả
+               <GeneralButton onPress={() => this.props.navigation.navigate('Favorite')}>Xem Tất Cả
                </GeneralButton>
              </View>
              </View>
@@ -119,7 +121,7 @@ changeTab = () => {
                 iconType="simple-line-icon"
                 style={styles.contentStyle}
            >
-             <FavoriteScreen user={this.state.user} />
+            <FavoriteScreen user={this.state.user} navigation={this.props.navigation} />
            </ScrollView>
 
            {/* Third tab */}

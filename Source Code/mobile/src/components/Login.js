@@ -24,7 +24,7 @@ class Login extends Component {
 
   onPressButton = () => {
     this.onSubmit();
-    this.setState({ isLoggedIn: true })
+    this.setState({ isLoggedIn: true });
     this.props.handler(true);
   }
 
@@ -62,10 +62,6 @@ class Login extends Component {
     .catch((error) => {
       console.log('error', JSON.stringify(error.response));
     });
-  }
-  testButton = (e) => {
-    console.log('testButton method works. Value is: ', e);
-    this.props.handler(true);
   }
 
   render() {

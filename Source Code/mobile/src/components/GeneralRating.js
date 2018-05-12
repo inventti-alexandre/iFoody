@@ -4,14 +4,12 @@ import { Rating } from 'react-native-elements';
 class GeneralRating extends Component {
   constructor(props) {
     super(props);
-    console.log('Generating Component. Props is: ', this.props);
   }
   ratingCompleted(rating) {
     console.log(`Rating is: ${rating}`);
   }
 
   render() {
-    console.log('inside Rating component');
     return (
       <Rating
         readonly

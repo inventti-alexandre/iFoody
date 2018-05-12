@@ -20,19 +20,16 @@ import WelcomeScreen from './src/screens/WelcomeScreen';
 import FavoriteScreen from './src/screens/FavoriteScreen';
 
 type Props = {};
-
-
-export default class App extends Component<Props> {
-
-  render() {
-    return (
-        <RootStack />
-    );
-  }
-}
-
-export const RootStack = StackNavigator(
+const RootStack = StackNavigator(
   {
+    Home: {
+      screen: HomeScreen,
+      navigationOptions: { header: null }
+    },
+    Favorite: {
+      screen: FavoriteScreen,
+      navigationOptions: { header: null }
+    },
     AllReview: {
       screen: AllReviewsScreen,
       navigationOptions: { header: null }
@@ -43,14 +40,6 @@ export const RootStack = StackNavigator(
     },
     DetailStore: {
       screen: DetailStoreScreen,
-      navigationOptions: { header: null }
-    },
-    Favorite: {
-      screen: FavoriteScreen,
-      navigationOptions: { header: null }
-    },
-    Home: {
-      screen: HomeScreen,
       navigationOptions: { header: null }
     },
     Login: {
@@ -74,3 +63,13 @@ export const RootStack = StackNavigator(
     initialRouteName: 'Welcome',
   },
 );
+
+
+export default class App extends Component<Props> {
+
+  render() {
+    return (
+        <RootStack />
+    );
+  }
+}
