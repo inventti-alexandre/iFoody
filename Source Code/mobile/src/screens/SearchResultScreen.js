@@ -10,7 +10,8 @@ import {
   ScrollView,
   FlatList,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions
 } from "react-native";
 import { Button, Divider } from "react-native-elements";
 import axios from "axios";
@@ -23,36 +24,37 @@ import SearchService from "../services/SearchService";
 import CategoryService from "../services/CategoryService";
 import Modal from "react-native-modal";
 import CheckBox from "react-native-check-box";
+import StoreItem from "../components/StoreItem";
 
 export default class SearchResultScreen extends Component {
   state = {
     categoryList: [],
     districts: [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6,
-      7,
-      8,
-      9,
-      10,
-      11,
-      12,
-      "Bình Thạnh",
-      "Tân Bình",
-      "Phú Nhuận",
-      "Tân Phú",
-      "Gò Vấp",
-      "Bình Tân",
-      "Thủ Đức",
-      "Bình Chánh",
-      "Nhà Bè",
-      "Hóc Môn",
-      "Củ Chi",
-      "Cần Giờ"
+      { id: "quan1", name: "quận 1", type: "district" },
+      { id: "quan2", name: "quận 2", type: "district" },
+      { id: "quan3", name: "quận 3", type: "district" },
+      { id: "quan4", name: "quận 4", type: "district" },
+      { id: "quan5", name: "quận 5", type: "district" },
+      { id: "quan6", name: "quận 6", type: "district" },
+      { id: "quan7", name: "quận 7", type: "district" },
+      { id: "quan8", name: "quận 8", type: "district" },
+      { id: "quan9", name: "quận 9", type: "district" },
+      { id: "quan10", name: "quận 10", type: "district" },
+      { id: "quan11", name: "quận 11", type: "district" },
+      { id: "quan12", name: "quận 12", type: "district" },
+      { id: "quanTanBinh", name: "quận Tân Bình", type: "district" },
+      { id: "quanBinhThanh", name: "quận Bình Thạnh", type: "district" },
+      { id: "quanPhuNhuan", name: "quận Phú Nhuận", type: "district" },
+      { id: "quanTanPhu", name: "quận Tân Phú", type: "district" },
+      { id: "quanBinhTan", name: "quận Bình Tân", type: "district" },
+      { id: "quanThuDuc", name: "quận Thủ Đức", type: "district" },
+      { id: "quanBinhChanh", name: "quận Bình Chánh", type: "district" },
+      { id: "quanNhaBe", name: "quận Nhà Bè", type: "district" },
+      { id: "quanHocMon", name: "quận Hóc Môn", type: "district" },
+      { id: "quanCuChi", name: "quận Củ Chi", type: "district" },
+      { id: "quanCanGio", name: "quận Cần Giờ", type: "district" }
     ],
+    defaultChecked: false,
     searchResults: {
       currentPage: 0,
       results: [],
@@ -60,6 +62,7 @@ export default class SearchResultScreen extends Component {
       totalRecord: 0
     },
     isModalVisible: false,
+    filterDisplay: "Bộ lọc",
     searchParam: {
       searchString: "",
       page: 1,
@@ -74,7 +77,8 @@ export default class SearchResultScreen extends Component {
         districts: false,
         rating: false
       }
-    }
+    },
+    isLoading: false
   };
   initDefautlValue = () => {
     this.setState({
@@ -98,18 +102,126 @@ export default class SearchResultScreen extends Component {
   _toggleModal = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   };
+  _resetFilterOption = () => {
+    this.state.searchParam.districtList = [];
+    this.state.searchParam.categoriesListId = [];
+    this.state.searchParam.filterOption.districts = false;
+    this.state.searchParam.filterOption.categories = false;
+    this.setState({ isModalVisible: false, filterDisplay: "Bộ lọc" });
+  };
+  _fiterFinish = () => {
+    let _this = this.state.searchParam;
+    let numberOfFilter =
+      _this.categoriesListId.length + _this.districtList.length;
+    if (_this.categoriesListId.length > 0 || _this.districtList.length > 0) {
+      this.setState(
+        prevState => ({
+          searchParam: {
+            ...prevState.searchParam,
+            filterOption: {
+              ...prevState.searchParam.filterOption,
+              categories: _this.categoriesListId.length > 0 ? true : false,
+              districts: _this.districtList.length > 0 ? true : false
+            },
+            page: 1
+          },
+          searchResults: {
+            currentPage: 0,
+            results: [],
+            totalPage: 0,
+            totalRecord: 0
+          },
+          isModalVisible: false,
+          filterDisplay: "Chọn ( " + numberOfFilter + " )"
+        }),
+        function() {
+          console.log("search filter", this.state.searchParam);
+          this.search(false);
+        }
+      );
+    }else{
+      this.setState({
+        isModalVisible: false,
+        filterDisplay: "Bộ lọc"
+      });
+    }
+  };
   onClick(data) {
     data.checked = !data.checked;
-    let msg = data.checked ? "you checked " : "you unchecked ";
-    // this.toast.show(msg + data.name);
+    if (data.checked) {
+      if (data.type) {
+        this.state.searchParam.districtList.push(data.name);
+        console.log("OPTION DIS", this.state);
+      } else {
+        this.state.searchParam.categoriesListId.push(data.id);
+        console.log("OPTION CAT", this.state);
+      }
+    } else {
+      if (data.type) {
+        for (let i = 0; i < this.state.searchParam.districtList.length; i++) {
+          if (this.state.searchParam.districtList[i] === data.name) {
+            this.state.searchParam.districtList.splice(i, 1);
+            console.log("OPTION DIS", this.state);
+            break;
+          }
+        }
+      } else {
+        for (
+          let i = 0;
+          i < this.state.searchParam.categoriesListId.length;
+          i++
+        ) {
+          if (this.state.searchParam.categoriesListId[i] === data.id) {
+            this.state.searchParam.categoriesListId.splice(i, 1);
+            console.log("OPTION CAT", this.state);
+            break;
+          }
+        }
+      }
+    }
+    let _this = this.state.searchParam;
+    let numberOfFilter =
+      _this.categoriesListId.length + _this.districtList.length;
+    if (numberOfFilter > 0) {
+      this.setState({
+        filterDisplay: "Chọn ( " + numberOfFilter + " )"
+      });
+    } else {
+      this.setState({
+        filterDisplay: "Bộ lọc"
+      });
+    }
   }
-  search = page => {
+  search = nextPage => {
     if (
-      this.state.searchResults.currentPage <= this.state.searchResults.totalPage && this.state.searchParam.searchString!==''
+      this.state.searchResults.currentPage <=
+        this.state.searchResults.totalPage &&
+      this.state.searchParam.searchString !== ""
     ) {
       SearchService.PagingSearching(this.state.searchParam).then(data => {
         if (data != null) {
-          this.setState({ searchResults: data });
+          if (!nextPage) {
+            this.setState({ searchResults: data }, function() {
+              console.log("test 333333333", this.state.searchResults);
+            });
+          } else {
+            data.results.forEach(item => {
+              this.state.searchResults.results.push(item);
+            });
+            this.state.searchResults.currentPage = data.currentPage;
+            this.state.searchResults.totalPage = data.totalPage;
+            this.state.searchResults.totalRecord = data.totalRecord;
+            let temp = this.state.searchResults;
+            this.setState(
+              {
+                searchResults: temp,
+                isLoading: false
+              },
+              function() {
+                console.log("test 22222222", this.state.searchResults);
+              }
+            );
+          }
         } else {
           this.setState({
             searchResults: {
@@ -120,7 +232,6 @@ export default class SearchResultScreen extends Component {
             }
           });
         }
-        console.log("test 22222222", this.state.searchResults);
       });
     }
   };
@@ -131,25 +242,107 @@ export default class SearchResultScreen extends Component {
     });
   }
   getSearchString = searchString => {
-    if(searchString!==this.state.searchParam.searchString){
+    if (searchString !== this.state.searchParam.searchString) {
       this.setState(
         prevState => ({
           searchParam: {
             ...prevState.searchParam,
-            searchString: searchString
+            searchString: searchString,
+            page: 1
+          },
+          searchResults: {
+            currentPage: 0,
+            results: [],
+            totalPage: 0,
+            totalRecord: 0
           }
         }),
         function() {
           console.log("search", this.state.searchParam);
-          let page = this.state.searchResults.currentPage;
-          this.search(page++);
+          this.search(false);
         }
       );
     }
   };
+  onScrollEnd = nativeEvent => {
+    var windowHeight = Dimensions.get("window").height,
+      height = nativeEvent.contentSize.height,
+      offset = nativeEvent.contentOffset.y;
+    if (windowHeight + offset >= height && !this.state.isLoading) {
+      if (
+        this.state.searchResults.currentPage <
+        this.state.searchResults.totalPage
+      ) {
+        this.setState(
+          prevState => ({
+            searchParam: {
+              ...prevState.searchParam,
+              page: prevState.searchParam.page + 1
+            },
+            isLoading: true
+          }),
+          function() {
+            console.log("search next", this.state.searchParam);
+            this.search(true);
+          }
+        );
+      }
+    }
+  };
+  setRatingFilter=()=>{
+    this.setState(
+      prevState => ({
+        searchParam: {
+          ...prevState.searchParam,
+          filterOption: {
+            ...prevState.searchParam.filterOption,
+            rating:true,
+            location: false,
+          },
+          page: 1
+        },
+        searchResults: {
+          currentPage: 0,
+          results: [],
+          totalPage: 0,
+          totalRecord: 0
+        }
+      }),
+      function() {
+        console.log("search filter", this.state.searchParam);
+        this.search(false);
+      }
+    );
+  }
+  setLocationFilter=()=>{
+    this.setState(
+      prevState => ({
+        searchParam: {
+          ...prevState.searchParam,
+          currentLatitude: '10.773266',
+          currentLongitude: '106.6594674',
+          filterOption: {
+            ...prevState.searchParam.filterOption,
+            rating:false,
+            location: true,
+          },
+          page: 1
+        },
+        searchResults: {
+          currentPage: 0,
+          results: [],
+          totalPage: 0,
+          totalRecord: 0
+        }
+      }),
+      function() {
+        console.log("search filter", this.state.searchParam);
+        this.search(false);
+      }
+    );
+  }
 
   render() {
-    let districtsKey = 1;
     return (
       <View style={styles.containerStyle}>
         <Tabs>
@@ -159,61 +352,77 @@ export default class SearchResultScreen extends Component {
             iconName="search"
             iconType="octicon"
             style={styles.contentStyle}
+            onScroll={({ nativeEvent }) => {
+              this.onScrollEnd(nativeEvent);
+            }}
           >
             <View style={styles.searchStyle}>
-              <Search searchString={this.getSearchString} />
+              <Search
+                searchString={this.getSearchString}
+                isHomePage={false}
+                initText={this.props.navigation.state.params.initSearchString}
+              />
 
               <View style={styles.buttonContainerStyle}>
                 <Button
                   title="Gần Đây"
                   rounded
                   textStyle={styles.buttonTextStyle}
-                  buttonStyle={styles.buttonStyle}
+                  buttonStyle={this.state.searchParam.filterOption.location?styles.buttonChosen:styles.buttonStyle}
+                  onPress = {this.setLocationFilter}
                 />
                 <Button
                   title="Đánh giá cao"
                   rounded
                   textStyle={styles.buttonTextStyle}
-                  buttonStyle={styles.buttonStyle}
+                  buttonStyle={this.state.searchParam.filterOption.rating?styles.buttonChosen:styles.buttonStyle}
+                  onPress={this.setRatingFilter}
                 />
                 <Button
-                  title="Bộ lọc"
+                  title={this.state.filterDisplay}
                   rounded
                   textStyle={styles.buttonTextStyle}
-                  buttonStyle={styles.buttonStyle}
+                  buttonStyle={this.state.filterDisplay==="Bộ lọc"?styles.buttonStyle:styles.buttonChosen}
+                  onPress={this._toggleModal}
                 />
               </View>
               <Divider
                 style={{ backgroundColor: "#f2f2f2", marginBottom: 7 }}
               />
               <View style={{}}>
-                <TouchableOpacity onPress={this._toggleModal}>
-                  <Text>Show Modal</Text>
-                </TouchableOpacity>
+                <Text style={styles.totalRecord}>
+                  {this.state.searchResults.totalRecord +
+                    ' Kết quả cho "' +
+                    this.state.searchParam.searchString +
+                    '"'}
+                </Text>
                 <Modal
                   animationInTiming={0}
                   animationOutTiming={0}
                   isVisible={this.state.isModalVisible}
                   style={styles.modalStyle}
-                  onBackdropPress={() =>
-                    this.setState({ isModalVisible: false })
-                  }
+                  onBackdropPress={this._fiterFinish}
                 >
                   <ScrollView style={{}}>
                     <Text style={styles.typeFilter}> Chọn loại</Text>
                     <View>
-                      <FlatList
-                        data={this.state.categoryList}
-                        renderItem={({ item }) => (
-                          <CheckBox
-                            style={styles.item}
-                            rightText={item.name}
-                            onClick={() => this.onClick(item)}
-                            isChecked={item.checked}
-                          />
-                        )}
-                        keyExtractor={item => item.id}
-                      />
+                      {this.state.isLoading ? (
+                        "Dang loading..."
+                      ) : (
+                        <FlatList
+                          data={this.state.categoryList}
+                          renderItem={({ item }) => (
+                            <CheckBox
+                              style={styles.item}
+                              rightText={item.name}
+                              onClick={() => this.onClick(item)}
+                              isChecked={item.checked}
+                            />
+                          )}
+                          extraData={this.state}
+                          keyExtractor={item => item.id}
+                        />
+                      )}
                     </View>
                     <Text style={styles.typeFilter}> Chọn quận</Text>
                     <View>
@@ -222,19 +431,41 @@ export default class SearchResultScreen extends Component {
                         renderItem={({ item }) => (
                           <CheckBox
                             style={styles.item}
-                            rightText={item.toString()}
+                            rightText={item.name}
                             onClick={() => this.onClick(item)}
                             isChecked={item.checked}
                           />
                         )}
-                        keyExtractor={item => "district" + districtsKey++}
+                        extraData={this.state}
+                        keyExtractor={item => item.id}
                       />
                     </View>
                   </ScrollView>
-                  <TouchableOpacity onPress={this._toggleModal}>
-                    <Text>Chọn xong</Text>
-                  </TouchableOpacity>
+                  <View style={{ flexDirection: "row" }}>
+                    <Button
+                      title="Xong"
+                      rounded
+                      textStyle={styles.buttonTextStyle}
+                      buttonStyle={styles.buttonModalStyle}
+                      onPress={this._fiterFinish}
+                    />
+                    <Button
+                      title="Hủy"
+                      rounded
+                      textStyle={styles.buttonTextStyle}
+                      buttonStyle={styles.buttonModalStyle}
+                      onPress={this._resetFilterOption}
+                    />
+                  </View>
                 </Modal>
+              </View>
+              <View>
+                <FlatList
+                  data={this.state.searchResults.results}
+                  extraData={this.state}
+                  renderItem={({ item }) => <StoreItem storeInfo={item} />}
+                  keyExtractor={item => item.id}
+                />
               </View>
 
               <View style={styles.categoryContainerStyle}>
@@ -280,7 +511,8 @@ const styles = StyleSheet.create({
   // Tab content container
   contentStyle: {
     flex: 1, // Take up all available space
-    backgroundColor: "white" // Darker background for content area
+    backgroundColor: "white", // Darker background for content area
+    height: 600
   },
   // Content header
   headerStyle: {
@@ -307,6 +539,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#f6f6f6",
     borderWidth: 1
   },
+  buttonChosen:{
+    width: 110,
+    height: 35,
+    backgroundColor: "#42c2f4",
+    borderWidth: 1
+  },
   buttonTextStyle: {
     color: "black",
     fontSize: 12
@@ -320,5 +558,16 @@ const styles = StyleSheet.create({
     color: "#1b7c2d",
     textAlign: "center",
     fontWeight: "bold"
+  },
+  totalRecord: {
+    color: "#4286f4",
+    textAlign: "center",
+    fontSize: 14
+  },
+  buttonModalStyle: {
+    width: 70,
+    height: 30,
+    backgroundColor: "#f6f6f6",
+    borderWidth: 1
   }
 });

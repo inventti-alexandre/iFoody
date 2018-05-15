@@ -50,7 +50,7 @@ export default class HomeScreen extends Component {
             style={styles.contentStyle}
           >
             <View style={styles.searchStyle}>
-              <Search searchString={this.getSearchString} />
+              <Search searchString={this.getSearchString} isHomePage={true}navigation={this.props.navigation}/>
 
               <View style={styles.categoryContainerStyle}>
                 <FlatList

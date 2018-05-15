@@ -5,20 +5,39 @@ import Animation from 'lottie-react-native';
 import image from '../assets/images/test2.jpg';
 import GeneralRating from './GeneralRating';
 import anim from '../assets/externals/airbnb/heart_with_particles.json';
+import { handelImagePath } from "../services/ShareFunction";
+import { ImageLoader } from "react-native-image-fallback";
 
 class StoreItem extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {     
+    };
+  }
+
   componentDidMount() {
     this.animation.play();
   }
 
   render() {
-    console.log('inside StoreItem component');
-
+    let item = this.props.storeInfo;
+    item.images = handelImagePath(item.images);
+    const imageSource =
+      item.images.length > 0
+        ? item.images[0].path
+        : require("../assets/images/no-image.jpg");
+    const fallbacks = [
+      require("../assets/images/no-image.jpg") // A locally require'd image
+    ];
     return (
       <Card
         containerStyle={styles.containerStyle}
-        image={image}
       >
+       <ImageLoader
+          source={imageSource}
+          fallback={fallbacks}   
+          style={styles.imageStyle}      
+        />
         <View style={styles.animationStyle}>
           <Animation
             ref={animation => {
@@ -34,10 +53,10 @@ class StoreItem extends Component {
         </View>
         <View>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text>
-              The Coffee House
+            <Text  style={styles.nameStoreStyle}>
+              {item.store.name}
             </Text>
-            <GeneralRating />
+            <GeneralRating rating={item.store.rating?item.store.rating:0}/>
           </View>
 
           <View style={{ flexDirection: 'row' }}>
@@ -49,13 +68,13 @@ class StoreItem extends Component {
               />
 
               <Text>
-              {' '}  29,000 - 56,000
+              <Text>{" " + item.store.lowestPrice + ' - '+ item.store.highestPrice}</Text>
               </Text>
 
           </View>
 
-          <Text>
-            113 Bình Phú, Quận 6, TpHCM
+          <Text style={styles.addressStoreStyle}>
+            {item.store.address + ', '+ item.store.district+ ', '+ item.store.city}
           </Text>
 
         </View>
@@ -79,6 +98,19 @@ const styles = {
     position: 'absolute',
     top: -155,
     right: 0
+  },
+  imageStyle: {
+    flexDirection: "row",
+    height: 150,
+    width: '100%',
+  },
+  nameStoreStyle: {
+    width: '80%',
+    maxHeight: 50
+  },
+  addressStoreStyle: {
+    width: '100%',
+    maxHeight: 70
   }
 };
 

@@ -6,18 +6,34 @@ class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: "",
+      text: this.props.initText?this.props.initText:"",
       noIcon: false,
       clearIcon: false,
       placeHolder: "Tìm kiếm..."
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    if(!this.props.isHomePage){
+      console.log("777777777777", this.props.initText);
+
+    }
+    if(this.state.text!==""){
+      let searchString = this.state.text.trim().replace(/ +(?= )/g, "");
+      this.props.searchString(searchString);
+    }
+  }
   onChangeText = text => {
     this.setState({ text });
-    let searchString = text.trim().replace(/ +(?= )/g, "");
-    this.props.searchString(searchString);
+  };
+  onSubmit = () => {
+    if (this.props.isHomePage) {
+      let initSearchString = this.state.text;
+      this.props.navigation.navigate("SearchResult",  { initSearchString });
+    } else {
+      let searchString = this.state.text.trim().replace(/ +(?= )/g, "");
+      this.props.searchString(searchString);
+    }
   };
 
   render() {
@@ -34,6 +50,7 @@ class Search extends Component {
           onBlur={() => this.setState({ clearIcon: false })}
           onChangeText={this.onChangeText}
           onClearText={() => {}}
+          onSubmitEditing={this.onSubmit}
           ref={search => {
             this.search = search;
           }}

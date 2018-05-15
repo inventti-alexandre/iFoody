@@ -9,9 +9,6 @@ class ProductItem extends Component {
   constructor(props) {
     super(props);
   }
-  handelImgErro = erro => {
-    console.log("7777777777777", this._test);
-  };
   render() {
     let item = this.props.productInfo;
     item.images = handelImagePath(item.images);
