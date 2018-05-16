@@ -19,6 +19,7 @@ import ViewAllScreen from './src/screens/ViewAllScreen';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import SearchResultScreen from './src/screens/SearchResultScreen';
 import FavoriteScreen from './src/screens/FavoriteScreen';
+import AllProductsByCategoryScreen from './src/screens/AllProductsByCategoryScreen'
 
 type Props = {};
 const RootStack = StackNavigator(
@@ -62,7 +63,11 @@ const RootStack = StackNavigator(
     SearchResult: {
       screen: SearchResultScreen,
       navigationOptions: { header: null }
-    }
+    },
+    AllProductsByCategory: {
+      screen: AllProductsByCategoryScreen,
+      navigationOptions: { header: null }
+    },
   },
   {
     initialRouteName: 'Welcome',

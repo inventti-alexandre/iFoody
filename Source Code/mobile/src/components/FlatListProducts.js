@@ -13,7 +13,7 @@ export default class FlatListProducts extends Component {
       initPage: 1,
       initCount: 10
     };
-    console.log('flatlistproduct:', this.props)
+    console.log("flatlistproduct:", this.props);
   }
 
   componentWillMount() {
@@ -33,17 +33,30 @@ export default class FlatListProducts extends Component {
       }
     });
   };
+  goAllProductsByCategory = () => {
+    let categoryInfo = this.props.categoryInfo
+    this.props.navigation.navigate("AllProductsByCategory", {
+      categoryInfo
+    });
+  };
 
   render() {
     return (
       <View>
         {this.state.products.length > 0 ? (
           <View>
-            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
+            >
               <Text style={styles.categoryName}>
                 {this.props.categoryInfo.name}
               </Text>
-              <Text style={styles.moreText} onPress={() => this.props.navigation.navigate('SearchResult')}>Xem thêm</Text>
+              <Text
+                style={styles.moreText}
+                onPress={this.goAllProductsByCategory}
+              >
+                Xem thêm
+              </Text>
             </View>
 
             <Divider style={{ backgroundColor: "#96abce", marginBottom: 7 }} />
@@ -65,13 +78,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "steelblue",
     marginTop: 10,
-    textAlign: 'left'
+    textAlign: "left"
   },
-  moreText:{
+  moreText: {
     fontSize: 20,
     // fontWeight: "bold",
     // color: "steelblue",
     marginTop: 10,
-    textAlign: 'right'
+    textAlign: "right"
   }
 });

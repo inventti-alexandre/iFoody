@@ -87,8 +87,8 @@ export default class HomeScreen extends Component {
         <Tabs onClick={this.changeTab}>
           {/* First tab */}
           <ScrollView
-            title="Tìm Kiếm"
-            iconName="search"
+            title="Trang chủ"
+            iconName="home"
             iconType="octicon"
             style={styles.contentStyle}
           >
@@ -109,12 +109,6 @@ export default class HomeScreen extends Component {
                     />
                   )}
                 />
-
-                <GeneralButton
-                  onPress={() => this.props.navigation.navigate("SearchResult")}
-                >
-                  Xem Tất Cả
-                </GeneralButton>
               </View>
             </View>
           </ScrollView>
