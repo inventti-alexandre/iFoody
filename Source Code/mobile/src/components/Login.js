@@ -1,22 +1,20 @@
 import React, { Component } from 'react';
 import { Button, View, AsyncStorage } from 'react-native';
-import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
+import { FormLabel, FormInput } from 'react-native-elements';
 import Animation from 'lottie-react-native';
 import axios from 'axios';
 import GeneralButton from './GeneralButton';
 import anim from '../assets/externals/airbnb/android_fingerprint';
 import { SignIn } from '../assets/constants/apiUrl';
-import { userId, authToken } from '../assets/constants/global';
 
 class Login extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
       userId: '',
-      authToken: ''
+      authToken: '',
+      isLoggedIn: false
     };
   }
 
@@ -24,9 +22,15 @@ class Login extends Component {
     this.animation.play();
   }
 
+  onPressButton = () => {
+    this.onSubmit();
+    this.setState({ isLoggedIn: true });
+    this.props.handler(true);
+  }
+
 
    onSubmit = () => {
-    console.log('onSubmit3 work');
+    console.log('onSubmit5 work');
     console.log('this.state ', this.state);
     const dataTest = 'hoailinhtinh@gmail.com:8899';
     const data = Base64.btoa(dataTest);
@@ -38,11 +42,19 @@ class Login extends Component {
      };
     axios.post(SignIn, data, config)
     .then(async (response) => {
-      console.log('Response: ', JSON.stringify(response));
-      this.setState({ userId: response.data.userId });
+      console.log('Response 1: ', JSON.stringify(response));
       try {
+        console.log('after111 navigation');
+        this.setState({
+          userId: response.data.userId,
+          authToken: response.data.authToken,
+          isLoggedIn: true
+        });
         await AsyncStorage.setItem('user_id', response.data.userId);
         await AsyncStorage.setItem('auth_token', response.data.authToken);
+        console.log('after222 navigation');
+        this.props.handler(this.state);
+        console.log('after333 navigation');
       } catch (error) {
         console.log('Error in saving storage ', error);
       }
@@ -50,15 +62,6 @@ class Login extends Component {
     .catch((error) => {
       console.log('error', JSON.stringify(error.response));
     });
-  }
-
-  // TEST AsyncStorage.GetItem
-  onPressButton = async () => {
-    console.log('onPressButton1234 work');
-    console.log('userId & authKen', this.state.userId, this.state.authToken);
-    console.log('===========');
-    const id = await AsyncStorage.getItem('user_id');
-    console.log('id', id);
   }
 
   render() {
@@ -89,18 +92,15 @@ class Login extends Component {
               }
             }
           />
-          <FormValidationMessage>Invalid Email</FormValidationMessage>
 
           <FormLabel>Password</FormLabel>
           <FormInput
             onChangeText={(text) => this.setState({ password: text })}
           />
-          <FormValidationMessage>Incorrect Password</FormValidationMessage>
 
           <GeneralButton style={styles.loginBtnStyle} onPress={this.onSubmit}>
             LOGIN
           </GeneralButton>
-          <Button onPress={this.onPressButton} title='TEST AsyncStorage.getItem' />
         </View>
     );
   }

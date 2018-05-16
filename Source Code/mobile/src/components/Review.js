@@ -1,31 +1,84 @@
 import { Text, View } from 'react-native';
 import React, { Component } from 'react';
-import { Avatar, Divider } from 'react-native-elements';
+import { Avatar } from 'react-native-elements';
+import axios from 'axios';
+import Moment from 'moment';
+import { StoreReview, ProductReview } from '../assets/constants/apiUrl';
 
 class Review extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      productId: '',
+      storeId: '',
+      reviewList: []
+    };
+  }
+
+  componentWillMount() {
+    if (this.props.productId !== null || this.props.productId !== undefined) {
+      this.setState({ productId: this.props.productId });
+    } else if (this.props.storeId !== null || this.props.storeId !== undefined) {
+      this.setState({ storeId: this.props.storeId });
+    }
+  }
+
+  componentDidMount() {
+    this.fetchReviewList();
+  }
+
+  fetchReviewList = () => {
+    if (this.props.productId !== null && this.props.productId !== undefined) {
+      axios.get(`${ProductReview}/${this.props.productId}`)
+        .then(response => {
+          this.setState({ reviewList: response.data });
+        })
+        .catch(error => {
+          console.log('fetchReviewList error: ', error);
+        });
+    } else if (this.props.storeId !== null && this.props.storeId !== undefined) {
+      axios.get(`${StoreReview}/${this.props.storeId}`)
+        .then(response => {
+          this.setState({ reviewList: response.data });
+        })
+        .catch(error => {
+          console.log('fetchReviewList error: ', error);
+        });
+    }
+  }
+
   render() {
-    console.log('inside Review component');
+    Moment.locale('en');
     return (
-      <View>
-        <Divider style={{ backgroundColor: '#e5e5e5' }} />
+      <View style={{ marginTop: 15 }}>
+      <Text style={{ fontSize: 17, marginLeft: 10 }}>Đánh giá</Text>
+        { this.state.reviewList.map((item, key) => (
+          <View key={key} style={{ marginLeft: 10, marginRight: 10 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 25 }}>
+              <Avatar
+                small
+                rounded
+                source={{
+                  uri: 'https://imagineacademy.microsoft.com/content/images/microsoft-img.png'
+                }}
+                onPress={() => console.log('Works!')}
+                activeOpacity={0.7}
+              />
 
-        <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-          <Avatar
-            small
-            rounded
-            source={{ uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg' }}
-              onPress={() => console.log('Works!')}
-              activeOpacity={0.7}
-          />
-          <View>
-            <Text>Lady Gaga</Text>
-            <Text>04/2018</Text>
+              <Text style={{ fontWeight: 'bold', marginLeft: 5 }}>
+                {item.user.lastName} {item.user.firstName}
+              </Text>
+              <Text style={{ fontSize: 13, marginLeft: 'auto' }}>
+                {Moment(item.review.data).format('DD-MM-YYYY')}
+              </Text>
+            </View>
+
+            <View style={{ marginTop: 0 }}>
+              <Text>{item.review.reviewContent}</Text>
+            </View>
+
           </View>
-        </View>
-
-        <View>
-          <Text>Chất lượng khá ổn, mình cho 5 sao nha các bạn.</Text>
-        </View>
+        ))}
       </View>
     );
   }

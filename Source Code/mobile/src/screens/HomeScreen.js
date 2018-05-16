@@ -16,17 +16,36 @@ import LoginScreen from "./LoginScreen";
 import SearchService from "../services/SearchService";
 import CategoryService from "../services/CategoryService";
 import ProductService from "../services/ProductService";
+import React, { Component } from "react";
+import { View, StyleSheet, ScrollView, FlatList, Text } from "react-native";
+import { Button, Divider } from "react-native-elements";
+import Tabs from "../components/Tabs";
+import Search from "../components/Search";
+import GeneralButton from "../components/GeneralButton";
+import Map from "../components/Map";
+import FavoriteScreen from "./FavoriteScreen";
+import DetailStoreScreen from "./DetailStoreScreen";
+import ProfileScreen from "./ProfileScreen";
+import LoginScreen from "./LoginScreen";
+import LoginManager from "../services/LoginManager";
 
 export default class HomeScreen extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isLoggedIn: false,
+      categoryList: [],
+      storeList: [],
+      user: {}
+    };
   }
-  state = {
-    categoryList: [],
-    storeList: []
-  };
 
   componentWillMount() {
+    LoginManager.isLoggedIn().then(response => {
+      console.log("response of LoginManager ", response);
+      this.setState({ isLoggedIn: false });
+    });
+    console.log("this.props.navigation", this.props);
     this.getProductsByCategoryId();
   }
   getProductsByCategoryId = () => {
@@ -34,14 +53,46 @@ export default class HomeScreen extends Component {
       this.setState({ categoryList: data });
     });
   };
-  getSearchString=()=>{
-    
+  getSearchString = () => {};
+
+  componentWillReceiveProps() {
+    console.log("componentWillReceiveProps");
   }
 
+  shouldComponentUpdate() {
+    console.log("shouldComponentUpdate run");
+    console.log("this.state in Home", this.state.isLoggedIn);
+    return true;
+  }
+  componentWillUpdate() {
+    console.log("componentWillUpdate");
+  }
+  componentDidUpdate() {
+    console.log(
+      "componentDidUpdate. This.state.isLoggedIn: ",
+      this.state.isLoggedIn
+    );
+  }
+
+  handler = value => {
+    console.log(
+      "handler method in HOME Component. VALUE from child is: ",
+      value
+    );
+    this.setState({
+      isLoggedIn: value.isLoggedIn,
+      user: value
+    });
+  };
+
+  changeTab = () => {
+    console.log("changeTab");
+  };
   render() {
+    console.log("render. this.state is: ", this.state);
     return (
       <View style={styles.containerStyle}>
-        <Tabs>
+        <Tabs onClick={this.changeTab}>
           {/* First tab */}
           <ScrollView
             title="Tìm Kiếm"
@@ -50,8 +101,11 @@ export default class HomeScreen extends Component {
             style={styles.contentStyle}
           >
             <View style={styles.searchStyle}>
-              <Search searchString={this.getSearchString} isHomePage={true}navigation={this.props.navigation}/>
-
+              <Search
+                searchString={this.getSearchString}
+                isHomePage={true}
+                navigation={this.props.navigation}
+              />
               <View style={styles.categoryContainerStyle}>
                 <FlatList
                   data={this.state.categoryList}
@@ -79,7 +133,10 @@ export default class HomeScreen extends Component {
             iconType="simple-line-icon"
             style={styles.contentStyle}
           >
-            <FavoriteScreen />
+            <FavoriteScreen
+              user={this.state.user}
+              navigation={this.props.navigation}
+            />
           </ScrollView>
 
           {/* Third tab */}
@@ -88,9 +145,20 @@ export default class HomeScreen extends Component {
             iconName="user-o"
             iconType="font-awesome"
             style={styles.contentStyle}
+            onClick={this.changeTab}
           >
-            <LoginScreen />
+            {this.state.isLoggedIn ? (
+              <ProfileScreen handler={this.handler} user={this.state.user} />
+            ) : (
+              <LoginScreen handler={this.handler} />
+            )}
           </ScrollView>
+
+          {/* <GeneralButton
+            onPress={() => this.props.navigation.navigate("Favorite")}
+          >
+            Xem Tất Cả
+          </GeneralButton> */}
         </Tabs>
       </View>
     );

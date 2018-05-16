@@ -12,28 +12,25 @@ import {
 import AllReviewsScreen from './src/screens/AllReviewsScreen';
 import DetailProductScreen from './src/screens/DetailProductScreen';
 import DetailStoreScreen from './src/screens/DetailStoreScreen';
-import FavoriteScreen from './src/screens/FavoriteScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import ViewAllScreen from './src/screens/ViewAllScreen';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import SearchResultScreen from './src/screens/SearchResultScreen';
+import FavoriteScreen from './src/screens/FavoriteScreen';
 
 type Props = {};
-
-
-export default class App extends Component<Props> {
-
-  render() {
-    return (
-        <RootStack />
-    );
-  }
-}
-
 const RootStack = StackNavigator(
   {
+    Home: {
+      screen: HomeScreen,
+      navigationOptions: { header: null }
+    },
+    Favorite: {
+      screen: FavoriteScreen,
+      navigationOptions: { header: null }
+    },
     AllReview: {
       screen: AllReviewsScreen,
       navigationOptions: { header: null }
@@ -44,14 +41,6 @@ const RootStack = StackNavigator(
     },
     DetailStore: {
       screen: DetailStoreScreen,
-      navigationOptions: { header: null }
-    },
-    Favorite: {
-      screen: FavoriteScreen,
-      navigationOptions: { header: null }
-    },
-    Home: {
-      screen: HomeScreen,
       navigationOptions: { header: null }
     },
     Login: {
@@ -79,3 +68,13 @@ const RootStack = StackNavigator(
     initialRouteName: 'Welcome',
   },
 );
+
+
+export default class App extends Component<Props> {
+
+  render() {
+    return (
+        <RootStack />
+    );
+  }
+}

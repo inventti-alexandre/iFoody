@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { Icon, Card, Button } from 'react-native-elements';
 import Animation from 'lottie-react-native';
-import image from '../assets/images/test2.jpg';
 import GeneralRating from './GeneralRating';
 import anim from '../assets/externals/airbnb/heart_with_particles.json';
 import { handelImagePath } from "../services/ShareFunction";
@@ -82,8 +81,17 @@ class StoreItem extends Component {
           icon={{ name: 'code' }}
           backgroundColor='#03A9F4'
           fontFamily='Lato'
-          buttonStyle={{ borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0 }}
+          buttonStyle={{
+              borderRadius: 0,
+              marginLeft: 0,
+              marginRight: 0,
+              marginBottom: 0,
+              display: this.props.buttonItemDisplay }}
           title='Xem Ngay'
+          onPress={() => {
+            console.log('Xem Ngay Clicked!!!!');
+            this.props.navigateInItem({ screenName: 'DetailStore', id: this.props.item.id });
+          }}
         />
       </Card>
     );
@@ -96,7 +104,7 @@ const styles = {
   },
   animationStyle: {
     position: 'absolute',
-    top: -155,
+    top: -220,
     right: 0
   },
   imageStyle: {
