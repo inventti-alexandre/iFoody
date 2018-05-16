@@ -17,6 +17,7 @@ import LoginScreen from './src/screens/LoginScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import ViewAllScreen from './src/screens/ViewAllScreen';
 import WelcomeScreen from './src/screens/WelcomeScreen';
+import SearchResultScreen from './src/screens/SearchResultScreen';
 import FavoriteScreen from './src/screens/FavoriteScreen';
 
 type Props = {};
@@ -58,6 +59,10 @@ const RootStack = StackNavigator(
       screen: WelcomeScreen,
       navigationOptions: { header: null }
     },
+    SearchResult: {
+      screen: SearchResultScreen,
+      navigationOptions: { header: null }
+    }
   },
   {
     initialRouteName: 'Welcome',

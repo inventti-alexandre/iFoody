@@ -10,13 +10,15 @@ class GeneralRating extends Component {
   }
 
   render() {
+    let rating = this.props.rating;
+    console.log('inside Rating component', this.props.rating);
     return (
       <Rating
         readonly
         showReadOnlyText='false'
         type="star"
         fractions={1}
-        startingValue={this.props.value}
+        startingValue={rating}
         type='custom'
         imageSize={10}
         onFinishRating={this.ratingCompleted}

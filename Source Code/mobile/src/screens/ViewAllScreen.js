@@ -17,6 +17,9 @@ import StoreItem from '../components/StoreItem';
 import GeneralButton from '../components/GeneralButton';
 
 export default class ViewAllScreen extends Component {
+  getSearchString=()=>{
+    
+  }
   render() {
     return (
       <View style={styles.containerStyle}>
@@ -31,7 +34,7 @@ export default class ViewAllScreen extends Component {
 
              <View style={styles.searchStyle}>
 
-              <Search />
+              <Search searchString={this.getSearchString} />
 
               <View style={styles.buttonContainerStyle}>
                 <Button
