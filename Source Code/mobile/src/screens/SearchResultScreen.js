@@ -24,7 +24,7 @@ import SearchService from "../services/SearchService";
 import CategoryService from "../services/CategoryService";
 import Modal from "react-native-modal";
 import CheckBox from "react-native-check-box";
-import StoreItem from "../components/StoreItem";
+import SearchStoreItem from "../components/SearchStoreItem";
 
 export default class SearchResultScreen extends Component {
   state = {
@@ -463,7 +463,7 @@ export default class SearchResultScreen extends Component {
                 <FlatList
                   data={this.state.searchResults.results}
                   extraData={this.state}
-                  renderItem={({ item }) => <StoreItem storeInfo={item} />}
+                  renderItem={({ item }) => <SearchStoreItem storeInfo={item} />}
                   keyExtractor={item => item.id}
                 />
               </View>

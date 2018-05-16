@@ -73,21 +73,6 @@ class ProductItem extends Component {
   }
 }
 
-const styles = {
-  containerStyle: {
-    position: 'relative',
-  },
-  animationStyle: {
-    position: 'absolute',
-    top: -220,
-    right: 0
-  },
-  image: {
-    flex: 1,
-    height: 220
-  }
-};
-
 export default ProductItem;
 
 const styles = StyleSheet.create({

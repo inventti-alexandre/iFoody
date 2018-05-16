@@ -4,13 +4,14 @@ import { Icon, Card, Button } from 'react-native-elements';
 import Animation from 'lottie-react-native';
 import GeneralRating from './GeneralRating';
 import anim from '../assets/externals/airbnb/heart_with_particles.json';
-import imageDefault from '../assets/constants/global';
+import { handelImagePath } from "../services/ShareFunction";
+import { ImageLoader } from "react-native-image-fallback";
 
-class StoreItem extends Component {
+class SearchStoreItem extends Component {
   constructor(props) {
     super(props);
-    console.log('Constructor StoreItem. Props is: ', this.props);
-    console.log('this.props.buttonItemDisplay', this.props.buttonItemDisplay);
+    this.state = {     
+    };
   }
 
   componentDidMount() {
@@ -18,18 +19,24 @@ class StoreItem extends Component {
   }
 
   render() {
-    console.log('inside StoreItem component');
-
+    let item = this.props.storeInfo;
+    item.images = handelImagePath(item.images);
+    const imageSource =
+      item.images.length > 0
+        ? item.images[0].path
+        : require("../assets/images/no-image.jpg");
+    const fallbacks = [
+      require("../assets/images/no-image.jpg") // A locally require'd image
+    ];
     return (
       <Card
         containerStyle={styles.containerStyle}
-        image={{ uri:
-          this.props.item.images.length > 0
-          ? this.props.item.images[0].path
-          : imageDefault
-        }}
-        imageStyle={styles.image}
       >
+       <ImageLoader
+          source={imageSource}
+          fallback={fallbacks}   
+          style={styles.imageStyle}      
+        />
         <View style={styles.animationStyle}>
           <Animation
             ref={animation => {
@@ -45,10 +52,10 @@ class StoreItem extends Component {
         </View>
         <View>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text>
-              {this.props.item.name}
+            <Text  style={styles.nameStoreStyle}>
+              {item.store.name}
             </Text>
-            <GeneralRating value={this.props.item.rating} />
+            <GeneralRating rating={item.store.rating?item.store.rating:0}/>
           </View>
 
           <View style={{ flexDirection: 'row' }}>
@@ -60,14 +67,13 @@ class StoreItem extends Component {
               />
 
               <Text>
-              {' '} {this.props.item.lowestPrice}
-               - {this.props.item.highestPrice}
+              <Text>{" " + item.store.lowestPrice + ' - '+ item.store.highestPrice}</Text>
               </Text>
 
           </View>
 
-          <Text>
-            {this.props.item.address}, {this.props.item.district}
+          <Text style={styles.addressStoreStyle}>
+            {item.store.address + ', '+ item.store.district+ ', '+ item.store.city}
           </Text>
 
         </View>
@@ -101,10 +107,19 @@ const styles = {
     top: -220,
     right: 0
   },
-  image: {
-    flex: 1,
-    height: 220
+  imageStyle: {
+    flexDirection: "row",
+    height: 150,
+    width: '100%',
+  },
+  nameStoreStyle: {
+    width: '80%',
+    maxHeight: 50
+  },
+  addressStoreStyle: {
+    width: '100%',
+    maxHeight: 70
   }
 };
 
-export default StoreItem;
+export default SearchStoreItem;

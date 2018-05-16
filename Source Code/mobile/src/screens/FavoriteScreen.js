@@ -129,7 +129,7 @@ export default class FavoriteScreen extends Component {
     return ([
           this.state.productList.map((item, key) => (
             <ProductItem
-              key={key} item={item}
+              key={key} productInfo={item}
               navigateInItem={this.navigateInItem}
             />
           )),
