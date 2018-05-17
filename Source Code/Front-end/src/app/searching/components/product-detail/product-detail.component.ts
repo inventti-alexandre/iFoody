@@ -10,7 +10,7 @@ import {
   ChangeDetectorRef
 } from "@angular/core";
 import * as apiUrl from "../../../constant/apiUrl";
-import { deCodeUrl } from "./../../../shared/services/share-function.service";
+import { deCodeUrl, handelImagePath } from "./../../../shared/services/share-function.service";
 @Component({
   selector: "product-detail",
   templateUrl: "./product-detail.component.html",
@@ -29,6 +29,7 @@ export class ProductDetailComponent implements OnInit {
   imageDefault: string;
   deCodeUrl = deCodeUrl;
   isLoadingProduct: Boolean;
+  handelImagePath =handelImagePath;
 
   constructor(
     private _productService: ProductService,
@@ -56,6 +57,7 @@ export class ProductDetailComponent implements OnInit {
         .GetProductById(this.productId)
         .subscribe((data: Response) => {
           this.productModel = data;
+          this.productModel.images = handelImagePath(this.productModel.images);
           this.isLoadingProduct = false;
           this.categoryId = this.productModel.category.id;
           this.storeId.push(this.productModel.store.id);

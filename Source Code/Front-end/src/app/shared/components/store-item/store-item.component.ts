@@ -6,7 +6,7 @@ import { UserService } from './../../services/user.service';
 import { IStore } from './../../models/allModel';
 import { Component, Input, OnInit } from '@angular/core';
 import * as apiUrl from '../../../constant/apiUrl';
-import { enCodeUrl } from "../../../shared/services/share-function.service";
+import { enCodeUrl, handelImagePath } from "../../../shared/services/share-function.service";
 
 @Component({
   selector: 'favorite-store-item',
@@ -18,6 +18,7 @@ export class StoreItemComponent implements OnInit {
   storeModel: any;
   storeUrl: string;
   enCodeUrl = enCodeUrl;
+  handelImagePath = handelImagePath;
   // name: string;
   // price: number;
   constructor(private _userService: UserService,
@@ -51,6 +52,7 @@ export class StoreItemComponent implements OnInit {
 
     console.log(data);
         this.storeModel = data;
+        this.storeModel.images = handelImagePath(this.storeModel.images);
       });
   }
 

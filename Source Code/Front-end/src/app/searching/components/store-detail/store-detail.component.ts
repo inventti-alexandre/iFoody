@@ -83,28 +83,34 @@ export class StoreDetailComponent implements OnInit {
         console.log("storeInfoModel", data);
         this.storeInfoModel = data;
         this.isLoadingStore = false;
-        if (
-          data.userId === localStorage.getItem("user_id").replace(/['"]+/g, "")
-        ) {
-          console.log("is Store Manager");
-        } else {
+        if(localStorage.length>0){
+          if (
+            data.userId === localStorage.getItem("user_id").replace(/['"]+/g, "")
+          ) {
+            console.log("is Store Manager");
+          } 
+        }
+        else {
           this.storeManager = false;
           console.log("not Store Manager");
         }
         this.storeInfoModel.images.forEach(image => {
           image.path = image.path.replace("~/", "");
         });
-        
-          if(this.storeInfoModel != null && this.storeInfoModel.images.length > 0) {
-            mainStoreImage = this.imageDomain + data.images[0].path;
-            nameStore = this.storeInfoModel.name;
-            addressStore = this.storeInfoModel.address + ', ' + this.storeInfoModel.district;
-          }
-          else {
-            mainStoreImage = this.imageDefault;
-            nameStore = "Cửa hàng";
-            addressStore = "";
-          }
+
+        if (
+          this.storeInfoModel != null &&
+          this.storeInfoModel.images.length > 0
+        ) {
+          mainStoreImage = this.imageDomain + data.images[0].path;
+          nameStore = this.storeInfoModel.name;
+          addressStore =
+            this.storeInfoModel.address + ", " + this.storeInfoModel.district;
+        } else {
+          mainStoreImage = this.imageDefault;
+          nameStore = "Cửa hàng";
+          addressStore = "";
+        }
 
         this._userService
           .getAllProductInStore(idFromParam)
