@@ -143,6 +143,7 @@ export class SearchBarComponent implements OnInit {
         (data: Response) => {
           if (data != null) {
             this.suggestionList.push(data);
+            this.suggestionList[0].results = this.changeImagePath( this.suggestionList[0].results);
           }else{
             this.isNotFound = true;
           }
