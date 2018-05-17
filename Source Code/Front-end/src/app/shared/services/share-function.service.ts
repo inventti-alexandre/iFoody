@@ -1,6 +1,7 @@
 import { imageDefault } from "./../../constant/global";
 import { Injectable } from "@angular/core";
 import { Router, NavigationEnd  } from '@angular/router';
+import {ImageDomain} from '../../constant/apiUrl';
 
 @Injectable()
 export class ShareFunctionService {
@@ -42,4 +43,9 @@ export function enCodeUrl(para){
 export function deCodeUrl(para){
   return atob(para);
 }
-
+export function handelImagePath(listImage){
+  listImage.forEach(image => {
+      image.path = image.path.replace("~/",ImageDomain);
+  });
+  return listImage;
+}

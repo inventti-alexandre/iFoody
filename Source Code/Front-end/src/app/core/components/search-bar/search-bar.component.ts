@@ -1,3 +1,4 @@
+import { forEach } from '@angular/router/src/utils/collection';
 import { ISearchParam, ISearchResult } from "./../../../shared/models/allModel";
 import { imageDefault } from "./../../../constant/global";
 import { ActivatedRoute, Params, Route, Router } from "@angular/router";
@@ -5,7 +6,7 @@ import { Component, OnInit, Input } from "@angular/core";
 import { SearchService } from "./../../../shared/services/search.service";
 import { UserService } from "../../../shared/services/user.service";
 import * as _ from "lodash";
-import { handelImgErro,checkOpenStore,enCodeUrl } from "../../../shared/services/share-function.service";
+import { handelImgErro,checkOpenStore,enCodeUrl,handelImagePath } from "../../../shared/services/share-function.service";
 declare var searchObject: any;
 
 @Component({
@@ -30,6 +31,7 @@ export class SearchBarComponent implements OnInit {
   handelImgErro = handelImgErro;
   checkOpenStore = checkOpenStore;
   enCode = enCodeUrl;
+  handelImagePath = handelImagePath;
 
   constructor(
     private router: Router,
@@ -90,6 +92,7 @@ export class SearchBarComponent implements OnInit {
         this.getSuggestionListByRating(this.defaultSuggestionCount);
       }
     } else {
+      this.defaultSuggestionList[0].results = this.changeImagePath( this.defaultSuggestionList[0].results);
       this.suggestionList = _.cloneDeep(this.defaultSuggestionList);
     }
   }
@@ -100,6 +103,7 @@ export class SearchBarComponent implements OnInit {
       .subscribe((data: Response) => {
         if (data !== null) {
           this.defaultSuggestionList.push(data);
+          this.defaultSuggestionList[0].results = this.changeImagePath( this.defaultSuggestionList[0].results);
           this.suggestionList = _.cloneDeep(this.defaultSuggestionList);
           console.log("suggest default", this.defaultSuggestionList[0].results);
         } else {
@@ -114,8 +118,9 @@ export class SearchBarComponent implements OnInit {
       .subscribe((data: Response) => {
         if (data !== null) {
           this.defaultSuggestionList.push(data);
-          this.suggestionList = _.cloneDeep(this.defaultSuggestionList);
+          this.defaultSuggestionList[0].results = this.changeImagePath( this.defaultSuggestionList[0].results);
           console.log("suggest result", this.defaultSuggestionList[0].results);
+          this.suggestionList = _.cloneDeep(this.defaultSuggestionList);
         } else {
           console.log("suggest result empty");
         }
@@ -175,5 +180,11 @@ export class SearchBarComponent implements OnInit {
       this.filterDisplay = "Chọn khu vực";
     }
     this.handelChangeSearchBar();
+  }
+  changeImagePath=(results)=>{
+    results.forEach(item=>{
+      item.images = handelImagePath(item.images);
+    })
+    return results;
   }
 }

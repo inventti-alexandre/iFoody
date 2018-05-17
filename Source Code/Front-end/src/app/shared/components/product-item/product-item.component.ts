@@ -8,7 +8,7 @@ import { IProductItem } from "../../models/allModel";
 import { CurrencyPipe } from "@angular/common/src/pipes/number_pipe";
 import { Component, OnInit, Output, Input } from "@angular/core";
 import * as apiUrl from "../../../constant/apiUrl";
-import { handelImgErro, checkOpenStore, enCodeUrl } from "./../../../shared/services/share-function.service";
+import { handelImgErro, checkOpenStore, enCodeUrl, handelImagePath } from "./../../../shared/services/share-function.service";
 
 @Component({
   selector: "product-item",
@@ -24,6 +24,7 @@ export class ProductItemComponent implements OnInit {
   handelImgErro = handelImgErro;
   checkOpenStore = checkOpenStore;
   enCodeUrl = enCodeUrl;
+  handelImagePath = handelImagePath;
   constructor(
     private _productService: ProductService,
     private _http: Http,
@@ -41,11 +42,13 @@ export class ProductItemComponent implements OnInit {
     if (this.productId) {
       this._productService.GetProductById(this.productId).subscribe(data => {
         this.productModel = data;
+        this.productModel.images = handelImagePath(this.productModel.images);
       });
     }
     if (this.productInfo) {
       this.productId = this.productInfo.product.id;
       this.productModel = this.productInfo;
+      this.productModel.images = handelImagePath(this.productModel.images);
     }
   }
 
