@@ -85,7 +85,14 @@ export class StoreDetailComponent implements OnInit {
         console.log("storeInfoModel", data);
         this.storeInfoModel = data;
         this.isLoadingStore = false;
-        
+        if (
+          data.userId === localStorage.getItem("user_id").replace(/['"]+/g, "")
+        ) {
+          console.log("is Store Manager");
+        } else {
+          this.storeManager = false;
+          console.log("not Store Manager");
+        }
         this.storeInfoModel.images.forEach(image => {
           console.log('image path ', image);
           image.path = image.path.replace("~/", "");

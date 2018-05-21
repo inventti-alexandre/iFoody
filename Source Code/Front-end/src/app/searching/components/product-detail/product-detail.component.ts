@@ -11,11 +11,11 @@ import {
   ChangeDetectorRef
 } from "@angular/core";
 import * as apiUrl from "../../../constant/apiUrl";
-import { deCodeUrl } from "./../../../shared/services/share-function.service";
 declare var mainStoreImage: any;
 declare var nameStore: any;
 declare var addressStore: any;
 
+import { deCodeUrl, handelImagePath } from "./../../../shared/services/share-function.service";
 @Component({
   selector: "product-detail",
   templateUrl: "./product-detail.component.html",
@@ -35,6 +35,7 @@ export class ProductDetailComponent implements OnInit {
   imageDomain: string;
   deCodeUrl = deCodeUrl;
   isLoadingProduct: Boolean;
+  handelImagePath =handelImagePath;
 
   constructor(
     private _productService: ProductService,
@@ -63,9 +64,7 @@ export class ProductDetailComponent implements OnInit {
         .GetProductById(this.productId)
         .subscribe((data: Response) => {
           this.productModel = data;
-          this.productModel.images.forEach(image => {
-            image.path = image.path.replace("~/", "");
-          });
+          this.productModel.images = handelImagePath(this.productModel.images);
           if(this.productModel.store.city === '1'){
             this.productModel.store.city = 'TpHCM'
           }
