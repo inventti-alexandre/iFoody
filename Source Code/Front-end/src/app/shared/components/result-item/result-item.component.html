@@ -2,10 +2,10 @@
   <div class="row-item filter-result-item">
     <div class="ri-avatar result-image">
       <a target="blank" href="" [routerLink]="['/store', enCodeUrl(item.store.id)]" [title]="item.store.name">
-        <img [src]="item.images.length > 0 ?item.images[0].path:imageDefault" [alt]="item.store.name" (error)="handelImgErro($event)">
+        <img [src]="item.images.length > 0 ? imageDomain + item.images[0].path:imageDefault" [alt]="item.store.name" (error)="handelImgErro($event)">
         <ng-template [ngIf]="item.images.length > 1">
           <div class="overlay">
-            <img src={{item.images[1].path}} [alt]="item.store.name" (error)="handelImgErro($event)">
+            <img [src]="imageDomain + item.images[1].path" [alt]="item.store.name" (error)="handelImgErro($event)">
           </div>
         </ng-template>
       </a>

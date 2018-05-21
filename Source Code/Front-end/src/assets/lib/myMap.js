@@ -6,9 +6,11 @@ var addressList;
 var currentLocationImage = 'https://thumb.ibb.co/dj9Fbn/my_location_min.png';
 var currentLocationGlobal;
 var currentPositionGlobal;
-var mainStoreImage;
-var nameStore;
-var addressStore;
+var mainStoreImage = [];
+var nameStore = [];
+var priceStore = [];
+var addressStore = [];
+
 
 $(document).ready(function() {
     if (navigator.geolocation) {
@@ -28,7 +30,7 @@ var mapObject = (function() {
     return {
         initMap1: function() {
             // For Geocoding Service
-            geocoder = new google.maps.Geocoder();
+            // geocoder = new google.maps.Geocoder();
 
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 11,
@@ -79,33 +81,53 @@ var mapObject = (function() {
             var directionsDisplay = new google.maps.DirectionsRenderer({map: map});
             var directionsService = new google.maps.DirectionsService();
             //////////////////////////
-            
             for(y = 0; y < addressList.length; y++) {
                 var myLatlng = new google.maps.LatLng(addressList[y].latitude,addressList[y].longitude);
-                geocoder.geocode( { 'latLng': myLatlng}, function(results, status) {
-                    if (status == 'OK') {
+                // geocoder.geocode( { 'latLng': myLatlng}, function(results, status) {
+                    // if (status == 'OK') {
+                            let icon = {
+                                url: mainStoreImage[y], // url
+                                scaledSize: new google.maps.Size(40, 30), // scaled size
+                                origin: new google.maps.Point(0,0), // origin
+                                anchor: new google.maps.Point(0, 0) // anchor
+                            };
+                            let iconMouseOver = {
+                                url: mainStoreImage[y], // url
+                                scaledSize: new google.maps.Size(120, 90), // scaled size
+                                origin: new google.maps.Point(0,0), // origin
+                                anchor: new google.maps.Point(0, 0) // anchor
+                            };
                             marker = new google.maps.Marker({
                                     map: map,
                                     // position: results[0].geometry.location,
+                                    icon: icon,
                                     position: myLatlng,
                                     animation: google.maps.Animation.DROP,
+                            });
+                            marker.addListener('mouseover', function() {
+                                this.setIcon(iconMouseOver);
+                                this.setZIndex(1000);
+                            });
+                            marker.addListener('mouseout', function() {
+                                this.setIcon(icon);
+                                this.setZIndex(1);
                             });
                             google.maps.event.addListener(marker, 'click', (function (marker, y) {
                                 return function () {
                                     // infoWindow.setContent();
                                     infoWindow.setContent(
-                                        "<div style='height: 130px;width:110px;'><div style='text-align: center'><img style='height:60px;width: 100%;' src='" 
-                                        + mainStoreImage + "'></div><br/><div><strong>" 
-                                        + nameStore + "</strong></div><div>"
-                                        + addressStore + "</div></div>"
+                                        "<div style='height: 130px;width:130px;'><div style='text-align: center'><img style='height:60px;width: 100%;' src='" 
+                                        + mainStoreImage[y] + "'></div><br/><div><strong>" 
+                                        + nameStore[y] + "</strong></div><div>"
+                                        + addressStore[y] + "</div></div>"
                                     );
                                     infoWindow.open(map, marker);
                                     // get route from A to B
                                     calculateAndDisplayRoute(directionsService, directionsDisplay, marker, currentMarker);
                                 }
                             })(marker, y));
-                        };
-                });
+                        // };
+                // });
             }
         },
         // Get Address Array from Service
@@ -131,7 +153,6 @@ function calculateAndDisplayRoute (directionsService, directionsDisplay, pointA,
     };
     directionsService.route(request, function(result, status) {
         if (status == 'OK') {
-            console.log("status OK");
             directionsDisplay.setDirections(result);
             directionsDisplay.setOptions( { suppressMarkers: true } );
                  

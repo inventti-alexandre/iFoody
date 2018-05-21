@@ -63,7 +63,7 @@ export default class FlatListProducts extends Component {
             <FlatList
               horizontal
               data={this.state.products}
-              renderItem={({ item }) => <ProductItem productInfo={item} />}
+              renderItem={({ item }) => <ProductItem productInfo={item} key={item.key} />}
               keyExtractor={item => item.id}
             />
           </View>

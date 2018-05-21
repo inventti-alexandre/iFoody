@@ -20,7 +20,7 @@ declare var addressStore: any;
   styleUrls: ["./store-detail.component.scss"]
 })
 export class StoreDetailComponent implements OnInit {
-  storeManager = true;
+  storeManager = false;
   storeId;
   storeIds: any[];
   @Output() productModel: any;
@@ -44,6 +44,8 @@ export class StoreDetailComponent implements OnInit {
     window.scrollTo(0, 0);
     this.imageDefault = imageDefault;
     this.imageDomain = ImageDomain;
+    nameStore = 'No Name';
+    addressStore = 'No update';
     this.productsQuantity = 0;
     this.storeInfoModel = {
       address: "...................",
@@ -83,28 +85,53 @@ export class StoreDetailComponent implements OnInit {
         console.log("storeInfoModel", data);
         this.storeInfoModel = data;
         this.isLoadingStore = false;
-        if (
-          data.userId === localStorage.getItem("user_id").replace(/['"]+/g, "")
-        ) {
-          console.log("is Store Manager");
-        } else {
-          this.storeManager = false;
-          console.log("not Store Manager");
-        }
-        this.storeInfoModel.images.forEach(image => {
-          image.path = image.path.replace("~/", "");
-        });
         
-          if(this.storeInfoModel != null && this.storeInfoModel.images.length > 0) {
-            mainStoreImage = this.imageDomain + data.images[0].path;
-            nameStore = this.storeInfoModel.name;
-            addressStore = this.storeInfoModel.address + ', ' + this.storeInfoModel.district;
+        this.storeInfoModel.images.forEach(image => {
+          console.log('image path ', image);
+          image.path = image.path.replace("~/", "");
+         });
+
+        if(localStorage.getItem("user_id") !== undefined && localStorage.getItem("user_id") !==  null) {
+          if (
+            data.userId === localStorage.getItem("user_id").replace(/['"]+/g, "")
+          ) {
+            this.storeManager = true;
+            console.log("is Store Manager");
           }
           else {
-            mainStoreImage = this.imageDefault;
-            nameStore = "Cửa hàng";
-            addressStore = "";
+            this.storeManager = false;
+            console.log("not Store Manager");
           }
+        } else {
+            this.storeManager = false;
+            console.log("is Guest");
+        }
+
+        if(this.storeInfoModel.images.length > 0) {
+            mainStoreImage = [];
+            mainStoreImage.push(this.imageDomain + this.storeInfoModel.images[0].path);
+            console.log('mainStoreImage', mainStoreImage);
+        }
+        else {
+          mainStoreImage = [];
+          mainStoreImage.push(this.imageDefault);
+          console.log('mainStoreImage', mainStoreImage);
+        }
+        
+        if(this.storeInfoModel.city === '1'){
+          this.storeInfoModel.city = 'TpHCM'
+        }
+        if(this.storeInfoModel.city === '2'){
+          this.storeInfoModel.city = 'Hà Nội'
+        }
+        if(this.storeInfoModel != null && this.storeInfoModel.images.length > 0) {
+          nameStore = this.storeInfoModel.name;
+          addressStore = this.storeInfoModel.address + ', ' + this.storeInfoModel.district;
+        }
+        else {
+          nameStore = "Cửa hàng";
+          addressStore = "";
+        }
 
         this._userService
           .getAllProductInStore(idFromParam)
@@ -128,5 +155,5 @@ export class StoreDetailComponent implements OnInit {
           });
       });
     });
-  };
+  }
 }

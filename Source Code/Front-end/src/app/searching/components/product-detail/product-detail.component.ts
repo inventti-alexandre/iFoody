@@ -1,3 +1,4 @@
+import { ImageDomain } from './../../../constant/apiUrl';
 import { UserService } from "./../../../shared/services/user.service";
 import { ActivatedRoute, Router, Params } from "@angular/router";
 import { ProductService } from "./../../../shared/services/product.service";
@@ -11,6 +12,10 @@ import {
 } from "@angular/core";
 import * as apiUrl from "../../../constant/apiUrl";
 import { deCodeUrl } from "./../../../shared/services/share-function.service";
+declare var mainStoreImage: any;
+declare var nameStore: any;
+declare var addressStore: any;
+
 @Component({
   selector: "product-detail",
   templateUrl: "./product-detail.component.html",
@@ -27,6 +32,7 @@ export class ProductDetailComponent implements OnInit {
   isFavorited = false;
   favoriteId: string;
   imageDefault: string;
+  imageDomain: string;
   deCodeUrl = deCodeUrl;
   isLoadingProduct: Boolean;
 
@@ -42,6 +48,7 @@ export class ProductDetailComponent implements OnInit {
     this.userIdKey = apiUrl.UserId;
     this.storeId = [];
     this.isLoadingProduct = true;
+    this.imageDomain = ImageDomain;
   }
 
   ngOnInit() {
@@ -56,9 +63,30 @@ export class ProductDetailComponent implements OnInit {
         .GetProductById(this.productId)
         .subscribe((data: Response) => {
           this.productModel = data;
+          this.productModel.images.forEach(image => {
+            image.path = image.path.replace("~/", "");
+          });
+          if(this.productModel.store.city === '1'){
+            this.productModel.store.city = 'TpHCM'
+          }
+          if(this.productModel.store.city === '2'){
+            this.productModel.store.city = 'Hà Nội'
+          }
           this.isLoadingProduct = false;
           this.categoryId = this.productModel.category.id;
           this.storeId.push(this.productModel.store.id);
+          if(this.productModel.images.length > 0) {
+            mainStoreImage = [];
+            mainStoreImage.push(this.imageDomain + this.productModel.images[0].path);
+            console.log('mainStoreImage', mainStoreImage);
+          }
+          else {
+            mainStoreImage = [];
+            mainStoreImage.push(this.imageDefault);
+            console.log('mainStoreImage', mainStoreImage);
+          }
+          nameStore = this.productModel.store.name;
+          addressStore = this.productModel.store.address + ', ' + this.productModel.store.district;
         });
 
       // Product is Favorited or not
@@ -76,7 +104,7 @@ export class ProductDetailComponent implements OnInit {
           });
         });
     });
-  };
+  }
 
   addFavoriteItem() {
     console.log("addFavoriteItem works");

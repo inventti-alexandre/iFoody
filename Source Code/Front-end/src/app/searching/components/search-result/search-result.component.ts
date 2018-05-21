@@ -1,9 +1,15 @@
+import { ImageDomain } from './../../../constant/apiUrl';
+import { imageDefault } from './../../../constant/global';
 import { forEach } from '@angular/router/src/utils/collection';
 import { ISearchParam } from './../../../shared/models/allModel';
 import { SearchService } from './../../../shared/services/search.service';
 import { Component, OnInit, Input} from '@angular/core';
 import { ActivatedRoute, Router, Params, NavigationEnd  } from '@angular/router';
 import {scrollTop} from './../../../shared/services/share-function.service';
+declare var mainStoreImage;
+declare var nameStore;
+declare var priceStore;
+declare var addressStore;
 
 @Component({
   selector: 'search-result',
@@ -16,6 +22,7 @@ export class SearchResultComponent implements OnInit {
   targetPage: number; // Value get from Bs-Pagination
   storeIds: any[];
   scrollTop = scrollTop;
+  imageDomain: any;
 
   public products: any[];
   public initPage;
@@ -30,6 +37,8 @@ export class SearchResultComponent implements OnInit {
     this.initCount = 20;
     this.isLoading = true;
     this.initDefautlValue();
+    this.imageDomain = ImageDomain;
+    window.scrollTo(0,0);
   }
 
   ngOnInit() {
@@ -52,7 +61,7 @@ export class SearchResultComponent implements OnInit {
         "districts":false,
         "rating": false
       }
-    }
+    };
     this.products = [];
     this.storeIds=[];
   }
@@ -65,13 +74,29 @@ export class SearchResultComponent implements OnInit {
   }
   setStoreIds=(result)=>{
     this.storeIds=[];
+    result.sort(function(a,b) {return (a.store.id > b.store.id ? 1 : ((b.store.id > a.store.id) ? -1 : 0));}); 
     result.forEach(item=>{
       this.storeIds.push(item.store.id);
-    })
+      if(item.images[0] !== null) {
+        mainStoreImage.push(this.imageDomain + item.images[0].path.replace('~/', ''));
+      }
+      else {
+        mainStoreImage.push(imageDefault);
+      }
+      priceStore.push(`${item.store.lowestPrice} - ${item.store.highestPrice}`);
+      nameStore.push(item.store.name);
+      addressStore.push(`${item.store.address}, ${item.store.district}`);
+    });
+    this.storeIds.sort();
+    console.log('mainStoreImage', mainStoreImage);
+    console.log('priceStore ', priceStore);
+    console.log('nameStore ', nameStore);
+    console.log('addressStore ', addressStore);
   }
+
   getSearchPaging(targetPage) {
     this.isLoading = true;
-    if(this.searchParam.searchString != "") {
+    if(this.searchParam.searchString !== "") {
       this.searchParam.page = targetPage;
       this.setDistrictFilterOption();
       return this._searchService.Search(this.searchParam)

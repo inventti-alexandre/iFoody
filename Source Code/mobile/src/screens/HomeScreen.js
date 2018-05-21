@@ -9,7 +9,7 @@ import { Button, Divider } from "react-native-elements";
 import axios from "axios";
 import Tabs from "../components/Tabs";
 import Search from "../components/Search";
-import FlatListroducts from "../components/FlatListProducts";
+import FlatListProducts from "../components/FlatListProducts";
 import GeneralButton from "../components/GeneralButton";
 import FavoriteScreen from "./FavoriteScreen";
 import SearchService from "../services/SearchService";
@@ -103,7 +103,8 @@ export default class HomeScreen extends Component {
                   data={this.state.categoryList}
                   keyExtractor={item => item.id}
                   renderItem={({ item }) => (
-                    <FlatListroducts
+                    <FlatListProducts
+					  key={item.key}
                       categoryInfo={item}
                       navigation={this.props.navigation}
                     />
