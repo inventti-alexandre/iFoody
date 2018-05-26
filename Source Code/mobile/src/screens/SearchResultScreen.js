@@ -20,7 +20,9 @@ import Search from "../components/Search";
 import GeneralButton from "../components/GeneralButton";
 import FavoriteScreen from "./FavoriteScreen";
 import LoginScreen from "./LoginScreen";
-import SearchService, { currentLocationGlobal } from "../services/SearchService";
+import SearchService, {
+  currentLocationGlobal
+} from "../services/SearchService";
 import CategoryService from "../services/CategoryService";
 import Modal from "react-native-modal";
 import CheckBox from "react-native-check-box";
@@ -80,6 +82,38 @@ class SearchResultScreen extends Component {
     },
     isLoading: false
   };
+  resetCheckbox = () => {
+   this.state.categoryList.forEach(item=>{
+     item.checked = false;
+   });
+   this.setState({
+    districts: [
+      { id: "quan1", name: "quận 1", type: "district" },
+      { id: "quan2", name: "quận 2", type: "district" },
+      { id: "quan3", name: "quận 3", type: "district" },
+      { id: "quan4", name: "quận 4", type: "district" },
+      { id: "quan5", name: "quận 5", type: "district" },
+      { id: "quan6", name: "quận 6", type: "district" },
+      { id: "quan7", name: "quận 7", type: "district" },
+      { id: "quan8", name: "quận 8", type: "district" },
+      { id: "quan9", name: "quận 9", type: "district" },
+      { id: "quan10", name: "quận 10", type: "district" },
+      { id: "quan11", name: "quận 11", type: "district" },
+      { id: "quan12", name: "quận 12", type: "district" },
+      { id: "quanTanBinh", name: "quận Tân Bình", type: "district" },
+      { id: "quanBinhThanh", name: "quận Bình Thạnh", type: "district" },
+      { id: "quanPhuNhuan", name: "quận Phú Nhuận", type: "district" },
+      { id: "quanTanPhu", name: "quận Tân Phú", type: "district" },
+      { id: "quanBinhTan", name: "quận Bình Tân", type: "district" },
+      { id: "quanThuDuc", name: "quận Thủ Đức", type: "district" },
+      { id: "quanBinhChanh", name: "quận Bình Chánh", type: "district" },
+      { id: "quanNhaBe", name: "quận Nhà Bè", type: "district" },
+      { id: "quanHocMon", name: "quận Hóc Môn", type: "district" },
+      { id: "quanCuChi", name: "quận Củ Chi", type: "district" },
+      { id: "quanCanGio", name: "quận Cần Giờ", type: "district" }
+    ]
+   })
+  };
   initDefautlValue = () => {
     this.setState({
       searchParam: {
@@ -107,7 +141,11 @@ class SearchResultScreen extends Component {
     this.state.searchParam.categoriesListId = [];
     this.state.searchParam.filterOption.districts = false;
     this.state.searchParam.filterOption.categories = false;
-    this.setState({ isModalVisible: false, filterDisplay: "Bộ lọc" });
+    this.resetCheckbox();
+    this.setState({ isModalVisible: false, filterDisplay: "Bộ lọc" },function() {
+      console.log("search filter", this.state.searchParam);
+      this.search(false);
+    });
   };
   _fiterFinish = () => {
     let _this = this.state.searchParam;
@@ -139,7 +177,7 @@ class SearchResultScreen extends Component {
           this.search(false);
         }
       );
-    }else{
+    } else {
       this.setState({
         isModalVisible: false,
         filterDisplay: "Bộ lọc"
@@ -237,9 +275,9 @@ class SearchResultScreen extends Component {
   };
 
   componentWillMount() {
-    console.log('TESTING currentLocationGlobal', global.currentLocation);
+    console.log("TESTING currentLocationGlobal", global.currentLocation);
     CategoryService.GetCategories().then(data => {
-      this.setState({ categoryList: data });
+      this.setState({ categoryList: data});
     });
   }
   getSearchString = searchString => {
@@ -290,15 +328,15 @@ class SearchResultScreen extends Component {
       }
     }
   };
-  setRatingFilter=()=>{
+  setRatingFilter = () => {
     this.setState(
       prevState => ({
         searchParam: {
           ...prevState.searchParam,
           filterOption: {
             ...prevState.searchParam.filterOption,
-            rating:true,
-            location: false,
+            rating: true,
+            location: false
           },
           page: 1
         },
@@ -314,8 +352,8 @@ class SearchResultScreen extends Component {
         this.search(false);
       }
     );
-  }
-  setLocationFilter=()=>{
+  };
+  setLocationFilter = () => {
     this.setState(
       prevState => ({
         searchParam: {
@@ -324,8 +362,8 @@ class SearchResultScreen extends Component {
           currentLongitude: global.currentLocation.longitude,
           filterOption: {
             ...prevState.searchParam.filterOption,
-            rating:false,
-            location: true,
+            rating: false,
+            location: true
           },
           page: 1
         },
@@ -341,13 +379,13 @@ class SearchResultScreen extends Component {
         this.search(false);
       }
     );
-  }
+  };
 
-  navigateInItem = (value) => {
-    console.log('navigateInItem works');
-    console.log('value is: ', value);
+  navigateInItem = value => {
+    console.log("navigateInItem works");
+    console.log("value is: ", value);
     this.props.navigation.navigate(value.screenName, { id: value.id });
-  }
+  };
 
   render() {
     return (
@@ -375,21 +413,33 @@ class SearchResultScreen extends Component {
                   title="Gần Đây"
                   rounded
                   textStyle={styles.buttonTextStyle}
-                  buttonStyle={this.state.searchParam.filterOption.location?styles.buttonChosen:styles.buttonStyle}
-                  onPress = {this.setLocationFilter}
+                  buttonStyle={
+                    this.state.searchParam.filterOption.location
+                      ? styles.buttonChosen
+                      : styles.buttonStyle
+                  }
+                  onPress={this.setLocationFilter}
                 />
                 <Button
                   title="Đánh giá cao"
                   rounded
                   textStyle={styles.buttonTextStyle}
-                  buttonStyle={this.state.searchParam.filterOption.rating?styles.buttonChosen:styles.buttonStyle}
+                  buttonStyle={
+                    this.state.searchParam.filterOption.rating
+                      ? styles.buttonChosen
+                      : styles.buttonStyle
+                  }
                   onPress={this.setRatingFilter}
                 />
                 <Button
                   title={this.state.filterDisplay}
                   rounded
                   textStyle={styles.buttonTextStyle}
-                  buttonStyle={this.state.filterDisplay==="Bộ lọc"?styles.buttonStyle:styles.buttonChosen}
+                  buttonStyle={
+                    this.state.filterDisplay === "Bộ lọc"
+                      ? styles.buttonStyle
+                      : styles.buttonChosen
+                  }
                   onPress={this._toggleModal}
                 />
               </View>
@@ -470,12 +520,12 @@ class SearchResultScreen extends Component {
                 <FlatList
                   data={this.state.searchResults.results}
                   extraData={this.state}
-                  renderItem={({ item }) =>
+                  renderItem={({ item }) => (
                     <SearchStoreItem
                       storeInfo={item}
                       navigateInItem={this.navigateInItem}
                     />
-                  }
+                  )}
                   keyExtractor={item => item.store.id}
                 />
               </View>
@@ -551,7 +601,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f6f6f6",
     borderWidth: 1
   },
-  buttonChosen:{
+  buttonChosen: {
     width: 110,
     height: 35,
     backgroundColor: "#42c2f4",
