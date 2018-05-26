@@ -13,12 +13,13 @@ class Review extends Component {
       storeId: '',
       reviewList: []
     };
+    console.log('REVIEW constructor . props is', this.props);
   }
 
   componentWillMount() {
-    if (this.props.productId !== null || this.props.productId !== undefined) {
+    if (this.props.productId !== null && this.props.productId !== undefined) {
       this.setState({ productId: this.props.productId });
-    } else if (this.props.storeId !== null || this.props.storeId !== undefined) {
+    } else if (this.props.storeId !== null && this.props.storeId !== undefined) {
       this.setState({ storeId: this.props.storeId });
     }
   }
@@ -29,8 +30,10 @@ class Review extends Component {
 
   fetchReviewList = () => {
     if (this.props.productId !== null && this.props.productId !== undefined) {
+      console.log('PRODUCTID in Review ', this.props.productId);
       axios.get(`${ProductReview}/${this.props.productId}`)
         .then(response => {
+          console.log('Review response: ', response);
           this.setState({ reviewList: response.data });
         })
         .catch(error => {
@@ -39,6 +42,7 @@ class Review extends Component {
     } else if (this.props.storeId !== null && this.props.storeId !== undefined) {
       axios.get(`${StoreReview}/${this.props.storeId}`)
         .then(response => {
+          console.log('Review response: ', response);
           this.setState({ reviewList: response.data });
         })
         .catch(error => {
@@ -69,11 +73,11 @@ class Review extends Component {
                 {item.user.lastName} {item.user.firstName}
               </Text>
               <Text style={{ fontSize: 13, marginLeft: 'auto' }}>
-                {Moment(item.review.data).format('DD-MM-YYYY')}
+                {Moment(item.review.date).format('DD-MM-YYYY')}
               </Text>
             </View>
 
-            <View style={{ marginTop: 0 }}>
+            <View style={{ marginBottom: 20, marginLeft: 20 }}>
               <Text>{item.review.reviewContent}</Text>
             </View>
 

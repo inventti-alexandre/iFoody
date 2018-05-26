@@ -1,10 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, DoCheck} from '@angular/core';
 import { CategoryService } from '../../../shared/services/category.service';
 declare var currentLocationGlobal;
-currentLocationGlobal = {
-  lat:10.7924923,
-  lng:106.6417418,
-};
 
 @Component({
   selector: 'search-filter',
@@ -18,7 +14,7 @@ export class SearchFilterComponent implements OnInit{
   @Output("filterChange") filterChange= new EventEmitter();
   constructor(private _categoryService: CategoryService) {
     this.categories = [];
-    this.filterCategoriesDisplay = "Chọn loại"
+    this.filterCategoriesDisplay = "Chọn loại";
     this.searchFilter={
       "currentLatitude": 0,
       "currentLongitude": 0,
@@ -52,7 +48,7 @@ export class SearchFilterComponent implements OnInit{
       this.searchFilter.categoriesListId.push(event.source.value)
     }else{
       for(let i=0;i<this.searchFilter.categoriesListId.length;i++){
-        if(this.searchFilter.categoriesListId[i]==event.source.value){
+        if(this.searchFilter.categoriesListId[i]===event.source.value){
           this.searchFilter.categoriesListId.splice(i, 1);
           break;
         }

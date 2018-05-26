@@ -5,13 +5,12 @@ class GeneralRating extends Component {
   constructor(props) {
     super(props);
   }
+  
   ratingCompleted(rating) {
-    console.log(`Rating is: ${rating}`);
   }
 
   render() {
-    let rating = this.props.rating;
-    console.log('inside Rating component', this.props.rating);
+    const rating = this.props.rating;
     return (
       <Rating
         readonly

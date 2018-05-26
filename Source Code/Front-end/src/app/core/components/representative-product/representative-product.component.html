@@ -1,9 +1,9 @@
-<div class="container">
-  <ng-template [ngIf]="products.length==0">
-    <div class="row listCategory">
+<ng-template [ngIf]="products.length==0">
+    <div class="listCategory">
       <loading-page></loading-page>
     </div>
-  </ng-template>
+</ng-template>
+<div class="container">
   <ng-template [ngIf]="products.length>0">
     <div class="row listCategory">
       <div class="col-md-12" *ngFor="let group of products; let i=index">

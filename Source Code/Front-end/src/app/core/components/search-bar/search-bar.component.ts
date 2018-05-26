@@ -152,7 +152,8 @@ export class SearchBarComponent implements OnInit {
         err => {}
       );
     }
-  };
+  }
+
   setSearchQueryParam = (hide) => {
     if(hide){
       searchObject.hide();
@@ -164,7 +165,7 @@ export class SearchBarComponent implements OnInit {
   }
   chooseDistrict=(event)=>{
     if(event.checked){
-      this.searchParam.districtList.push(event.source.value)
+      this.searchParam.districtList.push(event.source.value);
     }else{
       for(let i=0;i<this.searchParam.districtList.length;i++){
         if(this.searchParam.districtList[i]===event.source.value){
@@ -185,7 +186,7 @@ export class SearchBarComponent implements OnInit {
   changeImagePath=(results)=>{
     results.forEach(item=>{
       item.images = handelImagePath(item.images);
-    })
+    });
     return results;
   }
 }

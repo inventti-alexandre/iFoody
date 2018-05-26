@@ -1,10 +1,12 @@
-import { View, AsyncStorage, Text } from 'react-native';
+import { View, AsyncStorage, Text, Dimensions } from 'react-native';
 import React, { Component } from 'react';
-import { Avatar, FormLabel } from 'react-native-elements';
+import { Button, Avatar, FormLabel } from 'react-native-elements';
 import axios from 'axios';
 import Moment from 'moment';
-import GeneralButton from './GeneralButton';
 import { GetUser } from '../assets/constants/apiUrl';
+
+const deviceWidth = Dimensions.get('window').width;
+const deviceHeight = Dimensions.get('window').height;
 
 class Profile extends Component {
   constructor(props) {
@@ -91,16 +93,26 @@ class Profile extends Component {
             activeOpacity={0.7}
         />
 
-        <FormLabel>Name</FormLabel>
-        <Text>{this.state.name}</Text>
-        <FormLabel>Email</FormLabel>
-        <Text>{this.state.email}</Text>
-        <FormLabel>Birthday</FormLabel>
-        <Text>{Moment(dt).format('DD-MM-YYYY')}</Text>
+        <FormLabel style={styles.label}>Tên</FormLabel>
+        <Text style={styles.input}>{this.state.name}</Text>
 
-        <GeneralButton onPress={this.logOut}>
-          Log Out
-        </GeneralButton>
+        <FormLabel style={styles.label}>Email</FormLabel>
+        <Text style={styles.input}>{this.state.email}</Text>
+
+        <FormLabel style={styles.label}>DOB</FormLabel>
+        <Text style={styles.input}>{Moment(dt).format('DD-MM-YYYY')}</Text>
+
+        <Button
+          onPress={this.logOut}
+          title='Đăng Xuất'
+          buttonStyle={{
+            borderRadius: 5,
+            marginTop: 20,
+            height: 45,
+            width: deviceWidth * 0.45,
+            alignSelf: 'center'
+          }}
+        />
       </View>
     );
   }
@@ -113,6 +125,18 @@ const styles = {
     flexDirection: 'row',
     alignSelf: 'center',
     marginTop: 10
+  },
+  label: {
+    marginLeft: 25,
+    fontSize: 20
+  },
+  input: {
+    height: 50,
+    alignItems: 'center',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    fontSize: 24,
+    marginTop: 7
   }
 };
 

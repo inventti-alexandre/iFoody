@@ -2,7 +2,7 @@ import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import React, { Component } from 'react';
 import { Icon } from 'react-native-elements';
 
-export default class Tabs extends Component {
+class Tabs extends Component {
   // Initialize State
   state = {
     // First tab is active by default
@@ -84,3 +84,5 @@ const styles = StyleSheet.create({
     flex: 1                             // Take up all available space
   }
 });
+
+export default Tabs

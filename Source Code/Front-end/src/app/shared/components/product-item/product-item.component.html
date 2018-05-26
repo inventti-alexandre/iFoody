@@ -1,11 +1,11 @@
 <div class="result-item col-xs-12 col-sm-12">
     <div class="row-item filter-result-item">
       <div class="ri-avatar result-image">
-        <a href="" [title]="productModel.product.name" [routerLink]="['/product', enCodeUrl(productId)]">
-          <img [src]="productModel.images.length > 0 ?productModel.images[0].path:imageDefault" [alt]="productModel.product.name" (error)="handelImgErro($event)">
+        <a href="" [title]="productModel?.product.name" [routerLink]="['/product', enCodeUrl(productId)]">
+          <img [src]="productModel.images.length > 0 ? productModel.images[0].path : imageDefault" [alt]="productModel.product.name" (error)="handelImgErro($event)">
           <ng-template [ngIf]="productModel.images.length > 1">
             <div class="overlay">
-              <img src={{productModel.images[1].path}} [alt]="productModel.product.name" (error)="handelImgErro($event)">
+              <img [src]= "productModel?.images[1].path" [alt]="productModel.product.name" (error)="handelImgErro($event)">
             </div>
           </ng-template>
         </a>

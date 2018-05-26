@@ -52,11 +52,12 @@ export class ReviewComponent implements OnInit, AfterViewChecked{
 
   ngOnInit() {
     this.getReviewsData();
-    this._userService.getUserById(this.currentUserId)
-      .subscribe(data => {
-        this.currentUser = data;
-      });
-
+    if (this.currentUserId != null && this.currentUserId != undefined && this.currentUserId != '') {
+      this._userService.getUserById(this.currentUserId)
+        .subscribe(data => {
+          this.currentUser = data;
+        });
+    }
   }
   ngAfterViewChecked() {
     ratingObject1.removeBorderLineReview();

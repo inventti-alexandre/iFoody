@@ -16,7 +16,6 @@ class Search extends Component {
   componentDidMount() {
     if(!this.props.isHomePage){
       console.log("777777777777", this.props.initText);
-
     }
     if(this.state.text!==""){
       let searchString = this.state.text.trim().replace(/ +(?= )/g, "");
@@ -71,6 +70,7 @@ const styles = {
     marginLeft: 10,
     marginRight: 10,
     paddingLeft: 50,
+    paddingTop: 10,
     height: 45,
     color: "#a3a375",
     backgroundColor: "white",

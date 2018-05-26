@@ -1,3 +1,4 @@
+import { ImageDomain } from './../../../constant/apiUrl';
 import { ISearchResult } from './../../models/allModel';
 import { Component, OnInit, Input} from "@angular/core";
 import { handelImgErro, checkOpenStore, enCodeUrl, handelImagePath } from "../../../shared/services/share-function.service";
@@ -11,12 +12,16 @@ import { imageDefault } from "../../../constant/global";
 export class ResultItemComponent implements OnInit {
   @Input("itemInfo") itemInfo;
   item:ISearchResult;
-  imageDefault = imageDefault;
   handelImgErro = handelImgErro;
   checkOpenStore= checkOpenStore;
   enCodeUrl= enCodeUrl;
-  handelImagePath = handelImagePath;
+  handelImagePath;
+  imageDefault: string;
+  imageDomain: string;
   constructor() {
+    this.imageDefault = imageDefault;
+    this.imageDomain = ImageDomain;
+    this.handelImagePath = handelImagePath;
   }
 
   ngOnInit() {

@@ -20,13 +20,13 @@ import Search from "../components/Search";
 import GeneralButton from "../components/GeneralButton";
 import FavoriteScreen from "./FavoriteScreen";
 import LoginScreen from "./LoginScreen";
-import SearchService from "../services/SearchService";
+import SearchService, { currentLocationGlobal } from "../services/SearchService";
 import CategoryService from "../services/CategoryService";
 import Modal from "react-native-modal";
 import CheckBox from "react-native-check-box";
 import SearchStoreItem from "../components/SearchStoreItem";
 
-export default class SearchResultScreen extends Component {
+class SearchResultScreen extends Component {
   state = {
     categoryList: [],
     districts: [
@@ -237,6 +237,7 @@ export default class SearchResultScreen extends Component {
   };
 
   componentWillMount() {
+    console.log('TESTING currentLocationGlobal', global.currentLocation);
     CategoryService.GetCategories().then(data => {
       this.setState({ categoryList: data });
     });
@@ -319,8 +320,8 @@ export default class SearchResultScreen extends Component {
       prevState => ({
         searchParam: {
           ...prevState.searchParam,
-          currentLatitude: '10.773266',
-          currentLongitude: '106.6594674',
+          currentLatitude: global.currentLocation.latitude,
+          currentLongitude: global.currentLocation.longitude,
           filterOption: {
             ...prevState.searchParam.filterOption,
             rating:false,
@@ -340,6 +341,12 @@ export default class SearchResultScreen extends Component {
         this.search(false);
       }
     );
+  }
+
+  navigateInItem = (value) => {
+    console.log('navigateInItem works');
+    console.log('value is: ', value);
+    this.props.navigation.navigate(value.screenName, { id: value.id });
   }
 
   render() {
@@ -463,8 +470,13 @@ export default class SearchResultScreen extends Component {
                 <FlatList
                   data={this.state.searchResults.results}
                   extraData={this.state}
-                  renderItem={({ item }) => <SearchStoreItem storeInfo={item} />}
-                  keyExtractor={item => item.id}
+                  renderItem={({ item }) =>
+                    <SearchStoreItem
+                      storeInfo={item}
+                      navigateInItem={this.navigateInItem}
+                    />
+                  }
+                  keyExtractor={item => item.store.id}
                 />
               </View>
 
@@ -571,3 +583,5 @@ const styles = StyleSheet.create({
     borderWidth: 1
   }
 });
+
+export default SearchResultScreen;

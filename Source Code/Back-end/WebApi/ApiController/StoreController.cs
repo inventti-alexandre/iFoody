@@ -34,20 +34,20 @@ namespace WebApi.ApiController
         // GET All api/store
         [HttpGet]
         [Route("getAll")]
-        public HttpResponseMessage Get()
+        public IHttpActionResult Get()
         {
             try
             {
-                var store = _storeService.GetAllStore().GroupBy(x => x.CategoryId);
+                var store = _storeService.GetAllStore().ToList();
                 if (store.Any())
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not Found Store");
+                    return Ok(store);  // Returns an OkNegotiatedContentResult
                 }
-                return Request.CreateResponse(HttpStatusCode.OK, store);
+                return NotFound(); // Returns a NotFoundResult
             }
             catch (Exception e)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed, "Expectation Failed");
+                return NotFound();
             }
         }
 

@@ -21,9 +21,10 @@ export class StoreService {
   }
 
   public GetStoreById(id: string): Observable<any> {
-    console.log('getStoreById works');
+    console.log('TESTING    getStoreByIddworks');
     console.log(id);
     if(id != null) {
+      console.log('this.storeURL ', this.storeUrl);
       return this._http.get(this.storeUrl + '/' + id.replace(/['"]+/g, ''))
             .map((response: Response) => <any>response.json());
     }
@@ -43,13 +44,10 @@ export class StoreService {
   // Get Locations By StoreIds
   GetLocationsByStoreIds(storeIds: any[]) {
     console.log("GetLocationsByStoreIds works");
-    console.log("storeIds", storeIds);
 
     if(storeIds.length > 0) {
-      console.log("GetLocationsByStoreIds works 2");
       console.log('storeIds',storeIds);
       let encodedStoreIds = encodeURIComponent(JSON.stringify(storeIds));
-      console.log("encodedStoreIds", encodedStoreIds);
       return this._http.get(this.getStoreAddresses + '/?storeIds=' + encodedStoreIds)
             .map((response: Response) => <any>response.json())
             .do(data => {
@@ -79,7 +77,7 @@ export class StoreService {
             .map((response: Response) => <any>response.json())
             .catch((erro: any) => {
               return Observable.of(erro);
-            })
+            });
     }
   }
 

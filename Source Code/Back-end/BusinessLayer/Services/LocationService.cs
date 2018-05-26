@@ -216,7 +216,7 @@ namespace BusinessLayer.Services
             try
             {
                 var address = input;
-                string requestUri = string.Format("http://maps.googleapis.com/maps/api/geocode/xml?address={0}&sensor=false&AIzaSyCiY8keBM8gppqsXkyKyyLxTwo31sFRjC0", Uri.EscapeDataString(address));
+                string requestUri = string.Format("http://maps.googleapis.com/maps/api/geocode/xml?address={0}&sensor=false&AIzaSyAqVJqCbRycAE2hj4WydsoTMJ30oOJJAb4", Uri.EscapeDataString(address));
 
                 WebRequest request = WebRequest.Create(requestUri);
                 WebResponse response = request.GetResponse();

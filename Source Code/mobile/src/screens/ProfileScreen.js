@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 import Profile from '../../src/components/Profile';
 
-export default class ProfileScreen extends Component {
+class ProfileScreen extends Component {
   constructor(props) {
     super(props);
     console.log('constructor in Profilescreen. this.props is:', this.props);
@@ -36,3 +36,5 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+export default ProfileScreen;
