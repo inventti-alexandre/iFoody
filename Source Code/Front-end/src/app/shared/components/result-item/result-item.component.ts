@@ -12,16 +12,16 @@ import { imageDefault } from "../../../constant/global";
 export class ResultItemComponent implements OnInit {
   @Input("itemInfo") itemInfo;
   item:ISearchResult;
-  imageDefault = imageDefault;
   handelImgErro = handelImgErro;
   checkOpenStore= checkOpenStore;
   enCodeUrl= enCodeUrl;
-  handelImagePath = handelImagePath;
-  imageDefault: any;
-  imageDomain: any;
+  handelImagePath;
+  imageDefault: string;
+  imageDomain: string;
   constructor() {
     this.imageDefault = imageDefault;
     this.imageDomain = ImageDomain;
+    this.handelImagePath = handelImagePath;
   }
 
   ngOnInit() {

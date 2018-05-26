@@ -19,7 +19,8 @@ import ViewAllScreen from './src/screens/ViewAllScreen';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import SearchResultScreen from './src/screens/SearchResultScreen';
 import FavoriteScreen from './src/screens/FavoriteScreen';
-import AllProductsByCategoryScreen from './src/screens/AllProductsByCategoryScreen'
+import AllProductsByCategoryScreen from './src/screens/AllProductsByCategoryScreen';
+import SearchService from './src/services/SearchService';
 
 type Props = {};
 const RootStack = StackNavigator(
@@ -75,11 +76,14 @@ const RootStack = StackNavigator(
 );
 
 
-export default class App extends Component<Props> {
+class App extends Component<Props> {
 
   render() {
+    SearchService.getCurrentPosition();
     return (
         <RootStack />
     );
   }
 }
+
+export default App;

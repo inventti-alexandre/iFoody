@@ -123,8 +123,10 @@ namespace BusinessLayer.Services
                             Address = storeEntity.Address,
                             District = storeEntity.District,
                             City = storeEntity.City,
+                            Rating = storeEntity.Rating,
+                            RatingCount = storeEntity.RatingCount,
                             UserId = storeEntity.UserId,
-                            //Category = categoryEntity,
+                            CategoryId = categoryEntity.Id,
                             Images = imageEntities,
                         };
                         return storeDto;

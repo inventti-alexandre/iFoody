@@ -7,11 +7,11 @@ import GeneralRating from '../components/GeneralRating';
 import imageDefault from '../assets/constants/global';
 import Review from '../components/Review';
 import Map from '../components/Map';
+import SearchService, { handelImagePath } from '../services/ShareFunction';
 
-export default class DetailStoreScreen extends Component {
+class DetailStoreScreen extends Component {
   constructor(props) {
     super(props);
-    console.log('DetailStoreScreen Constructor. this.props is: ', this.props);
     this.state = {
       item: '',
       productIdList: [],
@@ -33,21 +33,16 @@ export default class DetailStoreScreen extends Component {
 
   componentDidMount() {
     console.log('componentDidMount in DetailStoreScreen');
-    console.log(`${Store}/79ae2ad9-d5d0-4bf0-b5c6-3f123e97080c`);
-    console.log('11111111111111');
-    axios.get(`${Store}/79ae2ad9-d5d0-4bf0-b5c6-3f123e97080c`)
+    axios.get(`${Store}/${this.props.navigation.state.params.id}`)
       .then(response => {
-        console.log('response is: ', response);
+        response.data.images = handelImagePath(response.data.images);
         this.setState({ item: response.data });
 
-        console.log('storeIds', ['79ae2ad9-d5d0-4bf0-b5c6-3f123e97080c']);
         const encodedStoreIds = encodeURIComponent(
-          JSON.stringify(['79ae2ad9-d5d0-4bf0-b5c6-3f123e97080c']));
-        console.log('encodedStoreIds', encodedStoreIds);
+          JSON.stringify([this.props.navigation.state.params.id]));
 
         axios.get(`${GetStoreAddresses}/?storeIds=${encodedStoreIds}`)
           .then(result => {
-            console.log('result.data GetStoreAddresses is: ', result.data);
             this.setState({
               location: {
                 latlng: {
@@ -65,9 +60,11 @@ export default class DetailStoreScreen extends Component {
             console.log('Error to get GetStoreAddress', error);
           });
 
-        axios.get(`${GetAllProductsInStore}/79ae2ad9-d5d0-4bf0-b5c6-3f123e97080c`)
+        axios.get(`${GetAllProductsInStore}/${this.props.navigation.state.params.id}`)
           .then(result => {
-            console.log('result.data GetAllProductsInStore is: ', result.data);
+            result.data.map((item) => (
+              item.images = handelImagePath(item.images)
+            ));
             this.setState({ productList: result.data });
           })
           .catch(error => {
@@ -86,8 +83,6 @@ export default class DetailStoreScreen extends Component {
 
   render() {
     const deviceWidth = Dimensions.get('window').width;
-    console.log('deviceWidth is: ', deviceWidth);
-    console.log('This.state.productList is: ', this.state.productList);
     return (
        (this.state.item !== '')
           ? <ScrollView style={styles.container}>
@@ -203,9 +198,9 @@ export default class DetailStoreScreen extends Component {
               </View>
             }
 
-            <Review storeId='79ae2ad9-d5d0-4bf0-b5c6-3f123e97080c' />
+            <Review storeId={this.props.navigation.state.params.id} />
             </ScrollView>
-          : <Text>No Store found</Text>
+          : <Text />
     );
   }
 }
@@ -221,3 +216,5 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
+
+export default DetailStoreScreen;

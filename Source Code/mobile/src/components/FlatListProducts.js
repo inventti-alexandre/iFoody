@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { View, FlatList, Text, StyleSheet } from "react-native";
-import { Divider } from "react-native-elements";
-import axios from "axios";
-import ProductItem from "../components/ProductItem";
-import ProductService from "../services/ProductService";
+import React, { Component } from 'react';
+import { View, FlatList, Text, StyleSheet, Dimensions } from 'react-native';
+import { Divider } from 'react-native-elements';
+import axios from 'axios';
+import ProductItem from '../components/ProductItem';
+import ProductService from '../services/ProductService';
 
-export default class FlatListProducts extends Component {
+class FlatListProducts extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,7 +13,6 @@ export default class FlatListProducts extends Component {
       initPage: 1,
       initCount: 10
     };
-    console.log("flatlistproduct:", this.props);
   }
 
   componentWillMount() {
@@ -27,7 +26,7 @@ export default class FlatListProducts extends Component {
     ).then(data => {
       if (data.status === 404) {
       } else {
-        this.setState({ products: data.results }, function() {
+        this.setState({ products: data.results }, () => {
           // console.log("2222222", this.state.products);
         });
       }
@@ -35,10 +34,16 @@ export default class FlatListProducts extends Component {
   };
   goAllProductsByCategory = () => {
     let categoryInfo = this.props.categoryInfo
-    this.props.navigation.navigate("AllProductsByCategory", {
+    this.props.navigation.navigate('AllProductsByCategory', {
       categoryInfo
     });
   };
+
+ navigateInItem = (value) => {
+    console.log('navigateInItem Flatlist works');
+    console.log('value is: ', value);
+    this.props.navigation.navigate(value.screenName, { id: value.id });
+  }
 
   render() {
     return (
@@ -46,7 +51,7 @@ export default class FlatListProducts extends Component {
         {this.state.products.length > 0 ? (
           <View>
             <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}
             >
               <Text style={styles.categoryName}>
                 {this.props.categoryInfo.name}
@@ -59,12 +64,18 @@ export default class FlatListProducts extends Component {
               </Text>
             </View>
 
-            <Divider style={{ backgroundColor: "#96abce", marginBottom: 7 }} />
+            <Divider style={{ backgroundColor: '#96abce', marginBottom: 7 }} />
             <FlatList
               horizontal
               data={this.state.products}
-              renderItem={({ item }) => <ProductItem productInfo={item} key={item.key} />}
-              keyExtractor={item => item.id}
+              renderItem={({ item }) =>
+                <ProductItem
+                  productInfo={item}
+                  navigateInItem={this.navigateInItem}
+                  width={Dimensions.get('window').width / 1.5}
+                />
+              }
+              keyExtractor={item => item.product.id}
             />
           </View>
         ) : null}
@@ -88,3 +99,5 @@ const styles = StyleSheet.create({
     textAlign: "right"
   }
 });
+
+export default FlatListProducts;

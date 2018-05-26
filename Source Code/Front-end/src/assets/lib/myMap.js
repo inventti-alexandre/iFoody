@@ -2,8 +2,9 @@ var map;
 var directionsDisplay;
 var directionsService;
 var geocoder;
-var addressList;
+var addressList = [];
 var currentLocationImage = 'https://thumb.ibb.co/dj9Fbn/my_location_min.png';
+var destinationMarker = 'https://chicken2018.club/assets/images/core/destination-marker.png';
 var currentLocationGlobal;
 var currentPositionGlobal;
 var mainStoreImage = [];
@@ -85,6 +86,8 @@ var mapObject = (function() {
                 var myLatlng = new google.maps.LatLng(addressList[y].latitude,addressList[y].longitude);
                 // geocoder.geocode( { 'latLng': myLatlng}, function(results, status) {
                     // if (status == 'OK') {
+                var isClicked = false;
+                var isMouseOver = false;
                             let icon = {
                                 url: mainStoreImage[y], // url
                                 scaledSize: new google.maps.Size(40, 30), // scaled size
@@ -105,27 +108,42 @@ var mapObject = (function() {
                                     animation: google.maps.Animation.DROP,
                             });
                             marker.addListener('mouseover', function() {
-                                this.setIcon(iconMouseOver);
-                                this.setZIndex(1000);
+                                if(isMouseOver === false) {
+                                    this.setIcon(iconMouseOver);
+                                    this.setZIndex(1000);
+                                }
                             });
                             marker.addListener('mouseout', function() {
-                                this.setIcon(icon);
-                                this.setZIndex(1);
+                                if(isMouseOver === false) {
+                                    this.setIcon(icon);
+                                    this.setZIndex(1);
+                                }
                             });
                             google.maps.event.addListener(marker, 'click', (function (marker, y) {
                                 return function () {
+                                    let directionsDisplay = new google.maps.DirectionsRenderer({map: map});
+                                    isMouseOver = true;
                                     // infoWindow.setContent();
+                                    console.log('TESTING. y =   ', y, mainStoreImage[y], nameStore[y]);
                                     infoWindow.setContent(
-                                        "<div style='height: 130px;width:130px;'><div style='text-align: center'><img style='height:60px;width: 100%;' src='" 
+                                        "<div style='height: 130px;width:110px;'><div style='text-align: center'><img style='height:60px;width: 100%;' src='" 
                                         + mainStoreImage[y] + "'></div><br/><div><strong>" 
                                         + nameStore[y] + "</strong></div><div>"
                                         + addressStore[y] + "</div></div>"
                                     );
                                     infoWindow.open(map, marker);
                                     // get route from A to B
+                                    google.maps.event.addListener(infoWindow,'closeclick',function(){
+                                        isMouseOver = false;
+                                        marker.setIcon(icon);
+                                        directionsDisplay.setMap(null);
+                                     });
+                                    this.setIcon(destinationMarker);
+                                     
                                     calculateAndDisplayRoute(directionsService, directionsDisplay, marker, currentMarker);
                                 }
                             })(marker, y));
+                            
                         // };
                 // });
             }
@@ -133,10 +151,12 @@ var mapObject = (function() {
         // Get Address Array from Service
         getAddressList: function(addressListFromHttpRequest) {
             addressList = [];
+            console.log('TESTINGNGGGGG ', addressListFromHttpRequest);
             if(addressListFromHttpRequest != null) {
                 addressListFromHttpRequest.forEach(element => {
                    addressList.push({latitude: parseFloat(element.latitude), longitude: parseFloat(element.longitude)});
                 });
+                console.log('adddressList ', addressList, addressStore);
             }
         }
     }

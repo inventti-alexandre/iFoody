@@ -13,12 +13,12 @@
       <div class="row">
         <div class="productDetail__photo col-xs-12 col-sm-6 col-md-4">
           <div class="productDetail__photo__main row">
-            <img [src]="productModel.images.length>0? imageDomain + productModel.images[0].path:imageDefault" alt="">
+            <img [src]="productModel.images.length>0? productModel.images[0].path:imageDefault" alt="">
           </div>
 
           <div class="productDetail__photo__minor row">
             <div class="col-xs-3 col-sm-3" *ngFor="let image of productModel?.images">
-              <img [src]="imageDomain + image?.path" alt="Product" *ngIf="(image.id != null)">
+              <img [src]="image?.path" alt="Product" *ngIf="(image.id != null)">
             </div>
           </div>
         </div>

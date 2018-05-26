@@ -55,13 +55,12 @@ export class ProductItemComponent implements OnInit {
       this.productModel = this.productInfo;
       this.productModel.images = handelImagePath(this.productModel.images);
     }
-    this.productModel.images.forEach(image => {
-      image.path = image.path.replace("~/", "");
-    });
+    // this.productModel.images.forEach(image => {
+    //   image.path = image.path.replace("~/", "");
+    // });
   }
 
   getProductDetail() {
-    console.log("getProductDetail works");
     if (this.productId != null) {
       return this._productService
         .GetProductById(this.productId.replace(/['"]+/g, ""))

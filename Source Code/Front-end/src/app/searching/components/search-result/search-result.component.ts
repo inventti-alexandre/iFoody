@@ -5,7 +5,7 @@ import { ISearchParam } from './../../../shared/models/allModel';
 import { SearchService } from './../../../shared/services/search.service';
 import { Component, OnInit, Input} from '@angular/core';
 import { ActivatedRoute, Router, Params, NavigationEnd  } from '@angular/router';
-import {scrollTop} from './../../../shared/services/share-function.service';
+import {scrollTop, handelImagePath} from './../../../shared/services/share-function.service';
 declare var mainStoreImage;
 declare var nameStore;
 declare var priceStore;
@@ -74,11 +74,17 @@ export class SearchResultComponent implements OnInit {
   }
   setStoreIds=(result)=>{
     this.storeIds=[];
+    mainStoreImage = [];
+    priceStore = [];
+    nameStore = [];
+    addressStore = [];
     result.sort(function(a,b) {return (a.store.id > b.store.id ? 1 : ((b.store.id > a.store.id) ? -1 : 0));}); 
+    console.log('result : ', result);
     result.forEach(item=>{
       this.storeIds.push(item.store.id);
+      item.images = handelImagePath(item.images);
       if(item.images[0] !== null) {
-        mainStoreImage.push(this.imageDomain + item.images[0].path.replace('~/', ''));
+        mainStoreImage.push(item.images[0].path);
       }
       else {
         mainStoreImage.push(imageDefault);
@@ -88,10 +94,6 @@ export class SearchResultComponent implements OnInit {
       addressStore.push(`${item.store.address}, ${item.store.district}`);
     });
     this.storeIds.sort();
-    console.log('mainStoreImage', mainStoreImage);
-    console.log('priceStore ', priceStore);
-    console.log('nameStore ', nameStore);
-    console.log('addressStore ', addressStore);
   }
 
   getSearchPaging(targetPage) {

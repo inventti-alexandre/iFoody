@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Login from '../../src/components/Login';
 
-export default class LoginScreen extends Component {
+class LoginScreen extends Component {
   constructor(props) {
     super(props);
     console.log('constructor in LoginScreen');
@@ -12,7 +12,6 @@ export default class LoginScreen extends Component {
   }
 
   handler = (value) => {
-    console.log('handler in LoginScreen. Value is: ', value);
     this.setState({ isLoggedIn: value });
     this.props.handler(value);
   }
@@ -31,3 +30,5 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+export default LoginScreen;

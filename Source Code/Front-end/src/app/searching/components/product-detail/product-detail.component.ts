@@ -50,6 +50,8 @@ export class ProductDetailComponent implements OnInit {
     this.storeId = [];
     this.isLoadingProduct = true;
     this.imageDomain = ImageDomain;
+    nameStore = [];
+    addressStore = [];
   }
 
   ngOnInit() {
@@ -66,43 +68,44 @@ export class ProductDetailComponent implements OnInit {
           this.productModel = data;
           this.productModel.images = handelImagePath(this.productModel.images);
           if(this.productModel.store.city === '1'){
-            this.productModel.store.city = 'TpHCM'
+            this.productModel.store.city = 'TpHCM';
           }
           if(this.productModel.store.city === '2'){
-            this.productModel.store.city = 'Hà Nội'
+            this.productModel.store.city = 'Hà Nội';
           }
           this.isLoadingProduct = false;
           this.categoryId = this.productModel.category.id;
           this.storeId.push(this.productModel.store.id);
           if(this.productModel.images.length > 0) {
             mainStoreImage = [];
-            mainStoreImage.push(this.imageDomain + this.productModel.images[0].path);
-            console.log('mainStoreImage', mainStoreImage);
+            mainStoreImage.push(this.productModel.images[0].path);
           }
           else {
             mainStoreImage = [];
             mainStoreImage.push(this.imageDefault);
-            console.log('mainStoreImage', mainStoreImage);
           }
-          nameStore = this.productModel.store.name;
-          addressStore = this.productModel.store.address + ', ' + this.productModel.store.district;
+          nameStore.push(this.productModel.store.name);
+          addressStore.push(this.productModel.store.address + ', ' + this.productModel.store.district);
+          
         });
 
       // Product is Favorited or not
-      this._userService
-        .getFavoriteList(localStorage.getItem(apiUrl.UserId))
-        .subscribe(response => {
-          response.forEach(element => {
-            if (element.productId === this.productId) {
-              this.favoriteId = element.id;
-              console.log("favoriteList: ", element);
-              // let Component know Change of properties and update. Same with ChangeDetectorRef
-              setTimeout(() => (this.isFavorited = true), 0);
-              return;
-            }
+      if(localStorage.getItem(apiUrl.UserId) !== null && localStorage.getItem(apiUrl.UserId) !== '') {
+        this._userService
+          .getFavoriteList(localStorage.getItem(apiUrl.UserId))
+          .subscribe(response => {
+            response.forEach(element => {
+              if (element.productId === this.productId) {
+                this.favoriteId = element.id;
+                console.log("favoriteList: ", element);
+                // let Component know Change of properties and update. Same with ChangeDetectorRef
+                setTimeout(() => (this.isFavorited = true), 0);
+                return;
+              }
+            });
           });
-        });
-    });
+      }
+      });
   }
 
   addFavoriteItem() {

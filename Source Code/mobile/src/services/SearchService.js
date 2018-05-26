@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Alert } from 'react-native';
 import { Search } from "../assets/constants/apiUrl";
 
 onSubmit = () => {
@@ -28,6 +29,7 @@ onSubmit = () => {
       console.log("error", JSON.stringify(error.response));
     });
 };
+
 function PagingSearching(searchParam) {
   let url = Search;
   const config = {
@@ -45,7 +47,41 @@ function PagingSearching(searchParam) {
       return err.response;
     });
 }
+
+function getCurrentPosition() {
+  try {
+    global.navigator.geolocation.getCurrentPosition(
+      (position) => {
+        console.log('POSITION: ', position);
+        global.currentLocation = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          latitudeDelta: 0.09,
+          longitudeDelta: 0.09,
+        };
+      },
+      (error) => {
+        //TODO: better design
+        switch (error.code) {
+          case 1:
+            if (Platform.OS === 'ios') {
+              Alert.alert('', 'Para ubicar tu locación habilita permiso para');
+            } else {
+              Alert.alert('', 'Para ubicar tu locación habilita permiso para');
+            }
+            break;
+          default:
+            Alert.alert('', 'Error al detectar tu locación');
+        }
+      }
+    );
+  } catch (e) {
+    Alert.alert(e.message || '');
+  }
+};
+
 const SearchService = {
-  PagingSearching
+  PagingSearching,
+  getCurrentPosition
 };
 export default SearchService;

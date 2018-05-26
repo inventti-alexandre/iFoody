@@ -51,6 +51,7 @@ export class RepresentativeProductComponent implements OnInit {
             .PagingAllProductsByCategory(item.id, this.initPage, this.initCount)
             .subscribe(
               data => {
+                console.log('TEST ', data);
                 if (data !== null) {
                   this.products.push(data);
                 } else {

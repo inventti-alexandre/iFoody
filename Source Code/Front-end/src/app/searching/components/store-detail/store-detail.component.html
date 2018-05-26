@@ -14,12 +14,12 @@
 
         <div class="storeDetail__photo col-xs-12 col-sm-6 col-md-4">
           <div class="storeDetail__photo__main row">
-            <img [src]="imageDomain + storeInfoModel?.images[0]?.path" (error)="handelImgErro($event)" alt="">
+            <img [src]="storeInfoModel?.images[0]?.path" (error)="handelImgErro($event)" alt="">
           </div>
 
           <div class="storeDetail__photo__minor row">
             <div class="col-xs-3 col-sm-3" *ngFor="let image of storeInfoModel?.images">
-              <img [src]="imageDomain + image?.path" alt="image?.name" (error)="handelImgErro($event)">
+              <img [src]="image?.path" alt="image?.name" (error)="handelImgErro($event)">
             </div>
           </div>
         </div>

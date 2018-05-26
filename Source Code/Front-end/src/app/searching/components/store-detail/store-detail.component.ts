@@ -7,8 +7,10 @@ import { ImageDomain } from "../../../constant/apiUrl";
 import { imageDefault } from "./../../../constant/global";
 import {
   deCodeUrl,
-  handelImgErro
+  handelImgErro,
+  handelImagePath
 } from "../../../shared/services/share-function.service";
+declare var addressList: any;
 declare var deleteImageObject: any;
 declare var mainStoreImage: any;
 declare var nameStore: any;
@@ -44,8 +46,8 @@ export class StoreDetailComponent implements OnInit {
     window.scrollTo(0, 0);
     this.imageDefault = imageDefault;
     this.imageDomain = ImageDomain;
-    nameStore = 'No Name';
-    addressStore = 'No update';
+    nameStore = [];
+    addressStore = [];
     this.productsQuantity = 0;
     this.storeInfoModel = {
       address: "...................",
@@ -68,6 +70,7 @@ export class StoreDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    addressList = [];
     this.getStoreInfo();
   }
   getStoreInfo = () => {
@@ -77,6 +80,7 @@ export class StoreDetailComponent implements OnInit {
       this.isLoadingProducts = true;
 
       let idFromParam = deCodeUrl(params["id"]);
+      console.log(idFromParam);
       this.storeIds = [idFromParam]; // For Google Map Api
       this.storeId = idFromParam;
       this.reviewList = [];
@@ -85,20 +89,10 @@ export class StoreDetailComponent implements OnInit {
         console.log("storeInfoModel", data);
         this.storeInfoModel = data;
         this.isLoadingStore = false;
-        if (
-          data.userId === localStorage.getItem("user_id").replace(/['"]+/g, "")
-        ) {
-          console.log("is Store Manager");
-        } else {
-          this.storeManager = false;
-          console.log("not Store Manager");
-        }
-        this.storeInfoModel.images.forEach(image => {
-          console.log('image path ', image);
-          image.path = image.path.replace("~/", "");
-         });
+        
+        this.storeInfoModel.images = handelImagePath(this.storeInfoModel.images);
 
-        if(localStorage.getItem("user_id") !== undefined && localStorage.getItem("user_id") !==  null) {
+        if(localStorage.getItem("user_id") !== '' && localStorage.getItem("user_id") !==  null) {
           if (
             data.userId === localStorage.getItem("user_id").replace(/['"]+/g, "")
           ) {
@@ -116,7 +110,7 @@ export class StoreDetailComponent implements OnInit {
 
         if(this.storeInfoModel.images.length > 0) {
             mainStoreImage = [];
-            mainStoreImage.push(this.imageDomain + this.storeInfoModel.images[0].path);
+            mainStoreImage.push(this.storeInfoModel.images[0].path);
             console.log('mainStoreImage', mainStoreImage);
         }
         else {
@@ -126,18 +120,14 @@ export class StoreDetailComponent implements OnInit {
         }
         
         if(this.storeInfoModel.city === '1'){
-          this.storeInfoModel.city = 'TpHCM'
+          this.storeInfoModel.city = 'TpHCM';
         }
         if(this.storeInfoModel.city === '2'){
-          this.storeInfoModel.city = 'Hà Nội'
+          this.storeInfoModel.city = 'Hà Nội';
         }
         if(this.storeInfoModel != null && this.storeInfoModel.images.length > 0) {
-          nameStore = this.storeInfoModel.name;
-          addressStore = this.storeInfoModel.address + ', ' + this.storeInfoModel.district;
-        }
-        else {
-          nameStore = "Cửa hàng";
-          addressStore = "";
+          nameStore.push(this.storeInfoModel.name);
+          addressStore.push(this.storeInfoModel.address + ', ' + this.storeInfoModel.district);
         }
 
         this._userService

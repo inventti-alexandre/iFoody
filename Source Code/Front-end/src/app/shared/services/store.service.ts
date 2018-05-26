@@ -21,7 +21,7 @@ export class StoreService {
   }
 
   public GetStoreById(id: string): Observable<any> {
-    console.log('getStoreByIddddd works');
+    console.log('TESTING    getStoreByIddworks');
     console.log(id);
     if(id != null) {
       console.log('this.storeURL ', this.storeUrl);
@@ -77,7 +77,7 @@ export class StoreService {
             .map((response: Response) => <any>response.json())
             .catch((erro: any) => {
               return Observable.of(erro);
-            })
+            });
     }
   }
 
