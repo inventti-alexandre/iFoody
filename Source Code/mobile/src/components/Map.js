@@ -1,7 +1,10 @@
-import { View, Image } from 'react-native';
+import { View, Image, Alert, Platform, Dimensions } from 'react-native';
 import React, { Component } from 'react';
 import MapView, { Marker } from 'react-native-maps';
+import MapViewDirections from 'react-native-maps-directions';
 import imageDefault from '../assets/constants/global';
+
+const GOOGLE_MAPS_APIKEY = 'AIzaSyAqVJqCbRycAE2hj4WydsoTMJ30oOJJAb4';
 
 class Map extends Component {
   constructor(props) {
@@ -15,39 +18,83 @@ class Map extends Component {
         latitudeDelta: 0.09,
         longitudeDelta: 0.09,
       },
-      markers: []
+      markers: [],
+      coordinates: [
+        {
+          latitude: global.currentLocation.latitude,
+          longitude: global.currentLocation.longitude,
+        },
+      ],
     };
+    this.mapView = null;
   }
 
   componentDidMount() {
-    console.log('Map ComponentIdMount work. This.props.items is: ', this.props.items);
     this.setState({ markers: this.props.items });
   }
 
 
   componentWillReceiveProps = () => {
-    console.log('componentWillReceiveProps works. newProps is; ', this.props);
+    console.log('MAP componentWillReceiveProps. this.props.items is: ', this.props);
     this.setState({ markers: this.props.items });
+    this.props.items.map((item) => {
+      if (item.latlng !== null && item.latlng !== {} && item.latlng.latitude !== 0) {
+        this.setState({
+          coordinates: [
+            ...this.state.coordinates,
+            item.latlng
+          ],
+        });
+      }
+      return true;
+    }
+    );
   }
 
   onMapLayout = () => {
     this.setState({ isMapReady: true });
   }
+  setRegion(value) {
+      if (this.state.ready) {
+        setTimeout(() => (function () {
+          this.map.mapview.animateToRegion(value);
+        })
+        , 10);
+      }
+      //this.setState({ region });
+    }
+  onMapPress = (e) => {
+      this.setState({
+        coordinates: [
+          ...this.state.coordinates,
+          e.nativeEvent.coordinate,
+        ],
+      });
+    }
 
   render() {
-    console.log('inside Map render component. This.state ', this.state.markers);
+    console.log('Map Render. this.state.coordinates : ', this.state.coordinates);
     return (
       <View style={styles.containerStyle}>
         <MapView
+          showsUserLocation
           initialRegion={{
-            latitude: 0,
-            longitude: 0,
+            latitude: 10.7734674,
+            longitude: 106.6610249,
             latitudeDelta: 0.09,
             longitudeDelta: 0.09,
           }}
-          region={this.state.region}
+          ref={c => { this.mapView = c; }}
           style={styles.mapStyle}
+          onPress={this.onMapPress}
         >
+        <MapViewDirections
+                   origin={this.state.coordinates[0]}
+                   destination={this.state.coordinates[1]}
+                   apikey={GOOGLE_MAPS_APIKEY}
+                   strokeWidth={3}
+                   strokeColor="violet"
+        />
 
         {this.state.markers.map((marker, key) => (
           <Marker

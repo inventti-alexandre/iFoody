@@ -9,7 +9,7 @@ import { Button, Divider } from "react-native-elements";
 import axios from "axios";
 import Tabs from "../components/Tabs";
 import Search from "../components/Search";
-import FlatListroducts from "../components/FlatListProducts";
+import FlatListProducts from "../components/FlatListProducts";
 import GeneralButton from "../components/GeneralButton";
 import FavoriteScreen from "./FavoriteScreen";
 import SearchService from "../services/SearchService";
@@ -21,7 +21,7 @@ import ProfileScreen from "./ProfileScreen";
 import LoginScreen from "./LoginScreen";
 import LoginManager from "../services/LoginManager";
 
-export default class HomeScreen extends Component {
+class HomeScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -78,10 +78,14 @@ export default class HomeScreen extends Component {
   };
 
   changeTab = () => {
-    console.log("changeTab");
   };
+
+   navigateInItem = (value) => {
+    console.log('navigateInItem works. Value is: ', value);
+    this.props.navigation.navigate(value.screenName, { id: value.id });
+  }
+
   render() {
-    console.log("render. this.state is: ", this.state);
     return (
       <View style={styles.containerStyle}>
         <Tabs onClick={this.changeTab}>
@@ -95,7 +99,7 @@ export default class HomeScreen extends Component {
             <View style={styles.searchStyle}>
               <Search
                 searchString={this.getSearchString}
-                isHomePage={true}
+                isHomePage
                 navigation={this.props.navigation}
               />
               <View style={styles.categoryContainerStyle}>
@@ -103,7 +107,8 @@ export default class HomeScreen extends Component {
                   data={this.state.categoryList}
                   keyExtractor={item => item.id}
                   renderItem={({ item }) => (
-                    <FlatListroducts
+                    <FlatListProducts
+                      key={item.key}
                       categoryInfo={item}
                       navigation={this.props.navigation}
                     />
@@ -193,3 +198,5 @@ const styles = StyleSheet.create({
   },
   categoryContainerStyle: {}
 });
+
+export default HomeScreen;

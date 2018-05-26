@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { Button, View, AsyncStorage } from 'react-native';
-import { FormLabel, FormInput } from 'react-native-elements';
+import { Dimensions, View, AsyncStorage } from 'react-native';
+import { Button, FormLabel, FormInput } from 'react-native-elements';
 import Animation from 'lottie-react-native';
 import axios from 'axios';
-import GeneralButton from './GeneralButton';
 import anim from '../assets/externals/airbnb/android_fingerprint';
 import { SignIn } from '../assets/constants/apiUrl';
+
+const deviceWidth = Dimensions.get('window').width;
+const deviceHeight = Dimensions.get('window').height;
 
 class Login extends Component {
 
@@ -14,7 +16,8 @@ class Login extends Component {
     this.state = {
       userId: '',
       authToken: '',
-      isLoggedIn: false
+      isLoggedIn: false,
+      isLoading: false
     };
   }
 
@@ -22,15 +25,18 @@ class Login extends Component {
     this.animation.play();
   }
 
+  componentWillReceiveProps = () => {
+    console.log('componentWillReceiveProps works');
+    return true;
+  }
   onPressButton = () => {
     this.onSubmit();
     this.setState({ isLoggedIn: true });
     this.props.handler(true);
   }
 
-
-   onSubmit = () => {
-    console.log('onSubmit5 work');
+  onSubmit = () => {
+    console.log('onSubmit workds');
     console.log('this.state ', this.state);
     const dataTest = 'hoailinhtinh@gmail.com:8899';
     const data = Base64.btoa(dataTest);
@@ -41,26 +47,22 @@ class Login extends Component {
        }
      };
     axios.post(SignIn, data, config)
-    .then(async (response) => {
-      console.log('Response 1: ', JSON.stringify(response));
+    .then((response) => {
       try {
-        console.log('after111 navigation');
         this.setState({
           userId: response.data.userId,
           authToken: response.data.authToken,
           isLoggedIn: true
         });
-        await AsyncStorage.setItem('user_id', response.data.userId);
-        await AsyncStorage.setItem('auth_token', response.data.authToken);
-        console.log('after222 navigation');
+        AsyncStorage.setItem('user_id', response.data.userId);
+        AsyncStorage.setItem('auth_token', response.data.authToken);
         this.props.handler(this.state);
-        console.log('after333 navigation');
       } catch (error) {
         console.log('Error in saving storage ', error);
       }
     })
     .catch((error) => {
-      console.log('error', JSON.stringify(error.response));
+      console.log('error In SignIn', JSON.stringify(error.response));
     });
   }
 
@@ -68,7 +70,6 @@ class Login extends Component {
     console.log('inside Login component');
     return (
         <View style={styles.containerStyle}>
-
           <View>
             <Animation
               ref={animation => {
@@ -76,7 +77,7 @@ class Login extends Component {
               }}
               style={{
                 width: 160,
-                height: 110,
+                height: 150,
                 alignSelf: 'center'
               }}
               loop
@@ -84,23 +85,52 @@ class Login extends Component {
             />
           </View>
 
-          <FormLabel>Email</FormLabel>
-          <FormInput
-            onChangeText={(email) => {
-              console.log('text', email);
-              this.setState({ email });
-              }
-            }
-          />
+          <View style={styles.input}>
+              <FormLabel>Email</FormLabel>
+              <FormInput
+                onChangeText={(email) => {
+                  this.setState({ email });
+                  }
+                }
+                containerStyle={{
+                  marginBottom: 15
+                }}
+              />
 
-          <FormLabel>Password</FormLabel>
-          <FormInput
-            onChangeText={(text) => this.setState({ password: text })}
-          />
+              <FormLabel>Password</FormLabel>
+              <FormInput
+                onChangeText={(text) => this.setState({ password: text })}
+              />
+          </View>
 
-          <GeneralButton style={styles.loginBtnStyle} onPress={this.onSubmit}>
-            LOGIN
-          </GeneralButton>
+          <Button
+            title="LOGIN"
+            loading={this.state.isLoading}
+            loadingProps={{ size: "large", color: "rgba(111, 202, 186, 1)" }}
+            titleStyle={{
+              fontWeight: "100",
+              fontSize: 30
+              }}
+            onPress={() => {
+              this.setState({ isLoading: true });
+              console.log('this.state.isLoading ', this.state.isLoading);
+              this.onPressButton();
+             }}
+            buttonStyle={{
+              height: 60,
+              backgroundColor: "#4CAF50",
+              borderWidth: 0,
+              borderRadius: 5,
+              width: deviceWidth * 0.65,
+              alignSelf: 'center',
+              marginTop: 50,
+            }}
+            containerStyle={{
+              width: deviceWidth,
+               marginLeft: 25,
+               marginRight: 25,
+            }}
+          />
         </View>
     );
   }
@@ -109,6 +139,12 @@ class Login extends Component {
 const styles = {
   containerStyle: {
     backgroundColor: 'white',
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    height: deviceHeight * 0.83,
+    paddingLeft: 15,
+    paddingRight: 15,
   },
   headerStyle: {
     alignSelf: 'center',
@@ -116,7 +152,6 @@ const styles = {
     fontFamily: 'sans-serif-light'
   },
   loginBtnStyle: {
-    marginBottom: 30
   }
 };
 

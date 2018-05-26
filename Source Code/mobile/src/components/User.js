@@ -4,7 +4,7 @@ import ProfileScreen from '../screens/ProfileScreen';
 import LoginScreen from '../screens/LoginScreen';
 
 
-export default class User extends Component {
+class User extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,3 +32,5 @@ export default class User extends Component {
     );
   }
 }
+
+export default User;

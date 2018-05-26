@@ -16,9 +16,9 @@ import Search from '../components/Search';
 import StoreItem from '../components/StoreItem';
 import GeneralButton from '../components/GeneralButton';
 
-export default class ViewAllScreen extends Component {
+class ViewAllScreen extends Component {
   getSearchString=()=>{
-    
+
   }
   render() {
     return (
@@ -143,3 +143,5 @@ const styles = StyleSheet.create({
 
   }
 });
+
+export default ViewAllScreen;

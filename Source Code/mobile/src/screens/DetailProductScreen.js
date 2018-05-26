@@ -2,44 +2,85 @@ import React, { Component } from 'react';
 import { Text, StyleSheet, View, ScrollView, Dimensions } from 'react-native';
 import axios from 'axios';
 import { Divider, Icon, Card } from 'react-native-elements';
-import { Product } from '../assets/constants/apiUrl';
+import { GetStoreAddresses, GetAllProductsInStore, Product, Store } from '../assets/constants/apiUrl';
 import GeneralRating from '../components/GeneralRating';
 import imageDefault from '../assets/constants/global';
 import Review from '../components/Review';
+import { handelImagePath } from '../services/ShareFunction';
+import Map from '../components/Map';
 
-export default class DetailProductScreen extends Component {
+class DetailProductScreen extends Component {
     constructor(props) {
       super(props);
       console.log('DetailProductScreen- Constructor. this.props is: ', this.props);
       this.state = {
         item: '',
-        productId: this.props.navigation.getParam('id'),
-        buttonItemDisplay: 'none'
+        productId: '',
+        buttonItemDisplay: 'none',
+        locationReturnFromApi: {},
+        location: {
+          latlng: {
+            latitude: 0,
+            longitude: 0,
+          },
+          title: '',
+          description: '',
+          images: '',
+          price: ''
+        }
       };
-      console.log('DetailProductScreen. getParam: ', this.props.navigation.getParam('id'));
     }
 
     componentDidMount() {
-      console.log('componentDidMount in DetailProductScreen');
-      console.log(`${Product}/${this.state.productId}`);
-      axios.get(`${Product}/de444f26-d11e-461a-a048-4bc439f68594`)
+      console.log(`${Product}/${this.props.navigation.getParam('id')}`);
+      axios.get(`${Product}/${this.props.navigation.getParam('id')}`)
         .then(response => {
           console.log('response is: ', response);
+          response.data.images = handelImagePath(response.data.images);
           this.setState({ item: response.data });
-        })
-        .catch(error => {
-          console.log('Error to get Product', error);
-        });
+
+          const encodedStoreIds = encodeURIComponent(
+            JSON.stringify([response.data.store.id]));
+
+          axios.get(`${GetStoreAddresses}/?storeIds=${encodedStoreIds}`)
+            .then(result => {
+              this.setState({
+                location: {
+                  latlng: {
+                    latitude: result.data[0].latitude,
+                    longitude: result.data[0].longitude
+                  },
+                  title: response.data.store.name,
+                  description: response.data.store.description,
+                  images: response.data.images,
+                  price: response.data.product.price
+                }
+              });
+              this.setState(this.state);
+            })
+            .catch(error => {
+              console.log('Error to get GetStoreAddress', error);
+            });
+      })
+      .catch(error => {
+        console.log('Error to get Product', error);
+      });
     }
 
+    componentWillReceiveProps() {
+      console.log('componentWillReceiveProps');
+      return true;
+    }
     getItem = (item) => {
       console.log('DetailScreen. getItem work. Item is: ', item);
       this.setState({ item });
     }
 
     render() {
+      console.log('this.state.location : ', this.state.location);
+      console.log('this.state.item ', this.state.item);
+
       const deviceWidth = Dimensions.get('window').width;
-      console.log('deviceWidth is: ', deviceWidth);
       return (
          (this.state.item !== '')
             ? <ScrollView style={styles.container}>
@@ -117,10 +158,12 @@ export default class DetailProductScreen extends Component {
                 </View>
 
               <Divider color='grey' />
+              <Map items={[this.state.location]} />
 
-              <Review productId='de444f26-d11e-461a-a048-4bc439f68594' />
+              <Review productId={this.props.navigation.getParam('id')} />
+
               </ScrollView>
-            : <Text>No Product found</Text>
+            : <Text />
       );
     }
   }
@@ -136,3 +179,5 @@ export default class DetailProductScreen extends Component {
       flex: 1
     }
   });
+
+export default DetailProductScreen;

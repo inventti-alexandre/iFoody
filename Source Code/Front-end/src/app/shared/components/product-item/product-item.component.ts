@@ -1,3 +1,4 @@
+import { forEach } from '@angular/router/src/utils/collection';
 import { imageDefault } from "./../../../constant/global";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Http } from "@angular/http";
@@ -8,6 +9,7 @@ import { IProductItem } from "../../models/allModel";
 import { CurrencyPipe } from "@angular/common/src/pipes/number_pipe";
 import { Component, OnInit, Output, Input } from "@angular/core";
 import * as apiUrl from "../../../constant/apiUrl";
+import { ImageDomain } from "../../../constant/apiUrl";
 import { handelImgErro, checkOpenStore, enCodeUrl, handelImagePath } from "./../../../shared/services/share-function.service";
 
 @Component({
@@ -21,6 +23,7 @@ export class ProductItemComponent implements OnInit {
   productModel: any;
   productUrl: string;
   imageDefault: string;
+  imageDomain: any;
   handelImgErro = handelImgErro;
   checkOpenStore = checkOpenStore;
   enCodeUrl = enCodeUrl;
@@ -33,11 +36,13 @@ export class ProductItemComponent implements OnInit {
   ) {
     this.productUrl = apiUrl.GetAllProduct;
     this.imageDefault = imageDefault;
+    this.imageDomain = ImageDomain;
   }
 
   ngOnInit() {
     this.getProductInfo();
   }
+
   getProductInfo = () => {
     if (this.productId) {
       this._productService.GetProductById(this.productId).subscribe(data => {
@@ -50,11 +55,12 @@ export class ProductItemComponent implements OnInit {
       this.productModel = this.productInfo;
       this.productModel.images = handelImagePath(this.productModel.images);
     }
+    // this.productModel.images.forEach(image => {
+    //   image.path = image.path.replace("~/", "");
+    // });
   }
 
   getProductDetail() {
-    debugger
-    console.log("getProductDetail works");
     if (this.productId != null) {
       return this._productService
         .GetProductById(this.productId.replace(/['"]+/g, ""))

@@ -5,6 +5,7 @@ import Animation from 'lottie-react-native';
 import GeneralRating from './GeneralRating';
 import anim from '../assets/externals/airbnb/heart_with_particles.json';
 import imageDefault from '../assets/constants/global';
+import { handelImagePath } from '../services/ShareFunction';
 
 class StoreItem extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class StoreItem extends Component {
 
   render() {
     console.log('inside StoreItem component');
-
+    this.props.item.images = handelImagePath(this.props.item.images);
     return (
       <Card
         containerStyle={styles.containerStyle}

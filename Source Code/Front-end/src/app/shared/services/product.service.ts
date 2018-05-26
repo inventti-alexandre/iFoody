@@ -37,7 +37,7 @@ export class ProductService {
       .do(x => {
         listProduct.push(x);
       });
-  };
+  }
 
   public GetProductByCategoryId = (categoryId): Observable<any> => {
     let listProduct = [];
@@ -52,7 +52,7 @@ export class ProductService {
           listProduct.push(x);
         });
     }
-  };
+  }
 
   public PagingAllProducts = (page, count?): Observable<any> => {
     let listProduct = [];
@@ -68,7 +68,7 @@ export class ProductService {
       .do(x => {
         listProduct.push(x);
       });
-  };
+  }
 
   public PagingAllProductsByCategory = (
     categoryId,
@@ -101,7 +101,7 @@ export class ProductService {
       .do(x => {
         listProduct.push(x);
       });
-  };
+  }
 
   // POST - Product updload
   // Tuan modified
@@ -116,7 +116,7 @@ export class ProductService {
       .post(this.actionUrl, body, options)
       .map((response: Response) => <any>response.json())
       .catch(this.handleError);
-  };
+  }
   // public GetProductByCategory=(categoryName, products, result): Observable<any> => {
   //   console.log('GetProductByCategory works');
   //   if(products != null) {
@@ -220,6 +220,6 @@ export class ProductService {
       .map((response: Response) => <any>response.json())
       .catch((erro: any) => {
         return Observable.of(erro);
-      })
-  };
+      });
+  }
 }

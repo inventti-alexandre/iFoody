@@ -1,3 +1,4 @@
+import { ImageDomain } from './../../../constant/apiUrl';
 import { UserService } from "./../../../shared/services/user.service";
 import { ActivatedRoute, Router, Params } from "@angular/router";
 import { ProductService } from "./../../../shared/services/product.service";
@@ -10,6 +11,10 @@ import {
   ChangeDetectorRef
 } from "@angular/core";
 import * as apiUrl from "../../../constant/apiUrl";
+declare var mainStoreImage: any;
+declare var nameStore: any;
+declare var addressStore: any;
+
 import { deCodeUrl, handelImagePath } from "./../../../shared/services/share-function.service";
 @Component({
   selector: "product-detail",
@@ -27,6 +32,7 @@ export class ProductDetailComponent implements OnInit {
   isFavorited = false;
   favoriteId: string;
   imageDefault: string;
+  imageDomain: string;
   deCodeUrl = deCodeUrl;
   isLoadingProduct: Boolean;
   handelImagePath =handelImagePath;
@@ -43,6 +49,9 @@ export class ProductDetailComponent implements OnInit {
     this.userIdKey = apiUrl.UserId;
     this.storeId = [];
     this.isLoadingProduct = true;
+    this.imageDomain = ImageDomain;
+    nameStore = [];
+    addressStore = [];
   }
 
   ngOnInit() {
@@ -58,27 +67,46 @@ export class ProductDetailComponent implements OnInit {
         .subscribe((data: Response) => {
           this.productModel = data;
           this.productModel.images = handelImagePath(this.productModel.images);
+          if(this.productModel.store.city === '1'){
+            this.productModel.store.city = 'TpHCM';
+          }
+          if(this.productModel.store.city === '2'){
+            this.productModel.store.city = 'Hà Nội';
+          }
           this.isLoadingProduct = false;
           this.categoryId = this.productModel.category.id;
           this.storeId.push(this.productModel.store.id);
+          if(this.productModel.images.length > 0) {
+            mainStoreImage = [];
+            mainStoreImage.push(this.productModel.images[0].path);
+          }
+          else {
+            mainStoreImage = [];
+            mainStoreImage.push(this.imageDefault);
+          }
+          nameStore.push(this.productModel.store.name);
+          addressStore.push(this.productModel.store.address + ', ' + this.productModel.store.district);
+          
         });
 
       // Product is Favorited or not
-      this._userService
-        .getFavoriteList(localStorage.getItem(apiUrl.UserId))
-        .subscribe(response => {
-          response.forEach(element => {
-            if (element.productId === this.productId) {
-              this.favoriteId = element.id;
-              console.log("favoriteList: ", element);
-              // let Component know Change of properties and update. Same with ChangeDetectorRef
-              setTimeout(() => (this.isFavorited = true), 0);
-              return;
-            }
+      if(localStorage.getItem(apiUrl.UserId) !== null && localStorage.getItem(apiUrl.UserId) !== '') {
+        this._userService
+          .getFavoriteList(localStorage.getItem(apiUrl.UserId))
+          .subscribe(response => {
+            response.forEach(element => {
+              if (element.productId === this.productId) {
+                this.favoriteId = element.id;
+                console.log("favoriteList: ", element);
+                // let Component know Change of properties and update. Same with ChangeDetectorRef
+                setTimeout(() => (this.isFavorited = true), 0);
+                return;
+              }
+            });
           });
-        });
-    });
-  };
+      }
+      });
+  }
 
   addFavoriteItem() {
     console.log("addFavoriteItem works");

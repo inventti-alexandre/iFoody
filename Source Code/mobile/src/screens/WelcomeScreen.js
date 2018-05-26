@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Welcome from '../../src/components/Welcome';
 
-export default class WelcomeScreen extends Component {
+class WelcomeScreen extends Component {
   componentWillMount() {
   }
 
@@ -28,3 +28,5 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+export default WelcomeScreen;

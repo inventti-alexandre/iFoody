@@ -10,7 +10,7 @@ import { ImageLoader } from "react-native-image-fallback";
 class SearchStoreItem extends Component {
   constructor(props) {
     super(props);
-    this.state = {     
+    this.state = {
     };
   }
 
@@ -34,8 +34,8 @@ class SearchStoreItem extends Component {
       >
        <ImageLoader
           source={imageSource}
-          fallback={fallbacks}   
-          style={styles.imageStyle}      
+          fallback={fallbacks}
+          style={styles.imageStyle}
         />
         <View style={styles.animationStyle}>
           <Animation
@@ -90,7 +90,7 @@ class SearchStoreItem extends Component {
           title='Xem Ngay'
           onPress={() => {
             console.log('Xem Ngay Clicked!!!!');
-            this.props.navigateInItem({ screenName: 'DetailStore', id: this.props.item.id });
+            this.props.navigateInItem({ screenName: 'DetailStore', id: item.id });
           }}
         />
       </Card>

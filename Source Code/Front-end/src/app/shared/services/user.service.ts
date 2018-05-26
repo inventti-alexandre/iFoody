@@ -83,7 +83,8 @@ export class UserService {
 
   // GET User By Id
   getUserById(id: string): Observable<any> {
-    if(id != null) {
+    console.log('aaaaaaaaaaaa. UserId ', id);
+    if(id !== undefined) {
       return this._http.get(this.getUrl + '/' + id.replace(/['"]+/g, ''))
         .map((response: Response) =>
           <any>response.json())
@@ -94,6 +95,8 @@ export class UserService {
 
   // GET Favorite Product and Wish Store from User Id
   getFavoriteList(id: string): Observable<any> {
+    console.log('bbbbbbb');
+    
     // console.log("getFavoriteList works.");
     if(id != null) {
       return this._http.get(this.favoriteListUrl + '/' + id.replace(/['"]+/g, ''))
@@ -107,6 +110,8 @@ export class UserService {
 
   // GET Store By User Id
   getStoreById(id: string): Observable<any> {
+    console.log('cccccccccc');
+    
     if(id != null) {
       return this._http.get(this.storeUrl + '/' + id.replace(/['"]+/g, ''))
         .map((response: Response) => {
@@ -119,6 +124,8 @@ export class UserService {
 
   // GET Products in Store By StoreId
   getAllProductInStore(storeId: string): Observable<any> {
+    console.log('ddddd');
+    
     if(storeId != null) {
       console.log(this.storeUrl + '/allProducts' + '/' + storeId.replace(/['"]+/g,''));
       return this._http.get(this.storeUrl + '/allProducts' + '/' + storeId.replace(/['"]+/g,''))

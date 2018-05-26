@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Welcome from '../../src/components/Welcome';
 
-export default class AllReviewScreen extends Component {
+class AllReviewScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -17,3 +17,5 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+export default AllReviewScreen;

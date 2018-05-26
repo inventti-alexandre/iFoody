@@ -11,7 +11,7 @@ import {
   Dimensions
 } from "react-native";
 
-export default class AllProductsByCategoryScreen extends Component {
+class AllProductsByCategoryScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -118,3 +118,5 @@ const styles = StyleSheet.create({
     backgroundColor: "white", // Darker background for content area
   },
 })
+
+export default AllProductsByCategoryScreen;

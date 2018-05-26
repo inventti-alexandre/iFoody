@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { AsyncStorage } from 'react-native';
 
-export default class LoginManager extends Component {
+class LoginManager extends Component {
   static isLoggedIn = async () => {
     const value = await AsyncStorage.getItem('user_id');
 
@@ -21,3 +21,5 @@ export default class LoginManager extends Component {
     };
   }
 }
+
+export default LoginManager;

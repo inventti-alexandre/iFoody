@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
+import { Dimensions } from 'react-native';
 import axios from 'axios';
 import { FavoriteList, Product, Store } from '../assets/constants/apiUrl';
 import ProductItem from '../components/ProductItem';
 import StoreItem from '../components/StoreItem';
 
-export default class FavoriteScreen extends Component {
+class FavoriteScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       favoriteList: [],
-      productIdList: [],
       storeIdList: [],
-      productList: [],
       storeList: [],
+      productIdList: [],
+      productList: [],
       user: this.props.user,
       clickedItem: ''
     };
@@ -48,10 +49,10 @@ export default class FavoriteScreen extends Component {
     console.log('setFavoriteList work');
     this.setState({ favoriteList: data });
     data.map((item) => {
-      if (item.productId !== null) {
+     if (item.storeId !== null) {
+       this.state.storeIdList.push(item.storeId);
+      } else if (item.productId !== null) {
         this.state.productIdList.push(item.productId);
-      } else if (item.storeId !== null) {
-        this.state.storeIdList.push(item.storeId);
       }
       return item;
     });
@@ -63,11 +64,11 @@ export default class FavoriteScreen extends Component {
     .then(response => {
       console.log('response is: ', response);
       this.setFavoriteList(response.data);
-      this.fetchProductList();
       this.fetchStoreList();
+      this.fetchProductList();
       console.log('finish Fetching FavoriteList');
-      console.log(this.state.productList);
       console.log(this.state.storeList);
+      console.log(this.state.productList);
     })
     .catch(error => {
       console.log('Error: ', error);
@@ -97,6 +98,7 @@ export default class FavoriteScreen extends Component {
       axios.get(`${Store}/${storeId}`)
         .then(response => {
           console.log('response is: ', response);
+          response.data.id = storeId;
           this.setState({ storeList: [...this.state.storeList, response.data] });
         })
         .catch(error => {
@@ -127,18 +129,20 @@ export default class FavoriteScreen extends Component {
     console.log('in render', this.state.productList);
     console.log('in render', this.state.storeList);
     return ([
-          this.state.productList.map((item, key) => (
-            <ProductItem
-              key={key} productInfo={item}
-              navigateInItem={this.navigateInItem}
-            />
-          )),
           this.state.storeList.map((item, key) => (
             <StoreItem
               key={key} item={item}
+              navigateInItem={this.navigateInItem}
+            />
+          )),
+          this.state.productList.map((item, key) => (
+            <ProductItem
+              key={key} productInfo={item}
               navigateInItem={this.navigateInItem}
             />
           ))]
     );
   }
 }
+
+export default FavoriteScreen;
