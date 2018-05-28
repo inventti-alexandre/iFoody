@@ -274,8 +274,8 @@ class SearchResultScreen extends Component {
     }
   };
 
-  componentWillMount() {
-    console.log("TESTING currentLocationGlobal", global.currentLocation);
+  componentDidMount() {
+    console.log('TESTING currentLocationGlobal', global.currentLocation);
     CategoryService.GetCategories().then(data => {
       this.setState({ categoryList: data});
     });

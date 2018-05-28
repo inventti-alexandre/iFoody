@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, Text, View, AsyncStorage } from 'react-native';
+import { Button } from 'react-native-elements';
 import axios from 'axios';
 import { FavoriteList, Product, Store } from '../assets/constants/apiUrl';
 import ProductItem from '../components/ProductItem';
 import StoreItem from '../components/StoreItem';
+
+const deviceWidth = Dimensions.get('window').width;
+const deviceHeight = Dimensions.get('window').height;
 
 class FavoriteScreen extends Component {
   constructor(props) {
@@ -14,8 +18,9 @@ class FavoriteScreen extends Component {
       storeList: [],
       productIdList: [],
       productList: [],
-      user: this.props.user,
-      clickedItem: ''
+      user: '',
+      clickedItem: '',
+      notificationLogin: 'Xin đăng nhập để xem mục yêu thích!'
     };
     console.log('constructor in favoriteScreen. this.props is: ', this.props);
   }
@@ -24,8 +29,13 @@ class FavoriteScreen extends Component {
   }
 
   componentDidMount() {
-    console.log('componentDidMount');
-    this.fetchFavoriteList();
+    console.log('Favorite componentDidMount. this.props.user: ', this.props.user);
+    if (this.props.user === '' || this.props.user === undefined) {
+      return true;
+    }
+    this.setState({ user: this.props.user }, () => {
+      this.fetchFavoriteList();
+    });
   }
 
   componentWillReceiveProps() {
@@ -45,8 +55,12 @@ class FavoriteScreen extends Component {
     console.log('componentDidUpdate');
   }
 
+  onPressButton = () => {
+    this.props.navigation.navigate('Login', this.handler);
+  }
+
   setFavoriteList = (data) => {
-    console.log('setFavoriteList work');
+    console.log('setFavoriteList work. Data is: ', data);
     this.setState({ favoriteList: data });
     data.map((item) => {
      if (item.storeId !== null) {
@@ -57,9 +71,22 @@ class FavoriteScreen extends Component {
       return item;
     });
   }
+  async test() {
+    console.log('test function');
+    await AsyncStorage.getItem('user_id')
+      .then(data => {
+        console.log('user_id in ProfileComponent', data);
+      });
+  }
+
+  handler = (value) => {
+    console.log("handler method in HOME Component. VALUE from child is: ", value
+    );
+  };
 
   fetchFavoriteList = () => {
     console.log('fetchFavoriteItems works');
+    console.log(`${FavoriteList}/${this.state.user.userId}`);
     axios.get(`${FavoriteList}/${this.state.user.userId}`)
     .then(response => {
       console.log('response is: ', response);
@@ -126,8 +153,6 @@ class FavoriteScreen extends Component {
   }
 
   render() {
-    console.log('in render', this.state.productList);
-    console.log('in render', this.state.storeList);
     return ([
           this.state.storeList.map((item, key) => (
             <StoreItem

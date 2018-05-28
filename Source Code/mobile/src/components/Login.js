@@ -29,11 +29,6 @@ class Login extends Component {
     console.log('componentWillReceiveProps works');
     return true;
   }
-  onPressButton = () => {
-    this.onSubmit();
-    this.setState({ isLoggedIn: true });
-    this.props.handler(true);
-  }
 
   onSubmit = () => {
     console.log('onSubmit workds');
@@ -49,11 +44,13 @@ class Login extends Component {
     axios.post(SignIn, data, config)
     .then((response) => {
       try {
+        console.log('response from SIgnin. response is: ', response);
         this.setState({
           userId: response.data.userId,
           authToken: response.data.authToken,
           isLoggedIn: true
         });
+        this.props.handler(true);
         AsyncStorage.setItem('user_id', response.data.userId);
         AsyncStorage.setItem('auth_token', response.data.authToken);
         this.props.handler(this.state);
@@ -112,9 +109,7 @@ class Login extends Component {
               fontSize: 30
               }}
             onPress={() => {
-              this.setState({ isLoading: true });
-              console.log('this.state.isLoading ', this.state.isLoading);
-              this.onPressButton();
+              this.onSubmit();
              }}
             buttonStyle={{
               height: 60,

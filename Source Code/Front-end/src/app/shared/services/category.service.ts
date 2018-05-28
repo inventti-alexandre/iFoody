@@ -24,4 +24,11 @@ export class CategoryService {
         );
   }
 
+  public GetCategoryById = (id: string): Observable<any> => {
+    console.log('getCategoryById works');
+    console.log('categoryId: ', id);
+    return this._http.get(apiUrl.GetAllCategories + '/' + id)
+      .map((response: Response) => <any>response.json())
+  }
+
 }

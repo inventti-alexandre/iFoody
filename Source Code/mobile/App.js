@@ -4,7 +4,7 @@
  * @flow
  */
 import React, { Component } from 'react';
-import {
+import { Dimensions
 } from 'react-native';
 import {
   StackNavigator,
@@ -21,6 +21,9 @@ import SearchResultScreen from './src/screens/SearchResultScreen';
 import FavoriteScreen from './src/screens/FavoriteScreen';
 import AllProductsByCategoryScreen from './src/screens/AllProductsByCategoryScreen';
 import SearchService from './src/services/SearchService';
+
+const deviceWidth = Dimensions.get('window').width;
+const deviceHeight = Dimensions.get('window').height;
 
 type Props = {};
 const RootStack = StackNavigator(

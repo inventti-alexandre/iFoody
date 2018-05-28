@@ -11,9 +11,11 @@ const deviceHeight = Dimensions.get('window').height;
 class Profile extends Component {
   constructor(props) {
     super(props);
-    console.log('constructor in Profile');
+    console.log('constructor in Profile. This.props is: ', this.props);
     this.state = {
       user: {},
+      userId: '',
+      authToken: '',
       email: '',
       name: '',
       birthday: ''
@@ -54,9 +56,9 @@ class Profile extends Component {
       });
   }
 
-  logOut = async () => {
+  async logOut() {
     console.log('Logout function');
-  await AsyncStorage.removeItem('user_id')
+    await AsyncStorage.removeItem('user_id')
       .then(response => {
           try {
             console.log('removeItem1 successfully');
