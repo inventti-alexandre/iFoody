@@ -1,3 +1,4 @@
+import { forEach } from '@angular/router/src/utils/collection';
 import { imageDefault } from './../../../../constant/global';
 import { IFavoriteList } from './../../../../shared/models/allModel';
 import { UserService } from '../../../../shared/services/user.service';
@@ -7,6 +8,7 @@ import { ProfileChildren } from '../../../models/profileChildren';
 import * as apiUrl from '../../../../constant/apiUrl';
 import { ProductService } from '../../../../shared/services/product.service';
 import { StoreService } from '../../../../shared/services/store.service';
+import { handelImagePath } from '../../../../shared/services/share-function.service';
 
 declare var favoriteObject: any;
 
@@ -42,33 +44,31 @@ export class FavoriteListComponent implements OnInit, ProfileChildren {
   ngOnInit() {
      // Get Favorite List from User Id in Local Storage
      this._userService.getFavoriteList(localStorage.getItem(apiUrl.UserId))
-     .subscribe(data => {
-        this.favoriteList = data;
-        console.log('data',data);
-       // Filter Product or Store from favoriteList variable
-       this.productIds= this.favoriteList
-       .filter(function(x: IFavoriteList) {
-           /// console.log(this.favoriteList);
-           return x.productId != null;
-         })
-       .map(y => y.productId);
-       
-       this.productIds.forEach(element => {
-         this._productService.GetProductById(element)
-            .subscribe(response => {
-              console.log('response', response);
-              this.productsModel.push(response);
-            });
-       });
+      .subscribe(data => {
+          this.favoriteList = data;
+          // Filter Product or Store from favoriteList variable
+          this.productIds= this.favoriteList
+            .filter(function(x: IFavoriteList) {
+                /// console.log(this.favoriteList);
+                return x.productId != null;
+              })
+            .map(y => y.productId);
+          
+          this.productIds.forEach(element => {
+            this._productService.GetProductById(element)
+              .subscribe(response => {
+                console.log('response', response);
+                response.images = handelImagePath(response.images);
+                this.productsModel.push(response);
+              });
+          });
 
-       this.storeIds = this.favoriteList
-       .filter(function(y: IFavoriteList) {
-        return y.storeId != null ;
-      })
-      .map(y => y.storeId);
-     });
-
-     
+          this.storeIds = this.favoriteList
+            .filter(function(y: IFavoriteList) {
+              return y.storeId != null ;
+            })
+           .map(y => y.storeId);
+      });
   }
 
   removeFavoriteItem(id) {

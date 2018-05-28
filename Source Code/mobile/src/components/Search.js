@@ -6,7 +6,7 @@ class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: this.props.initText?this.props.initText:"",
+      text: this.props.initText ? this.props.initText:"",
       noIcon: false,
       clearIcon: false,
       placeHolder: "Tìm kiếm..."

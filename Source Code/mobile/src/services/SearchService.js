@@ -65,13 +65,13 @@ function getCurrentPosition() {
         switch (error.code) {
           case 1:
             if (Platform.OS === 'ios') {
-              Alert.alert('', 'Para ubicar tu locación habilita permiso para');
+              Alert.alert('', 'Lỗi bật định vị!');
             } else {
-              Alert.alert('', 'Para ubicar tu locación habilita permiso para');
+              Alert.alert('', 'Lỗi bật định vị!');
             }
             break;
           default:
-            Alert.alert('', 'Error al detectar tu locación');
+            Alert.alert('', 'Chưa bật định vị GPS !');
         }
       }
     );

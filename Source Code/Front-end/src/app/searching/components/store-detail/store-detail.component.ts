@@ -1,5 +1,6 @@
 import { Headers } from "@angular/http";
 import { UserService } from "./../../../shared/services/user.service";
+import { CategoryService } from "./../../../shared/services/category.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { StoreService } from "./../../../shared/services/store.service";
 import { Component, OnInit, Output } from "@angular/core";
@@ -36,12 +37,14 @@ export class StoreDetailComponent implements OnInit {
   isLoadingReview: Boolean;
   handelImgErro = handelImgErro;
   productsQuantity: any;
+  categoryName: any;
 
   constructor(
     private _storeService: StoreService,
     private router: Router,
     private route: ActivatedRoute,
-    private _userService: UserService
+    private _userService: UserService,
+    private _categoryService: CategoryService
   ) {
     window.scrollTo(0, 0);
     this.imageDefault = imageDefault;
@@ -67,6 +70,7 @@ export class StoreDetailComponent implements OnInit {
     this.isLoadingStore = true;
     this.isLoadingReview = true;
     this.isLoadingProducts = true;
+    this.categoryName = '';
   }
 
   ngOnInit() {
@@ -92,6 +96,11 @@ export class StoreDetailComponent implements OnInit {
         
         this.storeInfoModel.images = handelImagePath(this.storeInfoModel.images);
 
+          this._categoryService.GetCategoryById(this.storeInfoModel.categoryId)
+            .subscribe(data => {
+              console.log('data response from GetCategoryById ', data);
+              this.categoryName = data.name;
+            })
         if(localStorage.getItem("user_id") !== '' && localStorage.getItem("user_id") !==  null) {
           if (
             data.userId === localStorage.getItem("user_id").replace(/['"]+/g, "")

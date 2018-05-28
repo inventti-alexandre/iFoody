@@ -58,7 +58,7 @@ class Review extends Component {
       <Text style={{ fontSize: 17, marginLeft: 10 }}>Đánh giá</Text>
         { this.state.reviewList.map((item, key) => (
           <View key={key} style={{ marginLeft: 10, marginRight: 10 }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 25 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 12 }}>
               <Avatar
                 small
                 rounded

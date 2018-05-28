@@ -15,7 +15,7 @@ class FlatListProducts extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.getProductsByCategoryId(this.props.categoryInfo.id);
   }
   getProductsByCategoryId = id => {

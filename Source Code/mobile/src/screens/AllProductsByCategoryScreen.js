@@ -27,7 +27,7 @@ class AllProductsByCategoryScreen extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.getProductsByCategoryId(this.state.initPage);
   }
   getProductsByCategoryId = (page) => {

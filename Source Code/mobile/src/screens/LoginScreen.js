@@ -7,13 +7,23 @@ class LoginScreen extends Component {
     super(props);
     console.log('constructor in LoginScreen');
     this.state = {
-      isLoggedIn: false
+      userId: '',
+      authToken: '',
+      isLoggedIn: false,
+      isLoading: false
     };
   }
 
   handler = (value) => {
-    this.setState({ isLoggedIn: value });
+    console.log('handler in LoginScreen. Value is: ', value);
+    this.setState({
+      isLoggedIn: value.isLoggedIn,
+      authToken: value.authToken,
+      userId: value.userId,
+      isLoading: value.isLoading
+     });
     this.props.handler(value);
+    console.log('222222');
   }
 
   render() {

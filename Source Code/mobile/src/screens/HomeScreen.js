@@ -32,7 +32,7 @@ class HomeScreen extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     LoginManager.isLoggedIn().then(response => {
       console.log("response of LoginManager ", response);
       this.setState({ isLoggedIn: false });
@@ -66,7 +66,7 @@ class HomeScreen extends Component {
     );
   }
 
-  handler = value => {
+  handler = (value) => {
     console.log(
       "handler method in HOME Component. VALUE from child is: ",
       value
