@@ -65,6 +65,7 @@ export class ProductDetailComponent implements OnInit {
       this._productService
         .GetProductById(this.productId)
         .subscribe((data: Response) => {
+          console.log('TTTTTTTTTTTTTT: ', data);
           this.productModel = data;
           this.productModel.images = handelImagePath(this.productModel.images);
           if(this.productModel.store.city === '1'){

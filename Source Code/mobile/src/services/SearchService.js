@@ -71,7 +71,7 @@ function getCurrentPosition() {
             }
             break;
           default:
-            Alert.alert('', 'Chưa bật định vị GPS !');
+            Alert.alert('', 'Bật GPS để có trải nghiệm tốt nhất!');
         }
       }
     );

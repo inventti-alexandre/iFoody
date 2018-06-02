@@ -5,6 +5,7 @@ import axios from 'axios';
 import { FavoriteList, Product, Store } from '../assets/constants/apiUrl';
 import ProductItem from '../components/ProductItem';
 import StoreItem from '../components/StoreItem';
+import LoginScreen from './LoginScreen';
 
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
@@ -18,9 +19,10 @@ class FavoriteScreen extends Component {
       storeList: [],
       productIdList: [],
       productList: [],
-      user: '',
+      user: this.props.user,
       clickedItem: '',
-      notificationLogin: 'Xin đăng nhập để xem mục yêu thích!'
+      notificationLogin: 'Xin đăng nhập để xem mục yêu thích!',
+      needToLogin: false
     };
     console.log('constructor in favoriteScreen. this.props is: ', this.props);
   }
@@ -30,16 +32,19 @@ class FavoriteScreen extends Component {
 
   componentDidMount() {
     console.log('Favorite componentDidMount. this.props.user: ', this.props.user);
-    if (this.props.user === '' || this.props.user === undefined) {
-      return true;
+    if (Object.keys(this.state.user).length !== 0) {
+      console.log('DDDDDDDDD');
+      this.setState({ user: this.props.user }, () =>
+        this.fetchFavoriteList());
+    } else {
+      console.log('EEEEEEE');
     }
-    this.setState({ user: this.props.user }, () => {
-      this.fetchFavoriteList();
-    });
   }
 
-  componentWillReceiveProps() {
+  componentWillReceiveProps(nextProps) {
     console.log('componentWillReceiveProps');
+    console.log('nextProps is: ', nextProps);
+    this.setState({ user: nextProps.user });
   }
 
   shouldComponentUpdate() {
@@ -152,8 +157,30 @@ class FavoriteScreen extends Component {
     this.props.navigation.navigate(value.screenName, { id: value.id });
   }
 
+  needToLogin() {
+      console.log('needToLogin works');
+      this.setState({ needToLogin: true });
+  }
+
   render() {
-    return ([
+    console.log('Rendering FavoriteScreen. This.state.user is ', this.state.user);
+    if (Object.keys(this.state.user).length === 0) {
+      console.log('REnder User = 0')
+      return (
+        <View
+          style={{
+            flex: 1,
+            height: deviceHeight * 0.85,
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Text style={{ alignSelf: 'center', fontSize: 24 }}>Đăng nhập để xem mục này</Text>
+        </View>
+      );
+    }
+     return ([
           this.state.storeList.map((item, key) => (
             <StoreItem
               key={key} item={item}

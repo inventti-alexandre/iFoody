@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, View, AsyncStorage } from 'react-native';
+import { Dimensions, View, AsyncStorage, Text } from 'react-native';
 import { Button, FormLabel, FormInput } from 'react-native-elements';
 import Animation from 'lottie-react-native';
 import axios from 'axios';
@@ -83,7 +83,9 @@ class Login extends Component {
           </View>
 
           <View style={styles.input}>
-              <FormLabel>Email</FormLabel>
+              <Text style={styles.label}>
+              Email
+              </Text>
               <FormInput
                 onChangeText={(email) => {
                   this.setState({ email });
@@ -94,7 +96,7 @@ class Login extends Component {
                 }}
               />
 
-              <FormLabel>Password</FormLabel>
+              <Text style={styles.label}>Password</Text>
               <FormInput
                 onChangeText={(text) => this.setState({ password: text })}
               />
@@ -146,8 +148,13 @@ const styles = {
     color: 'white',
     fontFamily: 'sans-serif-light'
   },
-  loginBtnStyle: {
-  }
+  label: {
+    paddingLeft: 15,
+    paddingRight: 15,
+    marginTop: 15,
+    fontSize: 17,
+    letterSpacing: 6
+  },
 };
 
 const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
