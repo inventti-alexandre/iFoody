@@ -17,6 +17,8 @@ export class ReviewComponent implements OnInit, AfterViewChecked{
   rerender = false; // Refresh component when submit Review
   @Input() productId: string;
   @Input() storeId: string;
+  @Input() storeIdOfProduct: string;
+
   reviewsModel: any;
   reviewQuantity: number;
   currentUserId: string;
@@ -27,6 +29,7 @@ export class ReviewComponent implements OnInit, AfterViewChecked{
   isLoading: Boolean;
   isReviewNull: Boolean;
   isSubmitReview: Boolean;
+  isCommented: boolean;
 
   public max = 5;
   public rate;
@@ -44,18 +47,39 @@ export class ReviewComponent implements OnInit, AfterViewChecked{
     {
       this.isReadonly = false;
       this.today = new Date(Date.now());
-      this.currentUserId = localStorage.getItem(apiUrl.UserId);
+      if(localStorage.getItem(apiUrl.UserId) != null 
+        && localStorage.getItem(apiUrl.UserId) !== undefined
+        && localStorage.getItem(apiUrl.UserId) !== ''
+      ) {
+        this.currentUserId = localStorage.getItem(apiUrl.UserId).replace(/['"]+/g, '');
+      }
+      else {
+        this.currentUserId = '';
+      }
       this.isLoading = true;
       this.isReviewNull = true;
       this.isSubmitReview = false;
+      this.isCommented = false;
     }
 
   ngOnInit() {
+    console.log('currentUserId is: ', this.currentUserId);
     this.getReviewsData();
-    if (this.currentUserId != null && this.currentUserId != undefined && this.currentUserId != '') {
+    if (this.currentUserId != null && this.currentUserId !== undefined && this.currentUserId !== '') {
       this._userService.getUserById(this.currentUserId)
         .subscribe(data => {
           this.currentUser = data;
+          console.log('this.currentUser is: ', this.currentUser);
+          this._storeService.GetStoreByUserId(this.currentUserId)
+            .subscribe(response => {
+              console.log('RESPONSE GETSTOREBYUSERID: ', response);
+              if (response.id !== this.storeId &&
+                response.id !== this.storeIdOfProduct
+              ) {
+                this.isCommented = true;
+              }
+              console.log('CHICKENNNNNN : ', this.isCommented);
+            });
         });
     }
   }
@@ -81,7 +105,6 @@ export class ReviewComponent implements OnInit, AfterViewChecked{
         productId: this.productId,
         storeId: this.storeId
     };
-    console.log("newReview",newReview);
     this._userService.insertReview(newReview)
       .subscribe((response: Response) => {
         this.getReviewsData();
@@ -97,7 +120,8 @@ export class ReviewComponent implements OnInit, AfterViewChecked{
     if(this.productId != null) {
       this._productService.GetReviewListByProductId(this.productId)
       .subscribe((data: Response) => {
-        if(data.status==undefined){
+        console.log('DATA VVVVVV: ', data);
+        if(data.status===undefined){
           this.reviewsModel = data;
           this.reviewQuantity = this.reviewsModel.length;
           this.isLoading = false;
@@ -110,8 +134,10 @@ export class ReviewComponent implements OnInit, AfterViewChecked{
     }
     else if(this.storeId != null) {
       this._storeService.GetReviewListByStoreId(this.storeId)
-        .subscribe((data: Response) => {
-          if(data.status==undefined){
+        .subscribe((data) => {
+          if(data.length > 0) {
+            // Check Whether it is Store Owner
+            
             this.reviewsModel = data;
             this.reviewQuantity = this.reviewsModel.length;
             this.isLoading = false;

@@ -22,6 +22,7 @@ class LoginScreen extends Component {
       userId: value.userId,
       isLoading: value.isLoading
      });
+   console.log('this.props ', this.props);
     this.props.handler(value);
     console.log('222222');
   }

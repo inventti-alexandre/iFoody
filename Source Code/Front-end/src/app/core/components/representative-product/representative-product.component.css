@@ -25,6 +25,12 @@
   }
 }
 
+@media screen and (max-width: 480px) {
+  .listCategory .category__row .row {
+    margin: 0 auto;
+  }
+}
+
 .listCategory .seeMoreBtn {
   float: right;
   cursor: pointer;
