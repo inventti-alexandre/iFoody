@@ -36,6 +36,24 @@ namespace WebApi.ApiController
                 return NotFound();
             }
         }
+        // GET api/search/?storeId=?&page=&count
+        [HttpGet]
+        public IHttpActionResult GetSimilarStores(Guid storeId, int page, int? count)
+        {
+            try
+            {
+                var products = _searchService.GetSimilarStores(storeId, page, count);
+                if (products == null)
+                {
+                    return NotFound(); // Returns a NotFoundResult
+                }
+                return Ok(products);  // Returns an OkNegotiatedContentResult
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+        }
         // GET api/search/?count={?}
         [HttpGet]
         public IHttpActionResult SuggestionListByRatingProduct(int ? count)

@@ -1,147 +1,179 @@
 <div class="container">
-  <div class="storeDetail col-xs-12 col-sm-12">
-    <ng-template [ngIf]="isLoadingStore">
-      <div class="row">
-        <div class="row no-margin" style="text-align:center">
-          <div>
-            <i class="fa fa-spinner fa-spin" style="font-size:36px"></i>
-          </div>
+  <ng-template [ngIf]="isLoadingStore">
+    <div class="row">
+      <div class="row no-margin" style="text-align:center">
+        <div>
+          <i class="fa fa-spinner fa-spin" style="font-size:36px"></i>
         </div>
       </div>
-    </ng-template>
-    <ng-template [ngIf]="!isLoadingStore">
-      <div class="row storeDetail__header">
-
-        <div class="storeDetail__photo col-xs-12 col-sm-6 col-md-4">
-          <div class="storeDetail__photo__main row">
-            <img [src]="storeInfoModel?.images[0]?.path" (error)="handelImgErro($event)" alt="">
-          </div>
-
-          <div class="storeDetail__photo__minor row">
-            <div class="col-xs-3 col-sm-3" *ngFor="let image of storeInfoModel?.images">
-              <img [src]="image?.path" alt="image?.name" (error)="handelImgErro($event)">
+    </div>
+  </ng-template>
+  <ng-template [ngIf]="!isLoadingStore">
+    <div class="storeDetail col-xs-12 col-sm-12">
+      <ng-template [ngIf]="isLoadingStore">
+        <div class="row">
+          <div class="row no-margin" style="text-align:center">
+            <div>
+              <i class="fa fa-spinner fa-spin" style="font-size:36px"></i>
             </div>
           </div>
         </div>
+      </ng-template>
+      <ng-template [ngIf]="!isLoadingStore">
+        <div class="row storeDetail__header">
 
-
-        <div class="storeDetail__info col-xs-12 col-sm-6 col-md-5">
-          <h2>{{ storeInfoModel?.name }}</h2>
-          <div class="row">
-            <div class="type col-xs-4 col-sm-4">
-              <span>
-                <i class="fa fa-th-list"></i>
-                {{categoryName}}
-              </span> 
+          <div class="storeDetail__photo col-xs-12 col-sm-6 col-md-4">
+            <div class="storeDetail__photo__main row">
+              <img [src]="storeInfoModel?.images[0]?.path" (error)="handelImgErro($event)" alt="">
             </div>
-            <div class="rating col-xs-8 col-sm-8">
-              <bs-rating [rating]="storeInfoModel?.rating" [ratingCount]="storeInfoModel?.ratingCount"></bs-rating>
-            </div>
-          </div>
 
-          <div class="others row">
-            <div>
-              <span>
-                <i class="fa fa-location-arrow fa-1x"></i>
-              </span>{{ storeInfoModel?.address + ', ' + storeInfoModel?.district + ', ' + storeInfoModel?.city }}</div>
-            <div>
-              <span>
-                <i class="fa fa-clock-o fa-1x"></i>
-              </span>{{ storeInfoModel?.openHour | slice:0:5 }} - {{ storeInfoModel?.closeHour | slice:0:5 }}</div>
-            <div>
-              <span>
-                <i class="fa fa-money fa-1x"></i>
-              </span>{{ storeInfoModel?.lowestPrice | number}} - {{ storeInfoModel?.highestPrice | number}}</div>
-          </div>
-        </div>
-
-        <div class="storeDetail__map col-xs-12 col-sm-12 col-md-3">
-          <h4 class="col-xs-12 col-sm-12 col-md-12">
-            <span>
-              <i class="fa fa-flag-checkered fa-1x pull-right"></i>
-            </span>
-          </h4>
-          <map [storeIds]="storeIds"></map>
-          <div class="storeDetail__map__note col-xs-12 col-sm-12 col-md-12">Nhấp vào địa điểm màu đỏ để xem đường đi ngắn nhất từ vị trí hiện tại của bạn</div>
-        </div>
-
-      </div>
-    </ng-template>
-    <hr/>
-
-    <ng-template [ngIf]="!storeManager">
-      <div class="row storeDetail__menu">
-        <ng-template [ngIf]="isLoadingProducts">
-          <div class="row">
-            <div class="row no-margin" style="text-align:center">
-              <div>
-                <i class="fa fa-spinner fa-spin" style="font-size:36px"></i>
+            <div class="storeDetail__photo__minor row">
+              <div class="col-xs-3 col-sm-3" *ngFor="let image of storeInfoModel?.images">
+                <img [src]="image?.path" alt="image?.name" (error)="handelImgErro($event)">
               </div>
             </div>
           </div>
-        </ng-template>
 
-        <ng-template [ngIf]="!isLoadingProducts">
-          <h4>Thực đơn</h4>
-          <div class="col-sm-4 col-md-3 col-xs-12 product-item" *ngFor="let item of productModel">
+
+          <div class="storeDetail__info col-xs-12 col-sm-6 col-md-5">
+            <h2>{{ storeInfoModel?.name }}</h2>
             <div class="row">
-              <product-item [productInfo]="item"></product-item>
+              <div class="type col-xs-4 col-sm-4">
+                <span>
+                  <i class="fa fa-th-list"></i>
+                  {{categoryName}}
+                </span>
+              </div>
+              <div class="rating col-xs-8 col-sm-8">
+                <bs-rating [rating]="storeInfoModel?.rating" [ratingCount]="storeInfoModel?.ratingCount"></bs-rating>
+              </div>
+            </div>
+
+            <div class="others row">
+              <div>
+                <span>
+                  <i class="fa fa-location-arrow fa-1x"></i>
+                </span>{{ storeInfoModel?.address + ', ' + storeInfoModel?.district + ', ' + storeInfoModel?.city }}</div>
+              <div>
+                <span>
+                  <i class="fa fa-clock-o fa-1x"></i>
+                </span>{{ storeInfoModel?.openHour | slice:0:5 }} - {{ storeInfoModel?.closeHour | slice:0:5 }}</div>
+              <div>
+                <span>
+                  <i class="fa fa-money fa-1x"></i>
+                </span>{{ storeInfoModel?.lowestPrice | number}} - {{ storeInfoModel?.highestPrice | number}}</div>
             </div>
           </div>
-        </ng-template>
 
-      </div>
+          <div class="storeDetail__map col-xs-12 col-sm-12 col-md-3">
+            <h4 class="col-xs-12 col-sm-12 col-md-12">
+              <span>
+                <i class="fa fa-flag-checkered fa-1x pull-right"></i>
+              </span>
+            </h4>
+            <map [storeIds]="storeIds"></map>
+            <div class="storeDetail__map__note col-xs-12 col-sm-12 col-md-12">Nhấp vào địa điểm màu đỏ để xem đường đi ngắn nhất từ vị trí hiện tại của bạn</div>
+          </div>
+
+        </div>
+      </ng-template>
       <hr/>
 
-      <div class="row storeDetail__review">
-        <ng-template [ngIf]="isLoadingReview">
-          <div class="row">
-            <div class="row no-margin" style="text-align:center">
-              <div>
-                <i class="fa fa-spinner fa-spin" style="font-size:36px"></i>
-              </div>
-            </div>
-          </div>
-        </ng-template>
-        <ng-template [ngIf]="!isLoadingReview">
-          <h4>Đánh Giá</h4>
-          <div class="col-xs-12 col-sm-12">
-            <review [storeId]="storeId"></review>
-          </div>
-        </ng-template>
-      </div>
-    </ng-template>
-
-    <ng-template [ngIf]="storeManager">
-      <div class="row storeDetail__menu__manager">
-        <ng-template [ngIf]="isLoadingProducts">
-          <div class="row">
-            <div class="row no-margin" style="text-align:center">
-              <div>
-                <i class="fa fa-spinner fa-spin" style="font-size:36px"></i>
-              </div>
-            </div>
-          </div>
-        </ng-template>
-
-        <ng-template [ngIf]="!isLoadingProducts">
-          <div class="col-sm-12 col-md-12 col-xs-12" *ngFor="let item of productModel">
+      <ng-template [ngIf]="!storeManager">
+        <div class="row storeDetail__menu">
+          <ng-template [ngIf]="isLoadingProducts">
             <div class="row">
-              <product-item-manager [productModel]="item"></product-item-manager>
+              <div class="row no-margin" style="text-align:center">
+                <div>
+                  <i class="fa fa-spinner fa-spin" style="font-size:36px"></i>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+
+          <ng-template [ngIf]="!isLoadingProducts">
+            <h4>Thực đơn</h4>
+            <div class="col-sm-4 col-md-3 col-xs-12 product-item" *ngFor="let item of productModel">
+              <div class="row">
+                <product-item [productInfo]="item"></product-item>
+              </div>
+            </div>
+          </ng-template>
+
+        </div>
+        <hr/>
+
+        <div class="row storeDetail__review">
+          <ng-template [ngIf]="isLoadingReview">
+            <div class="row">
+              <div class="row no-margin" style="text-align:center">
+                <div>
+                  <i class="fa fa-spinner fa-spin" style="font-size:36px"></i>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+          <ng-template [ngIf]="!isLoadingReview">
+            <h4>Đánh Giá</h4>
+            <div class="col-xs-12 col-sm-12">
+              <review [storeId]="storeId"></review>
+            </div>
+          </ng-template>
+        </div>
+      </ng-template>
+
+      <ng-template [ngIf]="storeManager">
+        <div class="row storeDetail__menu__manager">
+          <ng-template [ngIf]="isLoadingProducts">
+            <div class="row">
+              <div class="row no-margin" style="text-align:center">
+                <div>
+                  <i class="fa fa-spinner fa-spin" style="font-size:36px"></i>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+
+          <ng-template [ngIf]="!isLoadingProducts">
+            <div class="col-sm-12 col-md-12 col-xs-12" *ngFor="let item of productModel">
+              <div class="row">
+                <product-item-manager [productModel]="item"></product-item-manager>
+              </div>
+            </div>
+          </ng-template>
+
+          <ng-template [ngIf]="!isLoadingReview">
+            <h4>Đánh Giá</h4>
+            <div class="col-xs-12 col-sm-12">
+              <review [storeId]="storeId"></review>
+            </div>
+          </ng-template>
+
+        </div>
+        <hr/>
+      </ng-template>
+
+      <!-- similar stores -->
+      <hr/>
+      <ng-template [ngIf]="isLoadingStore">
+        <div class="row">
+          <div class="row no-margin" style="text-align:center">
+            <div>
+              <i class="fa fa-spinner fa-spin" style="font-size:36px"></i>
             </div>
           </div>
-        </ng-template>
+        </div>
+      </ng-template>
 
-        <ng-template [ngIf]="!isLoadingReview">
-          <h4>Đánh Giá</h4>
-          <div class="col-xs-12 col-sm-12">
-            <review [storeId]="storeId"></review>
+      <ng-template [ngIf]="!isLoadingStore">
+        <div class="row">
+          <h4>Cửa hàng Tương Tự</h4>
+          <div class="productDetail__similar col-xs-12 col-sm-12">
+            <similar-store [storeId]="storeId"></similar-store>
           </div>
-        </ng-template>
+        </div>
+      </ng-template>
 
-      </div>
-      <hr/>
-    </ng-template>
-
-  </div>
+    </div>
+  </ng-template>
 </div>

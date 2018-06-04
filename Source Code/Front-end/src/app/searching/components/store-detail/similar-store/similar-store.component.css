@@ -1,37 +1,46 @@
-.similarStore {
-  height: 300px;
+.similarProduct {
+  font-size: 1.2em;
+}
+
+.similarProduct__photo {
+  height: 120px;
   overflow: hidden;
-  text-align: center;
 }
 
-.similarStore__photo {
-  text-align: center;
+.similarProduct__photo img {
+  max-height: 120px;
+  border-radius: 4px;
+  box-shadow: 2px 2px 2px #A095A3;
 }
 
-.similarStore__photo img {
-  max-height: 150px;
-  height: auto;
-  width: auto;
-  border-radius: 7px;
-  box-shadow: 3px 3px 3px goldenrod;
+.similarProduct__content h3 {
+  margin-top: 0;
+  height: 40px;
 }
 
-.similarStore__rating {
-  max-height: 35px;
+.similarProduct__content h3 span {
+  float: right;
 }
 
-@media screen and (min-width: 769px) {
-  .similarStore__rating {
-    font-size: 0.71em !important;
+.similarProduct__content div {
+  height: 40px;
+}
+
+.similarProduct__content div :last-child {
+  margin-bottom: 0;
+}
+
+@media only screen and (max-width: 500px) {
+  .similarProduct .item {
+    width: 100% !important;
   }
 }
 
-@media screen and (max-width: 768px) {
-  .similarStore__rating {
-    font-size: 0.64em !important;
-  }
+.similarProduct .seeMoreBtn {
+  float: right;
+  cursor: pointer;
 }
 
-.similarStore__address {
-  text-align: center;
+.similarProduct .seeMoreBtn i:hover {
+  color: #337ab7;
 }
