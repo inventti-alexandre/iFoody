@@ -5,7 +5,10 @@ var geocoder;
 var addressList = [];
 var currentLocationImage = 'https://thumb.ibb.co/dj9Fbn/my_location_min.png';
 var destinationMarker = 'https://chicken2018.club/assets/images/core/destination-marker.png';
-var currentLocationGlobal;
+var currentLocationGlobal = {
+    lat: 10.773293,
+    lng: 106.6591515
+};
 var currentPositionGlobal;
 var mainStoreImage = [];
 var nameStore = [];

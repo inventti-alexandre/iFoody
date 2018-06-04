@@ -72,14 +72,22 @@ export class ReviewComponent implements OnInit, AfterViewChecked{
           console.log('this.currentUser is: ', this.currentUser);
           this._storeService.GetStoreByUserId(this.currentUserId)
             .subscribe(response => {
+              console.log('RESPONSE IS ', response);
               console.log('RESPONSE GETSTOREBYUSERID: ', response);
+              console.log('RESPONSE GETSTOREBYUSERID: ', this.storeId);
+              console.log('RESPONSE GETSTOREBYUSERID: ', this.storeIdOfProduct);
               if (response.id !== this.storeId &&
                 response.id !== this.storeIdOfProduct
               ) {
                 this.isCommented = true;
               }
               console.log('CHICKENNNNNN : ', this.isCommented);
-            });
+            },
+            error => {
+              console.log('errror: ', error);
+              this.isCommented = true;
+            }
+          );
         });
     }
   }
@@ -93,10 +101,15 @@ export class ReviewComponent implements OnInit, AfterViewChecked{
 
   onSubmit() {
     this.isSubmitReview = true;
-    if(this.newRate === undefined || this.newRate <= 1) {
-      this.newRate = 1;
+    console.log('this.newReViewContent ', this.newReviewContent);
+    if (this.newReviewContent === '' || this.newReviewContent === undefined) {
+      confirm("Nội dung không được trống");
+      return true;
     }
-
+    if(this.newRate === undefined || this.newRate < 1) {
+      confirm("Xin đánh giá sao cho sản phẩm/cửa hàng!");
+      return true;
+    }
     let newReview: IReview = {
         reviewContent: this.newReviewContent,
         rating:this.newRate,
@@ -107,6 +120,7 @@ export class ReviewComponent implements OnInit, AfterViewChecked{
     };
     this._userService.insertReview(newReview)
       .subscribe((response: Response) => {
+        alert('Đánh giá thành công!');
         this.getReviewsData();
         this.newReviewContent = null;
         this.newRate = 0;
