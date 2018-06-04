@@ -15,7 +15,7 @@ class FlatListProducts extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.getProductsByCategoryId(this.props.categoryInfo.id);
   }
   getProductsByCategoryId = id => {
@@ -89,14 +89,17 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "steelblue",
     marginTop: 10,
-    textAlign: "left"
+    textAlign: "left",
+    marginLeft: 20
   },
   moreText: {
-    fontSize: 20,
+    fontSize: 15,
     // fontWeight: "bold",
     // color: "steelblue",
     marginTop: 10,
-    textAlign: "right"
+    textAlign: "right",
+    marginLeft: 20,
+    marginRight: 20
   }
 });
 

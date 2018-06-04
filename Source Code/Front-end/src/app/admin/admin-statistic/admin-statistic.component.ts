@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, AfterContentChecked, AfterViewInit, AfterViewChecked, DoCheck } from '@angular/core';
 import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { AuthService } from '../../shared/services/auth.service';
   templateUrl: './admin-statistic.component.html',
   styleUrls: ['./admin-statistic.component.scss']
 })
-export class AdminStatisticComponent implements OnInit {
+export class AdminStatisticComponent implements OnInit, DoCheck {
   externalScriptUrl: any;
   totalUsers: number;
   totalStores: number;
@@ -19,6 +19,27 @@ export class AdminStatisticComponent implements OnInit {
    }
 
   ngOnInit() {
+    this._authService.getAllUsers()
+      .subscribe(response => {
+        let usersJSON = JSON.parse(response._body);
+        this.totalUsers = usersJSON.length;
+      });
+    this._authService.getAllProducts()
+      .subscribe(response => {
+        let productsJSON = JSON.parse(response._body);
+        this.totalProducts = productsJSON.length;
+      });
+    this._authService.getAllStores()
+      .subscribe(response => {
+        let storesJSON = JSON.parse(response._body);
+        this.totalStores = storesJSON.length;
+      });
+  }
+  
+  ngDoCheck() {
+    console.log('');
+  }
+  
     // this.externalScriptUrl = "<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>" +
     //                         "<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js'></script>" +
     //                         "<script src='/public/javascript/embed-api/components/view-selector2.js'></script>" +
@@ -44,7 +65,6 @@ export class AdminStatisticComponent implements OnInit {
   //     console.log('result Products', result);
   //     this.totalProducts = result;
   //   });
-  }
 
 //   public loadScript(url) {
 //     console.log('preparing to load...');
@@ -54,4 +74,5 @@ export class AdminStatisticComponent implements OnInit {
 //     // node =rul
 //     document.getElementsByTagName('head')[0].appendChild(url);
 //  }
+
 }

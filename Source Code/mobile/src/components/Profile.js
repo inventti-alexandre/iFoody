@@ -1,6 +1,6 @@
 import { View, AsyncStorage, Text, Dimensions } from 'react-native';
 import React, { Component } from 'react';
-import { Button, Avatar, FormLabel } from 'react-native-elements';
+import { Button, Avatar } from 'react-native-elements';
 import axios from 'axios';
 import Moment from 'moment';
 import { GetUser } from '../assets/constants/apiUrl';
@@ -11,9 +11,11 @@ const deviceHeight = Dimensions.get('window').height;
 class Profile extends Component {
   constructor(props) {
     super(props);
-    console.log('constructor in Profile');
+    console.log('constructor in Profile. This.props is: ', this.props);
     this.state = {
       user: {},
+      userId: '',
+      authToken: '',
       email: '',
       name: '',
       birthday: ''
@@ -54,9 +56,9 @@ class Profile extends Component {
       });
   }
 
-  logOut = async () => {
+  async logOut() {
     console.log('Logout function');
-  await AsyncStorage.removeItem('user_id')
+    await AsyncStorage.removeItem('user_id')
       .then(response => {
           try {
             console.log('removeItem1 successfully');
@@ -93,13 +95,13 @@ class Profile extends Component {
             activeOpacity={0.7}
         />
 
-        <FormLabel style={styles.label}>Tên</FormLabel>
+        <Text style={styles.label}>Tên</Text>
         <Text style={styles.input}>{this.state.name}</Text>
 
-        <FormLabel style={styles.label}>Email</FormLabel>
+        <Text style={styles.label}>Email</Text>
         <Text style={styles.input}>{this.state.email}</Text>
 
-        <FormLabel style={styles.label}>DOB</FormLabel>
+        <Text style={styles.label}>DOB</Text>
         <Text style={styles.input}>{Moment(dt).format('DD-MM-YYYY')}</Text>
 
         <Button
@@ -128,7 +130,8 @@ const styles = {
   },
   label: {
     marginLeft: 25,
-    fontSize: 20
+    fontSize: 16,
+    letterSpacing: 5
   },
   input: {
     height: 50,

@@ -27,7 +27,7 @@ class AllProductsByCategoryScreen extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.getProductsByCategoryId(this.state.initPage);
   }
   getProductsByCategoryId = (page) => {
@@ -65,6 +65,7 @@ class AllProductsByCategoryScreen extends Component {
   navigateInItem = value => {
     this.props.navigation.navigate(value.screenName, { id: value.id });
   };
+  
   onScrollEnd = nativeEvent => {
     var windowHeight = Dimensions.get("window").height,
       height = nativeEvent.contentSize.height,

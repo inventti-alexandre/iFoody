@@ -28,6 +28,9 @@ import Modal from "react-native-modal";
 import CheckBox from "react-native-check-box";
 import SearchStoreItem from "../components/SearchStoreItem";
 
+const deviceWidth = Dimensions.get('window').width;
+const deviceHeight = Dimensions.get('window').height;
+
 class SearchResultScreen extends Component {
   state = {
     categoryList: [],
@@ -64,7 +67,7 @@ class SearchResultScreen extends Component {
       totalRecord: 0
     },
     isModalVisible: false,
-    filterDisplay: "Bộ lọc",
+    filterDisplay: "Lọc",
     searchParam: {
       searchString: "",
       page: 1,
@@ -142,7 +145,7 @@ class SearchResultScreen extends Component {
     this.state.searchParam.filterOption.districts = false;
     this.state.searchParam.filterOption.categories = false;
     this.resetCheckbox();
-    this.setState({ isModalVisible: false, filterDisplay: "Bộ lọc" },function() {
+    this.setState({ isModalVisible: false, filterDisplay: "Lọc" },function() {
       console.log("search filter", this.state.searchParam);
       this.search(false);
     });
@@ -180,7 +183,7 @@ class SearchResultScreen extends Component {
     } else {
       this.setState({
         isModalVisible: false,
-        filterDisplay: "Bộ lọc"
+        filterDisplay: "Lọc"
       });
     }
   };
@@ -226,7 +229,7 @@ class SearchResultScreen extends Component {
       });
     } else {
       this.setState({
-        filterDisplay: "Bộ lọc"
+        filterDisplay: "Lọc"
       });
     }
   }
@@ -274,8 +277,8 @@ class SearchResultScreen extends Component {
     }
   };
 
-  componentWillMount() {
-    console.log("TESTING currentLocationGlobal", global.currentLocation);
+  componentDidMount() {
+    console.log('TESTING currentLocationGlobal', global.currentLocation);
     CategoryService.GetCategories().then(data => {
       this.setState({ categoryList: data});
     });
@@ -409,39 +412,45 @@ class SearchResultScreen extends Component {
               />
 
               <View style={styles.buttonContainerStyle}>
-                <Button
-                  title="Gần Đây"
-                  rounded
-                  textStyle={styles.buttonTextStyle}
-                  buttonStyle={
-                    this.state.searchParam.filterOption.location
-                      ? styles.buttonChosen
-                      : styles.buttonStyle
-                  }
-                  onPress={this.setLocationFilter}
-                />
-                <Button
-                  title="Đánh giá cao"
-                  rounded
-                  textStyle={styles.buttonTextStyle}
-                  buttonStyle={
-                    this.state.searchParam.filterOption.rating
-                      ? styles.buttonChosen
-                      : styles.buttonStyle
-                  }
-                  onPress={this.setRatingFilter}
-                />
-                <Button
-                  title={this.state.filterDisplay}
-                  rounded
-                  textStyle={styles.buttonTextStyle}
-                  buttonStyle={
-                    this.state.filterDisplay === "Bộ lọc"
-                      ? styles.buttonStyle
-                      : styles.buttonChosen
-                  }
-                  onPress={this._toggleModal}
-                />
+                <View style={{ width: 115 }}>
+                  <Button
+                    title="Gần Đây"
+                    textStyle={styles.buttonTextStyle}
+                    rounded
+                    buttonStyle={
+                      this.state.searchParam.filterOption.location
+                        ? styles.buttonChosen
+                        : styles.buttonStyle
+                    }
+                    onPress={this.setLocationFilter}
+                  />
+                </View>
+                <View style={{ width: 115 }}>
+                  <Button
+                    title="Đánh giá cao"
+                    textStyle={styles.buttonTextStyle}
+                    rounded
+                    buttonStyle={
+                      this.state.searchParam.filterOption.rating
+                        ? styles.buttonChosen
+                        : styles.buttonStyle
+                    }
+                    onPress={this.setRatingFilter}
+                  />
+                </View>
+                <View style={{ width: 115 }}>
+                  <Button
+                    title={this.state.filterDisplay}
+                    textStyle={styles.buttonTextStyle}
+                    rounded
+                    buttonStyle={
+                      this.state.filterDisplay === "Lọc"
+                        ? styles.buttonStyle
+                        : styles.buttonChosen
+                    }
+                    onPress={this._toggleModal}
+                  />
+                </View>
               </View>
               <Divider
                 style={{ backgroundColor: "#f2f2f2", marginBottom: 7 }}
@@ -464,7 +473,7 @@ class SearchResultScreen extends Component {
                     <Text style={styles.typeFilter}> Chọn loại</Text>
                     <View>
                       {this.state.isLoading ? (
-                        "Dang loading..."
+                        "Loading..."
                       ) : (
                         <FlatList
                           data={this.state.categoryList}
@@ -592,24 +601,24 @@ const styles = StyleSheet.create({
   },
   searchStyle: {},
   buttonContainerStyle: {
-    flexDirection: "row",
-    justifyContent: "flex-start"
+    width: deviceWidth,
+    flexDirection: 'row',
   },
   buttonStyle: {
     width: 110,
     height: 35,
     backgroundColor: "#f6f6f6",
-    borderWidth: 1
+    borderWidth: 1,
   },
   buttonChosen: {
     width: 110,
     height: 35,
     backgroundColor: "#42c2f4",
-    borderWidth: 1
+    borderWidth: 1,
   },
   buttonTextStyle: {
     color: "black",
-    fontSize: 12
+    fontSize: 12,
   },
   categoryContainerStyle: {},
   modalStyle: {

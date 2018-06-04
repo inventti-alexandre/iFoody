@@ -32,6 +32,7 @@ export const ChangePassword = Domain + 'users/change-password';
 
 // Store URL
 export const GetStore = Domain + 'stores';
+export const GetAllStores = Domain + 'stores/getAll';
 export const DeleteStore = Domain + 'stores';
 export const GetStoreAddresses = Domain + 'stores/addresses';
 export const StoreReview = Domain + 'stores/review';

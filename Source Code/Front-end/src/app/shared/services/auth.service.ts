@@ -73,8 +73,7 @@ export class AuthService {
     headers.append("Content-Type", "application/json");
 
     let options = new RequestOptions( {headers: headers});
-
-    return this._http.get(apiUrl.Store, options)
+    return this._http.get(apiUrl.GetAllStores, options)
       .catch(this.handleError); 
   }
 
@@ -167,7 +166,7 @@ export class AuthService {
 
     let options = new RequestOptions( {headers: headers});
 
-    return this._http.get(apiUrl.GetAllProduct, options)
+    return this._http.get(apiUrl.GetAllProductWithoutDto, options)
       .catch(this.handleError); 
   }
 

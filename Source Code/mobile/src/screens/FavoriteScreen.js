@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, Text, View, AsyncStorage } from 'react-native';
+import { Button } from 'react-native-elements';
 import axios from 'axios';
 import { FavoriteList, Product, Store } from '../assets/constants/apiUrl';
 import ProductItem from '../components/ProductItem';
 import StoreItem from '../components/StoreItem';
+import LoginScreen from './LoginScreen';
+
+const deviceWidth = Dimensions.get('window').width;
+const deviceHeight = Dimensions.get('window').height;
 
 class FavoriteScreen extends Component {
   constructor(props) {
@@ -15,7 +20,9 @@ class FavoriteScreen extends Component {
       productIdList: [],
       productList: [],
       user: this.props.user,
-      clickedItem: ''
+      clickedItem: '',
+      notificationLogin: 'Xin đăng nhập để xem mục yêu thích!',
+      needToLogin: false
     };
     console.log('constructor in favoriteScreen. this.props is: ', this.props);
   }
@@ -24,12 +31,20 @@ class FavoriteScreen extends Component {
   }
 
   componentDidMount() {
-    console.log('componentDidMount');
-    this.fetchFavoriteList();
+    console.log('Favorite componentDidMount. this.props.user: ', this.props.user);
+    if (Object.keys(this.state.user).length !== 0) {
+      console.log('DDDDDDDDD');
+      this.setState({ user: this.props.user }, () =>
+        this.fetchFavoriteList());
+    } else {
+      console.log('EEEEEEE');
+    }
   }
 
-  componentWillReceiveProps() {
+  componentWillReceiveProps(nextProps) {
     console.log('componentWillReceiveProps');
+    console.log('nextProps is: ', nextProps);
+    this.setState({ user: nextProps.user });
   }
 
   shouldComponentUpdate() {
@@ -45,8 +60,12 @@ class FavoriteScreen extends Component {
     console.log('componentDidUpdate');
   }
 
+  onPressButton = () => {
+    this.props.navigation.navigate('Login', this.handler);
+  }
+
   setFavoriteList = (data) => {
-    console.log('setFavoriteList work');
+    console.log('setFavoriteList work. Data is: ', data);
     this.setState({ favoriteList: data });
     data.map((item) => {
      if (item.storeId !== null) {
@@ -57,9 +76,22 @@ class FavoriteScreen extends Component {
       return item;
     });
   }
+  async test() {
+    console.log('test function');
+    await AsyncStorage.getItem('user_id')
+      .then(data => {
+        console.log('user_id in ProfileComponent', data);
+      });
+  }
+
+  handler = (value) => {
+    console.log("handler method in HOME Component. VALUE from child is: ", value
+    );
+  };
 
   fetchFavoriteList = () => {
     console.log('fetchFavoriteItems works');
+    console.log(`${FavoriteList}/${this.state.user.userId}`);
     axios.get(`${FavoriteList}/${this.state.user.userId}`)
     .then(response => {
       console.log('response is: ', response);
@@ -125,10 +157,30 @@ class FavoriteScreen extends Component {
     this.props.navigation.navigate(value.screenName, { id: value.id });
   }
 
+  needToLogin() {
+      console.log('needToLogin works');
+      this.setState({ needToLogin: true });
+  }
+
   render() {
-    console.log('in render', this.state.productList);
-    console.log('in render', this.state.storeList);
-    return ([
+    console.log('Rendering FavoriteScreen. This.state.user is ', this.state.user);
+    if (Object.keys(this.state.user).length === 0) {
+      console.log('REnder User = 0')
+      return (
+        <View
+          style={{
+            flex: 1,
+            height: deviceHeight * 0.85,
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Text style={{ alignSelf: 'center', fontSize: 24 }}>Đăng nhập để xem mục này</Text>
+        </View>
+      );
+    }
+     return ([
           this.state.storeList.map((item, key) => (
             <StoreItem
               key={key} item={item}

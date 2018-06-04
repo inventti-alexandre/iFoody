@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, View, AsyncStorage } from 'react-native';
+import { Dimensions, View, AsyncStorage, Text } from 'react-native';
 import { Button, FormLabel, FormInput } from 'react-native-elements';
 import Animation from 'lottie-react-native';
 import axios from 'axios';
@@ -29,11 +29,6 @@ class Login extends Component {
     console.log('componentWillReceiveProps works');
     return true;
   }
-  onPressButton = () => {
-    this.onSubmit();
-    this.setState({ isLoggedIn: true });
-    this.props.handler(true);
-  }
 
   onSubmit = () => {
     console.log('onSubmit workds');
@@ -49,11 +44,13 @@ class Login extends Component {
     axios.post(SignIn, data, config)
     .then((response) => {
       try {
+        console.log('response from SIgnin. response is: ', response);
         this.setState({
           userId: response.data.userId,
           authToken: response.data.authToken,
           isLoggedIn: true
         });
+        this.props.handler(true);
         AsyncStorage.setItem('user_id', response.data.userId);
         AsyncStorage.setItem('auth_token', response.data.authToken);
         this.props.handler(this.state);
@@ -86,7 +83,9 @@ class Login extends Component {
           </View>
 
           <View style={styles.input}>
-              <FormLabel>Email</FormLabel>
+              <Text style={styles.label}>
+              Email
+              </Text>
               <FormInput
                 onChangeText={(email) => {
                   this.setState({ email });
@@ -97,7 +96,7 @@ class Login extends Component {
                 }}
               />
 
-              <FormLabel>Password</FormLabel>
+              <Text style={styles.label}>Password</Text>
               <FormInput
                 onChangeText={(text) => this.setState({ password: text })}
               />
@@ -112,9 +111,7 @@ class Login extends Component {
               fontSize: 30
               }}
             onPress={() => {
-              this.setState({ isLoading: true });
-              console.log('this.state.isLoading ', this.state.isLoading);
-              this.onPressButton();
+              this.onSubmit();
              }}
             buttonStyle={{
               height: 60,
@@ -151,8 +148,13 @@ const styles = {
     color: 'white',
     fontFamily: 'sans-serif-light'
   },
-  loginBtnStyle: {
-  }
+  label: {
+    paddingLeft: 15,
+    paddingRight: 15,
+    marginTop: 15,
+    fontSize: 17,
+    letterSpacing: 6
+  },
 };
 
 const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';

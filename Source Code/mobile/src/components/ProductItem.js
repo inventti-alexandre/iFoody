@@ -57,7 +57,7 @@ class ProductItem extends Component {
           backgroundColor='#03A9F4'
           fontFamily='Lato'
           buttonStyle={{
-            borderRadius: 0,
+            borderRadius: 10,
             marginLeft: 0,
             marginRight: 0,
             marginBottom: 0
