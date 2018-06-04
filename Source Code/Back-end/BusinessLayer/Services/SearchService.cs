@@ -210,6 +210,53 @@ namespace BusinessLayer.Services
                 return null;
             }
         }
+        public PagingReturnDto<SearchDto> GetSimilarStores(Guid storeId, int page, int? count)
+        {
+            try
+            {
+                var ordersDataModel = _unitOfWork.FavoriteLists.LoadStoreRecommender();
+
+                // get store key from store id
+                var storeKey = _unitOfWork.FavoriteLists.GetStoreKey(storeId);
+
+                var modelWithCurrentUser = GetDataModelForNewUser(ordersDataModel, storeKey);
+                var totalStores = _unitOfWork.Stores.GetTotalStores();
+
+                var similarity = new LogLikelihoodSimilarity(modelWithCurrentUser);
+
+                // in this example, we have no preference values (scores)
+                // to get correct results 'BooleanfPref' recommenders should be used
+
+                var recommender = new GenericBooleanPrefItemBasedRecommender(modelWithCurrentUser, similarity);
+
+                var recommendedItems = recommender.Recommend(PlusAnonymousUserDataModel.TEMP_USER_ID, totalStores, null);
+                if (recommendedItems.Any())
+                {
+                    List<Guid> storeIds = new List<Guid>();
+                    foreach (var item in recommendedItems)
+                    {
+                        storeIds.Add(_unitOfWork.FavoriteLists.GetStoreIdByStoreKey(item.GetItemID()));
+                    }
+                    var stores = _unitOfWork.Products.GetStoreReturnByListId(storeIds);
+                    PagingParam pagingParam = new PagingParam()
+                    {
+                        page = page,
+                        count = count ?? _defaultPageRecordCount,
+                        currentLatitude = 0,
+                        currentLongitude = 0
+                    };
+                    return PagingSearchResult(pagingParam, stores);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
 
         #endregion
 

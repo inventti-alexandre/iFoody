@@ -53,6 +53,12 @@ namespace DataModel.Repository
             long productKey = _iFoodyContext.Database.SqlQuery<long>(sql).FirstOrDefault();
             return productKey;
         }
+        public long GetStoreKey(Guid storeId)
+        {
+            string sql = "select StoreKey from StoresIdView where StoreId = '" + storeId + "'";
+            long storeKey = _iFoodyContext.Database.SqlQuery<long>(sql).FirstOrDefault();
+            return storeKey;
+        }
 
         public Guid GetProductIdByProductKey(long productKey)
         {

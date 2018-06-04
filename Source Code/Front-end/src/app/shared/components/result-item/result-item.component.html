@@ -1,12 +1,12 @@
 <div class="result-item col-xs-12 col-sm-12">
   <div class="row-item filter-result-item">
     <div class="ri-avatar result-image">
-      <a target="blank" href="" [routerLink]="['/store', enCodeUrl(item.store.id)]" [title]="item.store.name">
+      <a href="" [routerLink]="['/store', enCodeUrl(item.store.id)]" [title]="item.store.name">
         <img [src]="item.images.length > 0 ? item.images[0].path : imageDefault" [alt]="item.store.name" (error)="handelImgErro($event)">
         <ng-template [ngIf]="item.images.length > 1">
           <div class="overlay">
             <img [src]="item.images[1].path" [alt]="item.store.name" (error)="handelImgErro($event)">
-          </div>  
+          </div>
         </ng-template>
       </a>
     </div>
@@ -14,16 +14,16 @@
     <div class="row-view-right">
       <div class="result-name">
         <div class="status">
-          <div class="point highlight-text">{{item.store.rating?item.store.rating:'--'}}</div>
+          <div class="point highlight-text">{{item.store.rating?item.store.rating.toFixed(2):'--'}}</div>
         </div>
 
         <div class="resname">
           <h2>
-            <a target="blank" href="" [routerLink]="['/store', enCodeUrl(item.store.id)]" [title]="item.store.name">{{item.store.name}}</a>
+            <a href="" [routerLink]="['/store', enCodeUrl(item.store.id)]" [title]="item.store.name">{{item.store.name}}</a>
           </h2>
           <div class="result-address">
             <div class="address">
-              <a target="blank" href="" [routerLink]="['/store', enCodeUrl(item.store.id)]" [title]="item.store.address +', '+item.store.district">
+              <a href="" [routerLink]="['/store', enCodeUrl(item.store.id)]" [title]="item.store.address +', '+item.store.district">
                 <span data-bind="text: Address">{{item.store.address}}</span>,
                 <span data-bind="text: District">{{item.store.district}}</span>,
                 <span data-bind="text: City">{{item.store.city}}</span>
@@ -49,7 +49,7 @@
           <span class="suggest-text suggest-text--opentime">Đang mở cửa</span>
           <span style="float:right">
             <span class="fa fa-comment" style="font-weight: normal;"></span>
-            <span data-bind="text: TotalReview.formatK(1)">{{item.store.ratingCount?item.store.ratingCount:'0'}}</span>
+            <span>{{item.store.ratingCount?item.store.ratingCount:'0'}}</span>
           </span>
         </div>
 

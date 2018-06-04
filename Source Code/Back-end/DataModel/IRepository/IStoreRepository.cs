@@ -2,5 +2,6 @@
 {
     public interface IStoreRepository : IGenericRepository<Store>
     {
+        int GetTotalStores();
     }
 }

@@ -1,17 +1,38 @@
-<div class="similarStore col-xs-12 col-sm-12">
-    <h4>Starbucks Coffee Đề Thám</h4>
-
-    <div class="similarStore__photo col-xs-12 col-sm-12">
-        <img src="https://hd1.hotdeal.vn/images/13-10-2014/effoc%20cafe/99947-body-%20%2817%29.jpg" alt="">
+<div class="row similarProduct">
+  <div class="col-md-12 category__row">
+    <div class="row">
+      <ng-template [ngIf]="similarStores.length==0 && isLoading">
+        <div class="row">
+          <div class="row no-margin" style="text-align:center">
+            <div>
+              <i class="fa fa-spinner fa-spin" style="font-size:36px"></i>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template [ngIf]="similarStores.length==0 && !isLoading">
+        <p style="font-size: 11px; text-align: center">Không tìm thấy sản phẩm tương tự</p>
+      </ng-template>
+      <ng-template [ngIf]="similarStores.length!=0">
+        <div class="col-sm-4 col-md-3 col-xs-6 item" *ngFor="let itemInfo of similarStores">
+          <div class="row">
+            <result-item [itemInfo]="itemInfo"></result-item>
+          </div>
+        </div>
+        <ng-template [ngIf]="data.currentPage<data.totalPage">
+          <ng-template [ngIf]="isLoading">
+              <div class="row no-margin" style="text-align:center">
+                <div>
+                  <i class="fa fa-spinner fa-spin" style="font-size:36px"></i>
+                </div>
+              </div>
+            </ng-template>
+          <div class="row no-margin seeMoreBtn">
+            <i (click)="seeMore(data.currentPage+1)" class="fa fa-angle-double-down" style="font-size:36px"></i>
+          </div>
+        </ng-template>
+      </ng-template>
     </div>
-
-    <div class="similarStore__rating col-xs-12 col-sm-12">
-        <!-- <rating [(ngModel)]="rate" [max]="max" [readonly]="isReadonly" (onHover)="hoveringOver($event)" [titles]="['one','two','three']"
-        class="filled pull-right"></rating> -->
-        <bs-rating></bs-rating>
-    </div>
-
-    <div class="similarStore__address col-xs-12 col-sm-12">
-      <h4>60/13 Cửu Long Q.10</h4>
-    </div>
+  </div>
 </div>
+

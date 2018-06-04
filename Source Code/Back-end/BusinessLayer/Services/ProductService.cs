@@ -488,8 +488,7 @@ namespace BusinessLayer.Services
             try
             {
                 var ordersDataModel = _unitOfWork.FavoriteLists.LoadProductRecommender();
-
-                // get list id of favorite view -> id of stores which user like
+               
                 var productKey = _unitOfWork.FavoriteLists.GetProductKey(productId);
 
                 var modelWithCurrentUser = GetDataModelForNewUser(ordersDataModel, productKey);
