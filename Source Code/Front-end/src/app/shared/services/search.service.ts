@@ -64,4 +64,22 @@ export class SearchService {
         listProduct.push(x);
       });
   }
+
+  public GetSimilarStores = (storeId,page, count?): Observable<any> => {
+    debugger
+    let listProduct = [];
+    let url;
+    storeId = this.fomatParamater(storeId);
+    if (count) {
+      url = this.actionUrl + "/?storeId=" + storeId + "&page=" + page + "&count=" + count;
+    } else {
+      url = this.actionUrl + "/?storeId=" + storeId + "&page=" + page + "&count";
+    }
+    return this._http
+      .get(url)
+      .map((response: Response) => <any>response.json())
+      .do(x => {
+        listProduct.push(x);
+      });
+  }
 }

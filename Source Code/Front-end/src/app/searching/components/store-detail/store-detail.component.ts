@@ -38,6 +38,7 @@ export class StoreDetailComponent implements OnInit {
   handelImgErro = handelImgErro;
   productsQuantity: any;
   categoryName: any;
+  
 
   constructor(
     private _storeService: StoreService,
@@ -93,7 +94,7 @@ export class StoreDetailComponent implements OnInit {
         console.log("storeInfoModel", data);
         this.storeInfoModel = data;
         this.isLoadingStore = false;
-        
+
         this.storeInfoModel.images = handelImagePath(this.storeInfoModel.images);
 
           this._categoryService.GetCategoryById(this.storeInfoModel.categoryId)
@@ -127,7 +128,7 @@ export class StoreDetailComponent implements OnInit {
           mainStoreImage.push(this.imageDefault);
           console.log('mainStoreImage', mainStoreImage);
         }
-        
+
         if(this.storeInfoModel.city === '1'){
           this.storeInfoModel.city = 'TpHCM';
         }

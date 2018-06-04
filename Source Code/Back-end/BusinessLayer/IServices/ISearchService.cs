@@ -11,5 +11,6 @@ namespace BusinessLayer.IServices
         PagingReturnDto<SearchDto> TopRatingProducts(int? count);
         PagingReturnDto<SearchDto> SearchDto_Search(SearchParam searchParam);
         PagingReturnDto<SearchDto> GetRecommendation(Guid userId, int? count);
+        PagingReturnDto<SearchDto> GetSimilarStores(Guid storeId, int page, int? count);
     }
 }
