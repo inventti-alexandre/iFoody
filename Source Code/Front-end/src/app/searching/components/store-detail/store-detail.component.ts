@@ -38,7 +38,7 @@ export class StoreDetailComponent implements OnInit {
   handelImgErro = handelImgErro;
   productsQuantity: any;
   categoryName: any;
-  
+
 
   constructor(
     private _storeService: StoreService,

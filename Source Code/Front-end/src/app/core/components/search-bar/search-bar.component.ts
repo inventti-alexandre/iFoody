@@ -32,7 +32,6 @@ export class SearchBarComponent implements OnInit {
   checkOpenStore = checkOpenStore;
   enCode = enCodeUrl;
   handelImagePath = handelImagePath;
-  test:boolean
 
   constructor(
     private router: Router,
@@ -67,7 +66,6 @@ export class SearchBarComponent implements OnInit {
       {value:"quận Củ Chi",checked:false, display: 'Củ Chi'},
       {value:"quận Cần Giờ",checked:false, display: 'Cần Giờ'},
     ];
-    this.test=false
     this.suggestionList = [];
     this.userId = _userService.userId || "";
     this.defaultSuggestionList = [];
