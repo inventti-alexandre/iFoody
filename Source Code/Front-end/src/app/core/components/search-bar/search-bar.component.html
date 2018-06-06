@@ -23,7 +23,7 @@
                     <img [src]="result.images.length>0?result.images[0].path:imageDefault" (error)="handelImgErro($event)" alt="result.store.name"
                       title="result.store.name">
                   </div>
-                  <div class="suggestion-box-item-right col-xs-12 col-sm-12 col-md-10">
+                  <div class="suggestion-box-item-right col-xs-12 col-sm-12 col-md-8">
                     <div class="suggestion-box-item-right-res-name">{{result.store.name}}</div>
                     <div class="suggestion-box-item-right-res-descr" style="white-space: normal;">{{result.store.address + ", " + result.store.district}}
                     </div>
@@ -78,7 +78,11 @@
     <div class="parents-well">
       <div class="well well-lg well-search-area">
         <div class="row well-search-area">
-          <mat-checkbox *ngFor="let district of districts" class="col-xs-12 col-sm-6 col-md-6" [value]="'quận '+ district" (change)="chooseDistrict($event)">Quận {{district}}</mat-checkbox>
+          <mat-checkbox *ngFor="let district of districts" class="col-xs-12 col-sm-6 col-md-6" [value]="district.display" (ngModelChange)="chooseDistrict(district)" [(ngModel)] = "district.checked">{{district.display}}</mat-checkbox>
+        </div>
+        <div class="row well-search-area" style="text-align: center;">
+          <button type="button" class="btn btn-success" style="margin-right: 20px" (click)="setSearchQueryParam(true)">Chọn xong</button>
+          <button type="button" class="btn btn-primary" (click)="resetFilter()">Bỏ chọn</button>
         </div>
       </div>
     </div>
