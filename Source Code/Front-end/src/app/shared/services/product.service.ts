@@ -219,7 +219,7 @@ export class ProductService {
       .get(url)
       .map((response: Response) => <any>response.json())
       .catch((erro: any) => {
-        return Observable.of(erro);
+        return Observable.of(erro); //TO READ STATUS
       });
   }
 }

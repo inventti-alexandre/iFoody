@@ -7,7 +7,14 @@
   <ng-template [ngIf]="products.length>0">
     <div class="searchResult col-xs-12 col-sm-12">
       <div class="row resultNumber panel panel-info">
-          <div class="panel-heading">{{products[0].totalRecord + ' kết quả \"' + searchParam.searchString + '\"'}}</div>
+          <div class="panel-heading">
+            <span style="float: left">
+              {{'Trang ' + products[0].currentPage + ' / ' + products[0].totalPage}}
+            </span>
+            <span style="float: right">
+              {{products[0].results.length + ' / '+ products[0].totalRecord + ' kết quả \"' + searchParam.searchString + '\"'}}
+            </span>
+          </div>
         </div>
       <div class="row searchResult__filter">
         <search-filter (filterChange)="getSearchFiter($event)"></search-filter>

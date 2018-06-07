@@ -37,7 +37,7 @@ export class SimilarStoreComponent implements OnInit {
         this.isLoading = false;
         this.data = data;
         if(data.status===404){
-
+          console.log("SIMILAR STORE", this.similarStores);
         }else{
           this.data.results.forEach(product=>{
             this.similarStores.push(product);
