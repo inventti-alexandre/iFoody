@@ -1,6 +1,8 @@
+import { forEach } from '@angular/router/src/utils/collection';
 import { Component, OnInit, Output, EventEmitter, DoCheck} from '@angular/core';
 import { CategoryService } from '../../../shared/services/category.service';
 declare var currentLocationGlobal;
+declare var searchObject: any;
 
 @Component({
   selector: 'search-filter',
@@ -26,6 +28,13 @@ export class SearchFilterComponent implements OnInit{
       }
     }
   }
+  setCategories=(data)=>{
+    data.forEach(item=>{
+      this.categories.push({
+        id: item.id, name: item.name, checked: false
+      })
+    })
+  }
   resetSearchFilter=()=>{
     this.searchFilter.currentLatitude = 0;
     this.searchFilter.currentLongitude = 0;
@@ -38,17 +47,18 @@ export class SearchFilterComponent implements OnInit{
   getAllCategories=()=>{
     this._categoryService.GetAll()
       .subscribe(data => {
-        this.categories = data;
+        // this.categories = data;
+        this.setCategories(data);
       },
       error => console.log(error),
     )
   }
   chooseCategories=(event)=>{
-    if(event.checked){
-      this.searchFilter.categoriesListId.push(event.source.value)
+    if(!event.checked){
+      this.searchFilter.categoriesListId.push(event.id)
     }else{
       for(let i=0;i<this.searchFilter.categoriesListId.length;i++){
-        if(this.searchFilter.categoriesListId[i]===event.source.value){
+        if(this.searchFilter.categoriesListId[i]===event.id){
           this.searchFilter.categoriesListId.splice(i, 1);
           break;
         }
@@ -61,7 +71,19 @@ export class SearchFilterComponent implements OnInit{
       this.searchFilter.filterOption.categories = false;
       this.filterCategoriesDisplay = "Chọn loại";
     }
+  }
+  emitCategories=()=>{
+    searchObject.hide();
     this.filterChange.emit(this.searchFilter);
+  }
+  resetCategories=()=>{
+    this.searchFilter.categoriesListId = [];
+    this.searchFilter.filterOption.categories = false;
+    this.filterCategoriesDisplay = "Chọn loại";
+    this.categories.forEach(item=>{
+      item.checked = false;
+    });
+    this.emitCategories();
   }
   chooseLocationFilter=()=>{
     this.resetSearchFilter();

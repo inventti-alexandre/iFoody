@@ -21,7 +21,11 @@
           <div  class="parents-well">
             <div class="well well-lg well-search-type">
               <div class="row well-search-type">
-                  <mat-checkbox *ngFor="let category of categories" class="col-xs-12 col-sm-6 col-md-6" [value]="category.id" (change)="chooseCategories($event)">{{category.name}}</mat-checkbox>
+                  <mat-checkbox *ngFor="let category of categories" class="col-xs-12 col-sm-6 col-md-6" [value]="category.id" (ngModelChange)="chooseCategories(category)" [(ngModel)] = "category.checked">{{category.name}}</mat-checkbox>
+              </div>
+              <div class="row well-search-type" style="text-align: right">
+                  <button type="button" class="btn btn-success" style="margin-right: 20px" (click)="emitCategories()">Chọn xong</button>
+                  <button type="button" class="btn btn-primary" (click)="resetCategories()">Bỏ chọn</button>
               </div>
             </div>
           </div>

@@ -41,19 +41,30 @@ export class SearchBarComponent implements OnInit {
     this.filterDisplay = "Chọn khu vực";
     this.searchString = "";
     this.districts = [
-      1,2,3,4,5,6,7,8,9,10,11,12,
-      "Bình Thạnh",
-      "Tân Bình",
-      "Phú Nhuận",
-      "Tân Phú",
-      "Gò Vấp",
-      "Bình Tân",
-      "Thủ Đức",
-      "Bình Chánh",
-      "Nhà Bè",
-      "Hóc Môn",
-      "Củ Chi",
-      "Cần Giờ"
+      {value:'quận 1',checked:false, display: 'Quận 1'},
+      {value:'quận 2',checked:false, display: 'Quận 2'},
+      {value:'quận 3',checked:false, display: 'Quận 3'},
+      {value:'quận 4',checked:false, display: 'Quận 4'},
+      {value:'quận 5',checked:false, display: 'Quận 5'},
+      {value:'quận 6',checked:false, display: 'Quận 6'},
+      {value:'quận 7',checked:false, display: 'Quận 7'},
+      {value:'quận 8',checked:false, display: 'Quận 8'},
+      {value:'quận 9',checked:false, display: 'Quận 9'},
+      {value:'quận 10',checked:false, display: 'Quận 10'},
+      {value:'quận 11',checked:false, display: 'Quận 11'},
+      {value:'quận 12',checked:false, display: 'Quận 12'},
+      {value:"quận Bình Thạnh",checked:false, display: 'Quận Bình Thạnh'},
+      {value:"quận Tân Bình",checked:false, display: 'Quận Tân Bình'},
+      {value:"quận Phú Nhuận",checked:false, display: 'Quận Phú Nhuận'},
+      {value:"quận Tân Phú",checked:false, display: 'Quận Tân Phú'},
+      {value:"quận Gò Vấp",checked:false, display: 'Quận Gò Vấp'},
+      {value:"quận Bình Tân",checked:false, display: 'Quận Bình Tân'},
+      {value:"quận Thủ Đức",checked:false, display: 'Quận Thủ Đức'},
+      {value:"quận Bình Chánh",checked:false, display: 'Quận Bình Chánh'},
+      {value:"quận Nhà Bè",checked:false, display: 'Nhà Bè'},
+      {value:"quận Hóc Môn",checked:false, display: 'Hóc Môn'},
+      {value:"quận Củ Chi",checked:false, display: 'Củ Chi'},
+      {value:"quận Cần Giờ",checked:false, display: 'Cần Giờ'},
     ];
     this.suggestionList = [];
     this.userId = _userService.userId || "";
@@ -163,12 +174,22 @@ export class SearchBarComponent implements OnInit {
       queryParams: { name: this.searchString, districts: districts, page: this.defaultPageResult}
     });
   }
+
+  resetFilter = ()=>{
+    this.searchParam.districtList = [];
+    this.searchParam.filterOption.districts = false;
+    this.filterDisplay = "Chọn khu vực";
+    this.districts.forEach(district=>{
+      district.checked = false;
+    })
+    this.setSearchQueryParam(true);
+  }
   chooseDistrict=(event)=>{
-    if(event.checked){
-      this.searchParam.districtList.push(event.source.value);
+    if(!event.checked){
+      this.searchParam.districtList.push(event.value);
     }else{
       for(let i=0;i<this.searchParam.districtList.length;i++){
-        if(this.searchParam.districtList[i]===event.source.value){
+        if(this.searchParam.districtList[i]===event.value){
           this.searchParam.districtList.splice(i, 1);
           break;
         }
@@ -181,7 +202,8 @@ export class SearchBarComponent implements OnInit {
       this.searchParam.filterOption.districts = false;
       this.filterDisplay = "Chọn khu vực";
     }
-    this.handelChangeSearchBar();
+    // this.handelChangeSearchBar();
+    console.log("CHECK-BOX", this.districts)
   }
   changeImagePath=(results)=>{
     results.forEach(item=>{

@@ -6,6 +6,7 @@ import { SearchService } from './../../../shared/services/search.service';
 import { Component, OnInit, Input} from '@angular/core';
 import { ActivatedRoute, Router, Params, NavigationEnd  } from '@angular/router';
 import {scrollTop, handelImagePath} from './../../../shared/services/share-function.service';
+import * as _ from "lodash";
 declare var mainStoreImage;
 declare var nameStore;
 declare var priceStore;
@@ -78,7 +79,7 @@ export class SearchResultComponent implements OnInit {
     priceStore = [];
     nameStore = [];
     addressStore = [];
-    result.sort(function(a,b) {return (a.store.id > b.store.id ? 1 : ((b.store.id > a.store.id) ? -1 : 0));}); 
+    result.sort(function(a,b) {return (a.store.id > b.store.id ? 1 : ((b.store.id > a.store.id) ? -1 : 0));});
     console.log('result : ', result);
     result.forEach(item=>{
       this.storeIds.push(item.store.id);
@@ -111,7 +112,7 @@ export class SearchResultComponent implements OnInit {
             }
             this.isLoading = false;
             this.totalPage =this.products[0].totalPage;
-            this.setStoreIds(this.products[0].results);
+            this.setStoreIds(_.cloneDeep(this.products[0].results));
             console.log("page",this.products);
           }else{
             this.router1.navigate(["/search/notResult"]);
@@ -127,9 +128,11 @@ export class SearchResultComponent implements OnInit {
         this.initDefautlValue();
       }
       this.searchParam.searchString = params['name']?params['name']:"";
-      if(params['districts']){
+      if(params['districts']!=""){
         let districts = params['districts'].split(",");
         this.searchParam.districtList = districts;
+      }else{
+        this.searchParam.districtList = [];
       }
       this.initPage = params['page'];
       this.getSearchPaging(this.initPage);

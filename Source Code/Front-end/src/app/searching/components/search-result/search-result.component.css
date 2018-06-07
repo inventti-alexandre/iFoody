@@ -8,6 +8,11 @@
   color: #3a58fb;
 }
 
+.panel-heading {
+  padding-top: 7px;
+  padding-bottom: 23px;
+}
+
 @media only screen and (max-width: 500px) {
   .item {
     width: 100% !important;
