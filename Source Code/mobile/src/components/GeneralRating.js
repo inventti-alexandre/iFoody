@@ -10,6 +10,7 @@ class GeneralRating extends Component {
   }
 
   render() {
+    console.log('TESTING RATING : ', this.props.rating);
     const rating = this.props.rating;
     return (
       <Rating
@@ -19,9 +20,9 @@ class GeneralRating extends Component {
         fractions={1}
         startingValue={rating}
         type='custom'
-        imageSize={10}
+        imageSize={this.props.size/7.7}
         onFinishRating={this.ratingCompleted}
-        style={{ paddingVertical: 10, alignItems: 'center' }}
+        style={{  }}
       />
     );
   }

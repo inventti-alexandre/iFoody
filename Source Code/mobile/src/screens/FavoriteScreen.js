@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, Text, View, AsyncStorage } from 'react-native';
+import { StyleSheet, Dimensions, Text, View, AsyncStorage, FlatList } from 'react-native';
 import { Button } from 'react-native-elements';
 import axios from 'axios';
 import { FavoriteList, Product, Store } from '../assets/constants/apiUrl';
@@ -180,21 +180,60 @@ class FavoriteScreen extends Component {
         </View>
       );
     }
-     return ([
-          this.state.storeList.map((item, key) => (
+     return (
+      <View>
+        <Text style={styles.header}>
+          Cửa Hàng
+        </Text>
+        <FlatList
+          horizontal
+          data={this.state.storeList}
+          renderItem={({ item }) =>
             <StoreItem
-              key={key} item={item}
+              item={item}
               navigateInItem={this.navigateInItem}
+              width={Dimensions.get('window').width / 2.2}
+              height={Dimensions.get('window').height / 3.5}
+              nameSize={11}
+              addressSize={10}
             />
-          )),
-          this.state.productList.map((item, key) => (
+          }
+         keyExtractor={item => item.id}
+        />    
+
+        <Text style={styles.header}>
+          Sản Phẩm
+        </Text>      
+        <FlatList
+          horizontal
+          data={this.state.productList}
+          renderItem={({ item }) =>
             <ProductItem
-              key={key} productInfo={item}
+              productInfo={item}
               navigateInItem={this.navigateInItem}
+              width={Dimensions.get('window').width / 2.2}
+              height={Dimensions.get('window').height / 3.5}
+              nameSize={12}
+              addressSize={10}
             />
-          ))]
+          }
+         keyExtractor={item => item.product.id}
+        />
+      </View> 
     );
   }
 }
 
+const styles = StyleSheet.create({
+  header: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "steelblue",
+    marginTop: 14,
+    textAlign: "left",
+    marginLeft: 18
+  },
+});
+
 export default FavoriteScreen;
+

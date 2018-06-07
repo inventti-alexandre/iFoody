@@ -109,7 +109,7 @@ class DetailStoreScreen extends Component {
                   <Text style={{ fontSize: 14, fontWeight: 'bold' }}>
                     {this.state.item.name}
                   </Text>
-                  <GeneralRating value={this.state.item.rating} />
+                  <GeneralRating size={deviceWidth/3.3} rating={this.state.item.rating} />
                 </View>
 
                 <View

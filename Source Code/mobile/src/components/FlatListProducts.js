@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, FlatList, Text, StyleSheet, Dimensions } from 'react-native';
-import { Divider } from 'react-native-elements';
+import { Divider, Icon } from 'react-native-elements';
 import axios from 'axios';
 import ProductItem from '../components/ProductItem';
 import ProductService from '../services/ProductService';
@@ -51,20 +51,39 @@ class FlatListProducts extends Component {
         {this.state.products.length > 0 ? (
           <View>
             <View
-              style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+              style={{ flexDirection: 'row', justifyContent:'space-between' }}
             >
               <Text style={styles.categoryName}>
                 {this.props.categoryInfo.name}
               </Text>
-              <Text
-                style={styles.moreText}
-                onPress={this.goAllProductsByCategory}
-              >
-                Xem thêm
-              </Text>
+              <View style={{ 
+                flex: 1, 
+                flexDirection: 'row',
+                justifyContent: 'flex-end'
+                }}>
+                <Text
+                  style={styles.moreText}
+                  onPress={this.goAllProductsByCategory}
+                >
+                  Xem thêm 
+                </Text>
+                <Icon 
+                  name='chevron-right' 
+                  type='font-awesome' 
+                  color='#ccc' 
+                  containerStyle={styles.seeMoreIcon}
+                  size={10}
+                />
+              </View>
             </View>
 
-            <Divider style={{ backgroundColor: '#96abce', marginBottom: 7 }} />
+            <Divider style={{ 
+                backgroundColor: '#ccc', 
+                marginBottom: 7,
+                marginLeft: 18,
+                marginRight: 3
+              }} 
+            />
             <FlatList
               horizontal
               data={this.state.products}
@@ -72,7 +91,10 @@ class FlatListProducts extends Component {
                 <ProductItem
                   productInfo={item}
                   navigateInItem={this.navigateInItem}
-                  width={Dimensions.get('window').width / 1.5}
+                  width={Dimensions.get('window').width / 3}
+                  height={Dimensions.get('window').height / 4.6}
+                  nameSize={10}
+                  addressSize={9}
                 />
               }
               keyExtractor={item => item.product.id}
@@ -85,21 +107,22 @@ class FlatListProducts extends Component {
 }
 const styles = StyleSheet.create({
   categoryName: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "bold",
     color: "steelblue",
     marginTop: 10,
     textAlign: "left",
-    marginLeft: 20
+    marginLeft: 18
   },
   moreText: {
     fontSize: 15,
-    // fontWeight: "bold",
-    // color: "steelblue",
-    marginTop: 10,
-    textAlign: "right",
-    marginLeft: 20,
-    marginRight: 20
+    marginTop: 11,
+    marginRight: 5,
+    color:'#ccc'
+  },
+  seeMoreIcon: {
+    marginTop: 13,
+    marginRight: 4,
   }
 });
 

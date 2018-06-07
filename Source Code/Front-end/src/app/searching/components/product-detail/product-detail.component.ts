@@ -112,7 +112,12 @@ export class ProductDetailComponent implements OnInit {
   addFavoriteItem() {
     console.log("addFavoriteItem works");
     console.log(this.isFavorited);
-
+    if(localStorage.getItem(apiUrl.UserId) === null ||
+    localStorage.getItem(apiUrl.UserId) === undefined
+    ) {
+      alert('Đăng nhập để thêm vào mục yêu thích!');
+      return true;
+    }
     // Insert Product to Favorite List
     if (this.isFavorited === false) {
       // this._userService.InsertFavoriteProduct(localStorage.getItem(this.userIdKey), this.productId, null)

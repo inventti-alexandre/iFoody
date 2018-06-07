@@ -533,6 +533,11 @@ class SearchResultScreen extends Component {
                     <SearchStoreItem
                       storeInfo={item}
                       navigateInItem={this.navigateInItem}
+                      width={Dimensions.get('window').width / 2.2}
+                      height={Dimensions.get('window').height / 3.5}
+                      nameSize={11}
+                      addressSize={10}
+                      priceSize={10}
                     />
                   )}
                   keyExtractor={item => item.store.id}

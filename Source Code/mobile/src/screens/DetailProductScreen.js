@@ -117,7 +117,7 @@ class DetailProductScreen extends Component {
                           {this.state.item.store.name}
                         </Text>
                     </View>
-                    <GeneralRating value={this.state.item.product.rating} />
+                    <GeneralRating size={deviceWidth/3.3} rating={this.state.item.product.rating} />
                   </View>
 
                   <View
@@ -153,7 +153,11 @@ class DetailProductScreen extends Component {
                   </View>
                 </View>
 
-                <View style={{ marginTop: 20, marginLeft: 15 }}>
+                <View style={{ 
+                  marginTop: 15, 
+                  marginLeft: 15,
+                  marginRight: 15,
+                  marginBottom: 15 }}>
                   <Text>{this.state.item.product.description}</Text>
                 </View>
 

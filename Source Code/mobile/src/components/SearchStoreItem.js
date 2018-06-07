@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { Icon, Card, Button } from 'react-native-elements';
 import Animation from 'lottie-react-native';
 import GeneralRating from './GeneralRating';
@@ -29,71 +29,90 @@ class SearchStoreItem extends Component {
       require("../assets/images/no-image.jpg") // A locally require'd image
     ];
     return (
-      <Card
-        containerStyle={styles.containerStyle}
-      >
-       <ImageLoader
-          source={imageSource}
-          fallback={fallbacks}
-          style={styles.imageStyle}
-        />
-        <View style={styles.animationStyle}>
-          <Animation
-            ref={animation => {
-              this.animation = animation;
-            }}
+      <TouchableOpacity 
+        style={{
+          width: this.props.width * 1.15, 
+          height: this.props.height * 1.15 
+        }}
+        onPress={()=> {
+          console.log('does not work');
+            this.props.navigateInItem({
+              screenName: 'DetailStore',
+              id: item.id });
+        }
+      }>
+        <Card
+          containerStyle={styles.containerStyle}
+        >
+        <ImageLoader
+            source={imageSource}
+            fallback={fallbacks}
             style={{
-              width: 70,
-              height: 70
+              width: this.props.width,
+              height: this.props.height / 1.6,
+              borderRadius: 7
             }}
-            loop
-            source={anim}
           />
-        </View>
-        <View>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text  style={styles.nameStoreStyle}>
-              {item.store.name}
-            </Text>
-            <GeneralRating rating={item.store.rating?item.store.rating:0}/>
+          <View style={styles.animationStyle}>
+            <Animation
+              ref={animation => {
+                this.animation = animation;
+              }}
+              style={{
+                width: 70,
+                height: 70
+              }}
+              loop
+              source={anim}
+            />
           </View>
-
-          <View style={{ flexDirection: 'row' }}>
-
-              <Icon
-                name='money'
-                type='font-awesome'
-                color='#517fa4'
-              />
-
-              <Text>
-              <Text>{" " + item.store.lowestPrice + ' - '+ item.store.highestPrice}</Text>
+          <View>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <Text 
+                numberOfLines={1} 
+                ellipsizeMode='tail'
+                style={{
+                  width: this.props.width / 1.55, 
+                  fontSize: this.props.nameSize
+              }}>
+                {item.store.name}
               </Text>
+              <GeneralRating size={this.props.width/2.5} rating={item.store.rating?item.store.rating:0}/>
+            </View>
 
+            <View style={{ flexDirection: 'row', justifyContent: 'flex-start'}}>
+                <Icon
+                  name='money'
+                  type='font-awesome'
+                  color='#517fa4'
+                  size={this.props.priceSize}
+                />
+                <Text
+                  numberOfLines={1} 
+                  ellipsizeMode='tail'
+                  style={{
+                    alignItems: 'center' ,
+                    fontSize: this.props.priceSize
+                  }}
+                >
+                  {" " + item.store.lowestPrice + ' - '+ item.store.highestPrice}
+                </Text>
+            </View>
+            <View style={{ flexDirection: 'row', justifyContent: 'flex-start'}}>
+              <Text 
+                numberOfLines={1} 
+                ellipsizeMode='tail'
+                style={{
+                  alignItems: 'center' ,
+                  fontSize: this.props.addressSize
+                }}
+              >
+                  {item.store.address + ', '+ item.store.district+ ', '+ item.store.city}
+              </Text>
+            </View>
           </View>
-
-          <Text style={styles.addressStoreStyle}>
-            {item.store.address + ', '+ item.store.district+ ', '+ item.store.city}
-          </Text>
-
-        </View>
-        <Button
-          icon={{ name: 'code' }}
-          backgroundColor='#03A9F4'
-          fontFamily='Lato'
-          buttonStyle={{
-              borderRadius: 10,
-              marginLeft: 0,
-              marginRight: 0,
-              marginBottom: 0,
-              display: this.props.buttonItemDisplay }}
-          title='Xem Ngay'
-          onPress={() => {
-            console.log('Xem Ngay Clicked!!!!');
-            this.props.navigateInItem({ screenName: 'DetailStore', id: item.id });
-          }}
-        />
-      </Card>
+        </Card>
+      </TouchableOpacity>
     );
   }
 }

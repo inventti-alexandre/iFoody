@@ -66,7 +66,6 @@ export class SearchService {
   }
 
   public GetSimilarStores = (storeId,page, count?): Observable<any> => {
-    debugger
     let listProduct = [];
     let url;
     storeId = this.fomatParamater(storeId);
