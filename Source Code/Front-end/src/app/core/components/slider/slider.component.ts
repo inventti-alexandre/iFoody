@@ -14,6 +14,7 @@ import * as _ from "lodash";
 })
 export class SliderComponent implements OnInit {
   slider: any[];
+  linkImg: any[];
   userId: string;
   defaultSuggestionList: any[];
   defaultSuggestionCount: number;
@@ -33,6 +34,13 @@ export class SliderComponent implements OnInit {
     this.suggestionList = [];
     this.slider=[];
     this.loading = false;
+    this.linkImg = [
+      "../../../../assets/images/core/slide1.jpg",
+      "../../../../assets/images/core/slide2.jpg",
+      "../../../../assets/images/core/slide3.jpg",
+      "../../../../assets/images/core/slide4.jpg",
+      "../../../../assets/images/core/slide5.jpg",
+    ]
     // this.slider=[
     //   {
     //     src: "http://img.taste.com.au/hegWu1Xh/taste/2016/11/banh-xeo-crispy-pancakes-77516-1.jpeg"
@@ -71,14 +79,15 @@ export class SliderComponent implements OnInit {
     this.getSuggestionList();
   }
   setSlider=(data)=>{
-    data.forEach(item=>{
+    for(let i=0;i<this.defaultSuggestionCount;i++){
       this.slider.push({
-        src: item.images[0].path,
-        name: item.store.name,
-        id: item.store.id,
-        title: item.store.address + ', ' + item.store.district
+        // src: data[i].images[0].path,
+        src: this.linkImg[i],
+        name: data[i].store.name,
+        id: data[i].store.id,
+        title: data[i].store.address + ', ' + data[i].store.district
       })
-    })
+    }
   }
   getSuggestionList = () => {
     if (this.defaultSuggestionList.length === 0) {
