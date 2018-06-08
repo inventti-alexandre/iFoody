@@ -27,7 +27,6 @@ export class MapComponent implements OnInit, OnChanges {
     this.imageDomain = ImageDomain;
   }
   ngOnInit() {
-    console.log('onInit');
     addressList = [];
     this.getLocation();
   }

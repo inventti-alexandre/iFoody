@@ -25,12 +25,12 @@
 
         <div class="productDetail__info col-xs-12 col-sm-6 col-md-5">
           <div class="row">
-            <h2 class="col-xs-12 col-sm-8 col-md-8"> {{ productModel.product.name }}
+            <h2 class="col-xs-12 col-sm-12 col-md-12"> {{ productModel.product.name }}
               <span>
-                <i class="fa fa-1x" [ngClass]="isFavorited ? 'fa-heart' : 'fa-heart-o'" (click)="addFavoriteItem($event)"></i>
+                <sup><i class="fa fa-1x" [ngClass]="isFavorited ? 'fa-heart' : 'fa-heart-o'" (click)="addFavoriteItem($event)"></i></sup>
               </span>
             </h2>
-            <div class="productDetail__info__rating col-xs-12 col-sm-8 col-md-8">
+            <div class="productDetail__info__rating col-xs-12 col-sm-12 col-md-12">
               <bs-rating [id]="productModel.product?.id" [rating]="productModel.product.rating" [ratingCount]="productModel.product.ratingCount"></bs-rating>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">

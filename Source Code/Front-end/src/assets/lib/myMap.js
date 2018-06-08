@@ -5,7 +5,10 @@ var geocoder;
 var addressList = [];
 var currentLocationImage = 'https://thumb.ibb.co/dj9Fbn/my_location_min.png';
 var destinationMarker = 'https://chicken2018.club/assets/images/core/destination-marker.png';
-var currentLocationGlobal;
+var currentLocationGlobal = {
+    lat: 10.773293,
+    lng: 106.6591515
+};
 var currentPositionGlobal;
 var mainStoreImage = [];
 var nameStore = [];
@@ -34,8 +37,8 @@ var mapObject = (function() {
             // geocoder = new google.maps.Geocoder();
 
             var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 11,
-                center: new google.maps.LatLng(10.761008, 106.670145),
+                zoom: 13,
+                center: new google.maps.LatLng(10.771008, 106.670145),
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 gestureHandling: 'greedy'
             });
