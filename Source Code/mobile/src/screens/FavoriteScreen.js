@@ -163,7 +163,6 @@ class FavoriteScreen extends Component {
   }
 
   render() {
-    console.log('Rendering FavoriteScreen. This.state.user is ', this.state.user);
     if (Object.keys(this.state.user).length === 0) {
       console.log('REnder User = 0')
       return (
@@ -229,7 +228,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     color: "steelblue",
-    marginTop: 14,
+    marginTop: 18,
     textAlign: "left",
     marginLeft: 18
   },

@@ -20,10 +20,8 @@
       <i class="fa number fa-stack-1x">--</i>
     </ng-template>
   </span>
-  <div class="ratingCount">
-    <a [routerLink]="['/product', id]" (click)="getDetail()">
+  <div class="ratingCount" style="color:black">
      &nbsp;&nbsp; {{ ratingCount }} đánh giá
-    </a>
   </div>
 </div>
 <!-- <span class="label" [ngClass]="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}"

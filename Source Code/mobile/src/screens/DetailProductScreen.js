@@ -61,6 +61,7 @@ class DetailProductScreen extends Component {
             .catch(error => {
               console.log('Error to get GetStoreAddress', error);
             });
+            this.setState(this.state);
       })
       .catch(error => {
         console.log('Error to get Product', error);
@@ -77,9 +78,6 @@ class DetailProductScreen extends Component {
     }
 
     render() {
-      console.log('this.state.location : ', this.state.location);
-      console.log('this.state.item ', this.state.item);
-
       const deviceWidth = Dimensions.get('window').width;
       return (
          (this.state.item !== '')
@@ -93,6 +91,8 @@ class DetailProductScreen extends Component {
                       : imageDefault
                     }}
                     imageStyle={styles.image}
+                    imageWrapperStyle={{ 
+                    }}
                   />
                   <View
                    style={{
@@ -180,7 +180,6 @@ class DetailProductScreen extends Component {
       alignItems: 'stretch'
     },
     image: {
-      flex: 1
     }
   });
 

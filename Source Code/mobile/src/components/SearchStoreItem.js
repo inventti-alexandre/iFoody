@@ -19,6 +19,7 @@ class SearchStoreItem extends Component {
   }
 
   render() {
+    console.log('ITEM in SeacrhStoreItem: ', this.props.storeInfo);
     let item = this.props.storeInfo;
     item.images = handelImagePath(item.images);
     const imageSource =
@@ -31,14 +32,14 @@ class SearchStoreItem extends Component {
     return (
       <TouchableOpacity 
         style={{
-          width: this.props.width * 1.15, 
-          height: this.props.height * 1.15 
+          width: this.props.width * 1.12, 
+          height: this.props.height * 1.15,
         }}
         onPress={()=> {
           console.log('does not work');
             this.props.navigateInItem({
               screenName: 'DetailStore',
-              id: item.id });
+              id: item.store.id });
         }
       }>
         <Card
@@ -48,9 +49,8 @@ class SearchStoreItem extends Component {
             source={imageSource}
             fallback={fallbacks}
             style={{
-              width: this.props.width,
+              width: this.props.width*0.75,
               height: this.props.height / 1.6,
-              borderRadius: 7
             }}
           />
           <View style={styles.animationStyle}>
@@ -72,12 +72,12 @@ class SearchStoreItem extends Component {
                 numberOfLines={1} 
                 ellipsizeMode='tail'
                 style={{
-                  width: this.props.width / 1.55, 
+                  width: this.props.width / 1.85, 
                   fontSize: this.props.nameSize
               }}>
                 {item.store.name}
               </Text>
-              <GeneralRating size={this.props.width/2.5} rating={item.store.rating?item.store.rating:0}/>
+              <GeneralRating size={this.props.width/3.4} rating={item.store.rating?item.store.rating:0}/>
             </View>
 
             <View style={{ flexDirection: 'row', justifyContent: 'flex-start'}}>

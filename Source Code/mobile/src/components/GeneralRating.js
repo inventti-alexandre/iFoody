@@ -10,7 +10,6 @@ class GeneralRating extends Component {
   }
 
   render() {
-    console.log('TESTING RATING : ', this.props.rating);
     const rating = this.props.rating;
     return (
       <Rating

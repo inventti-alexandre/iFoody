@@ -30,7 +30,7 @@ class StoreItem extends Component {
           console.log('does not work');
             this.props.navigateInItem({
               screenName: 'DetailStore',
-              id: item.id });
+              id: this.props.item.id });
         }
       }>
         <Card
@@ -75,7 +75,7 @@ class StoreItem extends Component {
                 }}>
                 {this.props.item.name}
               </Text>
-              <GeneralRating size={this.props.width/2.5} rating={this.props.item.rating} />
+              <GeneralRating size={this.props.width/2.5} rating={this.props.item.rating?this.props.item.rating:0} />
             </View>
 
                <View 
