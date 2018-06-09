@@ -11,6 +11,8 @@ import {
   handelImgErro,
   handelImagePath
 } from "../../../shared/services/share-function.service";
+import * as apiUrl from "../../../constant/apiUrl";
+
 declare var addressList: any;
 declare var deleteImageObject: any;
 declare var mainStoreImage: any;
@@ -38,7 +40,8 @@ export class StoreDetailComponent implements OnInit {
   handelImgErro = handelImgErro;
   productsQuantity: any;
   categoryName: any;
-
+  isFavorited = false;
+  favoriteId: string;
 
   constructor(
     private _storeService: StoreService,
@@ -77,6 +80,21 @@ export class StoreDetailComponent implements OnInit {
   ngOnInit() {
     addressList = [];
     this.getStoreInfo();
+    if(localStorage.getItem(apiUrl.UserId) !== null && localStorage.getItem(apiUrl.UserId) !== '') {
+      this._userService
+        .getFavoriteList(localStorage.getItem(apiUrl.UserId))
+        .subscribe(response => {
+          response.forEach(element => {
+            if (element.storeId === this.storeId) {
+              this.favoriteId = element.id;
+              console.log("favoriteList: ", element);
+              // let Component know Change of properties and update. Same with ChangeDetectorRef
+              setTimeout(() => (this.isFavorited = true), 0);
+              return;
+            }
+          });
+        });
+    }
   }
   getStoreInfo = () => {
     this.route.params.subscribe((params: Params) => {
@@ -162,5 +180,41 @@ export class StoreDetailComponent implements OnInit {
           });
       });
     });
+  }
+
+  addFavoriteItem() {
+    console.log("addFavoriteItem works");
+    console.log(this.isFavorited);
+    if(localStorage.getItem(apiUrl.UserId) === null ||
+    localStorage.getItem(apiUrl.UserId) === undefined
+    ) {
+      alert('Đăng nhập để thêm vào mục yêu thích!');
+      return true;
+    }
+    // Insert Product to Favorite List
+    if (this.isFavorited === false) {
+      // this._userService.InsertFavoriteProduct(localStorage.getItem(this.userIdKey), this.productId, null)
+      let userId = localStorage.getItem(apiUrl.UserId);
+      let model = {
+        userId: userId.replace(/['"]+/g, ""),
+        productId: null,
+        storeId: this.storeId
+      };
+      console.log(model);
+      this._userService.InsertFavoriteProduct(model).subscribe(response => {
+        console.log("response", response);
+        this.isFavorited = true;
+        alert("Thêm mục yêu thích thành công!");
+        console.log(this.isFavorited);
+      });
+    } else {
+      console.log("else works");
+      alert("Đã tồn tại trong mục yêu thích");
+      // console.log("in else: ",this.favoriteId);
+      // this._userService.deleteFavoriteItem(this.favoriteId)
+      //   .subscribe(response => {
+      //     setTimeout(() => this.isFavorited = false);
+      //   });
+    }
   }
 }

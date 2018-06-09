@@ -114,14 +114,14 @@ export interface ISearchParam {
   };
 }
 export interface ISearchResult{
-  store: IStore,
-  category: ICategory,
-  images: IImages[],
-  distance: number
+  store: IStore;
+  category: ICategory;
+  images: IImages[];
+  distance: number;
 }
 export interface IProductItem{
-  product: IProduct,
-  store: IStore,
-  images: IImages[],
-  category: ICategory
+  product: IProduct;
+  store: IStore;
+  images: IImages[];
+  category: ICategory;
 }

@@ -56,7 +56,8 @@
         }   
         h2 {
             // height: 50px;
-            padding-left:20%;
+            // padding-left:20%;
+            text-align: center;
             color:#484848 !important;
             // font-size: 28px !important;
             font-weight: 700 !important;
@@ -72,11 +73,10 @@
         }
         div {
             position: relative;
-            padding-left: 45px;
+            padding-left: 5%;
             line-height: 270%;
             span {
-                position: absolute;
-                left: 18px;
+                margin-left:15px
             }
         }
 
@@ -86,7 +86,13 @@
         }
 
         .fa-heart {
-            color:red
+            color:red;
+            margin-top: 10%
+        }
+
+        .fa-heart-o {
+            color:red;
+            margin-top: 10%
         }
 
     }

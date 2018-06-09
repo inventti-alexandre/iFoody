@@ -53,6 +53,12 @@ export class ProductItemComponent implements OnInit {
     if (this.productInfo) {
       this.productId = this.productInfo.product.id;
       this.productModel = this.productInfo;
+      
+      if(this.productModel.product.rating !== null &&
+        this.productModel.product.rating !== undefined &&
+        this.productModel.product.rating !== '') {
+          this.productModel.product.rating = this.productModel.product.rating.toFixed(1);
+        }
       this.productModel.images = handelImagePath(this.productModel.images);
     }
     // this.productModel.images.forEach(image => {

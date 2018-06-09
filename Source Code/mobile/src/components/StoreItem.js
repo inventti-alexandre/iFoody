@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import { Icon, Card, Button } from 'react-native-elements';
 import Animation from 'lottie-react-native';
 import GeneralRating from './GeneralRating';
@@ -11,7 +11,6 @@ class StoreItem extends Component {
   constructor(props) {
     super(props);
     console.log('Constructor StoreItem. Props is: ', this.props);
-    console.log('this.props.buttonItemDisplay', this.props.buttonItemDisplay);
   }
 
   componentDidMount() {
@@ -19,81 +18,92 @@ class StoreItem extends Component {
   }
 
   render() {
-    console.log('inside StoreItem component');
+    console.log('inside StoreItem component. this.item is: ', this.props.item);
     this.props.item.images = handelImagePath(this.props.item.images);
     return (
-      <Card
-        containerStyle={styles.containerStyle}
-        image={{ uri:
-          this.props.item.images.length > 0
-          ? this.props.item.images[0].path
-          : imageDefault
+      <TouchableOpacity 
+        style={{
+          width: this.props.width * 1.15, 
+          height: this.props.height * 1.15 
         }}
-        imageStyle={styles.image}
-      >
-        <View style={styles.animationStyle}>
-          <Animation
-            ref={animation => {
-              this.animation = animation;
-            }}
-            style={{
-              width: 70,
-              height: 70
-            }}
-            loop
-            source={anim}
-          />
-        </View>
-        <View>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text>
-              {this.props.item.name}
-            </Text>
-            <GeneralRating value={this.props.item.rating} />
-          </View>
-
-          <View style={{ flexDirection: 'row' }}>
-
-              <Icon
-                name='money'
-                type='font-awesome'
-                color='#517fa4'
-              />
-
-              <Text>
-              {' '} {this.props.item.lowestPrice}
-               - {this.props.item.highestPrice}
-              </Text>
-
-          </View>
-
-          <Text>
-            {this.props.item.address}, {this.props.item.district}
-          </Text>
-
-        </View>
-        <Button
-          icon={{ name: 'code' }}
-          backgroundColor='#03A9F4'
-          fontFamily='Lato'
-          buttonStyle={{
-              borderRadius: 10,
-              marginLeft: 0,
-              marginRight: 0,
-              marginBottom: 0,
-              display: this.props.buttonItemDisplay }}
-          title='Xem Ngay'
-          onPress={() => {
-            console.log('Xem Ngay Clicked!!!!');
-            this.props.navigateInItem({ screenName: 'DetailStore', id: this.props.item.id });
+        onPress={()=> {
+          console.log('does not work');
+            this.props.navigateInItem({
+              screenName: 'DetailStore',
+              id: this.props.item.id });
+        }
+      }>
+        <Card
+          containerStyle={styles.containerStyle}
+          image={{ uri:
+            this.props.item.images.length > 0
+            ? this.props.item.images[0].path
+            : imageDefault
           }}
-        />
-      </Card>
+          imageStyle={{
+            width: this.props.width,
+            height: this.props.height / 1.6,
+            borderRadius: 7
+          }}
+        >
+          <View style={styles.animationStyle}>
+            <Animation
+              ref={animation => {
+                this.animation = animation;
+              }}
+              style={{
+                width: 70,
+                height: 70
+              }}
+              loop
+              source={anim}
+            />
+          </View>
+          <View>
+            <View 
+              style={{ 
+                flexDirection: 'row', 
+                justifyContent: 'space-between',
+                alignItems: 'center'  
+              }}>
+              <Text 
+                numberOfLines={1} 
+                ellipsizeMode='tail'
+                style={{
+                  width: this.props.width / 1.55, 
+                  fontSize: this.props.nameSize
+                }}>
+                {this.props.item.name}
+              </Text>
+              <GeneralRating size={this.props.width/2.5} rating={this.props.item.rating?this.props.item.rating:0} />
+            </View>
+
+               <View 
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+              }}
+            >
+              <Text
+                numberOfLines={1} 
+                ellipsizeMode='tail'
+                style={{   
+                  alignItems: 'center' ,
+                  fontSize: this.props.addressSize
+                }}>
+              {this.props.item.address + ', ' + this.props.item.district}
+              </Text>
+            </View>
+          </View>
+        </Card>
+      </TouchableOpacity>
     );
   }
 }
 
-const styles = {
+export default StoreItem;
+
+const styles = StyleSheet.create({
   containerStyle: {
     position: 'relative',
   },
@@ -106,6 +116,6 @@ const styles = {
     flex: 1,
     height: 220
   }
-};
+});
 
-export default StoreItem;
+

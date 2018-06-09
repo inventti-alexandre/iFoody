@@ -391,6 +391,7 @@ class SearchResultScreen extends Component {
   };
 
   render() {
+    console.log('RENDERING: ', this.state.searchResults);
     return (
       <View style={styles.containerStyle}>
         <Tabs>
@@ -528,11 +529,17 @@ class SearchResultScreen extends Component {
               <View>
                 <FlatList
                   data={this.state.searchResults.results}
+                  numColumns={2}
                   extraData={this.state}
                   renderItem={({ item }) => (
                     <SearchStoreItem
                       storeInfo={item}
                       navigateInItem={this.navigateInItem}
+                      width={Dimensions.get('window').width / 2.2}
+                      height={Dimensions.get('window').height / 3.5}
+                      nameSize={11}
+                      addressSize={10}
+                      priceSize={10}
                     />
                   )}
                   keyExtractor={item => item.store.id}
@@ -620,7 +627,9 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 12,
   },
-  categoryContainerStyle: {},
+  categoryContainerStyle: {
+    marginTop: 25
+  },
   modalStyle: {
     backgroundColor: "white",
     width: 200

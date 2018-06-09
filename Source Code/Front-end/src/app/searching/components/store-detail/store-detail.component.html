@@ -32,28 +32,37 @@
                 <img [src]="image?.path" alt="image?.name" (error)="handelImgErro($event)">
               </div>
             </div>
+
+            <div class="storeDetail__photo__description row">
+
+            </div>
           </div>
 
 
           <div class="storeDetail__info col-xs-12 col-sm-6 col-md-5">
-            <h2>{{ storeInfoModel?.name }}</h2>
+            <h2>{{ storeInfoModel?.name }} 
+                  <sup><i class="fa fa-1x" [ngClass]="isFavorited ? 'fa-heart' : 'fa-heart-o'" (click)="addFavoriteItem($event)"></i></sup>
+            </h2>
+            
+            
             <div class="row">
-              <div class="type col-xs-4 col-sm-4">
-                <span>
-                  <i class="fa fa-th-list"></i>
-                  {{categoryName}}
-                </span>
-              </div>
-              <div class="rating col-xs-8 col-sm-8">
                 <bs-rating [rating]="storeInfoModel?.rating" [ratingCount]="storeInfoModel?.ratingCount"></bs-rating>
-              </div>
             </div>
+          
+           
 
             <div class="others row">
               <div>
                 <span>
+                  <i class="fa fa-th-list fa-1x"></i>
+                </span>
+                {{categoryName}}
+              </div>
+              <div>
+                <span>
                   <i class="fa fa-location-arrow fa-1x"></i>
-                </span>{{ storeInfoModel?.address + ', ' + storeInfoModel?.district + ', ' + storeInfoModel?.city }}</div>
+                </span>{{ storeInfoModel?.address + ', ' + storeInfoModel?.district + ', ' + storeInfoModel?.city }}
+              </div>
               <div>
                 <span>
                   <i class="fa fa-clock-o fa-1x"></i>
@@ -74,7 +83,6 @@
             <map [storeIds]="storeIds"></map>
             <div class="storeDetail__map__note col-xs-12 col-sm-12 col-md-12">Nhấp vào địa điểm màu đỏ để xem đường đi ngắn nhất từ vị trí hiện tại của bạn</div>
           </div>
-
         </div>
       </ng-template>
       <hr/>
