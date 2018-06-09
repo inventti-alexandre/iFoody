@@ -16,7 +16,7 @@
     <div class="carousel-inner">
       <div *ngFor="let img of slider; let i = index" [ngClass]="[i === 0 ? 'item active' : 'item']">
         <a [routerLink]="['/store', enCode(img.id)]" class="suggestion-box-item" title="result.store.name">
-          <img src={{img.src}} alt="Los Angeles" style="width:100%">
+          <img src={{img.src}} alt="Store Image" style="width:100%; height: 100%">
           <div class="carousel-caption">
             <h3>{{img.name}}</h3>
             <p>{{img.title}}</p>
