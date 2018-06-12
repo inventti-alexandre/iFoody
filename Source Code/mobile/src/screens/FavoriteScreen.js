@@ -33,7 +33,6 @@ class FavoriteScreen extends Component {
   componentDidMount() {
     console.log('Favorite componentDidMount. this.props.user: ', this.props.user);
     if (Object.keys(this.state.user).length !== 0) {
-      console.log('DDDDDDDDD');
       this.setState({ user: this.props.user }, () =>
         this.fetchFavoriteList());
     } else {
@@ -180,45 +179,59 @@ class FavoriteScreen extends Component {
       );
     }
      return (
-      <View>
-        <Text style={styles.header}>
-          Cửa Hàng
-        </Text>
-        <FlatList
-          horizontal
-          data={this.state.storeList}
-          renderItem={({ item }) =>
-            <StoreItem
-              item={item}
-              navigateInItem={this.navigateInItem}
-              width={Dimensions.get('window').width / 2.2}
-              height={Dimensions.get('window').height / 3.5}
-              nameSize={11}
-              addressSize={10}
-            />
-          }
-         keyExtractor={item => item.id}
-        />    
-
-        <Text style={styles.header}>
-          Sản Phẩm
-        </Text>      
-        <FlatList
-          horizontal
-          data={this.state.productList}
-          renderItem={({ item }) =>
-            <ProductItem
-              productInfo={item}
-              navigateInItem={this.navigateInItem}
-              width={Dimensions.get('window').width / 2.2}
-              height={Dimensions.get('window').height / 3.5}
-              nameSize={12}
-              addressSize={10}
-            />
-          }
-         keyExtractor={item => item.product.id}
-        />
+      <View style={{
+        height: Dimensions.get('window').height*0.85, 
+        flexDirection: 'column', 
+        justifyContent: 'center'}}>
+        <View style={{
+          flexDirection:'column', 
+          justifyContent: 'flex-start',
+          height: Dimensions.get('window').height*0.4
+        }}>
+          <Text style={styles.header}>
+            Cửa Hàng
+          </Text>
+          <FlatList
+            horizontal
+            data={this.state.storeList}
+            renderItem={({ item }) =>
+              <StoreItem
+                item={item}
+                navigateInItem={this.navigateInItem}
+                width={Dimensions.get('window').width / 2.12}
+                height={Dimensions.get('window').height / 3.5}
+                nameSize={11}
+                addressSize={10}
+              />
+            }
+          keyExtractor={item => item.id}
+          />    
+        </View>
+        <View style={{
+          flexDirection:'column', 
+          justifyContent: 'flex-start',
+          height: Dimensions.get('window').height*0.44
+          }}>
+          <Text style={styles.header}>
+            Sản Phẩm
+          </Text>      
+          <FlatList
+            horizontal
+            data={this.state.productList}
+            renderItem={({ item }) =>
+              <ProductItem
+                productInfo={item}
+                navigateInItem={this.navigateInItem}
+                width={Dimensions.get('window').width / 2.12}
+                height={Dimensions.get('window').height / 3.5}
+                nameSize={12}
+                addressSize={10}
+              />
+            }
+          keyExtractor={item => item.product.id}
+          />
       </View> 
+    </View> 
     );
   }
 }
