@@ -535,7 +535,7 @@ class SearchResultScreen extends Component {
                     <SearchStoreItem
                       storeInfo={item}
                       navigateInItem={this.navigateInItem}
-                      width={Dimensions.get('window').width / 2.2}
+                      width={Dimensions.get('window').width / 2.3}
                       height={Dimensions.get('window').height / 3.5}
                       nameSize={11}
                       addressSize={10}

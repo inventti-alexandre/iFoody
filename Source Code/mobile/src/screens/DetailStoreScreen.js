@@ -164,7 +164,7 @@ class DetailStoreScreen extends Component {
             <Map items={[this.state.location]} />
             {(this.state.productList.length === 0)
 
-            ? <Text>No Product In Store</Text>
+            ? <Text style={{marginTop: 15, marginLeft: 15}}>Không có sản phẩm trong cửa hàng</Text>
             : 
               <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
                   {this.state.productList.map((item, key) => (

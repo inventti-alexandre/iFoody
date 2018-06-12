@@ -14,6 +14,7 @@ import {
 class AllProductsByCategoryScreen extends Component {
   constructor(props) {
     super(props);
+    console.log('AllProductsByCategoryScreen. this.props is:  ', this.props);
     this.state = {
       products: [],
       results: {
@@ -31,11 +32,13 @@ class AllProductsByCategoryScreen extends Component {
     this.getProductsByCategoryId(this.state.initPage);
   }
   getProductsByCategoryId = (page) => {
+    console.log('getProductsByCategoryId works');
     ProductService.PagingAllProductsByCategory(
       this.props.navigation.state.params.categoryInfo.id,
       page,
       this.state.initCount
     ).then(data => {
+      console.log('data response: ', data);
       if (data.status === 404) {
       } else {
         if (page>1) {
@@ -79,6 +82,7 @@ class AllProductsByCategoryScreen extends Component {
   };
 
   render() {
+    console.log('SeeMore Rendering. this.props is: ', this.props);
     return (
       <ScrollView
         title="Tìm Kiếm"
@@ -92,15 +96,20 @@ class AllProductsByCategoryScreen extends Component {
         <View>
           <Text style={styles.totalRecord}>{this.state.results.totalRecord +' Kết quả cho '+ this.props.navigation.state.params.categoryInfo.name}</Text>
           <FlatList
+            numColumns={2}
             data={this.state.results.results}
             extraData={this.state}
             renderItem={({ item }) => (
               <ProductItem
                 productInfo={item}
                 navigateInItem={this.navigateInItem}
+                width={Dimensions.get('window').width / 2.37}
+                height={Dimensions.get('window').height / 4.6}
+                nameSize={10}
+                addressSize={9}
               />
             )}
-            keyExtractor={item => item.id}
+            keyExtractor={item => item.product.id}
           />
         </View>
       </ScrollView>
