@@ -21,6 +21,7 @@ export class FavoriteListComponent implements OnInit, ProfileChildren {
   favoriteList: IFavoriteList[];
   productIds: any[];
   productsModel: any[];
+  storesModel: any[];
   storeIds: any[];
   imageDefault: any;
 
@@ -38,6 +39,7 @@ export class FavoriteListComponent implements OnInit, ProfileChildren {
   ) {
     this.imageDefault = imageDefault;
     this.productsModel = [];
+    this.storesModel = [];
     this.userId = localStorage.getItem(apiUrl.UserId);
   }
 
@@ -68,6 +70,15 @@ export class FavoriteListComponent implements OnInit, ProfileChildren {
               return y.storeId != null ;
             })
            .map(y => y.storeId);
+
+           this.storeIds.forEach(element => {
+            this._storeService.GetStoreById(element)
+              .subscribe(response => {
+                console.log('response1', response);
+                response.images = handelImagePath(response.images);
+                this.storesModel.push(response);
+              });
+          });
       });
   }
 

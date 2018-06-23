@@ -33,8 +33,9 @@ class Login extends Component {
   onSubmit = () => {
     console.log('onSubmit workds');
     console.log('this.state ', this.state);
-    const dataTest = 'hoailinhtinh@gmail.com:8899';
-    const data = Base64.btoa(dataTest);
+    const auth = `${this.state.email}:${this.state.password}`;
+    console.log('auth : ', auth);
+    const data = Base64.btoa(auth);
     const config = {
        headers: {
          'Content-Type': 'application/json',
@@ -99,6 +100,7 @@ class Login extends Component {
               <Text style={styles.label}>Password</Text>
               <FormInput
                 onChangeText={(text) => this.setState({ password: text })}
+                secureTextEntry={true}
               />
           </View>
 

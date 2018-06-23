@@ -157,7 +157,6 @@ export class ProductUploadComponent implements OnInit {
     // this.uploadProductForm.patchValue({'images': this.fileUploads});
   }
 
-
   onSubmit(value: any) {
     if(value.detail===1){ // check double click
          console.log("form", this.uploadProductForm);
@@ -189,7 +188,7 @@ export class ProductUploadComponent implements OnInit {
         (data) => {
           console.log("new product add success",data);
           alert("Thêm sản phẩm thành công. Mời nhập thêm sản phẩm khác!!!");
-
+          this.reload();
           this.uploadProductForm.reset();
           this.fileUploadComponent.forEach(component => {
             component.imageSrc = "";
