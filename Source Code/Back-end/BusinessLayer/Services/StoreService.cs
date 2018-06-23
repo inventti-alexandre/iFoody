@@ -417,7 +417,7 @@ namespace BusinessLayer.Services
 
                         var store = _unitOfWork.Stores.GetById(storeId);
 
-                        if (store.RatingCount == null)
+                        if (store.RatingCount == null || store.Rating == null)
                         {
                             store.Rating = 0.0;
                             store.RatingCount = 0;

@@ -2,7 +2,7 @@
   <form [formGroup]="productItemForm" (ngSubmit)="onSubmit()" class="row form-edit-profile">
     <div class="productItem__image image col-xs-12 col-sm-3 col-md-3">
       
-      <div [id]="image?.id" class="col-md-4 col-sm-4 col-xs-4" *ngFor="let image of images">
+      <div [id]="image?.id" class="col-md-4 col-sm-4 col-xs-4" style="margin-top: 12px; padding-right: 0 important" *ngFor="let image of images">
         <img [src]="imageDomain + image?.path" [alt]="image?.name">
         <div class="deleteBtn"><span (click)="deleteImage(image?.id)"><i class="fa fa-times fa-1x"></i></span></div>
       </div>
@@ -44,7 +44,7 @@
 
     <div class="productItem__info col-xs-12 col-sm-5 col-md-5">
       <div><label>Tên sản phẩm</label><input class="form-control" formControlName="name" value="{{ productModel.product.name }}"/></div>
-      <div><label>Giá</label><input  class="form-control" formControlName="price" value="{{ productModel.product.price | currency:'vnd':4.0 }}"/></div>
+      <div><label>Giá</label><input  class="form-control" formControlName="price" value="{{ productModel.product.price | number }}" /><span>VNĐ</span></div>
       <div><label>Loại</label>
         <!-- <input  class="form-control" value="{{ productModel.category?.name }}"/> -->
         <select class="form-control" formControlName="categoryId">
