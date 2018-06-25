@@ -21,8 +21,8 @@
           <!-- </div> -->
           <div  class="col-xs-12 col-sm-12 col-md-12"><span><i class="fa fa-map-marker fa-1x"></i></span> {{ productModel?.store.name }} </div>
           <div class="col-xs-12 col-sm-12 col-md-12"><span><i class="fa fa-location-arrow fa-1x"></i></span> {{ productModel?.store.address }}</div>
-          <div  class="col-xs-12 col-sm-12 col-md-12"><span><i class="fa fa-clock-o fa-1x"></i></span> {{ productModel?.store.openHour }} -  {{ productModel.store.closeHour }}  </div>
-          <div  class="col-xs-12 col-sm-12 col-md-12"><span><i class="fa fa-money fa-1x"></i></span> {{ productModel?.product.price }} </div>
+          <div  class="col-xs-12 col-sm-12 col-md-12"><span><i class="fa fa-clock-o fa-1x"></i></span> {{ productModel?.store.openHour | slice:0:5 }} -  {{ productModel.store.closeHour | slice:0:5}}  </div>
+          <div  class="col-xs-12 col-sm-12 col-md-12"><span><i class="fa fa-money fa-1x"></i></span> {{ productModel?.product.price | number }} VNĐ</div>
         </div>
       </div>
     </div>
@@ -37,9 +37,29 @@
       <h2>Cửa Hàng yêu thích</h2>
     </div>
     <div class="row favoriteList__content">
-      <div class="col-xs-6 col-sm-6" *ngFor="let storeId of storeIds">
+        <div class="col-xs-12 col-sm-12 favoriteList__item" [id]="storeModel?.id" *ngFor="let storeModel of storesModel">
+            <!-- <product-item [productId]="productId"></product-item> -->
+            <div class="deleteIcon row"><span (click)="removeFavoriteItem(storeModel?.id)"><i class="fa fa-times fa-1x"></i></span></div>
+            <div class="row">
+              <div class="favoriteList__content__photo col-xs-12 col-sm-4 col-md-4">
+                <img [src]="storeModel?.images.length>0?storeModel.images[0].path:imageDefault" alt="" >
+              </div>
+      
+              <div class="favoriteList__content__info col-xs-12 col-sm-8 col-md-8">
+                <!-- <div class="row"> -->
+                      <div class="favoriteList__content__info__name col-xs-12 col-sm-7 col-md-7"> {{ storeModel?.name }} </div>
+                      <div class="favoriteList__content__info__rating col-xs-12 col-sm-5 col-md-5"><bs-rating [id]="storeModel?.id" [rating]="storeModel.rating" [ratingCount]="storeModel.ratingCount"></bs-rating></div>
+                <!-- </div> -->
+                <div  class="col-xs-12 col-sm-12 col-md-12"><span><i class="fa fa-map-marker fa-1x"></i></span> {{ storeModel?.name }} </div>
+                <div class="col-xs-12 col-sm-12 col-md-12"><span><i class="fa fa-location-arrow fa-1x"></i></span> {{ storeModel?.address }}</div>
+                <div  class="col-xs-12 col-sm-12 col-md-12"><span><i class="fa fa-clock-o fa-1x"></i></span> {{ storeModel?.openHour }} -  {{ storeModel.closeHour }}  </div>
+                <div  class="col-xs-12 col-sm-12 col-md-12"><span><i class="fa fa-money fa-1x"></i></span> {{ storeModel?.lowestPrice }} - {{ storeModel?.highestPrice }} </div>
+              </div>
+            </div>
+          </div>
+      <!-- <div class="col-xs-6 col-sm-6" *ngFor="let storeId of storeIds">
         <favorite-store-item [storeId]="storeId"></favorite-store-item>
-      </div>
+      </div> -->
       <!-- <div class="col-xs-6 col-sm-6">
         <product-item></product-item>
       </div> -->

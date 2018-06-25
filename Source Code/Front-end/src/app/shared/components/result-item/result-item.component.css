@@ -128,7 +128,8 @@
 
 .price {
   text-align: center;
-  font-weight: 700;
+  font-weight: 600;
+  font-size: 0.8em !important;
   padding-top: 5px;
   padding-bottom: 5px;
   border-bottom: #f8f8f8 1px solid;

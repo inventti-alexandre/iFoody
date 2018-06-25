@@ -59,7 +59,7 @@
             </span>
           </h2>
           <map [storeIds]="[productModel.store?.id]"></map>
-          <div class="productDetail__map__note col-xs-12 col-sm-12 col-md-12">Nhấp vào địa điểm để xem đường đi ngắn nhất</div>
+          <div class="productDetail__map__note col-xs-12 col-sm-12 col-md-12">Nhấp vào Hình ảnh để xem đường đi ngắn nhất</div>
         </div>
       </div>
       <hr/>
@@ -67,7 +67,7 @@
       <div class="row">
         <h4>Đánh Giá</h4>
         <div class="productDetail__review col-xs-12 col-sm-12">
-          <review [productId]="productId" [storeIdOfProduct]="productModel?.store.id"></review>
+          <review [storeId]='' [productId]="productId" [storeIdOfProduct]="productModel?.store?.id"></review>
         </div>
       </div>
       <hr/>

@@ -10,12 +10,15 @@
         display: block;
         border-radius: 3px;
         text-align: center;
+        .deleteBtn {
+            margin-top: 30%;
+        }
         img{
-            width: 75px;
             height:60px;
+            border-radius: 10px
         }
         span {
-            margin-left: 7%;
+            margin-left: 45%;
             i:hover {
                 cursor: pointer;
             }
@@ -48,11 +51,15 @@
             }
             input, select { 
                 position: absolute;
-                margin-left: 3%;
+                margin-left: 8%;
                 width:55%;
                 border-radius: 4px;
                 display: inline-block
             } 
+            span {
+                position: absolute;
+                top: 53px;
+            }
         }
         
     }

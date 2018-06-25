@@ -53,6 +53,9 @@ export class LoginComponent implements OnInit {
         alert("Đăng nhập thành công!!!");
         this.reload();
         return this.isAuthenticated;
+      },
+      error => {
+        alert("Sai Email hoặc Passwords");
       }
     );
     return false;

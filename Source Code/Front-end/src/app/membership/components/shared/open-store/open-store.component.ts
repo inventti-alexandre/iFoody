@@ -16,7 +16,6 @@ import {
 } from '@angular/core';
 import { ProductService } from '../../../../shared/services/product.service';
 import * as apiUrl from '../../../../constant/apiUrl';
-import { window } from 'rxjs/operators/window';
 
 @Component({
   selector: 'open-store',
@@ -52,7 +51,7 @@ export class OpenStoreComponent implements OnInit {
               private componentFactoryResolver: ComponentFactoryResolver,
               private elRef: ElementRef
             ) {
-
+    window.scrollTo(0,0);
     this.userIdKey = apiUrl.UserId;
     this.userId = localStorage.getItem(this.userIdKey).replace(/['"]+/g,'');
     console.log(this.userId);
@@ -226,13 +225,14 @@ export class OpenStoreComponent implements OnInit {
       {id: 37, value:"Huyện Sóc Sơn"},
     ];
 
-
+    
     this._categoryService.GetAll()    
     .subscribe(response => {
       console.log("getCategory works");
       console.log(response);
       this.categories = response;
     });
+
   }
 
   ngOnInit() {

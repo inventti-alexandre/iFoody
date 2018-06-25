@@ -33,7 +33,8 @@ class FlatListProducts extends Component {
     });
   };
   goAllProductsByCategory = () => {
-    let categoryInfo = this.props.categoryInfo
+    console.log('goAllProductsBycategory works. categoryInfo: ', this.props.categoryInfo);
+    let categoryInfo = this.props.categoryInfo;
     this.props.navigation.navigate('AllProductsByCategory', {
       categoryInfo
     });
