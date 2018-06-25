@@ -125,14 +125,14 @@ export class SliderComponent implements OnInit {
     return this._searchService
       .SuggestListByUserId(userId, count)
       .subscribe((data: Response) => {
-        if (data !== null) {
+        if(data.status===404){
+          this.getSuggestionListByRating(this.defaultSuggestionCount);
+        }else{
           this.defaultSuggestionList.push(data);
           this.defaultSuggestionList[0].results = this.changeImagePath( this.defaultSuggestionList[0].results);
           this.suggestionList = _.cloneDeep(this.defaultSuggestionList);
           this.setSlider(this.suggestionList[0].results)
           console.log("suggest result", this.suggestionList);
-        } else {
-          console.log("suggest result empty");
         }
       });
   }

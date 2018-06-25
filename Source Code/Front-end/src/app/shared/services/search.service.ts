@@ -46,6 +46,9 @@ export class SearchService {
       .map((response: Response) => <any>response.json())
       .do(x => {
         listProduct.push(x);
+      })
+      .catch((erro:any)=>{
+        return Observable.of(erro);
       });
   }
 
